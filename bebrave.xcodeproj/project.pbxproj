@@ -7,15 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5241DDD22B8F61F000C7ECF0 /* HistoryViewConroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */; };
 		52F1E53A2B7CDC300058F767 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E5392B7CDC300058F767 /* AppDelegate.swift */; };
 		52F1E53C2B7CDC300058F767 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E53B2B7CDC300058F767 /* SceneDelegate.swift */; };
-		52F1E53E2B7CDC300058F767 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E53D2B7CDC300058F767 /* ViewController.swift */; };
-		52F1E5412B7CDC300058F767 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52F1E53F2B7CDC300058F767 /* Main.storyboard */; };
+		52F1E53E2B7CDC300058F767 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E53D2B7CDC300058F767 /* TabBarViewController.swift */; };
 		52F1E5432B7CDC330058F767 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52F1E5422B7CDC330058F767 /* Assets.xcassets */; };
 		52F1E5462B7CDC330058F767 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52F1E5442B7CDC330058F767 /* LaunchScreen.storyboard */; };
 		52F1E5512B7CDC330058F767 /* bebraveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E5502B7CDC330058F767 /* bebraveTests.swift */; };
 		52F1E55B2B7CDC330058F767 /* bebraveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E55A2B7CDC330058F767 /* bebraveUITests.swift */; };
 		52F1E55D2B7CDC330058F767 /* bebraveUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E55C2B7CDC330058F767 /* bebraveUITestsLaunchTests.swift */; };
+		52F1E56A2B7CE6330058F767 /* HabitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E5692B7CE6330058F767 /* HabitsViewController.swift */; };
+		52F1E56C2B7CE6B10058F767 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */; };
+		52F1E56E2B7CE6D10058F767 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,11 +39,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		521584B02BA320FC009F1B5A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewConroller.swift; sourceTree = "<group>"; };
 		52F1E5362B7CDC300058F767 /* bebrave.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bebrave.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52F1E5392B7CDC300058F767 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52F1E53B2B7CDC300058F767 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		52F1E53D2B7CDC300058F767 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		52F1E5402B7CDC300058F767 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		52F1E53D2B7CDC300058F767 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		52F1E5422B7CDC330058F767 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52F1E5452B7CDC330058F767 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52F1E5472B7CDC330058F767 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,6 +53,9 @@
 		52F1E5562B7CDC330058F767 /* bebraveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = bebraveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		52F1E55A2B7CDC330058F767 /* bebraveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bebraveUITests.swift; sourceTree = "<group>"; };
 		52F1E55C2B7CDC330058F767 /* bebraveUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bebraveUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		52F1E5692B7CE6330058F767 /* HabitsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsViewController.swift; sourceTree = "<group>"; };
+		52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
+		52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,8 +108,11 @@
 			children = (
 				52F1E5392B7CDC300058F767 /* AppDelegate.swift */,
 				52F1E53B2B7CDC300058F767 /* SceneDelegate.swift */,
-				52F1E53D2B7CDC300058F767 /* ViewController.swift */,
-				52F1E53F2B7CDC300058F767 /* Main.storyboard */,
+				52F1E53D2B7CDC300058F767 /* TabBarViewController.swift */,
+				52F1E5692B7CE6330058F767 /* HabitsViewController.swift */,
+				52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */,
+				52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */,
+				5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */,
 				52F1E5422B7CDC330058F767 /* Assets.xcassets */,
 				52F1E5442B7CDC330058F767 /* LaunchScreen.storyboard */,
 				52F1E5472B7CDC330058F767 /* Info.plist */,
@@ -208,11 +218,11 @@
 			};
 			buildConfigurationList = 52F1E5312B7CDC300058F767 /* Build configuration list for PBXProject "bebrave" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ru;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				ru,
 			);
 			mainGroup = 52F1E52D2B7CDC300058F767;
 			productRefGroup = 52F1E5372B7CDC300058F767 /* Products */;
@@ -233,7 +243,6 @@
 			files = (
 				52F1E5462B7CDC330058F767 /* LaunchScreen.storyboard in Resources */,
 				52F1E5432B7CDC330058F767 /* Assets.xcassets in Resources */,
-				52F1E5412B7CDC300058F767 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,9 +267,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52F1E53E2B7CDC300058F767 /* ViewController.swift in Sources */,
+				52F1E53E2B7CDC300058F767 /* TabBarViewController.swift in Sources */,
+				5241DDD22B8F61F000C7ECF0 /* HistoryViewConroller.swift in Sources */,
+				52F1E56C2B7CE6B10058F767 /* DiaryViewController.swift in Sources */,
 				52F1E53A2B7CDC300058F767 /* AppDelegate.swift in Sources */,
 				52F1E53C2B7CDC300058F767 /* SceneDelegate.swift in Sources */,
+				52F1E56A2B7CE6330058F767 /* HabitsViewController.swift in Sources */,
+				52F1E56E2B7CE6D10058F767 /* ProfileViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,18 +310,11 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		52F1E53F2B7CDC300058F767 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				52F1E5402B7CDC300058F767 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		52F1E5442B7CDC330058F767 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				52F1E5452B7CDC330058F767 /* Base */,
+				521584B02BA320FC009F1B5A /* ru */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -320,6 +326,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -380,6 +387,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -442,7 +450,6 @@
 				INFOPLIST_FILE = bebrave/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -470,7 +477,6 @@
 				INFOPLIST_FILE = bebrave/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

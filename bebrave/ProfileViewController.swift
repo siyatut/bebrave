@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  SettingsViewController.swift
 //  bebrave
 //
 //  Created by Anastasia Tyutinova on 14/2/2567 BE.
@@ -7,13 +7,11 @@
 
 import UIKit
 
-class ViewController: UIViewController {
 
+class ProfileViewController: UIViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .white
     }
-
-
 }
-
