@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		52021A772BAC3D2000E9D8F1 /* OutlineBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52021A762BAC3D2000E9D8F1 /* OutlineBackgroundView.swift */; };
 		5241DDD22B8F61F000C7ECF0 /* HistoryViewConroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */; };
 		52F1E53A2B7CDC300058F767 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E5392B7CDC300058F767 /* AppDelegate.swift */; };
 		52F1E53C2B7CDC300058F767 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E53B2B7CDC300058F767 /* SceneDelegate.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		52021A762BAC3D2000E9D8F1 /* OutlineBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineBackgroundView.swift; sourceTree = "<group>"; };
 		521584B02BA320FC009F1B5A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewConroller.swift; sourceTree = "<group>"; };
 		52F1E5362B7CDC300058F767 /* bebrave.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bebrave.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,6 +115,7 @@
 				52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */,
 				52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */,
 				5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */,
+				52021A762BAC3D2000E9D8F1 /* OutlineBackgroundView.swift */,
 				52F1E5422B7CDC330058F767 /* Assets.xcassets */,
 				52F1E5442B7CDC330058F767 /* LaunchScreen.storyboard */,
 				52F1E5472B7CDC330058F767 /* Info.plist */,
@@ -268,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				52F1E53E2B7CDC300058F767 /* TabBarViewController.swift in Sources */,
+				52021A772BAC3D2000E9D8F1 /* OutlineBackgroundView.swift in Sources */,
 				5241DDD22B8F61F000C7ECF0 /* HistoryViewConroller.swift in Sources */,
 				52F1E56C2B7CE6B10058F767 /* DiaryViewController.swift in Sources */,
 				52F1E53A2B7CDC300058F767 /* AppDelegate.swift in Sources */,

@@ -10,6 +10,7 @@ import UIKit
 enum CustomElement: String {
     case collectionHeader
     case sectionFooter
+    case outlineBackground
 }
 
 class HabitsViewController: UICollectionViewController {
@@ -23,11 +24,20 @@ class HabitsViewController: UICollectionViewController {
     
     init() {
         let provider: UICollectionViewCompositionalLayoutSectionProvider = { section, environment in
+            let background = NSCollectionLayoutSupplementaryItem(
+                layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .fractionalHeight(1)
+                ),
+                elementKind: CustomElement.outlineBackground.rawValue,
+                containerAnchor: .init(edges: .all)
+            )
             let item = NSCollectionLayoutItem(
                 layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
                     heightDimension: .absolute(60)
-                )
+                ),
+                supplementaryItems: [background]
             )
             let group = NSCollectionLayoutGroup.vertical(
                 layoutSize: .init(
@@ -84,6 +94,7 @@ class HabitsViewController: UICollectionViewController {
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: CustomElement.sectionFooter.rawValue, withReuseIdentifier: CustomElement.sectionFooter.rawValue)
         collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: CustomElement.collectionHeader.rawValue, withReuseIdentifier: CustomElement.collectionHeader.rawValue)
+        collectionView.register(OutlineBackgroundView.self, forSupplementaryViewOfKind: CustomElement.outlineBackground.rawValue, withReuseIdentifier: CustomElement.outlineBackground.rawValue)
     }
 
 // MARK: - Objc methods
@@ -108,7 +119,7 @@ extension HabitsViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        cell.backgroundColor = .tintColor
+        cell.backgroundColor = .tintColor.withAlphaComponent(0.05)
         return cell
     }
     
@@ -117,12 +128,15 @@ extension HabitsViewController {
         switch customElement {
         case .sectionFooter:
             let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomElement.sectionFooter.rawValue, for: indexPath)
-            footer.backgroundColor = .orange
+            footer.backgroundColor = .orange.withAlphaComponent(0.05)
             return footer
         case .collectionHeader:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomElement.collectionHeader.rawValue, for: indexPath)
-            header.backgroundColor = .red
+            header.backgroundColor = .red.withAlphaComponent(0.05)
             return header
+        case .outlineBackground:
+            let outlineBackground = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomElement.outlineBackground.rawValue, for: indexPath)
+            return outlineBackground
         case .none:
             fatalError()
         }
