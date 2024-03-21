@@ -31,9 +31,19 @@ class HabitsViewController: UICollectionViewController {
                 ),
                 subitems: [item]
             )
+            let footer = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(60)
+                ),
+                elementKind: "Button",
+                alignment: .bottom,
+                absoluteOffset: .init(x: 0, y: 24)
+            )
             let section = NSCollectionLayoutSection(group: group)
-            section.contentInsets = .init(top: 0, leading: 20, bottom: 0, trailing: 20)
-            section.interGroupSpacing = 12
+            section.contentInsets = .init(top: 0, leading: 12, bottom: 0, trailing: 12)
+            section.interGroupSpacing = 8
+            section.boundarySupplementaryItems = [footer]
             return section
         }
         let layout = UICollectionViewCompositionalLayout(sectionProvider: provider)
@@ -54,6 +64,7 @@ class HabitsViewController: UICollectionViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: historyButton)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: calendarLabel)
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: "Button", withReuseIdentifier: "Button")
     }
 
 // MARK: - Objc methods
@@ -82,6 +93,11 @@ extension HabitsViewController {
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Button", for: indexPath)
+        footer.backgroundColor = .orange
+        return footer
+    }
 }
 
 // MARK: — Customise navigation's items
