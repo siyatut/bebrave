@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum CustomElement: String {
+    case collectionHeader
+    case sectionFooter
+}
+
 class HabitsViewController: UICollectionViewController {
     
 // MARK: - UI components
@@ -36,7 +41,7 @@ class HabitsViewController: UICollectionViewController {
                     widthDimension: .fractionalWidth(1),
                     heightDimension: .absolute(60)
                 ),
-                elementKind: "Button",
+                elementKind: CustomElement.sectionFooter.rawValue,
                 alignment: .bottom,
                 absoluteOffset: .init(x: 0, y: 24)
             )
@@ -46,7 +51,20 @@ class HabitsViewController: UICollectionViewController {
             section.boundarySupplementaryItems = [footer]
             return section
         }
-        let layout = UICollectionViewCompositionalLayout(sectionProvider: provider)
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .absolute(70)
+            ),
+            elementKind: CustomElement.collectionHeader.rawValue,
+            alignment: .top,
+            absoluteOffset: .init(x: 0, y: -24)
+        )
+        header.extendsBoundary = true
+        header.contentInsets = .init(top: 0, leading: 12, bottom: 0, trailing: 12)
+        let configuration = UICollectionViewCompositionalLayoutConfiguration()
+        configuration.boundarySupplementaryItems = [header]
+        let layout = UICollectionViewCompositionalLayout(sectionProvider: provider, configuration: configuration)
         super.init(collectionViewLayout: layout)
     }
     
@@ -64,7 +82,8 @@ class HabitsViewController: UICollectionViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: historyButton)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: calendarLabel)
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-        collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: "Button", withReuseIdentifier: "Button")
+        collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: CustomElement.sectionFooter.rawValue, withReuseIdentifier: CustomElement.sectionFooter.rawValue)
+        collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: CustomElement.collectionHeader.rawValue, withReuseIdentifier: CustomElement.collectionHeader.rawValue)
     }
 
 // MARK: - Objc methods
@@ -94,9 +113,19 @@ extension HabitsViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Button", for: indexPath)
-        footer.backgroundColor = .orange
-        return footer
+        let customElement = CustomElement(rawValue: kind)
+        switch customElement {
+        case .sectionFooter:
+            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomElement.sectionFooter.rawValue, for: indexPath)
+            footer.backgroundColor = .orange
+            return footer
+        case .collectionHeader:
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomElement.collectionHeader.rawValue, for: indexPath)
+            header.backgroundColor = .red
+            return header
+        case .none:
+            fatalError()
+        }
     }
 }
 
