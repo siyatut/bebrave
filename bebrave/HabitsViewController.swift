@@ -92,7 +92,7 @@ class HabitsViewController: UICollectionViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: historyButton)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: calendarLabel)
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-        collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: CustomElement.sectionFooter.rawValue, withReuseIdentifier: CustomElement.sectionFooter.rawValue)
+        collectionView.register(HabitsCollectionViewCell.self, forSupplementaryViewOfKind: CustomElement.sectionFooter.rawValue, withReuseIdentifier: CustomElement.sectionFooter.rawValue)
         collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: CustomElement.collectionHeader.rawValue, withReuseIdentifier: CustomElement.collectionHeader.rawValue)
         collectionView.register(OutlineBackgroundView.self, forSupplementaryViewOfKind: CustomElement.outlineBackground.rawValue, withReuseIdentifier: CustomElement.outlineBackground.rawValue)
     }
