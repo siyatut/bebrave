@@ -14,7 +14,7 @@ class HabitsCollectionViewCell: UICollectionViewCell {
     private let habitsName: UILabel = {
         let label = UILabel()
         label.text = "Учить английский"
-        label.textColor = .black
+        label.textColor = .label
         label.font = UIFont.systemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -23,7 +23,7 @@ class HabitsCollectionViewCell: UICollectionViewCell {
     private let percentDone: UILabel = {
         let label = UILabel()
         label.text = "12 %"
-        label.textColor = .black
+        label.textColor = .secondaryLabel
         label.font = UIFont.systemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -39,7 +39,7 @@ class HabitsCollectionViewCell: UICollectionViewCell {
     private let habitsCount: UILabel = {
         let label = UILabel()
         label.text = "2 из 3"
-        label.textColor = .black
+        label.textColor = .secondaryLabel
         label.font = UIFont.systemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -74,8 +74,8 @@ class HabitsCollectionViewCell: UICollectionViewCell {
         for view in views {
             horizontalStackView.addArrangedSubview(view)
         }
-        addSubview(horizontalStackView)
-        addSubview(percentDone)
+        contentView.addSubview(horizontalStackView)
+        contentView.addSubview(percentDone)
         
         NSLayoutConstraint.activate([
             horizontalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),

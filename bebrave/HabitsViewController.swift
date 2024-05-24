@@ -11,6 +11,8 @@ enum CustomElement: String {
     case collectionHeader
     case sectionFooter
     case outlineBackground
+    case habitsCell
+    case writeDiaryCell
 }
 
 class HabitsViewController: UICollectionViewController {
@@ -91,10 +93,14 @@ class HabitsViewController: UICollectionViewController {
         customiseCalendarLabel()
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: historyButton)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: calendarLabel)
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-        collectionView.register(HabitsCollectionViewCell.self, forSupplementaryViewOfKind: CustomElement.sectionFooter.rawValue, withReuseIdentifier: CustomElement.sectionFooter.rawValue)
+        
         collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: CustomElement.collectionHeader.rawValue, withReuseIdentifier: CustomElement.collectionHeader.rawValue)
+        
+        collectionView.register(HabitsCollectionViewCell.self, forCellWithReuseIdentifier: CustomElement.habitsCell.rawValue)
+        collectionView.register(DiaryWriteCell.self, forCellWithReuseIdentifier: CustomElement.writeDiaryCell.rawValue)
         collectionView.register(OutlineBackgroundView.self, forSupplementaryViewOfKind: CustomElement.outlineBackground.rawValue, withReuseIdentifier: CustomElement.outlineBackground.rawValue)
+        
+        collectionView.register(UICollectionViewCell.self, forSupplementaryViewOfKind: CustomElement.sectionFooter.rawValue, withReuseIdentifier: CustomElement.sectionFooter.rawValue)
     }
 
 // MARK: - Objc methods
@@ -118,7 +124,11 @@ extension HabitsViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        let isWriteDiary = indexPath.row == 2
+        let reuseIdentifier = isWriteDiary
+            ? CustomElement.writeDiaryCell.rawValue
+            : CustomElement.habitsCell.rawValue
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         cell.backgroundColor = .tintColor.withAlphaComponent(0.05)
         return cell
     }
@@ -137,7 +147,7 @@ extension HabitsViewController {
         case .outlineBackground:
             let outlineBackground = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomElement.outlineBackground.rawValue, for: indexPath)
             return outlineBackground
-        case .none:
+        case .none, .habitsCell, .writeDiaryCell:
             fatalError()
         }
     }
