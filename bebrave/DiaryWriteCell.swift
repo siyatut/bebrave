@@ -34,7 +34,7 @@ class DiaryWriteCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             writeDiaryLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            writeDiaryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+            writeDiaryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             chevron.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             chevron.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -21),
             writeDiaryLabel.trailingAnchor.constraint(equalTo: chevron.leadingAnchor, constant: -21),

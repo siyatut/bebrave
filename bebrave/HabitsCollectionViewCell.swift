@@ -78,10 +78,38 @@ class HabitsCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(percentDone)
         
         NSLayoutConstraint.activate([
-            horizontalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+            horizontalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             horizontalStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            percentDone.topAnchor.constraint(equalTo: horizontalStackView.bottomAnchor, constant: 5),
-            percentDone.leadingAnchor.constraint(equalTo: horizontalStackView.leadingAnchor)
+            horizontalStackView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -16),
+            percentDone.topAnchor.constraint(equalTo: horizontalStackView.bottomAnchor, constant: 4),
+            percentDone.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
+            percentDone.leadingAnchor.constraint(equalTo: horizontalStackView.leadingAnchor),
+            percentDone.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
+            
         ])
     }
 }
+
+
+import SwiftUI
+
+struct HabitsCellPreview: PreviewProvider {
+    
+    static var previews: some View {
+        MyCell()
+            .edgesIgnoringSafeArea(.all)
+            .previewLayout(.fixed(width: 300, height: 60))
+    }
+    
+    struct MyCell: UIViewRepresentable {
+        
+        func makeUIView(context: Context) -> some UIView {
+            HabitsCollectionViewCell()
+        }
+
+        func updateUIView(_ uiView: UIViewType, context: Context) {
+            
+        }
+    }
+}
+
