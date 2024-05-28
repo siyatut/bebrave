@@ -100,7 +100,7 @@ class HabitsViewController: UICollectionViewController {
         collectionView.register(DiaryWriteCell.self, forCellWithReuseIdentifier: CustomElement.writeDiaryCell.rawValue)
         collectionView.register(OutlineBackgroundView.self, forSupplementaryViewOfKind: CustomElement.outlineBackground.rawValue, withReuseIdentifier: CustomElement.outlineBackground.rawValue)
         
-        collectionView.register(UICollectionViewCell.self, forSupplementaryViewOfKind: CustomElement.sectionFooter.rawValue, withReuseIdentifier: CustomElement.sectionFooter.rawValue)
+        collectionView.register(AddNewHabitView.self, forSupplementaryViewOfKind: CustomElement.sectionFooter.rawValue, withReuseIdentifier: CustomElement.sectionFooter.rawValue)
     }
 
 // MARK: - Objc methods

@@ -9,7 +9,7 @@ import UIKit
 
 class DiaryWriteCell: UICollectionViewCell {
     
-    // MARK
+    // MARK: - UI Components
     
     private let writeDiaryLabel: UILabel = {
         let label = UILabel()
@@ -27,6 +27,19 @@ class DiaryWriteCell: UICollectionViewCell {
         return view
     }()
     
+    // MARK: - Init
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupComponents()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Set up components
+    
     private func setupComponents() {
         contentView.addSubview(writeDiaryLabel)
         contentView.addSubview(chevron)
@@ -40,17 +53,6 @@ class DiaryWriteCell: UICollectionViewCell {
             writeDiaryLabel.trailingAnchor.constraint(equalTo: chevron.leadingAnchor, constant: -21),
             writeDiaryLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24.5)
         ])
-    }
-    
-    // MARK: - Init
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupComponents()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
 
