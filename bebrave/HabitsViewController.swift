@@ -96,7 +96,7 @@ class HabitsViewController: UICollectionViewController {
         
         collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: CustomElement.collectionHeader.rawValue, withReuseIdentifier: CustomElement.collectionHeader.rawValue)
         
-        collectionView.register(HabitsCollectionViewCell.self, forCellWithReuseIdentifier: CustomElement.habitsCell.rawValue)
+        collectionView.register(HabitsCell.self, forCellWithReuseIdentifier: CustomElement.habitsCell.rawValue)
         collectionView.register(DiaryWriteCell.self, forCellWithReuseIdentifier: CustomElement.writeDiaryCell.rawValue)
         collectionView.register(OutlineBackgroundView.self, forSupplementaryViewOfKind: CustomElement.outlineBackground.rawValue, withReuseIdentifier: CustomElement.outlineBackground.rawValue)
         

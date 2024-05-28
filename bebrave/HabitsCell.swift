@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HabitsCollectionViewCell: UICollectionViewCell {
+class HabitsCell: UICollectionViewCell {
     
     // MARK: - UI Components
     
@@ -55,6 +55,14 @@ class HabitsCollectionViewCell: UICollectionViewCell {
         return stack
     }()
     
+    private let checkbox: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "Checkbox")
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    
     // MARK: - Init
     
     override init(frame: CGRect) {
@@ -76,15 +84,22 @@ class HabitsCollectionViewCell: UICollectionViewCell {
         }
         contentView.addSubview(horizontalStackView)
         contentView.addSubview(percentDone)
+        contentView.addSubview(checkbox)
+        
+    
         
         NSLayoutConstraint.activate([
             horizontalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             horizontalStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            horizontalStackView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -16),
+            horizontalStackView.trailingAnchor.constraint(lessThanOrEqualTo: checkbox.leadingAnchor, constant: 106),
             percentDone.topAnchor.constraint(equalTo: horizontalStackView.bottomAnchor, constant: 4),
             percentDone.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
             percentDone.leadingAnchor.constraint(equalTo: horizontalStackView.leadingAnchor),
-            percentDone.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
+            percentDone.trailingAnchor.constraint(lessThanOrEqualTo: checkbox.leadingAnchor, constant: 106),
+            checkbox.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -23),
+            checkbox.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+//            checkbox.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 23),
+//            checkbox.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -23)
             
         ])
     }
@@ -104,7 +119,7 @@ struct HabitsCellPreview: PreviewProvider {
     struct MyCell: UIViewRepresentable {
         
         func makeUIView(context: Context) -> some UIView {
-            HabitsCollectionViewCell()
+            HabitsCell()
         }
 
         func updateUIView(_ uiView: UIViewType, context: Context) {
