@@ -50,7 +50,7 @@ class AddNewHabitView: UICollectionReusableView {
         addSubview(view)
         addSubview(addNewHabitLabel)
         addSubview(plus)
-        
+
         NSLayoutConstraint.activate([
             view.topAnchor.constraint(equalTo: topAnchor, constant: 0),
             view.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
@@ -58,17 +58,17 @@ class AddNewHabitView: UICollectionReusableView {
             view.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
             
             plus.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 90.5),
-            plus.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-//            plus.topAnchor.constraint(equalTo: view.topAnchor, constant: 12),
-//            plus.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12),
+            plus.topAnchor.constraint(equalTo: view.topAnchor, constant: 12),
             plus.trailingAnchor.constraint(equalTo: addNewHabitLabel.leadingAnchor, constant: -4),
+            plus.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12),
             
-            addNewHabitLabel.leadingAnchor.constraint(equalTo: plus.trailingAnchor, constant: 4),
             addNewHabitLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 14.5),
             addNewHabitLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -90.5),
-            addNewHabitLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -14.5)
+            addNewHabitLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -14.5),
+            addNewHabitLabel.leadingAnchor.constraint(equalTo: plus.trailingAnchor, constant: 4)
         ])
-    }
+#warning("Возможно, стоит переделать, но идеальное враг хорошего")
+     }
 }
 
 import SwiftUI
