@@ -137,9 +137,14 @@ extension HabitsViewController {
         let customElement = CustomElement(rawValue: kind)
         switch customElement {
         case .sectionFooter:
-            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomElement.sectionFooter.rawValue, for: indexPath)
-            footer.backgroundColor = .orange.withAlphaComponent(0.05)
-            return footer
+            if let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomElement.sectionFooter.rawValue, for: indexPath) as? AddNewHabitView {
+                footer.backgroundColor = .orange.withAlphaComponent(0.05)
+                footer.parentViewController = self
+                return footer
+            }
+//            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomElement.sectionFooter.rawValue, for: indexPath)
+//            footer.backgroundColor = .orange.withAlphaComponent(0.05)
+//            return footer
         case .collectionHeader:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomElement.collectionHeader.rawValue, for: indexPath)
             header.backgroundColor = .red.withAlphaComponent(0.05)
@@ -150,6 +155,7 @@ extension HabitsViewController {
         case .none, .habitsCell, .writeDiaryCell:
             fatalError()
         }
+        return UICollectionReusableView()
     }
 }
 

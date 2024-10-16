@@ -33,6 +33,16 @@ class AddNewHabitView: UICollectionReusableView {
         return view
     }()
     
+    private let button: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.isUserInteractionEnabled = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    weak var parentViewController: UIViewController?
+    
     // MARK: - Init
     
     override init(frame: CGRect) {
@@ -48,10 +58,12 @@ class AddNewHabitView: UICollectionReusableView {
     
     func setupComponents() {
         addSubview(view)
+        addSubview(button)
         view.addSubview(addNewHabitLabel)
         view.addSubview(plus)
     
         addNewHabitLabel.setContentHuggingPriority(.defaultHigh + 1, for: .horizontal)
+        button.addTarget(self, action: #selector(addNewHabitButtonTapped), for: .touchUpInside)
        
         NSLayoutConstraint.activate([
             view.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -65,7 +77,21 @@ class AddNewHabitView: UICollectionReusableView {
             plus.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             plus.topAnchor.constraint(equalTo: addNewHabitLabel.topAnchor),
             plus.bottomAnchor.constraint(equalTo: addNewHabitLabel.bottomAnchor),
+            
+            button.leadingAnchor.constraint(equalTo: leadingAnchor),
+            button.trailingAnchor.constraint(equalTo: trailingAnchor),
+            button.topAnchor.constraint(equalTo: topAnchor),
+            button.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+    }
+    
+    // MARK: - Objc methods
+    
+    @objc private func addNewHabitButtonTapped() {
+        let newHabitVC = NewHabitViewController()
+        newHabitVC.modalPresentationStyle = .pageSheet
+        print("Button tapped")
+        parentViewController?.present(newHabitVC, animated: true, completion: nil)
     }
 }
 
