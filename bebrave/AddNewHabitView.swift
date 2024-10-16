@@ -48,27 +48,25 @@ class AddNewHabitView: UICollectionReusableView {
     
     func setupComponents() {
         addSubview(view)
-        addSubview(addNewHabitLabel)
-        addSubview(plus)
-
+        view.addSubview(addNewHabitLabel)
+        view.addSubview(plus)
+    
+        addNewHabitLabel.setContentHuggingPriority(.defaultHigh + 1, for: .horizontal)
+       
         NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: topAnchor, constant: 0),
-            view.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
-            view.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-            view.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
+            view.centerXAnchor.constraint(equalTo: centerXAnchor),
+            view.centerYAnchor.constraint(equalTo: centerYAnchor),
             
-            plus.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 90.5),
-            plus.topAnchor.constraint(equalTo: view.topAnchor, constant: 12),
-            plus.trailingAnchor.constraint(equalTo: addNewHabitLabel.leadingAnchor, constant: -4),
-            plus.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12),
+            addNewHabitLabel.topAnchor.constraint(equalTo: view.topAnchor),
+            addNewHabitLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            addNewHabitLabel.leadingAnchor.constraint(equalTo: plus.trailingAnchor, constant: 4),
+            addNewHabitLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            addNewHabitLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 14.5),
-            addNewHabitLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -90.5),
-            addNewHabitLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -14.5),
-            addNewHabitLabel.leadingAnchor.constraint(equalTo: plus.trailingAnchor, constant: 4)
+            plus.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            plus.topAnchor.constraint(equalTo: addNewHabitLabel.topAnchor),
+            plus.bottomAnchor.constraint(equalTo: addNewHabitLabel.bottomAnchor),
         ])
-#warning("Возможно, стоит переделать, но идеальное враг хорошего")
-     }
+    }
 }
 
 import SwiftUI
