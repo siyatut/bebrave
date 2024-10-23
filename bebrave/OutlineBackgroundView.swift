@@ -18,6 +18,11 @@ class OutlineBackgroundView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setNeedsDisplay() 
+    }
+    
     override func draw(_ rect: CGRect) {
         let path = UIBezierPath(roundedRect: rect, cornerRadius: 18)
         path.lineWidth = 1

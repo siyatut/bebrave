@@ -86,9 +86,7 @@ class HabitsCell: UICollectionViewCell {
         contentView.addSubview(horizontalStackView)
         contentView.addSubview(percentDone)
         contentView.addSubview(checkbox)
-        
     
-        
         NSLayoutConstraint.activate([
             horizontalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             horizontalStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
@@ -98,11 +96,8 @@ class HabitsCell: UICollectionViewCell {
             percentDone.leadingAnchor.constraint(equalTo: horizontalStackView.leadingAnchor),
             percentDone.trailingAnchor.constraint(lessThanOrEqualTo: checkbox.leadingAnchor, constant: 106),
             checkbox.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -23),
-            checkbox.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-//            checkbox.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 23),
-//            checkbox.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -23)
+            checkbox.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
-        #warning("Проверить констрейнты выше, когда созвонимся с Сашей")
     }
 }
 
