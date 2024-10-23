@@ -41,6 +41,16 @@ class AddNewHabitView: UICollectionReusableView {
         return button
     }()
     
+    private let outlineBackgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor(named: "OutlineBorderColor")?.cgColor
+        view.layer.cornerRadius = 18
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     weak var parentViewController: UIViewController?
     
     // MARK: - Init
@@ -57,6 +67,7 @@ class AddNewHabitView: UICollectionReusableView {
     // MARK: - Set up components
     
     func setupComponents() {
+        addSubview(outlineBackgroundView)
         addSubview(view)
         addSubview(button)
         view.addSubview(addNewHabitLabel)
@@ -66,6 +77,10 @@ class AddNewHabitView: UICollectionReusableView {
         button.addTarget(self, action: #selector(addNewHabitButtonTapped), for: .touchUpInside)
        
         NSLayoutConstraint.activate([
+            outlineBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            outlineBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            outlineBackgroundView.topAnchor.constraint(equalTo: topAnchor),
+            outlineBackgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
             view.centerXAnchor.constraint(equalTo: centerXAnchor),
             view.centerYAnchor.constraint(equalTo: centerYAnchor),
             

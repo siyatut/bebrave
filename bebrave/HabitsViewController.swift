@@ -129,7 +129,8 @@ extension HabitsViewController {
             ? CustomElement.writeDiaryCell.rawValue
             : CustomElement.habitsCell.rawValue
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-        cell.backgroundColor = .tintColor.withAlphaComponent(0.05)
+        cell.backgroundColor = .systemBackground
+          //  .tintColor.withAlphaComponent(0.05)
         return cell
     }
     
@@ -138,7 +139,7 @@ extension HabitsViewController {
         switch customElement {
         case .sectionFooter:
             if let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomElement.sectionFooter.rawValue, for: indexPath) as? AddNewHabitView {
-                footer.backgroundColor = .orange.withAlphaComponent(0.05)
+                footer.backgroundColor = .systemBackground 
                 footer.parentViewController = self
                 return footer
             }
@@ -178,7 +179,6 @@ extension HabitsViewController {
         calendarLabel.text = "Январь"
         calendarLabel.textColor = .black
         calendarLabel.font = .boldSystemFont(ofSize: 20)
-       // calendarLabel.textAlignment = .left
     }
     
 }

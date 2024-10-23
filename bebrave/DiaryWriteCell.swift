@@ -43,16 +43,15 @@ class DiaryWriteCell: UICollectionViewCell {
     private func setupComponents() {
         contentView.addSubview(writeDiaryLabel)
         contentView.addSubview(chevron)
-        chevron.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        
+        chevron.setContentHuggingPriority(.defaultHigh + 1, for: .horizontal)
+   
         NSLayoutConstraint.activate([
             writeDiaryLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             writeDiaryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            writeDiaryLabel.trailingAnchor.constraint(equalTo: chevron.leadingAnchor, constant: -155),
             chevron.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            chevron.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -21),
-            writeDiaryLabel.trailingAnchor.constraint(equalTo: chevron.leadingAnchor, constant: -21),
-            writeDiaryLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24.5)
-        ])
+            chevron.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -21)
+            ])
     }
 }
 

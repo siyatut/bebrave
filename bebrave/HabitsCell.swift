@@ -57,7 +57,8 @@ class HabitsCell: UICollectionViewCell {
     
     private let checkbox: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "Checkbox")
+        view.image = UIImage(named: "Checkbox")?.withRenderingMode(.alwaysTemplate)
+        view.tintColor = UIColor(named: "OutlineBorderColor")
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
