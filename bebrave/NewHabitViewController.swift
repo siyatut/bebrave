@@ -20,13 +20,13 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     private let monthsTextField = UITextField()
     private let monthsLabel = UILabel()
     
-    private let errorLabel = UILabel() // Displays validation errors
+    private let errorLabel = UILabel()
     
     private var selectedDays: [Bool] = Array(repeating: false, count: 7)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         setupComponents()
     }
     
@@ -46,104 +46,125 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         habitTextField.placeholder = "Делать что-то"
         habitTextField.borderStyle = .roundedRect
         habitTextField.delegate = self
-        habitTextField.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(habitTextField)
         
         timesPerDayTextField.placeholder = "1"
-        timesPerDayTextField.textAlignment = .center
         timesPerDayTextField.borderStyle = .roundedRect
         timesPerDayTextField.keyboardType = .numberPad
         timesPerDayTextField.delegate = self
-        timesPerDayTextField.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(timesPerDayTextField)
         
         timesPerDayLabel.text = "раз в день"
-        timesPerDayLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(timesPerDayLabel)
         
         setupDaysOfWeekStack()
-        daysOfWeekStack.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(daysOfWeekStack)
         
         monthsTextField.placeholder = "1"
-        monthsTextField.textAlignment = .center
         monthsTextField.borderStyle = .roundedRect
         monthsTextField.keyboardType = .numberPad
         monthsTextField.delegate = self
-        monthsTextField.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(monthsTextField)
         
         monthsLabel.text = "месяц"
-        monthsLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(monthsLabel)
         
         errorLabel.textColor = .red
         errorLabel.font = UIFont.systemFont(ofSize: 14)
         errorLabel.numberOfLines = 0
         errorLabel.textAlignment = .center
-        errorLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(errorLabel)
+        
+        let stackView = UIStackView(arrangedSubviews: [
+            habitTextField,
+            timesPerDayTextField,
+            timesPerDayLabel,
+            daysOfWeekStack,
+            monthsTextField,
+            monthsLabel,
+            errorLabel,
+        ])
+        stackView.axis = .vertical
+        stackView.spacing = 16
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(stackView)
+        
         
         NSLayoutConstraint.activate([
-            
             emojiImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 102),
             emojiImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             emojiImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -321),
-            emojiImageView.heightAnchor.constraint(equalToConstant: 48),
             
             promiseLabel.topAnchor.constraint(equalTo: emojiImageView.bottomAnchor, constant: 16),
             promiseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             promiseLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
             
-            habitTextField.topAnchor.constraint(equalTo: promiseLabel.bottomAnchor, constant: 16),
-            habitTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            habitTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            stackView.topAnchor.constraint(equalTo: promiseLabel.bottomAnchor, constant: 16),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
+            stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             
-            timesPerDayTextField.topAnchor.constraint(equalTo: habitTextField.bottomAnchor, constant: 16),
-            timesPerDayTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            timesPerDayTextField.widthAnchor.constraint(equalToConstant: 50),
-            
-            timesPerDayLabel.centerYAnchor.constraint(equalTo: timesPerDayTextField.centerYAnchor),
-            timesPerDayLabel.leadingAnchor.constraint(equalTo: timesPerDayTextField.trailingAnchor, constant: 8),
-            
-            daysOfWeekStack.topAnchor.constraint(equalTo: timesPerDayTextField.bottomAnchor, constant: 16),
-            daysOfWeekStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            daysOfWeekStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            
-            monthsTextField.topAnchor.constraint(equalTo: daysOfWeekStack.bottomAnchor, constant: 16),
-            monthsTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            monthsTextField.widthAnchor.constraint(equalToConstant: 50),
-            
-            monthsLabel.centerYAnchor.constraint(equalTo: monthsTextField.centerYAnchor),
-            monthsLabel.leadingAnchor.constraint(equalTo: monthsTextField.trailingAnchor, constant: 8),
-            
-            errorLabel.topAnchor.constraint(equalTo: monthsTextField.bottomAnchor, constant: 16),
-            errorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            errorLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
         ])
     }
     
     private func setupDaysOfWeekStack() {
         daysOfWeekStack.axis = .horizontal
         daysOfWeekStack.distribution = .fillEqually
-        let dayTitles = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
+        daysOfWeekStack.spacing = 4
+        let dayTitles = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"]
         
         for i in 0..<7 {
-            let dayButton = UIButton(type: .system)
-            dayButton.setTitle(dayTitles[i], for: .normal)
-            dayButton.setTitleColor(.black, for: .normal)
-            dayButton.addTarget(self, action: #selector(dayButtonTapped(_:)), for: .touchUpInside)
-            dayButton.tag = i
-            daysOfWeekStack.addArrangedSubview(dayButton)
+            let dayContainer = UIView()
+            dayContainer.layer.cornerRadius = 18
+            dayContainer.layer.borderWidth = 1
+            dayContainer.layer.borderColor = UIColor.systemGray5.cgColor
+            dayContainer.translatesAutoresizingMaskIntoConstraints = false
+            dayContainer.widthAnchor.constraint(equalToConstant: 50).isActive = true
+            dayContainer.heightAnchor.constraint(equalToConstant: 70).isActive = true
+            
+            let dayStack = UIStackView()
+            dayStack.axis = .vertical
+            dayStack.alignment = .center
+            dayStack.spacing = 8
+            dayStack.translatesAutoresizingMaskIntoConstraints = false
+            dayContainer.addSubview(dayStack)
+            
+            let dayLabel = UILabel()
+            dayLabel.text = dayTitles[i]
+            dayLabel.font = UIFont.systemFont(ofSize: 14)
+            dayLabel.textAlignment = .center
+            
+            let checkboxImageView = UIImageView()
+            checkboxImageView.image = UIImage(named: "UncheckedCheckbox")
+            checkboxImageView.contentMode = .scaleAspectFit
+            checkboxImageView.isUserInteractionEnabled = true
+            checkboxImageView.tag = i
+            checkboxImageView.translatesAutoresizingMaskIntoConstraints = false
+            checkboxImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(checkboxTapped(_:))))
+            
+            NSLayoutConstraint.activate([
+                checkboxImageView.widthAnchor.constraint(equalToConstant: 24),
+                checkboxImageView.heightAnchor.constraint(equalToConstant: 24)
+            ])
+            
+            dayStack.addArrangedSubview(dayLabel)
+            dayStack.addArrangedSubview(checkboxImageView)
+            
+            NSLayoutConstraint.activate([
+                dayStack.centerXAnchor.constraint(equalTo: dayContainer.centerXAnchor),
+                dayStack.centerYAnchor.constraint(equalTo: dayContainer.centerYAnchor)
+            ])
+            
+            daysOfWeekStack.addArrangedSubview(dayContainer)
         }
     }
     
-    @objc private func dayButtonTapped(_ sender: UIButton) {
-        let index = sender.tag
+    // MARK: - Objc methods
+    
+    @objc private func checkboxTapped(_ sender: UITapGestureRecognizer) {
+        guard let index = sender.view?.tag else { return }
         selectedDays[index].toggle()
-        sender.backgroundColor = selectedDays[index] ? .systemBlue : .clear
+        
+        if let checkboxImageView = sender.view as? UIImageView {
+            let imageName = selectedDays[index] ? "CheckedCheckbox" : "UncheckedCheckbox"
+            checkboxImageView.image = UIImage(named: imageName)
+        }
     }
     
+    // MARK: - TextField methods
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == timesPerDayTextField {
