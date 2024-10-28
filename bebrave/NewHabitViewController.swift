@@ -11,7 +11,11 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - UI components
     
-    private let clearView = UIView()
+    private let clearView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     private let emojiImageView: UIImageView = {
         let view = UIImageView()
@@ -89,6 +93,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Set up components
     
     private func setupComponents() {
+        view.addSubview(clearView)
         view.addSubview(emojiImageView)
         view.addSubview(promiseLabel)
         
@@ -110,7 +115,11 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         
         
         NSLayoutConstraint.activate([
-            emojiImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 102),
+            clearView.topAnchor.constraint(equalTo: view.topAnchor),
+            clearView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            clearView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            emojiImageView.topAnchor.constraint(equalTo: clearView.bottomAnchor, constant: 20),
             emojiImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             emojiImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -321),
             
