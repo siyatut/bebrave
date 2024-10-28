@@ -38,6 +38,13 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         textField.placeholder = "Делать что-то"
         textField.borderStyle = .roundedRect
         textField.delegate = self
+        
+        textField.layer.cornerRadius = 18
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.systemGray5.cgColor
+        textField.clipsToBounds = true
+        textField.backgroundColor = .systemBackground
+        
         return textField
     }()
     
@@ -46,7 +53,15 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         textField.placeholder = "1"
         textField.borderStyle = .roundedRect
         textField.keyboardType = .numberPad
+        textField.textAlignment = .center
         textField.delegate = self
+        
+        textField.layer.cornerRadius = 18
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.systemGray5.cgColor
+        textField.clipsToBounds = true
+        textField.backgroundColor = .systemBackground
+        
         return textField
     }()
     
@@ -63,7 +78,15 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         textField.placeholder = "1"
         textField.borderStyle = .roundedRect
         textField.keyboardType = .numberPad
+        textField.textAlignment = .center
         textField.delegate = self
+        
+        textField.layer.cornerRadius = 18
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.systemGray5.cgColor
+        textField.clipsToBounds = true
+        textField.backgroundColor = .systemBackground
+        
         return textField
     }()
     
@@ -99,20 +122,28 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         
         setupDaysOfWeekStack()
         
+        let timesPerDayStack = UIStackView(arrangedSubviews: [timesPerDayTextField, timesPerDayLabel])
+            timesPerDayStack.axis = .horizontal
+            timesPerDayStack.spacing = 8
+            timesPerDayStack.alignment = .leading
+            
+            let monthsStack = UIStackView(arrangedSubviews: [monthsTextField, monthsLabel])
+            monthsStack.axis = .horizontal
+            monthsStack.spacing = 8
+            monthsStack.alignment = .leading
+        
         let stackView = UIStackView(arrangedSubviews: [
             habitTextField,
-            timesPerDayTextField,
-            timesPerDayLabel,
+            timesPerDayStack,
             daysOfWeekStack,
-            monthsTextField,
-            monthsLabel,
+            monthsStack,
             errorLabel,
         ])
+        
         stackView.axis = .vertical
         stackView.spacing = 16
         stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
-        
         
         NSLayoutConstraint.activate([
             clearView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -120,18 +151,26 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             clearView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
             emojiImageView.topAnchor.constraint(equalTo: clearView.bottomAnchor, constant: 20),
-            emojiImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            emojiImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -321),
+            emojiImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            emojiImageView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -321),
             
             promiseLabel.topAnchor.constraint(equalTo: emojiImageView.bottomAnchor, constant: 16),
-            promiseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            promiseLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            promiseLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
+            promiseLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
             
             stackView.topAnchor.constraint(equalTo: promiseLabel.bottomAnchor, constant: 16),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
+            stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 12),
+            stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -12),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             
+            timesPerDayLabel.centerYAnchor.constraint(equalTo: timesPerDayTextField.centerYAnchor),
+            monthsLabel.centerYAnchor.constraint(equalTo: monthsTextField.centerYAnchor),
+            
+            timesPerDayTextField.widthAnchor.constraint(equalToConstant: 57),
+            timesPerDayTextField.heightAnchor.constraint(equalToConstant: 48),
+            
+            monthsTextField.widthAnchor.constraint(equalToConstant: 57),
+            monthsTextField.heightAnchor.constraint(equalToConstant: 48),
         ])
     }
     
