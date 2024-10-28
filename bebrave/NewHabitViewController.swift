@@ -11,16 +11,72 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - UI components
     
-    private let emojiImageView = UIImageView()
-    private let promiseLabel = UILabel()
-    private let habitTextField = UITextField()
-    private let timesPerDayTextField = UITextField()
-    private let timesPerDayLabel = UILabel()
-    private let daysOfWeekStack = UIStackView()
-    private let monthsTextField = UITextField()
-    private let monthsLabel = UILabel()
+    private let clearView = UIView()
     
-    private let errorLabel = UILabel()
+    private let emojiImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "EmojiNewHabit")
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let promiseLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Я обещаю себе"
+        label.font = UIFont.boldSystemFont(ofSize: 24)
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var habitTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Делать что-то"
+        textField.borderStyle = .roundedRect
+        textField.delegate = self
+        return textField
+    }()
+    
+    private lazy var timesPerDayTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "1"
+        textField.borderStyle = .roundedRect
+        textField.keyboardType = .numberPad
+        textField.delegate = self
+        return textField
+    }()
+    
+    private let timesPerDayLabel: UILabel = {
+        let label = UILabel()
+        label.text = "раз в день"
+        return label
+    }()
+    
+    private let daysOfWeekStack = UIStackView()
+    
+    private lazy var monthsTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "1"
+        textField.borderStyle = .roundedRect
+        textField.keyboardType = .numberPad
+        textField.delegate = self
+        return textField
+    }()
+    
+    private let monthsLabel: UILabel = {
+        let label = UILabel()
+        label.text = "месяц"
+        return label
+    }()
+
+    private let errorLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .red
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        return label
+    }()
     
     private var selectedDays: [Bool] = Array(repeating: false, count: 7)
     
@@ -33,40 +89,10 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Set up components
     
     private func setupComponents() {
-        emojiImageView.image = UIImage(named: "EmojiNewHabit")
-        emojiImageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(emojiImageView)
-        
-        promiseLabel.text = "Я обещаю себе"
-        promiseLabel.font = UIFont.boldSystemFont(ofSize: 24)
-        promiseLabel.textAlignment = .left
-        promiseLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(promiseLabel)
         
-        habitTextField.placeholder = "Делать что-то"
-        habitTextField.borderStyle = .roundedRect
-        habitTextField.delegate = self
-        
-        timesPerDayTextField.placeholder = "1"
-        timesPerDayTextField.borderStyle = .roundedRect
-        timesPerDayTextField.keyboardType = .numberPad
-        timesPerDayTextField.delegate = self
-        
-        timesPerDayLabel.text = "раз в день"
-        
         setupDaysOfWeekStack()
-        
-        monthsTextField.placeholder = "1"
-        monthsTextField.borderStyle = .roundedRect
-        monthsTextField.keyboardType = .numberPad
-        monthsTextField.delegate = self
-        
-        monthsLabel.text = "месяц"
-        
-        errorLabel.textColor = .red
-        errorLabel.font = UIFont.systemFont(ofSize: 14)
-        errorLabel.numberOfLines = 0
-        errorLabel.textAlignment = .center
         
         let stackView = UIStackView(arrangedSubviews: [
             habitTextField,
