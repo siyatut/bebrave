@@ -37,6 +37,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         let textField = UITextField()
         textField.placeholder = "Делать что-то"
         textField.borderStyle = .roundedRect
+        textField.textAlignment = .left
         textField.delegate = self
         
         textField.layer.cornerRadius = 18
@@ -44,6 +45,10 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         textField.layer.borderColor = UIColor.systemGray5.cgColor
         textField.clipsToBounds = true
         textField.backgroundColor = .systemBackground
+        
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: textField.frame.height))
+        textField.leftView = paddingView
+        textField.leftViewMode = .always
         
         return textField
     }()
@@ -151,17 +156,19 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             clearView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
             emojiImageView.topAnchor.constraint(equalTo: clearView.bottomAnchor, constant: 20),
-            emojiImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            emojiImageView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -321),
+            emojiImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            emojiImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -321),
             
             promiseLabel.topAnchor.constraint(equalTo: emojiImageView.bottomAnchor, constant: 16),
-            promiseLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
-            promiseLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
+            promiseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            promiseLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -187),
             
             stackView.topAnchor.constraint(equalTo: promiseLabel.bottomAnchor, constant: 16),
             stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 12),
             stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -12),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            
+            habitTextField.heightAnchor.constraint(equalToConstant: 48),
             
             timesPerDayLabel.centerYAnchor.constraint(equalTo: timesPerDayTextField.centerYAnchor),
             monthsLabel.centerYAnchor.constraint(equalTo: monthsTextField.centerYAnchor),
