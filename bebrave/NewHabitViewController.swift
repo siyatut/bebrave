@@ -177,10 +177,13 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
         
+#warning("Эмодзи ушёл вниз, надо теперь проверять все констрейнты")
+        
         NSLayoutConstraint.activate([
             clearView.topAnchor.constraint(equalTo: view.topAnchor),
             clearView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             clearView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            clearView.heightAnchor.constraint(equalToConstant: 82),
             
             emojiImageView.topAnchor.constraint(equalTo: clearView.bottomAnchor, constant: 20),
             emojiImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -191,8 +194,8 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             promiseLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -187),
             
             stackView.topAnchor.constraint(equalTo: promiseLabel.bottomAnchor, constant: 16),
-            stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 12),
-            stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -12),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
             
             habitTextField.heightAnchor.constraint(equalToConstant: 48),
             
@@ -206,9 +209,9 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             monthsTextField.heightAnchor.constraint(equalToConstant: 48),
             
             addNewHabitButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 193),
-            addNewHabitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -42),
-            addNewHabitButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 12),
-            addNewHabitButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -12),
+            addNewHabitButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -42),
+            addNewHabitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            addNewHabitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
             addNewHabitButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
