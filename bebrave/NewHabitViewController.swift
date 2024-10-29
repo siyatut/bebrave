@@ -112,6 +112,32 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     
     private var selectedDays: [Bool] = Array(repeating: false, count: 7)
     
+    private let addNewHabitButton: UIButton = {
+        let button = UIButton(type: .system)
+            
+        button.setTitle("Добавить привычку", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = UIColor(named: "PrimaryColor")
+        
+        if let plusImage = UIImage(named: "Plus") {
+            button.setImage(plusImage, for: .normal)
+        }
+        
+        button.tintColor = .white
+        
+        var config = UIButton.Configuration.plain()
+        config.imagePadding = 4
+        config.baseForegroundColor = .white
+        button.configuration = config
+        
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 18
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -124,6 +150,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(clearView)
         view.addSubview(emojiImageView)
         view.addSubview(promiseLabel)
+        view.addSubview(addNewHabitButton)
         
         setupDaysOfWeekStack()
         
@@ -166,7 +193,6 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             stackView.topAnchor.constraint(equalTo: promiseLabel.bottomAnchor, constant: 16),
             stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 12),
             stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -12),
-            stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             
             habitTextField.heightAnchor.constraint(equalToConstant: 48),
             
@@ -178,6 +204,12 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             
             monthsTextField.widthAnchor.constraint(equalToConstant: 57),
             monthsTextField.heightAnchor.constraint(equalToConstant: 48),
+            
+            addNewHabitButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 193),
+            addNewHabitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -42),
+            addNewHabitButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 12),
+            addNewHabitButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -12),
+            addNewHabitButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
     

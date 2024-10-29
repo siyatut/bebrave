@@ -105,7 +105,7 @@ class AddNewHabitView: UICollectionReusableView {
     @objc private func addNewHabitButtonTapped() {
         let newHabitVC = NewHabitViewController()
         newHabitVC.modalPresentationStyle = .pageSheet
-        print("Button tapped")
+        print("Кнопка «Добавить привычку» нажата")
         parentViewController?.present(newHabitVC, animated: true, completion: nil)
     }
 }
