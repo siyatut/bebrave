@@ -9,7 +9,7 @@ import UIKit
 
 class NewHabitViewController: UIViewController, UITextFieldDelegate {
     
-    // MARK: - UI components
+    // MARK: - UI components top down
     
     private let clearView: UIView = {
         let view = UIView()
@@ -101,16 +101,9 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         return label
     }()
 
-    private let errorLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .red
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        return label
-    }()
-    
     private var selectedDays: [Bool] = Array(repeating: false, count: 7)
+    
+    // MARK: - Button
     
     private let addNewHabitButton: UIButton = {
         let button = UIButton(type: .system)
@@ -136,6 +129,48 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     
+    // MARK: - Error labels
+    
+    private let habitErrorLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .red
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        label.isHidden = true
+        return label
+    }()
+
+    private let timesPerDayErrorLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .red
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        label.isHidden = true
+        return label
+    }()
+
+    private let daysOfWeekErrorLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .red
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        label.isHidden = true
+        return label
+    }()
+
+    private let monthsErrorLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .red
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        label.isHidden = true
+        return label
+    }()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -152,6 +187,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(promiseLabel)
         view.addSubview(addNewHabitButton)
         
+        addNewHabitButton.addTarget(self, action: #selector(addNewHabitButtonTapped), for: .touchUpInside)
         setupDaysOfWeekStack()
         
         let timesPerDayStack = UIStackView(arrangedSubviews: [timesPerDayTextField, timesPerDayLabel])
@@ -166,18 +202,19 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         
         let stackView = UIStackView(arrangedSubviews: [
             habitTextField,
+            habitErrorLabel,
             timesPerDayStack,
+            timesPerDayErrorLabel,
             daysOfWeekStack,
+            daysOfWeekErrorLabel,
             monthsStack,
-            errorLabel,
+            monthsErrorLabel,
         ])
         
         stackView.axis = .vertical
         stackView.spacing = 16
         stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
-        
-#warning("Эмодзи ушёл вниз, надо теперь проверять все констрейнты")
         
         NSLayoutConstraint.activate([
             clearView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -187,7 +224,9 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             
             emojiImageView.topAnchor.constraint(equalTo: clearView.bottomAnchor, constant: 20),
             emojiImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            emojiImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -321),
+            emojiImageView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -321),
+            emojiImageView.widthAnchor.constraint(equalToConstant: 40),
+            emojiImageView.heightAnchor.constraint(equalToConstant: 40),
             
             promiseLabel.topAnchor.constraint(equalTo: emojiImageView.bottomAnchor, constant: 16),
             promiseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
@@ -196,6 +235,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             stackView.topAnchor.constraint(equalTo: promiseLabel.bottomAnchor, constant: 16),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
+            stackView.bottomAnchor.constraint(lessThanOrEqualTo: addNewHabitButton.topAnchor, constant: -20),
             
             habitTextField.heightAnchor.constraint(equalToConstant: 48),
             
@@ -208,7 +248,6 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             monthsTextField.widthAnchor.constraint(equalToConstant: 57),
             monthsTextField.heightAnchor.constraint(equalToConstant: 48),
             
-            addNewHabitButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 193),
             addNewHabitButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -42),
             addNewHabitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             addNewHabitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
@@ -280,41 +319,73 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    // MARK: - TextField methods
+    @objc private func addNewHabitButtonTapped() {
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField == timesPerDayTextField {
-            if let text = textField.text, let value = Int(text), value > 10 {
-                errorLabel.text = "Максимум 10, мы против насилия над собой"
-                textField.text = "10"
-            } else if textField.text?.isEmpty ?? true {
-                textField.text = "1"
-            }
-        } else if textField == monthsTextField {
-            if let text = textField.text, let value = Int(text), value > 125 {
-                errorLabel.text = "Максимум 125, но мы восхищены горизонтом планирования — это больше 10 лет!"
-                textField.text = "125"
-            } else if textField.text?.isEmpty ?? true {
-                textField.text = "1"
-            }
-        } else if textField == habitTextField, habitTextField.text?.isEmpty ?? true {
-            errorLabel.text = "А что именно?"
+        if validateFields() {
+            print("Сохраняем привычку")
+            // Здесь добавить логику для сохранения привычки
+        } else {
+            print("Ошибка в заполнении формы")
         }
     }
     
+   // MARK: - TextField methods
+
     func validateFields() -> Bool {
-        errorLabel.text = ""
+        var isValid = true
+        
+        resetErrorStates()
         
         if habitTextField.text?.isEmpty ?? true {
-            errorLabel.text = "А что именно?"
-            return false
+            habitErrorLabel.text = "А что именно?"
+            habitErrorLabel.isHidden = false
+            habitTextField.layer.borderColor = UIColor.red.cgColor
+            isValid = false
         }
         
-        if !(selectedDays.contains(true)) {
-            errorLabel.text = "Если не выбрать ни одного дня, в трекере нет смысла"
-            return false
+        if let text = timesPerDayTextField.text, text.isEmpty {
+            timesPerDayTextField.text = "1"
+        } else if let value = Int(timesPerDayTextField.text ?? ""), value > 10 {
+            timesPerDayErrorLabel.text = "Максимум 10, мы против насилия над собой"
+            timesPerDayErrorLabel.isHidden = false
+            timesPerDayTextField.layer.borderColor = UIColor.red.cgColor
+            isValid = false
         }
         
-        return true
+        if !selectedDays.contains(true) {
+            daysOfWeekErrorLabel.text = "Если не выбрать ни одного дня, в трекере нет смысла"
+            daysOfWeekErrorLabel.isHidden = false
+            highlightDaysOfWeekStack(with: .red)
+            isValid = false
+        }
+        
+        if let text = monthsTextField.text, text.isEmpty {
+            monthsTextField.text = "1"
+        } else if let value = Int(monthsTextField.text ?? ""), value > 125 {
+            monthsErrorLabel.text = "Максимум 125, но мы восхищены горизонтом планирования — это больше 10 лет!"
+            monthsErrorLabel.isHidden = false
+            monthsTextField.layer.borderColor = UIColor.red.cgColor
+            isValid = false
+        }
+        return isValid
+    }
+    
+    private func resetErrorStates() {
+        habitErrorLabel.isHidden = true
+        timesPerDayErrorLabel.isHidden = true
+        daysOfWeekErrorLabel.isHidden = true
+        monthsErrorLabel.isHidden = true
+        
+        habitTextField.layer.borderColor = UIColor.systemGray5.cgColor
+        timesPerDayTextField.layer.borderColor = UIColor.systemGray5.cgColor
+        monthsTextField.layer.borderColor = UIColor.systemGray5.cgColor
+        
+        highlightDaysOfWeekStack(with: UIColor.systemGray5)
+    }
+    
+    private func highlightDaysOfWeekStack(with color: UIColor) {
+        for view in daysOfWeekStack.arrangedSubviews {
+            view.layer.borderColor = color.cgColor
+        }
     }
 }
