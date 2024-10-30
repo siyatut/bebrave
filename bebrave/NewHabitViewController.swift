@@ -45,6 +45,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         textField.layer.borderColor = UIColor.systemGray5.cgColor
         textField.clipsToBounds = true
         textField.backgroundColor = .systemBackground
+        textField.translatesAutoresizingMaskIntoConstraints = false
         
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: textField.frame.height))
         textField.leftView = paddingView
@@ -66,6 +67,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         textField.layer.borderColor = UIColor.systemGray5.cgColor
         textField.clipsToBounds = true
         textField.backgroundColor = .systemBackground
+        textField.translatesAutoresizingMaskIntoConstraints = false
         
         return textField
     }()
@@ -73,6 +75,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     private let timesPerDayLabel: UILabel = {
         let label = UILabel()
         label.text = "раз в день"
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -91,6 +94,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         textField.layer.borderColor = UIColor.systemGray5.cgColor
         textField.clipsToBounds = true
         textField.backgroundColor = .systemBackground
+        textField.translatesAutoresizingMaskIntoConstraints = false
         
         return textField
     }()
@@ -98,6 +102,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     private let monthsLabel: UILabel = {
         let label = UILabel()
         label.text = "месяц"
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -138,6 +143,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         label.numberOfLines = 0
         label.textAlignment = .left
         label.isHidden = true
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -148,6 +154,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         label.numberOfLines = 0
         label.textAlignment = .left
         label.isHidden = true
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -158,6 +165,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         label.numberOfLines = 0
         label.textAlignment = .left
         label.isHidden = true
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -168,6 +176,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         label.numberOfLines = 0
         label.textAlignment = .left
         label.isHidden = true
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -191,14 +200,16 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         setupDaysOfWeekStack()
         
         let timesPerDayStack = UIStackView(arrangedSubviews: [timesPerDayTextField, timesPerDayLabel])
-            timesPerDayStack.axis = .horizontal
-            timesPerDayStack.spacing = 8
-            timesPerDayStack.alignment = .leading
-            
-            let monthsStack = UIStackView(arrangedSubviews: [monthsTextField, monthsLabel])
-            monthsStack.axis = .horizontal
-            monthsStack.spacing = 8
-            monthsStack.alignment = .leading
+        timesPerDayStack.axis = .horizontal
+        timesPerDayStack.spacing = 8
+        timesPerDayStack.alignment = .leading
+        timesPerDayStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        let monthsStack = UIStackView(arrangedSubviews: [monthsTextField, monthsLabel])
+        monthsStack.axis = .horizontal
+        monthsStack.spacing = 8
+        monthsStack.alignment = .leading
+        monthsStack.translatesAutoresizingMaskIntoConstraints = false
         
         let stackView = UIStackView(arrangedSubviews: [
             habitTextField,
@@ -259,6 +270,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         daysOfWeekStack.axis = .horizontal
         daysOfWeekStack.distribution = .fillEqually
         daysOfWeekStack.spacing = 4
+        daysOfWeekStack.translatesAutoresizingMaskIntoConstraints = false
         let dayTitles = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"]
         
         for i in 0..<7 {
@@ -267,8 +279,8 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             dayContainer.layer.borderWidth = 1
             dayContainer.layer.borderColor = UIColor.systemGray5.cgColor
             dayContainer.translatesAutoresizingMaskIntoConstraints = false
-            dayContainer.widthAnchor.constraint(equalToConstant: 50).isActive = true
-            dayContainer.heightAnchor.constraint(equalToConstant: 70).isActive = true
+            dayContainer.widthAnchor.constraint(equalToConstant: 49).isActive = true
+            dayContainer.heightAnchor.constraint(equalToConstant: 71).isActive = true
             
             let dayStack = UIStackView()
             dayStack.axis = .vertical
@@ -279,8 +291,9 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             
             let dayLabel = UILabel()
             dayLabel.text = dayTitles[i]
-            dayLabel.font = UIFont.systemFont(ofSize: 14)
+            dayLabel.font = UIFont.systemFont(ofSize: 16)
             dayLabel.textAlignment = .center
+            dayLabel.translatesAutoresizingMaskIntoConstraints = false
             
             let checkboxImageView = UIImageView()
             checkboxImageView.image = UIImage(named: "UncheckedCheckbox")
