@@ -213,13 +213,13 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         NSLayoutConstraint.activate([
             emojiImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
             emojiImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            emojiImageView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -321),
+            emojiImageView.trailingAnchor.constraint(greaterThanOrEqualTo: view.trailingAnchor, constant: -321),
             emojiImageView.widthAnchor.constraint(equalToConstant: 40),
             emojiImageView.heightAnchor.constraint(equalToConstant: 40),
             
             promiseLabel.topAnchor.constraint(equalTo: emojiImageView.bottomAnchor, constant: 16),
             promiseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            promiseLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -187),
+            promiseLabel.trailingAnchor.constraint(greaterThanOrEqualTo: view.trailingAnchor, constant: -187),
         
             habitTextField.topAnchor.constraint(equalTo: promiseLabel.bottomAnchor, constant: 16),
             habitTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
