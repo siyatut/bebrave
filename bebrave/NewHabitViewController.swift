@@ -228,13 +228,15 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             
             timesPerDayStack.topAnchor.constraint(equalTo: habitTextField.bottomAnchor, constant: 16),
             timesPerDayStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            timesPerDayStack.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -12),
             
             daysOfWeekStack.topAnchor.constraint(equalTo: timesPerDayStack.bottomAnchor, constant: 16),
             daysOfWeekStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
-        //    daysOfWeekStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
+            daysOfWeekStack.trailingAnchor.constraint(equalTo: timesPerDayStack.trailingAnchor),
             
             monthsStack.topAnchor.constraint(equalTo: daysOfWeekStack.bottomAnchor, constant: 16),
             monthsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            monthsStack.trailingAnchor.constraint(equalTo: timesPerDayStack.trailingAnchor),
             
             timesPerDayLabel.centerYAnchor.constraint(equalTo: timesPerDayTextField.centerYAnchor),
             monthsLabel.centerYAnchor.constraint(equalTo: monthsTextField.centerYAnchor),
@@ -265,8 +267,6 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             dayContainer.layer.borderWidth = 1
             dayContainer.layer.borderColor = UIColor.systemGray5.cgColor
             dayContainer.translatesAutoresizingMaskIntoConstraints = false
-            dayContainer.widthAnchor.constraint(equalToConstant: 49).isActive = true
-            dayContainer.heightAnchor.constraint(equalToConstant: 71).isActive = true
             
             let dayStack = UIStackView()
             dayStack.axis = .vertical
@@ -289,17 +289,16 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             checkboxImageView.translatesAutoresizingMaskIntoConstraints = false
             checkboxImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(checkboxTapped(_:))))
             
-            NSLayoutConstraint.activate([
-                checkboxImageView.widthAnchor.constraint(equalToConstant: 24),
-                checkboxImageView.heightAnchor.constraint(equalToConstant: 24)
-            ])
-            
             dayStack.addArrangedSubview(dayLabel)
             dayStack.addArrangedSubview(checkboxImageView)
             
             NSLayoutConstraint.activate([
                 dayStack.centerXAnchor.constraint(equalTo: dayContainer.centerXAnchor),
-                dayStack.centerYAnchor.constraint(equalTo: dayContainer.centerYAnchor)
+                dayStack.centerYAnchor.constraint(equalTo: dayContainer.centerYAnchor),
+                dayContainer.widthAnchor.constraint(equalToConstant: 49),
+                dayContainer.heightAnchor.constraint(equalToConstant: 71),
+                checkboxImageView.widthAnchor.constraint(equalToConstant: 24),
+                checkboxImageView.heightAnchor.constraint(equalToConstant: 24)
             ])
             
             daysOfWeekStack.addArrangedSubview(dayContainer)
