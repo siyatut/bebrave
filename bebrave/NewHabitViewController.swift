@@ -185,10 +185,6 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Set up components
     
     private func setupComponents() {
-        view.addSubview(emojiImageView)
-        view.addSubview(promiseLabel)
-        view.addSubview(addNewHabitButton)
-        
         addNewHabitButton.addTarget(self, action: #selector(addNewHabitButtonTapped), for: .touchUpInside)
         setupDaysOfWeekStack()
         
@@ -196,29 +192,23 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         timesPerDayStack.axis = .horizontal
         timesPerDayStack.spacing = 8
         timesPerDayStack.alignment = .leading
+        timesPerDayStack.distribution = .fillProportionally
         timesPerDayStack.translatesAutoresizingMaskIntoConstraints = false
         
         let monthsStack = UIStackView(arrangedSubviews: [monthsTextField, monthsLabel])
         monthsStack.axis = .horizontal
         monthsStack.spacing = 8
         monthsStack.alignment = .leading
+        monthsStack.distribution = .fillProportionally
         monthsStack.translatesAutoresizingMaskIntoConstraints = false
         
-        let stackView = UIStackView(arrangedSubviews: [
-            habitTextField,
-            habitErrorLabel,
-            timesPerDayStack,
-            timesPerDayErrorLabel,
-            daysOfWeekStack,
-            daysOfWeekErrorLabel,
-            monthsStack,
-            monthsErrorLabel,
-        ])
-        
-        stackView.axis = .vertical
-        stackView.spacing = 16
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(stackView)
+        view.addSubview(emojiImageView)
+        view.addSubview(promiseLabel)
+        view.addSubview(addNewHabitButton)
+        view.addSubview(habitTextField)
+        view.addSubview(timesPerDayStack)
+        view.addSubview(daysOfWeekStack)
+        view.addSubview(monthsStack)
         
         NSLayoutConstraint.activate([
             emojiImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
@@ -230,13 +220,21 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             promiseLabel.topAnchor.constraint(equalTo: emojiImageView.bottomAnchor, constant: 16),
             promiseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             promiseLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -187),
-            
-            stackView.topAnchor.constraint(equalTo: promiseLabel.bottomAnchor, constant: 16),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
-            stackView.bottomAnchor.constraint(lessThanOrEqualTo: addNewHabitButton.topAnchor, constant: -20),
-            
+        
+            habitTextField.topAnchor.constraint(equalTo: promiseLabel.bottomAnchor, constant: 16),
+            habitTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            habitTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
             habitTextField.heightAnchor.constraint(equalToConstant: 48),
+            
+            timesPerDayStack.topAnchor.constraint(equalTo: habitTextField.bottomAnchor, constant: 16),
+            timesPerDayStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            
+            daysOfWeekStack.topAnchor.constraint(equalTo: timesPerDayStack.bottomAnchor, constant: 16),
+            daysOfWeekStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+        //    daysOfWeekStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
+            
+            monthsStack.topAnchor.constraint(equalTo: daysOfWeekStack.bottomAnchor, constant: 16),
+            monthsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             
             timesPerDayLabel.centerYAnchor.constraint(equalTo: timesPerDayTextField.centerYAnchor),
             monthsLabel.centerYAnchor.constraint(equalTo: monthsTextField.centerYAnchor),
