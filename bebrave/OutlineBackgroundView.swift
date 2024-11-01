@@ -26,11 +26,6 @@ class OutlineBackgroundView: UICollectionReusableView {
     override func draw(_ rect: CGRect) {
         let path = UIBezierPath(roundedRect: rect, cornerRadius: 18)
         path.lineWidth = 1
-//        if let borderColor = UIColor(named: "OutlineBorderColor") {
-//            borderColor.setStroke()
-//        } else {
-//            UIColor.darkGray.setStroke()
-//        }
         UIColor.systemGray5.setStroke()
         path.stroke()
     }
