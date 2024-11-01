@@ -213,7 +213,6 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         NSLayoutConstraint.activate([
             emojiImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
             emojiImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-        //    emojiImageView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -321),
             emojiImageView.widthAnchor.constraint(equalToConstant: 40),
             emojiImageView.heightAnchor.constraint(equalToConstant: 40),
             
@@ -232,7 +231,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             
             daysOfWeekStack.topAnchor.constraint(equalTo: timesPerDayStack.bottomAnchor, constant: 16),
             daysOfWeekStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
-            daysOfWeekStack.trailingAnchor.constraint(equalTo: timesPerDayStack.trailingAnchor),
+            daysOfWeekStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
             
             monthsStack.topAnchor.constraint(equalTo: daysOfWeekStack.bottomAnchor, constant: 16),
             monthsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
@@ -295,7 +294,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             NSLayoutConstraint.activate([
                 dayStack.centerXAnchor.constraint(equalTo: dayContainer.centerXAnchor),
                 dayStack.centerYAnchor.constraint(equalTo: dayContainer.centerYAnchor),
-                dayContainer.widthAnchor.constraint(equalToConstant: 49),
+         //       dayContainer.widthAnchor.constraint(equalToConstant: 49),
                 dayContainer.heightAnchor.constraint(equalToConstant: 71),
                 checkboxImageView.widthAnchor.constraint(equalToConstant: 24),
                 checkboxImageView.heightAnchor.constraint(equalToConstant: 24)
