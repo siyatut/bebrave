@@ -383,7 +383,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         if let text = monthsTextField.text, text.isEmpty {
             monthsTextField.text = "1"
         } else if let value = Int(monthsTextField.text ?? ""), value > 125 {
-            monthsErrorLabel.text = "Максимум 125, но мы восхищены горизонтом планирования — это больше 10 лет!"
+            monthsErrorLabel.text = "Максимум 125, но мы восхищены горизонтом\nпланирования — это больше 10 лет!"
             monthsErrorLabel.isHidden = false
             monthsTextField.layer.borderColor = UIColor.red.cgColor
             isValid = false
