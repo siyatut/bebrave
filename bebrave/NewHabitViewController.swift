@@ -269,7 +269,15 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             habitTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
             habitTextField.heightAnchor.constraint(equalToConstant: 48),
             
-            timesPerDayStack.topAnchor.constraint(equalTo: habitTextField.bottomAnchor, constant: 16),
+            habitErrorLabel.topAnchor.constraint(equalTo: habitTextField.bottomAnchor, constant: 4),
+            habitErrorLabel.leadingAnchor.constraint(equalTo: habitTextField.leadingAnchor, constant: 16),
+            habitErrorLabel.trailingAnchor.constraint(equalTo: habitTextField.trailingAnchor),
+            
+            habitSpacerView.topAnchor.constraint(equalTo: habitErrorLabel.bottomAnchor),
+            habitSpacerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            habitSpacerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            timesPerDayStack.topAnchor.constraint(equalTo: habitSpacerView.bottomAnchor),
             timesPerDayStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             timesPerDayStack.trailingAnchor.constraint(equalTo: habitTextField.trailingAnchor),
             
