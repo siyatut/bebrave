@@ -41,7 +41,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         textField.backgroundColor = .systemBackground
         textField.translatesAutoresizingMaskIntoConstraints = false
         
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: textField.frame.height))
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
         
@@ -273,21 +273,29 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             habitErrorLabel.leadingAnchor.constraint(equalTo: habitTextField.leadingAnchor, constant: 16),
             habitErrorLabel.trailingAnchor.constraint(equalTo: habitTextField.trailingAnchor),
             
-            habitSpacerView.topAnchor.constraint(equalTo: habitErrorLabel.bottomAnchor),
-            habitSpacerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            habitSpacerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            timesPerDayStack.topAnchor.constraint(equalTo: habitSpacerView.bottomAnchor),
+            timesPerDayStack.topAnchor.constraint(equalTo: habitErrorLabel.bottomAnchor, constant: 16),
             timesPerDayStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             timesPerDayStack.trailingAnchor.constraint(equalTo: habitTextField.trailingAnchor),
             
-            daysOfWeekStack.topAnchor.constraint(equalTo: timesPerDayStack.bottomAnchor, constant: 16),
+            timesPerDayErrorLabel.topAnchor.constraint(equalTo: timesPerDayStack.bottomAnchor, constant: 4),
+            timesPerDayErrorLabel.leadingAnchor.constraint(equalTo: timesPerDayStack.leadingAnchor, constant: 16),
+            timesPerDayErrorLabel.trailingAnchor.constraint(equalTo: timesPerDayStack.trailingAnchor),
+            
+            daysOfWeekStack.topAnchor.constraint(equalTo: timesPerDayErrorLabel.bottomAnchor, constant: 16),
             daysOfWeekStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             daysOfWeekStack.trailingAnchor.constraint(equalTo: habitTextField.trailingAnchor),
             
-            monthsStack.topAnchor.constraint(equalTo: daysOfWeekStack.bottomAnchor, constant: 16),
+            daysOfWeekErrorLabel.topAnchor.constraint(equalTo: daysOfWeekStack.bottomAnchor, constant: 4),
+            daysOfWeekErrorLabel.leadingAnchor.constraint(equalTo: daysOfWeekStack.leadingAnchor, constant: 16),
+            daysOfWeekErrorLabel.trailingAnchor.constraint(equalTo: daysOfWeekStack.trailingAnchor),
+            
+            monthsStack.topAnchor.constraint(equalTo: daysOfWeekErrorLabel.bottomAnchor, constant: 16),
             monthsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             monthsStack.trailingAnchor.constraint(equalTo: habitTextField.trailingAnchor),
+            
+            monthsErrorLabel.topAnchor.constraint(equalTo: monthsStack.bottomAnchor, constant: 4),
+            monthsErrorLabel.leadingAnchor.constraint(equalTo: monthsStack.leadingAnchor, constant: 16),
+            monthsErrorLabel.trailingAnchor.constraint(equalTo: monthsStack.trailingAnchor),
             
             timesPerDayLabel.centerYAnchor.constraint(equalTo: timesPerDayTextField.centerYAnchor),
             monthsLabel.centerYAnchor.constraint(equalTo: monthsTextField.centerYAnchor),
