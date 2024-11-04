@@ -234,13 +234,25 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         monthsStack.distribution = .fillProportionally
         monthsStack.translatesAutoresizingMaskIntoConstraints = false
         
+        let labels = [promiseLabel, habitErrorLabel, timesPerDayErrorLabel, daysOfWeekErrorLabel, monthsErrorLabel]
+        let stacks = [timesPerDayStack, daysOfWeekStack, monthsStack]
+        let spacerViews = [habitSpacerView, timesPerDaySpacerView, daysOfWeekSpacerView, monthsSpacerView]
+        
+        for l in labels {
+            view.addSubview(l)
+        }
+        
+        for s in stacks {
+            view.addSubview(s)
+        }
+        
+        for spacerView in spacerViews {
+            view.addSubview(spacerView)
+        }
+        
         view.addSubview(emojiImageView)
-        view.addSubview(promiseLabel)
         view.addSubview(addNewHabitButton)
         view.addSubview(habitTextField)
-        view.addSubview(timesPerDayStack)
-        view.addSubview(daysOfWeekStack)
-        view.addSubview(monthsStack)
         
         NSLayoutConstraint.activate([
             emojiImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
