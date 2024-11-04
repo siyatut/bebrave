@@ -174,37 +174,6 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         return label
     }()
     
-    // MARK: - Spacer Views
-    
-    private let habitSpacerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let timesPerDaySpacerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let daysOfWeekSpacerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let monthsSpacerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private var habitSpacerHeightConstraint: NSLayoutConstraint!
-    private var timesPerDaySpacerHeightConstraint: NSLayoutConstraint!
-    private var daysOfWeekSpacerHeightConstraint: NSLayoutConstraint!
-    private var monthsSpacerHeightConstraint: NSLayoutConstraint!
-    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -218,7 +187,6 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     private func setupComponents() {
         addNewHabitButton.addTarget(self, action: #selector(addNewHabitButtonTapped), for: .touchUpInside)
         setupDaysOfWeekStack()
-        setupHeightForSpacerViews()
         
         let timesPerDayStack = UIStackView(arrangedSubviews: [timesPerDayTextField, timesPerDayLabel])
         timesPerDayStack.axis = .horizontal
@@ -236,7 +204,6 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         
         let labels = [promiseLabel, habitErrorLabel, timesPerDayErrorLabel, daysOfWeekErrorLabel, monthsErrorLabel]
         let stacks = [timesPerDayStack, daysOfWeekStack, monthsStack]
-        let spacerViews = [habitSpacerView, timesPerDaySpacerView, daysOfWeekSpacerView, monthsSpacerView]
         
         for l in labels {
             view.addSubview(l)
@@ -244,10 +211,6 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         
         for s in stacks {
             view.addSubview(s)
-        }
-        
-        for spacerView in spacerViews {
-            view.addSubview(spacerView)
         }
         
         view.addSubview(emojiImageView)
@@ -363,22 +326,6 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             
             daysOfWeekStack.addArrangedSubview(dayContainer)
         }
-    }
-    
-    // MARK: - Set up default height for spacer views
-    
-    private func setupHeightForSpacerViews() {
-        habitSpacerHeightConstraint = habitSpacerView.heightAnchor.constraint(equalToConstant: 16)
-        habitSpacerHeightConstraint.isActive = true
-        
-        timesPerDaySpacerHeightConstraint = timesPerDaySpacerView.heightAnchor.constraint(equalToConstant: 16)
-        timesPerDaySpacerHeightConstraint.isActive = true
-        
-        daysOfWeekSpacerHeightConstraint = daysOfWeekSpacerView.heightAnchor.constraint(equalToConstant: 16)
-        daysOfWeekSpacerHeightConstraint.isActive = true
-        
-        monthsSpacerHeightConstraint = monthsSpacerView.heightAnchor.constraint(equalToConstant: 16)
-        monthsSpacerHeightConstraint.isActive = true
     }
     
     // MARK: - Objc methods
