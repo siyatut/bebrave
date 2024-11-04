@@ -200,6 +200,11 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         return view
     }()
     
+    private var habitSpacerHeightConstraint: NSLayoutConstraint!
+    private var timesPerDaySpacerHeightConstraint: NSLayoutConstraint!
+    private var daysOfWeekSpacerConstraint: NSLayoutConstraint!
+    private var monthsSpacerConstraint: NSLayoutConstraint!
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
