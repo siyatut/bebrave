@@ -174,6 +174,32 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         return label
     }()
     
+    // MARK: - Spacer Views
+    
+    private let habitSpacerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let timesPerDaySpacerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let daysOfWeekSpacerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let monthsSpacerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
