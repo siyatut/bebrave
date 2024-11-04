@@ -202,8 +202,8 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     
     private var habitSpacerHeightConstraint: NSLayoutConstraint!
     private var timesPerDaySpacerHeightConstraint: NSLayoutConstraint!
-    private var daysOfWeekSpacerConstraint: NSLayoutConstraint!
-    private var monthsSpacerConstraint: NSLayoutConstraint!
+    private var daysOfWeekSpacerHeightConstraint: NSLayoutConstraint!
+    private var monthsSpacerHeightConstraint: NSLayoutConstraint!
     
     // MARK: - Lifecycle
     
@@ -218,6 +218,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     private func setupComponents() {
         addNewHabitButton.addTarget(self, action: #selector(addNewHabitButtonTapped), for: .touchUpInside)
         setupDaysOfWeekStack()
+        setupHeightForSpacerViews()
         
         let timesPerDayStack = UIStackView(arrangedSubviews: [timesPerDayTextField, timesPerDayLabel])
         timesPerDayStack.axis = .horizontal
@@ -284,6 +285,8 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         ])
     }
     
+    // MARK: - Set up daysOfWeekStack
+    
     private func setupDaysOfWeekStack() {
         daysOfWeekStack.axis = .horizontal
         daysOfWeekStack.distribution = .fillEqually
@@ -332,6 +335,22 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             
             daysOfWeekStack.addArrangedSubview(dayContainer)
         }
+    }
+    
+    // MARK: - Set up default height for spacer views
+    
+    private func setupHeightForSpacerViews() {
+        habitSpacerHeightConstraint = habitSpacerView.heightAnchor.constraint(equalToConstant: 16)
+        habitSpacerHeightConstraint.isActive = true
+        
+        timesPerDaySpacerHeightConstraint = timesPerDaySpacerView.heightAnchor.constraint(equalToConstant: 16)
+        timesPerDaySpacerHeightConstraint.isActive = true
+        
+        daysOfWeekSpacerHeightConstraint = daysOfWeekSpacerView.heightAnchor.constraint(equalToConstant: 16)
+        daysOfWeekSpacerHeightConstraint.isActive = true
+        
+        monthsSpacerHeightConstraint = monthsSpacerView.heightAnchor.constraint(equalToConstant: 16)
+        monthsSpacerHeightConstraint.isActive = true
     }
     
     // MARK: - Objc methods
