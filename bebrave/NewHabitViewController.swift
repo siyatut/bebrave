@@ -183,8 +183,12 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupComponents()
+        
         addNewHabitButton.addTarget(self, action: #selector(addNewHabitButtonTapped), for: .touchUpInside)
         updateButtonState()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
     
     // MARK: - Button state update
@@ -363,6 +367,10 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             print("Ошибка в заполнении формы")
         }
         updateButtonState()
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     // MARK: - Reset error states
