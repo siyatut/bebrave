@@ -180,12 +180,21 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupComponents()
+        addNewHabitButton.addTarget(self, action: #selector(addNewHabitButtonTapped), for: .touchUpInside)
+        updateButtonState()
+    }
+    
+    // MARK: - Button state update
+    
+    private func updateButtonState() {
+        let isFormValid = validateFields()
+        addNewHabitButton.isEnabled = isFormValid
+        addNewHabitButton.backgroundColor = isFormValid ? UIColor(named: "PrimaryColor") : .systemGray5
     }
     
     // MARK: - Set up components
     
     private func setupComponents() {
-        addNewHabitButton.addTarget(self, action: #selector(addNewHabitButtonTapped), for: .touchUpInside)
         setupDaysOfWeekStack()
         
         let timesPerDayStack = UIStackView(arrangedSubviews: [timesPerDayTextField, timesPerDayLabel])
@@ -350,11 +359,10 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-   // MARK: - Show or hide error labels
-
+   // MARK: - Reset error states
+    
     func validateFields() -> Bool {
         var isValid = true
-        
         resetErrorStates()
         
         if habitTextField.text?.isEmpty ?? true {
@@ -408,5 +416,11 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         for view in daysOfWeekStack.arrangedSubviews {
             view.layer.borderColor = color.cgColor
         }
+    }
+    
+    // MARK: - Text field delegate
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        updateButtonState()
     }
 }
