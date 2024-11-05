@@ -99,21 +99,17 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
     private var selectedDays: [Bool] = Array(repeating: false, count: 7)
     
     // MARK: - Button
     
     private let addNewHabitButton: UIButton = {
         let button = UIButton(type: .system)
-            
+        
         button.setTitle("Добавить привычку", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = UIColor(named: "PrimaryColor")
-        
-//        if let plusImage = UIImage(named: "Plus") {
-//            button.setImage(plusImage, for: .normal)
-//        }
         
         let plusImage = UIImage(named: "Plus")
         let plusImageGray = UIImage(named: "Plus")?.withTintColor(.white, renderingMode: .alwaysOriginal)
@@ -147,7 +143,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
     private let timesPerDayErrorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .red
@@ -158,7 +154,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
     private let daysOfWeekErrorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .red
@@ -169,7 +165,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
     private let monthsErrorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .red
@@ -198,7 +194,6 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             let isFormValid = validateFields(showErrors: true)
             addNewHabitButton.isEnabled = isFormValid
             addNewHabitButton.backgroundColor = isFormValid ? UIColor(named: "PrimaryColor") : .systemGray2
-            
             addNewHabitButton.setTitleColor(.white, for: .disabled)
         }
     }
@@ -246,7 +241,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             promiseLabel.topAnchor.constraint(equalTo: emojiImageView.bottomAnchor, constant: 16),
             promiseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             promiseLabel.trailingAnchor.constraint(greaterThanOrEqualTo: view.trailingAnchor, constant: -187),
-        
+            
             habitTextField.topAnchor.constraint(equalTo: promiseLabel.bottomAnchor, constant: 16),
             habitTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             habitTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
@@ -370,7 +365,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         updateButtonState()
     }
     
-   // MARK: - Reset error states
+    // MARK: - Reset error states
     
     func validateFields(showErrors: Bool = false) -> Bool {
         var isValid = true
@@ -437,11 +432,37 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    // MARK: - Text field delegate
+    // MARK: - Text field delegate (сhecking and updating the button state and logic for changing label's text on values ​​in text fields)
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if hasAttemptedSave {
             updateButtonState()
+        }
+        
+        if textField == timesPerDayTextField {
+            if let text = textField.text, let value = Int(text), (1...10).contains(value) {
+                timesPerDayLabel.text = (value == 1 ? "раз в день" : "раза в день")
+            } else {
+                timesPerDayLabel.text = "раз в день"
+                textField.text = "1"
+            }
+        } else if textField == monthsTextField {
+            if let text = textField.text, let value = Int(text), (1...125).contains(value) {
+                monthsLabel.text = monthText(for: value)
+            } else {
+                monthsLabel.text = "месяц"
+                textField.text = "1"
+            }
+        }
+    }
+    
+    // MARK: - Change's method for the word "month"
+    
+    private func monthText(for value: Int) -> String {
+        switch value {
+        case 1: return "месяц"
+        case 2...4: return "месяца"
+        default: return "месяцев"
         }
     }
 }
