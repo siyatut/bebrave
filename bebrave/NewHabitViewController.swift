@@ -188,6 +188,8 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         updateButtonState()
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false // Это не помогло
+        #warning("Профиксить момент, когда ввожу значение в текстовые поля с цифрами, тк они сбрасываются при нажатии на экран. При этом поле привычки и диапазон дней неделей не сбрасывается. Значения сбрасываются в случае нарушения диапазона, в таком случае ошибку нужно показать и при нажатии на экран, а не только при валидации по кнопке")
         view.addGestureRecognizer(tapGesture)
     }
     
@@ -449,7 +451,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         
         if textField == timesPerDayTextField {
             if let text = textField.text, let value = Int(text), (1...10).contains(value) {
-                timesPerDayLabel.text = (value == 1 ? "раз в день" : "раза в день")
+                timesPerDayLabel.text = dayText(for: value)
             } else {
                 timesPerDayLabel.text = "раз в день"
                 textField.text = "1"
@@ -464,13 +466,28 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    // MARK: - Change's method for the word "month"
+    // MARK: - Change's method for the words "day" and "month"
+    
+    private func dayText(for value: Int) -> String {
+        switch value {
+        case 2...4: return "раза в день"
+        default: return "раз в день"
+        }
+    }
     
     private func monthText(for value: Int) -> String {
-        switch value {
-        case 1: return "месяц"
-        case 2...4: return "месяца"
-        default: return "месяцев"
+        guard (1...125).contains(value) else { return "месяц" }
+        
+        let lastDigit = value % 10
+        let lastTwoDigits = value % 100
+        
+        switch lastDigit {
+        case 1 where lastTwoDigits != 11:
+            return "месяц"
+        case 2...4 where !(12...14).contains(lastTwoDigits):
+            return "месяца"
+        default:
+            return "месяцев"
         }
     }
 }
