@@ -111,12 +111,17 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = UIColor(named: "PrimaryColor")
         
-        if let plusImage = UIImage(named: "Plus") {
-            button.setImage(plusImage, for: .normal)
-        }
+//        if let plusImage = UIImage(named: "Plus") {
+//            button.setImage(plusImage, for: .normal)
+//        }
+        
+        let plusImage = UIImage(named: "Plus")
+        let plusImageGray = UIImage(named: "Plus")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+        
+        button.setImage(plusImage, for: .normal)
+        button.setImage(plusImageGray, for: .disabled)
         
         button.tintColor = .white
-        
         var config = UIButton.Configuration.plain()
         config.imagePadding = 4
         config.baseForegroundColor = .white
@@ -127,6 +132,8 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
+    private var hasAttemptedSave = false
     
     // MARK: - Error labels
     
@@ -187,9 +194,13 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Button state update
     
     private func updateButtonState() {
-        let isFormValid = validateFields()
-        addNewHabitButton.isEnabled = isFormValid
-        addNewHabitButton.backgroundColor = isFormValid ? UIColor(named: "PrimaryColor") : .systemGray5
+        if hasAttemptedSave {
+            let isFormValid = validateFields(showErrors: true)
+            addNewHabitButton.isEnabled = isFormValid
+            addNewHabitButton.backgroundColor = isFormValid ? UIColor(named: "PrimaryColor") : .systemGray2
+            
+            addNewHabitButton.setTitleColor(.white, for: .disabled)
+        }
     }
     
     // MARK: - Set up components
@@ -350,51 +361,59 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc private func addNewHabitButtonTapped() {
-    
-        if validateFields() {
-            print("Сохраняем привычку")
-            // Здесь добавить логику для сохранения привычки
+        hasAttemptedSave = true
+        if validateFields(showErrors: true) {
+            print("Сохраняем привычку") // Добавить логику для сохранения привычки
         } else {
             print("Ошибка в заполнении формы")
         }
+        updateButtonState()
     }
     
    // MARK: - Reset error states
     
-    func validateFields() -> Bool {
+    func validateFields(showErrors: Bool = false) -> Bool {
         var isValid = true
         resetErrorStates()
         
         if habitTextField.text?.isEmpty ?? true {
-            habitErrorLabel.text = "А что именно?"
-            habitErrorLabel.isHidden = false
-            habitTextField.layer.borderColor = UIColor.red.cgColor
             isValid = false
+            if showErrors {
+                habitErrorLabel.text = "А что именно?"
+                habitErrorLabel.isHidden = false
+                habitTextField.layer.borderColor = UIColor.red.cgColor
+            }
         }
         
         if let text = timesPerDayTextField.text, text.isEmpty {
             timesPerDayTextField.text = "1"
         } else if let value = Int(timesPerDayTextField.text ?? ""), value > 10 {
-            timesPerDayErrorLabel.text = "Максимум 10, мы против насилия над собой"
-            timesPerDayErrorLabel.isHidden = false
-            timesPerDayTextField.layer.borderColor = UIColor.red.cgColor
             isValid = false
+            if showErrors {
+                timesPerDayErrorLabel.text = "Максимум 10, мы против насилия над собой"
+                timesPerDayErrorLabel.isHidden = false
+                timesPerDayTextField.layer.borderColor = UIColor.red.cgColor
+            }
         }
         
         if !selectedDays.contains(true) {
-            daysOfWeekErrorLabel.text = "Если не выбрать ни одного дня, в трекере нет смысла"
-            daysOfWeekErrorLabel.isHidden = false
-            highlightDaysOfWeekStack(with: .red)
             isValid = false
+            if showErrors {
+                daysOfWeekErrorLabel.text = "Если не выбрать ни одного дня, в трекере нет смысла"
+                daysOfWeekErrorLabel.isHidden = false
+                highlightDaysOfWeekStack(with: .red)
+            }
         }
         
         if let text = monthsTextField.text, text.isEmpty {
             monthsTextField.text = "1"
         } else if let value = Int(monthsTextField.text ?? ""), value > 125 {
-            monthsErrorLabel.text = "Максимум 125, но мы восхищены горизонтом\nпланирования — это больше 10 лет!"
-            monthsErrorLabel.isHidden = false
-            monthsTextField.layer.borderColor = UIColor.red.cgColor
             isValid = false
+            if showErrors {
+                monthsErrorLabel.text = "Максимум 125, но мы восхищены горизонтом\nпланирования — это больше 10 лет!"
+                monthsErrorLabel.isHidden = false
+                monthsTextField.layer.borderColor = UIColor.red.cgColor
+            }
         }
         return isValid
     }
@@ -421,6 +440,8 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Text field delegate
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        updateButtonState()
+        if hasAttemptedSave {
+            updateButtonState()
+        }
     }
 }
