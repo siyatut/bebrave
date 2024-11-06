@@ -188,8 +188,6 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         updateButtonState()
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        tapGesture.cancelsTouchesInView = false // Это не помогло
-        #warning("Профиксить момент, когда ввожу значение в текстовые поля с цифрами, тк они сбрасываются при нажатии на экран. При этом поле привычки и диапазон дней неделей не сбрасывается. Значения сбрасываются в случае нарушения диапазона, в таком случае ошибку нужно показать и при нажатии на экран, а не только при валидации по кнопке")
         view.addGestureRecognizer(tapGesture)
     }
     
@@ -452,15 +450,25 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         if textField == timesPerDayTextField {
             if let text = textField.text, let value = Int(text), (1...10).contains(value) {
                 timesPerDayLabel.text = dayText(for: value)
+                timesPerDayErrorLabel.isHidden = true
+                timesPerDayTextField.layer.borderColor = UIColor.systemGray5.cgColor
             } else {
                 timesPerDayLabel.text = "раз в день"
+                timesPerDayErrorLabel.text = "Максимум 10, мы против насилия над собой"
+                timesPerDayErrorLabel.isHidden = false
+                timesPerDayTextField.layer.borderColor = UIColor.red.cgColor
                 textField.text = "1"
             }
         } else if textField == monthsTextField {
             if let text = textField.text, let value = Int(text), (1...125).contains(value) {
                 monthsLabel.text = monthText(for: value)
+                monthsErrorLabel.isHidden = true
+                monthsTextField.layer.borderColor = UIColor.systemGray5.cgColor
             } else {
                 monthsLabel.text = "месяц"
+                monthsErrorLabel.text = "Максимум 125, но мы восхищены горизонтом\nпланирования — это больше 10 лет!"
+                monthsErrorLabel.isHidden = false
+                monthsTextField.layer.borderColor = UIColor.red.cgColor
                 textField.text = "1"
             }
         }
