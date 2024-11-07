@@ -7,6 +7,8 @@
 
 import UIKit
 
+#warning("Проверить, как можно упростить код. Есть ли вещи, которые можно убрать. Вынести UITextFieldDelegate в extension.")
+
 class NewHabitViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - UI components top down
@@ -183,10 +185,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupComponents()
-        
         addNewHabitButton.addTarget(self, action: #selector(addNewHabitButtonTapped), for: .touchUpInside)
-        updateButtonState()
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
     }
