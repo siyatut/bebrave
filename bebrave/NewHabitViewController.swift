@@ -7,7 +7,9 @@
 
 import UIKit
 
-#warning("Проверить, как можно упростить код. Есть ли вещи, которые можно убрать. Вынести UITextFieldDelegate в extension.")
+#warning("Проверить, как можно упростить код. Есть ли вещи, которые можно убрать. Вынести UITextFieldDelegate в extension")
+#warning("Есть баг: если не отметить дни недели, а потом отметить, кнопка не возвращается в активное состояние, поскольку в плане работы с textField всё бьётся из-за нажатия на вью, а здесь нажатие на вью ни на что не влияет и получается нужно дополнительно нажать на текстовое поле, чтобы кнопка обновила состояние. Что делать?")
+
 
 class NewHabitViewController: UIViewController, UITextFieldDelegate {
     
@@ -388,7 +390,9 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             }
         }
         
-        if let value = Int(timesPerDayTextField.text ?? ""), !(1...10).contains(value) {
+        if let text = timesPerDayTextField.text, text.isEmpty {
+            timesPerDayTextField.text = "1"
+        } else if let value = Int(timesPerDayTextField.text ?? ""), value > 10 {
             isValid = false
             if showErrors {
                 timesPerDayErrorLabel.text = "Максимум 10, мы против насилия над собой"
@@ -406,7 +410,9 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             }
         }
         
-        if let value = Int(monthsTextField.text ?? ""), !(1...125).contains(value) {
+        if let text = monthsTextField.text, text.isEmpty {
+            monthsTextField.text = "1"
+        } else if let value = Int(monthsTextField.text ?? ""), value > 125 {
             isValid = false
             if showErrors {
                 monthsErrorLabel.text = "Максимум 125, но мы восхищены горизонтом\nпланирования — это больше 10 лет!"
@@ -414,8 +420,8 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
                 monthsTextField.layer.borderColor = UIColor.red.cgColor
             }
         }
-        
         return isValid
+        
     }
     
     private func resetErrorStates() {
