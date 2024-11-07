@@ -194,12 +194,10 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Button state update
     
     private func updateButtonState() {
-        if hasAttemptedSave {
-            let isFormValid = validateFields(showErrors: true)
-            addNewHabitButton.isEnabled = isFormValid
-            addNewHabitButton.backgroundColor = isFormValid ? UIColor(named: "PrimaryColor") : .systemGray2
-            addNewHabitButton.setTitleColor(.white, for: .disabled)
-        }
+        let isFormValid = validateFields(showErrors: hasAttemptedSave)
+        addNewHabitButton.isEnabled = isFormValid
+        addNewHabitButton.backgroundColor = isFormValid ? UIColor(named: "PrimaryColor") : .systemGray2
+        addNewHabitButton.setTitleColor(.white, for: .disabled)
     }
     
     // MARK: - Set up components
@@ -361,8 +359,11 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     
     @objc private func addNewHabitButtonTapped() {
         hasAttemptedSave = true
-        if validateFields(showErrors: true) {
-            print("Сохраняем привычку") // Добавить логику для сохранения привычки
+        let isFormValid = validateFields(showErrors: true)
+        
+        if isFormValid {
+            print("Сохраняем привычку")
+            // Здесь будет логика сохранения привычки
         } else {
             print("Ошибка в заполнении формы")
         }
@@ -388,9 +389,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             }
         }
         
-        if let text = timesPerDayTextField.text, text.isEmpty {
-            timesPerDayTextField.text = "1"
-        } else if let value = Int(timesPerDayTextField.text ?? ""), value > 10 {
+        if let value = Int(timesPerDayTextField.text ?? ""), !(1...10).contains(value) {
             isValid = false
             if showErrors {
                 timesPerDayErrorLabel.text = "Максимум 10, мы против насилия над собой"
@@ -408,9 +407,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             }
         }
         
-        if let text = monthsTextField.text, text.isEmpty {
-            monthsTextField.text = "1"
-        } else if let value = Int(monthsTextField.text ?? ""), value > 125 {
+        if let value = Int(monthsTextField.text ?? ""), !(1...125).contains(value) {
             isValid = false
             if showErrors {
                 monthsErrorLabel.text = "Максимум 125, но мы восхищены горизонтом\nпланирования — это больше 10 лет!"
@@ -418,6 +415,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
                 monthsTextField.layer.borderColor = UIColor.red.cgColor
             }
         }
+        
         return isValid
     }
     
@@ -443,9 +441,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Text field delegate (сhecking and updating the button state and logic for changing label's text on values ​​in text fields)
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if hasAttemptedSave {
-            updateButtonState()
-        }
+        updateButtonState()
         
         if textField == timesPerDayTextField {
             if let text = textField.text, let value = Int(text), (1...10).contains(value) {
@@ -457,7 +453,6 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
                 timesPerDayErrorLabel.text = "Максимум 10, мы против насилия над собой"
                 timesPerDayErrorLabel.isHidden = false
                 timesPerDayTextField.layer.borderColor = UIColor.red.cgColor
-                textField.text = "1"
             }
         } else if textField == monthsTextField {
             if let text = textField.text, let value = Int(text), (1...125).contains(value) {
@@ -469,7 +464,6 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
                 monthsErrorLabel.text = "Максимум 125, но мы восхищены горизонтом\nпланирования — это больше 10 лет!"
                 monthsErrorLabel.isHidden = false
                 monthsTextField.layer.borderColor = UIColor.red.cgColor
-                textField.text = "1"
             }
         }
     }
