@@ -8,7 +8,7 @@
 import UIKit
 
 #warning("Проверить, как можно упростить код. Есть ли вещи, которые можно убрать. Вынести UITextFieldDelegate в extension")
-
+#warning("Сломала логику отображения ошибок предпоследним коммитом. Пофиксила, ошибки отображаются, когда вводится неверное значение, но когда нажимаю на вью исчезают. При этом изменяются констрейнты и пространство увеличивается (не помню, должно ли так быть?). Во всяком случае хотелось бы, чтобы они уменьшались обратно, когда ошибка уходит.")
 
 
 class NewHabitViewController: UIViewController, UITextFieldDelegate {
@@ -452,9 +452,34 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         let _ = validateFields(showErrors: true)
         updateButtonState()
+        
+        if textField == timesPerDayTextField {
+            if let text = textField.text, let value = Int(text), (1...10).contains(value) {
+                timesPerDayLabel.text = dayText(for: value)
+                timesPerDayErrorLabel.isHidden = true
+                timesPerDayTextField.layer.borderColor = UIColor.systemGray5.cgColor
+            } else {
+                timesPerDayLabel.text = "раз в день"
+                timesPerDayErrorLabel.text = "Максимум 10, мы против насилия над собой"
+                timesPerDayErrorLabel.isHidden = false
+                timesPerDayTextField.layer.borderColor = UIColor.red.cgColor
+            }
+        } else if textField == monthsTextField {
+            if let text = textField.text, let value = Int(text), (1...125).contains(value) {
+                monthsLabel.text = monthText(for: value)
+                monthsErrorLabel.isHidden = true
+                monthsTextField.layer.borderColor = UIColor.systemGray5.cgColor
+            } else {
+                monthsLabel.text = "месяцев"
+                monthsErrorLabel.text = "Максимум 125, но мы восхищены горизонтом\nпланирования — это больше 10 лет!"
+                monthsErrorLabel.isHidden = false
+                monthsTextField.layer.borderColor = UIColor.red.cgColor
+            }
+        }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        let _ = validateFields(showErrors: true)
         updateButtonState()
         
         if textField == timesPerDayTextField {
@@ -474,7 +499,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
                 monthsErrorLabel.isHidden = true
                 monthsTextField.layer.borderColor = UIColor.systemGray5.cgColor
             } else {
-                monthsLabel.text = "месяц"
+                monthsLabel.text = "месяцев"
                 monthsErrorLabel.text = "Максимум 125, но мы восхищены горизонтом\nпланирования — это больше 10 лет!"
                 monthsErrorLabel.isHidden = false
                 monthsTextField.layer.borderColor = UIColor.red.cgColor
@@ -492,7 +517,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func monthText(for value: Int) -> String {
-        guard (1...125).contains(value) else { return "месяц" }
+        guard (1...125).contains(value) else { return "месяцев" }
         
         let lastDigit = value % 10
         let lastTwoDigits = value % 100
