@@ -8,7 +8,7 @@
 import UIKit
 
 #warning("Проверить, как можно упростить код. Есть ли вещи, которые можно убрать. Вынести UITextFieldDelegate в extension")
-#warning("Есть баг: если не отметить дни недели, а потом отметить, кнопка не возвращается в активное состояние, поскольку в плане работы с textField всё бьётся из-за нажатия на вью, а здесь нажатие на вью ни на что не влияет и получается нужно дополнительно нажать на текстовое поле, чтобы кнопка обновила состояние. Что делать?")
+
 
 
 class NewHabitViewController: UIViewController, UITextFieldDelegate {
@@ -356,6 +356,9 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             let imageName = selectedDays[index] ? "CheckedCheckbox" : "UncheckedCheckbox"
             checkboxImageView.image = UIImage(named: imageName)
         }
+        
+        let _ = validateFields(showErrors: true)
+        updateButtonState()
     }
     
     @objc private func addNewHabitButtonTapped() {
@@ -373,6 +376,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
+        updateButtonState()
     }
     
     // MARK: - Reset error states
@@ -444,6 +448,11 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: - Text field delegate (сhecking and updating the button state and logic for changing label's text on values ​​in text fields)
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        let _ = validateFields(showErrors: true)
+        updateButtonState()
+    }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         updateButtonState()
