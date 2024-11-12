@@ -8,7 +8,7 @@
 import UIKit
 
 #warning("Проверить, как можно упростить код. Есть ли вещи, которые можно убрать. Вынести UITextFieldDelegate в extension")
-#warning("Ну короче получается полная хуйня. Нужно пересмотреть, когда отображать ошибки...Сейчас всё работает совсем не как надо(")
+#warning("Некритично, но думать, как пересчитывать параметры экрана, когда ошибки скрываются, чтобы элементы UI сдвигались обратно")
 
 
 class NewHabitViewController: UIViewController, UITextFieldDelegate {
@@ -371,7 +371,12 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
-        updateButtonState()
+        
+        let isFormValid = validateFields(showErrors: true)
+        
+        if isFormValid {
+            updateButtonState()
+        }
     }
     
     // MARK: - Reset error states
