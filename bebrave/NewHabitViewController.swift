@@ -8,7 +8,7 @@
 import UIKit
 
 #warning("Проверить, как можно упростить код. Есть ли вещи, которые можно убрать. Вынести UITextFieldDelegate в extension")
-#warning("Сломала логику отображения ошибок предпоследним коммитом. Пофиксила, ошибки отображаются, когда вводится неверное значение, но когда нажимаю на вью исчезают. При этом изменяются констрейнты и пространство увеличивается (не помню, должно ли так быть?). Во всяком случае хотелось бы, чтобы они уменьшались обратно, когда ошибка уходит.")
+#warning("Ну короче получается полная хуйня. Нужно пересмотреть, когда отображать ошибки...Сейчас всё работает совсем не как надо(")
 
 
 class NewHabitViewController: UIViewController, UITextFieldDelegate {
@@ -104,7 +104,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         return label
     }()
     
-    private var selectedDays: [Bool] = Array(repeating: false, count: 7)
+    private var selectedDays: [Bool] = Array(repeating: true, count: 7)
     
     // MARK: - Button
     
@@ -195,9 +195,8 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Button state update
     
     private func updateButtonState() {
-        let isFormValid = validateFields(showErrors: hasAttemptedSave)
-        addNewHabitButton.isEnabled = isFormValid
-        addNewHabitButton.backgroundColor = isFormValid ? UIColor(named: "PrimaryColor") : .systemGray2
+        addNewHabitButton.isEnabled = validateFields(showErrors: hasAttemptedSave)
+        addNewHabitButton.backgroundColor = addNewHabitButton.isEnabled ? UIColor(named: "PrimaryColor") : .systemGray2
         addNewHabitButton.setTitleColor(.white, for: .disabled)
     }
     
@@ -324,7 +323,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             dayLabel.translatesAutoresizingMaskIntoConstraints = false
             
             let checkboxImageView = UIImageView()
-            checkboxImageView.image = UIImage(named: "UncheckedCheckbox")
+            checkboxImageView.image = UIImage(named: selectedDays[i] ? "CheckedCheckbox" : "UncheckedCheckbox")
             checkboxImageView.contentMode = .scaleAspectFit
             checkboxImageView.isUserInteractionEnabled = true
             checkboxImageView.tag = i
@@ -356,9 +355,6 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             let imageName = selectedDays[index] ? "CheckedCheckbox" : "UncheckedCheckbox"
             checkboxImageView.image = UIImage(named: imageName)
         }
-        
-        let _ = validateFields(showErrors: true)
-        updateButtonState()
     }
     
     @objc private func addNewHabitButtonTapped() {
@@ -368,9 +364,8 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         if isFormValid {
             print("Сохраняем привычку")
             // Здесь будет логика сохранения привычки
-        } else {
-            print("Ошибка в заполнении формы")
         }
+        
         updateButtonState()
     }
     
@@ -447,62 +442,23 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    // MARK: - Text field delegate (сhecking and updating the button state and logic for changing label's text on values ​​in text fields)
+    // MARK: - Text field delegate (сhecking and updating label's text on values ​​in text fields)
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        let _ = validateFields(showErrors: true)
-        updateButtonState()
         
         if textField == timesPerDayTextField {
             if let text = textField.text, let value = Int(text), (1...10).contains(value) {
                 timesPerDayLabel.text = dayText(for: value)
-                timesPerDayErrorLabel.isHidden = true
-                timesPerDayTextField.layer.borderColor = UIColor.systemGray5.cgColor
             } else {
                 timesPerDayLabel.text = "раз в день"
-                timesPerDayErrorLabel.text = "Максимум 10, мы против насилия над собой"
-                timesPerDayErrorLabel.isHidden = false
-                timesPerDayTextField.layer.borderColor = UIColor.red.cgColor
-            }
-        } else if textField == monthsTextField {
-            if let text = textField.text, let value = Int(text), (1...125).contains(value) {
-                monthsLabel.text = monthText(for: value)
-                monthsErrorLabel.isHidden = true
-                monthsTextField.layer.borderColor = UIColor.systemGray5.cgColor
-            } else {
-                monthsLabel.text = "месяцев"
-                monthsErrorLabel.text = "Максимум 125, но мы восхищены горизонтом\nпланирования — это больше 10 лет!"
-                monthsErrorLabel.isHidden = false
-                monthsTextField.layer.borderColor = UIColor.red.cgColor
             }
         }
-    }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        let _ = validateFields(showErrors: true)
-        updateButtonState()
-        
-        if textField == timesPerDayTextField {
-            if let text = textField.text, let value = Int(text), (1...10).contains(value) {
-                timesPerDayLabel.text = dayText(for: value)
-                timesPerDayErrorLabel.isHidden = true
-                timesPerDayTextField.layer.borderColor = UIColor.systemGray5.cgColor
-            } else {
-                timesPerDayLabel.text = "раз в день"
-                timesPerDayErrorLabel.text = "Максимум 10, мы против насилия над собой"
-                timesPerDayErrorLabel.isHidden = false
-                timesPerDayTextField.layer.borderColor = UIColor.red.cgColor
-            }
-        } else if textField == monthsTextField {
+        if textField == monthsTextField {
             if let text = textField.text, let value = Int(text), (1...125).contains(value) {
                 monthsLabel.text = monthText(for: value)
-                monthsErrorLabel.isHidden = true
-                monthsTextField.layer.borderColor = UIColor.systemGray5.cgColor
             } else {
                 monthsLabel.text = "месяцев"
-                monthsErrorLabel.text = "Максимум 125, но мы восхищены горизонтом\nпланирования — это больше 10 лет!"
-                monthsErrorLabel.isHidden = false
-                monthsTextField.layer.borderColor = UIColor.red.cgColor
             }
         }
     }
