@@ -15,11 +15,14 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: Methods for creating UI elements
     
-    private func createLabel(text: String, fontSize: CGFloat = 16, color: UIColor = .label, isBold: Bool = false) -> UILabel {
+    private func createLabel(text: String, fontSize: CGFloat = 16, color: UIColor = .label, isBold: Bool = false, alignment: NSTextAlignment = .left, numberOfLines: Int = 1, isHidden: Bool = false) -> UILabel {
         let label = UILabel()
         label.text = text
         label.textColor = color
         label.font = isBold ? .boldSystemFont(ofSize: fontSize) : .systemFont(ofSize: fontSize)
+        label.textAlignment = alignment
+        label.numberOfLines = numberOfLines
+        label.isHidden = isHidden
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }
@@ -55,20 +58,26 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         return view
     }()
     
-    private lazy var promiseLabel = createLabel(text: "Я обещаю себе", fontSize: 24, isBold: true)
-    
     private lazy var habitTextField: UITextField = {
         let textField = createTextField(placeholder: "Делать что-то")
         addPaddingToTextField(textField, paddingWidth: 12)
         return textField
     }()
     
+    private lazy var promiseLabel = createLabel(text: "Я обещаю себе", fontSize: 24, isBold: true)
     private lazy var timesPerDayTextField = createTextField(placeholder: "1", keyboardType: .numberPad, alignment: .center)
     private lazy var timesPerDayLabel = createLabel(text: "раз в день")
     private let daysOfWeekStack = UIStackView()
     private var selectedDays: [Bool] = Array(repeating: true, count: 7)
     private lazy var monthsTextField = createTextField(placeholder: "1", keyboardType: .numberPad, alignment: .center)
     private lazy var monthsLabel = createLabel(text: "месяц")
+    
+    // MARK: - Error labels
+    
+    private lazy var habitErrorLabel = createLabel(text: "", fontSize: 12, color: .red, numberOfLines: 0, isHidden: true)
+    private lazy var timesPerDayErrorLabel = createLabel(text: "", fontSize: 12, color: .red, numberOfLines: 0, isHidden: true)
+    private lazy var daysOfWeekErrorLabel = createLabel(text: "", fontSize: 12, color: .red, numberOfLines: 0, isHidden: true)
+    private lazy var monthsErrorLabel = createLabel(text: "", fontSize: 12, color: .red, numberOfLines: 0, isHidden: true)
     
     // MARK: - Button
     
@@ -98,52 +107,6 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     }()
     
     private var hasAttemptedSave = false
-    
-    // MARK: - Error labels
-    
-    private let habitErrorLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .red
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.numberOfLines = 0
-        label.textAlignment = .left
-        label.isHidden = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let timesPerDayErrorLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .red
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.numberOfLines = 0
-        label.textAlignment = .left
-        label.isHidden = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let daysOfWeekErrorLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .red
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.numberOfLines = 0
-        label.textAlignment = .left
-        label.isHidden = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let monthsErrorLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .red
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.numberOfLines = 0
-        label.textAlignment = .left
-        label.isHidden = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
     
     // MARK: - Lifecycle
     
