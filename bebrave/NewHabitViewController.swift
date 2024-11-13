@@ -13,6 +13,39 @@ import UIKit
 
 class NewHabitViewController: UIViewController, UITextFieldDelegate {
     
+    // MARK: Methods for creating UI elements
+    
+    private func createLabel(text: String, fontSize: CGFloat = 16, color: UIColor = .label, isBold: Bool = false) -> UILabel {
+        let label = UILabel()
+        label.text = text
+        label.textColor = color
+        label.font = isBold ? .boldSystemFont(ofSize: fontSize) : .systemFont(ofSize: fontSize)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
+    
+    private func createTextField(placeholder: String, keyboardType: UIKeyboardType = .default, alignment: NSTextAlignment = .left) -> UITextField {
+        let textField = UITextField()
+        textField.placeholder = placeholder
+        textField.borderStyle = .roundedRect
+        textField.keyboardType = keyboardType
+        textField.textAlignment = alignment
+        textField.layer.cornerRadius = 18
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.systemGray5.cgColor
+        textField.clipsToBounds = true
+        textField.backgroundColor = .systemBackground
+        textField.delegate = self
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }
+    
+    private func addPaddingToTextField(_ textField: UITextField, paddingWidth: CGFloat) {
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: paddingWidth, height: textField.frame.height))
+        textField.leftView = paddingView
+        textField.leftViewMode = .always
+    }
+    
     // MARK: - UI components top down
     
     private let emojiImageView: UIImageView = {
@@ -22,89 +55,20 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         return view
     }()
     
-    private let promiseLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Я обещаю себе"
-        label.font = UIFont.boldSystemFont(ofSize: 24)
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    private lazy var promiseLabel = createLabel(text: "Я обещаю себе", fontSize: 24, isBold: true)
     
     private lazy var habitTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Делать что-то"
-        textField.borderStyle = .roundedRect
-        textField.textAlignment = .left
-        textField.delegate = self
-        
-        textField.layer.cornerRadius = 18
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.systemGray5.cgColor
-        textField.clipsToBounds = true
-        textField.backgroundColor = .systemBackground
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: textField.frame.height))
-        textField.leftView = paddingView
-        textField.leftViewMode = .always
-        
+        let textField = createTextField(placeholder: "Делать что-то")
+        addPaddingToTextField(textField, paddingWidth: 12)
         return textField
     }()
     
-    private lazy var timesPerDayTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "1"
-        textField.borderStyle = .roundedRect
-        textField.keyboardType = .numberPad
-        textField.textAlignment = .center
-        textField.delegate = self
-        
-        textField.layer.cornerRadius = 18
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.systemGray5.cgColor
-        textField.clipsToBounds = true
-        textField.backgroundColor = .systemBackground
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        
-        return textField
-    }()
-    
-    private let timesPerDayLabel: UILabel = {
-        let label = UILabel()
-        label.text = "раз в день"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
+    private lazy var timesPerDayTextField = createTextField(placeholder: "1", keyboardType: .numberPad, alignment: .center)
+    private lazy var timesPerDayLabel = createLabel(text: "раз в день")
     private let daysOfWeekStack = UIStackView()
-    
-    private lazy var monthsTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "1"
-        textField.borderStyle = .roundedRect
-        textField.keyboardType = .numberPad
-        textField.textAlignment = .center
-        textField.delegate = self
-        
-        textField.layer.cornerRadius = 18
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.systemGray5.cgColor
-        textField.clipsToBounds = true
-        textField.backgroundColor = .systemBackground
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        
-        return textField
-    }()
-    
-    private let monthsLabel: UILabel = {
-        let label = UILabel()
-        label.text = "месяц"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
     private var selectedDays: [Bool] = Array(repeating: true, count: 7)
+    private lazy var monthsTextField = createTextField(placeholder: "1", keyboardType: .numberPad, alignment: .center)
+    private lazy var monthsLabel = createLabel(text: "месяц")
     
     // MARK: - Button
     
