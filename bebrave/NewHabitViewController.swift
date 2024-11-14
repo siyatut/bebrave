@@ -27,7 +27,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         return label
     }
     
-    private func createTextField(placeholder: String, keyboardType: UIKeyboardType = .default, alignment: NSTextAlignment = .left) -> UITextField {
+    private func createTextField(placeholder: String, keyboardType: UIKeyboardType = .numberPad, alignment: NSTextAlignment = .left) -> UITextField {
         let textField = UITextField()
         textField.placeholder = placeholder
         textField.borderStyle = .roundedRect
@@ -60,16 +60,17 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     
     private lazy var habitTextField: UITextField = {
         let textField = createTextField(placeholder: "Делать что-то")
+        textField.keyboardType = .default
         addPaddingToTextField(textField, paddingWidth: 12)
         return textField
     }()
     
     private lazy var promiseLabel = createLabel(text: "Я обещаю себе", fontSize: 24, isBold: true)
-    private lazy var timesPerDayTextField = createTextField(placeholder: "1", keyboardType: .numberPad, alignment: .center)
+    private lazy var timesPerDayTextField = createTextField(placeholder: "1", alignment: .center)
     private lazy var timesPerDayLabel = createLabel(text: "раз в день")
     private let daysOfWeekStack = UIStackView()
     private var selectedDays: [Bool] = Array(repeating: true, count: 7)
-    private lazy var monthsTextField = createTextField(placeholder: "1", keyboardType: .numberPad, alignment: .center)
+    private lazy var monthsTextField = createTextField(placeholder: "1", alignment: .center)
     private lazy var monthsLabel = createLabel(text: "месяц")
     
     // MARK: - Error labels
@@ -275,7 +276,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Interacting with button and checkbox
     
     private func validateAndRefreshButton() {
-        let _ = validateFields(showErrors: hasAttemptedSave)
+        let _ = validateFields(showErrors: true)
         updateButtonState()
     }
     
