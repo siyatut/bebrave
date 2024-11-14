@@ -275,9 +275,8 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Interacting with button and checkbox
     
-    private func validateAndRefreshButton() {
-        let _ = validateFields(showErrors: true)
-        updateButtonState()
+    private func validateAndShowErrorsIfNeeded() -> Bool {
+        return validateFields(showErrors: true)
     }
     
     @objc private func checkboxTapped(_ sender: UITapGestureRecognizer) {
@@ -292,18 +291,18 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     
     @objc private func addNewHabitButtonTapped() {
         hasAttemptedSave = true
-        let isFormValid = validateFields(showErrors: true)
-        
-        if isFormValid {
+        if validateAndShowErrorsIfNeeded() {
             print("Сохраняем привычку")
             // Здесь будет логика сохранения привычки
         }
-       updateButtonState()
+        updateButtonState()
     }
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
-        validateAndRefreshButton()
+        if validateAndShowErrorsIfNeeded() {
+            updateButtonState()
+        }
     }
     
     // MARK: - Reset error states
