@@ -109,6 +109,14 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     
     private var hasAttemptedSave = false
     
+    // MARK: - Button state update
+    
+    private func updateButtonState() {
+        addNewHabitButton.isEnabled = validateFields(showErrors: hasAttemptedSave)
+        addNewHabitButton.backgroundColor = addNewHabitButton.isEnabled ? UIColor(named: "PrimaryColor") : .systemGray2
+        addNewHabitButton.setTitleColor(.white, for: .disabled)
+    }
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -121,13 +129,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         view.addGestureRecognizer(tapGesture)
     }
     
-    // MARK: - Button state update
-    
-    private func updateButtonState() {
-        addNewHabitButton.isEnabled = validateFields(showErrors: hasAttemptedSave)
-        addNewHabitButton.backgroundColor = addNewHabitButton.isEnabled ? UIColor(named: "PrimaryColor") : .systemGray2
-        addNewHabitButton.setTitleColor(.white, for: .disabled)
-    }
+    // MARK: - Error label's height
     
     private var habitErrorLabelHeightConstraint: NSLayoutConstraint!
     private var timesPerDayErrorLabelHeightConstraint: NSLayoutConstraint!
@@ -145,7 +147,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         ])
     }
     
-    // MARK: - Set up components
+    // MARK: - Set up UI components
     
     private func setupComponents() {
         setupDaysOfWeekStack()
