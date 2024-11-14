@@ -115,6 +115,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupComponents()
+        setupErrorLabelConstraints()
         addNewHabitButton.addTarget(self, action: #selector(addNewHabitButtonTapped), for: .touchUpInside)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
@@ -126,6 +127,22 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         addNewHabitButton.isEnabled = validateFields(showErrors: hasAttemptedSave)
         addNewHabitButton.backgroundColor = addNewHabitButton.isEnabled ? UIColor(named: "PrimaryColor") : .systemGray2
         addNewHabitButton.setTitleColor(.white, for: .disabled)
+    }
+    
+    private var habitErrorLabelHeightConstraint: NSLayoutConstraint!
+    private var timesPerDayErrorLabelHeightConstraint: NSLayoutConstraint!
+    private var daysOfWeekErrorLabelHeightConstraint: NSLayoutConstraint!
+   
+    private func setupErrorLabelConstraints() {
+        habitErrorLabelHeightConstraint = habitErrorLabel.heightAnchor.constraint(equalToConstant: 0)
+        timesPerDayErrorLabelHeightConstraint = timesPerDayErrorLabel.heightAnchor.constraint(equalToConstant: 0)
+        daysOfWeekErrorLabelHeightConstraint = daysOfWeekErrorLabel.heightAnchor.constraint(equalToConstant: 0)
+        
+        NSLayoutConstraint.activate([
+            habitErrorLabelHeightConstraint,
+            timesPerDayErrorLabelHeightConstraint,
+            daysOfWeekErrorLabelHeightConstraint,
+        ])
     }
     
     // MARK: - Set up components
@@ -294,6 +311,8 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         if validateAndShowErrorsIfNeeded() {
             print("Сохраняем привычку")
             // Здесь будет логика сохранения привычки
+        } else {
+          print("После нажатия на кнопку. Есть ошибки. Кнопка недоступна")
         }
         updateButtonState()
     }
@@ -302,6 +321,8 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         view.endEditing(true)
         if validateAndShowErrorsIfNeeded() {
             updateButtonState()
+        } else {
+            print("После скрытия клавиатуры. Есть ошибки. Кнопка недоступна")
         }
     }
     
@@ -317,7 +338,10 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
                 habitErrorLabel.text = "А что именно?"
                 habitErrorLabel.isHidden = false
                 habitTextField.layer.borderColor = UIColor.red.cgColor
+                habitErrorLabelHeightConstraint.constant = 15
             }
+        } else {
+            habitErrorLabelHeightConstraint.constant = 0
         }
         
         if let text = timesPerDayTextField.text, text.isEmpty {
@@ -328,7 +352,10 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
                 timesPerDayErrorLabel.text = "Максимум 10, мы против насилия над собой"
                 timesPerDayErrorLabel.isHidden = false
                 timesPerDayTextField.layer.borderColor = UIColor.red.cgColor
+                timesPerDayErrorLabelHeightConstraint.constant = 15
             }
+        } else {
+            timesPerDayErrorLabelHeightConstraint.constant = 0
         }
         
         if !selectedDays.contains(true) {
@@ -340,6 +367,8 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             }
         }
         
+        daysOfWeekErrorLabelHeightConstraint.constant = selectedDays.contains(true) ? 0 : (showErrors ? 15 : 0)
+        
         if let text = monthsTextField.text, text.isEmpty {
             monthsTextField.text = "1"
         } else if let value = Int(monthsTextField.text ?? ""), value > 125 {
@@ -350,8 +379,9 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
                 monthsTextField.layer.borderColor = UIColor.red.cgColor
             }
         }
-        return isValid
         
+        view.layoutIfNeeded()
+        return isValid
     }
     
     private func resetErrorStates() {
@@ -363,8 +393,13 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         habitTextField.layer.borderColor = UIColor.systemGray5.cgColor
         timesPerDayTextField.layer.borderColor = UIColor.systemGray5.cgColor
         monthsTextField.layer.borderColor = UIColor.systemGray5.cgColor
-        
         highlightDaysOfWeekStack(with: UIColor.systemGray5)
+        
+        habitErrorLabelHeightConstraint.constant = 0
+        timesPerDayErrorLabelHeightConstraint.constant = 0
+        daysOfWeekErrorLabelHeightConstraint.constant = 0
+        
+        view.layoutIfNeeded()
     }
     
     private func highlightDaysOfWeekStack(with color: UIColor) {
