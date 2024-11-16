@@ -8,7 +8,6 @@
 import UIKit
 
 #warning("Проверить, как можно упростить код. Есть ли вещи, которые можно убрать. Вынести UITextFieldDelegate в extension")
-#warning("Некритично, но думать, как пересчитывать параметры экрана, когда ошибки скрываются, чтобы элементы UI сдвигались обратно")
 
 
 class NewHabitViewController: UIViewController, UITextFieldDelegate {
@@ -328,11 +327,19 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // MARK: - Animate hiding labels
+    
+    private func animateLayoutChanges(duration: TimeInterval = 0.3) {
+        UIView.animate(withDuration: duration, delay: 0, options: .curveEaseInOut) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
     // MARK: - Reset error states
     
     func validateFields(showErrors: Bool = false) -> Bool {
         var isValid = true
-        resetErrorStates()
+        resetErrorStates(animated: true)
         
         if habitTextField.text?.isEmpty ?? true {
             isValid = false
@@ -342,8 +349,6 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
                 habitTextField.layer.borderColor = UIColor.red.cgColor
                 habitErrorLabelHeightConstraint.constant = 15
             }
-        } else {
-            habitErrorLabelHeightConstraint.constant = 0
         }
         
         if let text = timesPerDayTextField.text, text.isEmpty {
@@ -356,8 +361,6 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
                 timesPerDayTextField.layer.borderColor = UIColor.red.cgColor
                 timesPerDayErrorLabelHeightConstraint.constant = 15
             }
-        } else {
-            timesPerDayErrorLabelHeightConstraint.constant = 0
         }
         
         if !selectedDays.contains(true) {
@@ -368,8 +371,6 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
                 highlightDaysOfWeekStack(with: .red)
             }
         }
-        
-        daysOfWeekErrorLabelHeightConstraint.constant = selectedDays.contains(true) ? 0 : (showErrors ? 15 : 0)
         
         if let text = monthsTextField.text, text.isEmpty {
             monthsTextField.text = "1"
@@ -382,11 +383,11 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             }
         }
         
-        view.layoutIfNeeded()
+        animateLayoutChanges()
         return isValid
     }
     
-    private func resetErrorStates() {
+    private func resetErrorStates(animated: Bool = true) {
         habitErrorLabel.isHidden = true
         timesPerDayErrorLabel.isHidden = true
         daysOfWeekErrorLabel.isHidden = true
@@ -401,7 +402,11 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         timesPerDayErrorLabelHeightConstraint.constant = 0
         daysOfWeekErrorLabelHeightConstraint.constant = 0
         
-        view.layoutIfNeeded()
+        if animated {
+            animateLayoutChanges()
+        } else {
+            view.layoutIfNeeded()
+        }
     }
     
     private func highlightDaysOfWeekStack(with color: UIColor) {
