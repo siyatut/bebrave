@@ -12,40 +12,18 @@ import UIKit
 
 class NewHabitViewController: UIViewController, UITextFieldDelegate {
     
-    // MARK: Methods for creating UI elements
-    
-    private func createLabel(text: String, fontSize: CGFloat = 16, color: UIColor = .label, isBold: Bool = false, alignment: NSTextAlignment = .left, numberOfLines: Int = 1, isHidden: Bool = false) -> UILabel {
-        let label = UILabel()
-        label.text = text
-        label.textColor = color
-        label.font = isBold ? .boldSystemFont(ofSize: fontSize) : .systemFont(ofSize: fontSize)
-        label.textAlignment = alignment
-        label.numberOfLines = numberOfLines
-        label.isHidden = isHidden
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }
-    
-    private func createTextField(placeholder: String, keyboardType: UIKeyboardType = .numberPad, alignment: NSTextAlignment = .left) -> UITextField {
-        let textField = UITextField()
-        textField.placeholder = placeholder
-        textField.borderStyle = .roundedRect
-        textField.keyboardType = keyboardType
-        textField.textAlignment = alignment
-        textField.layer.cornerRadius = 18
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.systemGray5.cgColor
-        textField.clipsToBounds = true
-        textField.backgroundColor = .systemBackground
-        textField.delegate = self
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
-    }
+    // MARK: Methods for text field
     
     private func addPaddingToTextField(_ textField: UITextField, paddingWidth: CGFloat) {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: paddingWidth, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
+    }
+    
+    private func delegeteTextFields() {
+        habitTextField.delegate = self
+        timesPerDayTextField.delegate = self
+        monthsTextField.delegate = self
     }
     
     // MARK: - UI components top down
@@ -58,26 +36,27 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     }()
     
     private lazy var habitTextField: UITextField = {
-        let textField = createTextField(placeholder: "Делать что-то")
+        let textField = UITextField.styled(placeholder: "Делать что-то")
         textField.keyboardType = .default
         addPaddingToTextField(textField, paddingWidth: 12)
         return textField
     }()
     
-    private lazy var promiseLabel = createLabel(text: "Я обещаю себе", fontSize: 24, isBold: true)
-    private lazy var timesPerDayTextField = createTextField(placeholder: "1", alignment: .center)
-    private lazy var timesPerDayLabel = createLabel(text: "раз в день")
+    private lazy var promiseLabel = UILabel.styled(text: "Я обещаю себе", fontSize: 24, isBold: true)
+    private lazy var timesPerDayTextField = UITextField.styled(placeholder: "1", alignment: .center)
+    private lazy var timesPerDayLabel = UILabel.styled(text: "раз в день")
+    
     private let daysOfWeekStack = UIStackView()
     private var selectedDays: [Bool] = Array(repeating: true, count: 7)
-    private lazy var monthsTextField = createTextField(placeholder: "1", alignment: .center)
-    private lazy var monthsLabel = createLabel(text: "месяц")
+    private lazy var monthsTextField = UITextField.styled(placeholder: "1", alignment: .center)
+    private lazy var monthsLabel = UILabel.styled(text: "месяц")
     
     // MARK: - Error labels
     
-    private lazy var habitErrorLabel = createLabel(text: "", fontSize: 12, color: .red, numberOfLines: 0, isHidden: true)
-    private lazy var timesPerDayErrorLabel = createLabel(text: "", fontSize: 12, color: .red, numberOfLines: 0, isHidden: true)
-    private lazy var daysOfWeekErrorLabel = createLabel(text: "", fontSize: 12, color: .red, numberOfLines: 0, isHidden: true)
-    private lazy var monthsErrorLabel = createLabel(text: "", fontSize: 12, color: .red, numberOfLines: 0, isHidden: true)
+    private lazy var habitErrorLabel = UILabel.styled(text: "", fontSize: 12, color: .red, numberOfLines: 0, isHidden: true)
+    private lazy var timesPerDayErrorLabel = UILabel.styled(text: "", fontSize: 12, color: .red, numberOfLines: 0, isHidden: true)
+    private lazy var daysOfWeekErrorLabel = UILabel.styled(text: "", fontSize: 12, color: .red, numberOfLines: 0, isHidden: true)
+    private lazy var monthsErrorLabel = UILabel.styled(text: "", fontSize: 12, color: .red, numberOfLines: 0, isHidden: true)
     
     // MARK: - Button
     
@@ -123,6 +102,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         view.backgroundColor = .systemBackground
         setupComponents()
         setupErrorLabelConstraints()
+        delegeteTextFields()
         addNewHabitButton.addTarget(self, action: #selector(addNewHabitButtonTapped), for: .touchUpInside)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
@@ -459,5 +439,36 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
         default:
             return "месяцев"
         }
+    }
+}
+
+extension UILabel {
+    static func styled(text: String, fontSize: CGFloat = 16, color: UIColor = .label, isBold: Bool = false, alignment: NSTextAlignment = .left, numberOfLines: Int = 1, isHidden: Bool = false) -> UILabel {
+        let label = UILabel()
+        label.text = text
+        label.textColor = color
+        label.font = isBold ? .boldSystemFont(ofSize: fontSize) : .systemFont(ofSize: fontSize)
+        label.textAlignment = alignment
+        label.numberOfLines = numberOfLines
+        label.isHidden = isHidden
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
+}
+
+extension UITextField {
+    static func styled(placeholder: String, keyboardType: UIKeyboardType = .numberPad, alignment: NSTextAlignment = .left) -> UITextField {
+        let textField = UITextField()
+        textField.placeholder = placeholder
+        textField.borderStyle = .roundedRect
+        textField.keyboardType = keyboardType
+        textField.textAlignment = alignment
+        textField.layer.cornerRadius = 18
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.systemGray5.cgColor
+        textField.clipsToBounds = true
+        textField.backgroundColor = .systemBackground
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
     }
 }
