@@ -309,7 +309,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Animate hiding labels
     
-    private func animateLayoutChanges(duration: TimeInterval = 0.3) {
+    private func animateLayoutChanges(duration: TimeInterval = 0.5) {
         UIView.animate(withDuration: duration, delay: 0, options: .curveEaseInOut) {
             self.view.layoutIfNeeded()
         }
