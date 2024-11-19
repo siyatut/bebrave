@@ -20,7 +20,7 @@ class NewHabitViewController: UIViewController {
         textField.leftViewMode = .always
     }
     
-    private func delegeteTextFields() {
+    private func delegateTextFields() {
         habitTextField.delegate = self
         timesPerDayTextField.delegate = self
         monthsTextField.delegate = self
@@ -102,7 +102,7 @@ class NewHabitViewController: UIViewController {
         view.backgroundColor = .systemBackground
         setupComponents()
         setupErrorLabelConstraints()
-        delegeteTextFields()
+        delegateTextFields()
         addNewHabitButton.addTarget(self, action: #selector(addNewHabitButtonTapped), for: .touchUpInside)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
