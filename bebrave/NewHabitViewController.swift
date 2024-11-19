@@ -132,23 +132,22 @@ class NewHabitViewController: UIViewController {
         views.forEach { view.addSubview($0) }
     }
     
+    private func createStackView(arrangedSubviews: [UIView], axis: NSLayoutConstraint.Axis = .horizontal, spacing: CGFloat = 8, alignment: UIStackView.Alignment = .leading, distribution: UIStackView.Distribution = .fillProportionally) -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: arrangedSubviews)
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        stackView.alignment = .leading
+        stackView.distribution = .fillProportionally
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }
+    
     private func setupComponents() {
         setupDaysOfWeekStack()
         
-        let timesPerDayStack = UIStackView(arrangedSubviews: [timesPerDayTextField, timesPerDayLabel])
-        timesPerDayStack.axis = .horizontal
-        timesPerDayStack.spacing = 8
-        timesPerDayStack.alignment = .leading
-        timesPerDayStack.distribution = .fillProportionally
-        timesPerDayStack.translatesAutoresizingMaskIntoConstraints = false
-        
-        let monthsStack = UIStackView(arrangedSubviews: [monthsTextField, monthsLabel])
-        monthsStack.axis = .horizontal
-        monthsStack.spacing = 8
-        monthsStack.alignment = .leading
-        monthsStack.distribution = .fillProportionally
-        monthsStack.translatesAutoresizingMaskIntoConstraints = false
-        
+        let timesPerDayStack = createStackView(arrangedSubviews: [timesPerDayTextField, timesPerDayLabel])
+        let monthsStack = createStackView(arrangedSubviews: [monthsTextField, monthsLabel])
+    
         let labels = [promiseLabel, habitErrorLabel, timesPerDayErrorLabel, daysOfWeekErrorLabel, monthsErrorLabel]
         let stacks = [timesPerDayStack, daysOfWeekStack, monthsStack]
 
