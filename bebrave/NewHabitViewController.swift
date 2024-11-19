@@ -21,9 +21,7 @@ class NewHabitViewController: UIViewController {
     }
     
     private func delegateTextFields() {
-        habitTextField.delegate = self
-        timesPerDayTextField.delegate = self
-        monthsTextField.delegate = self
+        [habitTextField, timesPerDayTextField, monthsTextField].forEach { $0.delegate = self }
     }
     
     // MARK: - UI components top down
