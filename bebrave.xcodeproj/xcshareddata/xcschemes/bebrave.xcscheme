@@ -77,9 +77,9 @@
       </BuildableProductRunnable>
       <EnvironmentVariables>
          <EnvironmentVariable
-            key = "CG_CONTEXT_SHOW_BACKTRACE"
-            value = "Yes"
-            isEnabled = "YES">
+            key = "OS_ACTIVITY_MODE"
+            value = "Disable"
+            isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>
    </LaunchAction>

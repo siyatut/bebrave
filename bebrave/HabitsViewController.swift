@@ -183,23 +183,5 @@ extension HabitsViewController {
     
 }
 
-import SwiftUI
 
-struct FlowProvider: PreviewProvider {
-    static var previews: some View {
-        ContainterView().edgesIgnoringSafeArea(.all)
-    }
-    
-    struct ContainterView: UIViewControllerRepresentable {
-        
-        let tabBar = TabBarViewController()
-        func makeUIViewController(context: UIViewControllerRepresentableContext<FlowProvider.ContainterView>) -> TabBarViewController {
-            return tabBar
-        }
-        
-        func updateUIViewController(_ uiViewController: FlowProvider.ContainterView.UIViewControllerType, context: UIViewControllerRepresentableContext<FlowProvider.ContainterView>) {
-            
-        }
-    }
-}
 

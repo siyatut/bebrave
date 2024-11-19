@@ -31,24 +31,3 @@ class OutlineBackgroundView: UICollectionReusableView {
     }
 }
 
-import SwiftUI
-
-struct OutlineBackgroundPreview: PreviewProvider {
-    
-    static var previews: some View {
-        OutlineBackground()
-            .edgesIgnoringSafeArea(.all)
-            .previewLayout(.fixed(width: 300, height: 60))
-    }
-    
-    struct OutlineBackground: UIViewRepresentable {
-        
-        func makeUIView(context: Context) -> some UIView {
-            OutlineBackgroundView()
-        }
-
-        func updateUIView(_ uiView: UIViewType, context: Context) {
-            
-        }
-    }
-}

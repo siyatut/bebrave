@@ -55,25 +55,4 @@ class DiaryWriteCell: UICollectionViewCell {
 }
 
 
-import SwiftUI
-
-struct DiaryWriteCellPreview: PreviewProvider {
-    
-    static var previews: some View {
-        MyCell()
-            .edgesIgnoringSafeArea(.all)
-            .previewLayout(.fixed(width: 300, height: 60))
-    }
-    
-    struct MyCell: UIViewRepresentable {
-        
-        func makeUIView(context: Context) -> some UIView {
-            DiaryWriteCell()
-        }
-
-        func updateUIView(_ uiView: UIViewType, context: Context) {
-            
-        }
-    }
-}
 
