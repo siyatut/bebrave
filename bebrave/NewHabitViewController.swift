@@ -12,7 +12,7 @@ import UIKit
 
 class NewHabitViewController: UIViewController {
     
-    // MARK: Methods for text field
+    // MARK: - Helper methods for text field
     
     private func addPaddingToTextField(_ textField: UITextField, paddingWidth: CGFloat) {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: paddingWidth, height: textField.frame.height))
@@ -57,6 +57,24 @@ class NewHabitViewController: UIViewController {
     private lazy var timesPerDayErrorLabel = UILabel.styled(text: "", fontSize: 12, color: .red, numberOfLines: 0, isHidden: true)
     private lazy var daysOfWeekErrorLabel = UILabel.styled(text: "", fontSize: 12, color: .red, numberOfLines: 0, isHidden: true)
     private lazy var monthsErrorLabel = UILabel.styled(text: "", fontSize: 12, color: .red, numberOfLines: 0, isHidden: true)
+    
+    // MARK: - Error label's height
+    
+    private var habitErrorLabelHeightConstraint: NSLayoutConstraint!
+    private var timesPerDayErrorLabelHeightConstraint: NSLayoutConstraint!
+    private var daysOfWeekErrorLabelHeightConstraint: NSLayoutConstraint!
+   
+    private func setupErrorLabelConstraints() {
+        habitErrorLabelHeightConstraint = habitErrorLabel.heightAnchor.constraint(equalToConstant: 0)
+        timesPerDayErrorLabelHeightConstraint = timesPerDayErrorLabel.heightAnchor.constraint(equalToConstant: 0)
+        daysOfWeekErrorLabelHeightConstraint = daysOfWeekErrorLabel.heightAnchor.constraint(equalToConstant: 0)
+        
+        NSLayoutConstraint.activate([
+            habitErrorLabelHeightConstraint,
+            timesPerDayErrorLabelHeightConstraint,
+            daysOfWeekErrorLabelHeightConstraint,
+        ])
+    }
     
     // MARK: - Button
     
@@ -108,25 +126,11 @@ class NewHabitViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
     }
     
-    // MARK: - Error label's height
-    
-    private var habitErrorLabelHeightConstraint: NSLayoutConstraint!
-    private var timesPerDayErrorLabelHeightConstraint: NSLayoutConstraint!
-    private var daysOfWeekErrorLabelHeightConstraint: NSLayoutConstraint!
-   
-    private func setupErrorLabelConstraints() {
-        habitErrorLabelHeightConstraint = habitErrorLabel.heightAnchor.constraint(equalToConstant: 0)
-        timesPerDayErrorLabelHeightConstraint = timesPerDayErrorLabel.heightAnchor.constraint(equalToConstant: 0)
-        daysOfWeekErrorLabelHeightConstraint = daysOfWeekErrorLabel.heightAnchor.constraint(equalToConstant: 0)
-        
-        NSLayoutConstraint.activate([
-            habitErrorLabelHeightConstraint,
-            timesPerDayErrorLabelHeightConstraint,
-            daysOfWeekErrorLabelHeightConstraint,
-        ])
-    }
-    
     // MARK: - Set up UI components
+    
+    private func addSubviews(_ views: [UIView]) {
+        views.forEach { view.addSubview($0) }
+    }
     
     private func setupComponents() {
         setupDaysOfWeekStack()
@@ -147,18 +151,9 @@ class NewHabitViewController: UIViewController {
         
         let labels = [promiseLabel, habitErrorLabel, timesPerDayErrorLabel, daysOfWeekErrorLabel, monthsErrorLabel]
         let stacks = [timesPerDayStack, daysOfWeekStack, monthsStack]
-        
-        for l in labels {
-            view.addSubview(l)
-        }
-        
-        for s in stacks {
-            view.addSubview(s)
-        }
-        
-        view.addSubview(emojiImageView)
-        view.addSubview(addNewHabitButton)
-        view.addSubview(habitTextField)
+
+        addSubviews(labels + stacks)
+        addSubviews([emojiImageView, addNewHabitButton, habitTextField])
         
         NSLayoutConstraint.activate([
             emojiImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
