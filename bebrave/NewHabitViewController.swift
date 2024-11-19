@@ -294,8 +294,9 @@ class NewHabitViewController: UIViewController {
         view.endEditing(true)
         if validateAndShowErrorsIfNeeded() {
             updateButtonState()
+            print("После скрытия клавиатуры. Нет ошибок. Кнопка доступна")
         } else {
-            print("После скрытия клавиатуры. Есть ошибки. Кнопка недоступна")
+            print("После скрытия клавиатуры. Есть ошибки. Кнопка становится серой")
         }
     }
     
