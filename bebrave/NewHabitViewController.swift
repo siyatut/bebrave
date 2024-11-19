@@ -7,10 +7,10 @@
 
 import UIKit
 
-#warning("Проверить, как можно упростить код. Есть ли вещи, которые можно убрать. Вынести UITextFieldDelegate в extension")
+#warning("Проверить, как можно упростить код. Есть ли вещи, которые можно убрать")
 
 
-class NewHabitViewController: UIViewController, UITextFieldDelegate {
+class NewHabitViewController: UIViewController {
     
     // MARK: Methods for text field
     
@@ -394,28 +394,7 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             view.layer.borderColor = color.cgColor
         }
     }
-    
-    // MARK: - Text field delegate (сhecking and updating label's text on values ​​in text fields)
-    
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-        
-        if textField == timesPerDayTextField {
-            if let text = textField.text, let value = Int(text), (1...10).contains(value) {
-                timesPerDayLabel.text = dayText(for: value)
-            } else {
-                timesPerDayLabel.text = "раз в день"
-            }
-        }
-    
-        if textField == monthsTextField {
-            if let text = textField.text, let value = Int(text), (1...125).contains(value) {
-                monthsLabel.text = monthText(for: value)
-            } else {
-                monthsLabel.text = "месяцев"
-            }
-        }
-    }
-    
+
     // MARK: - Change's method for the words "day" and "month"
     
     private func dayText(for value: Int) -> String {
@@ -438,6 +417,27 @@ class NewHabitViewController: UIViewController, UITextFieldDelegate {
             return "месяца"
         default:
             return "месяцев"
+        }
+    }
+}
+
+extension NewHabitViewController: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        
+        if textField == timesPerDayTextField {
+            if let text = textField.text, let value = Int(text), (1...10).contains(value) {
+                timesPerDayLabel.text = dayText(for: value)
+            } else {
+                timesPerDayLabel.text = "раз в день"
+            }
+        }
+    
+        if textField == monthsTextField {
+            if let text = textField.text, let value = Int(text), (1...125).contains(value) {
+                monthsLabel.text = monthText(for: value)
+            } else {
+                monthsLabel.text = "месяцев"
+            }
         }
     }
 }
