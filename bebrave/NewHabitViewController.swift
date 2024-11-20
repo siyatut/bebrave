@@ -7,10 +7,57 @@
 
 import UIKit
 
-#warning("Проверить, как можно упростить код. Есть ли вещи, которые можно убрать")
-
+private struct AppStyle {
+    struct Colors {
+        static let primaryColor = UIColor(named: "PrimaryColor") ?? .systemPurple
+        static let errorColor = UIColor.red
+        static let borderColor = UIColor.systemGray5
+        static let textColor = UIColor.label
+        static let backgroundColor = UIColor.systemBackground
+    }
+    
+    struct Sizes {
+        static let cornerRadius: CGFloat = 18
+        static let borderWidth: CGFloat = 1
+        static let padding: CGFloat = 12
+    }
+    
+    struct Fonts {
+        static func boldFont(size: CGFloat) -> UIFont {
+            return UIFont.boldSystemFont(ofSize: size)
+        }
+        
+        static func regularFont(size: CGFloat) -> UIFont {
+            return UIFont.systemFont(ofSize: size)
+        }
+    }
+}
 
 class NewHabitViewController: UIViewController {
+    
+    // MARK: - UI components top down
+    
+    private let emojiImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "EmojiNewHabit")
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var habitTextField: UITextField = {
+        let textField = UITextField.styled(placeholder: "Делать что-то", keyboardType: .default)
+        addPaddingToTextField(textField, paddingWidth: AppStyle.Sizes.padding)
+        return textField
+    }()
+    
+    private lazy var promiseLabel = UILabel.styled(text: "Я обещаю себе", fontSize: 24, isBold: true)
+    private lazy var timesPerDayTextField = UITextField.styled(placeholder: "1", alignment: .center)
+    private lazy var timesPerDayLabel = UILabel.styled(text: "раз в день")
+    
+    private let daysOfWeekStack = UIStackView()
+    private var selectedDays: [Bool] = Array(repeating: true, count: 7)
+    private lazy var monthsTextField = UITextField.styled(placeholder: "1", alignment: .center)
+    private lazy var monthsLabel = UILabel.styled(text: "месяц")
     
     // MARK: - Helper methods for text field
     
@@ -24,37 +71,12 @@ class NewHabitViewController: UIViewController {
         [habitTextField, timesPerDayTextField, monthsTextField].forEach { $0.delegate = self }
     }
     
-    // MARK: - UI components top down
-    
-    private let emojiImageView: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "EmojiNewHabit")
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private lazy var habitTextField: UITextField = {
-        let textField = UITextField.styled(placeholder: "Делать что-то")
-        textField.keyboardType = .default
-        addPaddingToTextField(textField, paddingWidth: 12)
-        return textField
-    }()
-    
-    private lazy var promiseLabel = UILabel.styled(text: "Я обещаю себе", fontSize: 24, isBold: true)
-    private lazy var timesPerDayTextField = UITextField.styled(placeholder: "1", alignment: .center)
-    private lazy var timesPerDayLabel = UILabel.styled(text: "раз в день")
-    
-    private let daysOfWeekStack = UIStackView()
-    private var selectedDays: [Bool] = Array(repeating: true, count: 7)
-    private lazy var monthsTextField = UITextField.styled(placeholder: "1", alignment: .center)
-    private lazy var monthsLabel = UILabel.styled(text: "месяц")
-    
     // MARK: - Error labels
     
-    private lazy var habitErrorLabel = UILabel.styled(text: "", fontSize: 12, color: .red, numberOfLines: 0, isHidden: true)
-    private lazy var timesPerDayErrorLabel = UILabel.styled(text: "", fontSize: 12, color: .red, numberOfLines: 0, isHidden: true)
-    private lazy var daysOfWeekErrorLabel = UILabel.styled(text: "", fontSize: 12, color: .red, numberOfLines: 0, isHidden: true)
-    private lazy var monthsErrorLabel = UILabel.styled(text: "", fontSize: 12, color: .red, numberOfLines: 0, isHidden: true)
+    private lazy var habitErrorLabel = UILabel.styled(text: "", fontSize: 12, color: AppStyle.Colors.errorColor, numberOfLines: 0, isHidden: true)
+    private lazy var timesPerDayErrorLabel = UILabel.styled(text: "", fontSize: 12, color: AppStyle.Colors.errorColor, numberOfLines: 0, isHidden: true)
+    private lazy var daysOfWeekErrorLabel = UILabel.styled(text: "", fontSize: 12, color: AppStyle.Colors.errorColor, numberOfLines: 0, isHidden: true)
+    private lazy var monthsErrorLabel = UILabel.styled(text: "", fontSize: 12, color: AppStyle.Colors.errorColor, numberOfLines: 0, isHidden: true)
     
     // MARK: - Error label's height
     
@@ -81,7 +103,7 @@ class NewHabitViewController: UIViewController {
         
         button.setTitle("Добавить привычку", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor(named: "PrimaryColor")
+        button.backgroundColor = AppStyle.Colors.primaryColor
         
         let plusImage = UIImage(named: "Plus")
         let plusImageGray = UIImage(named: "Plus")?.withTintColor(.white, renderingMode: .alwaysOriginal)
@@ -96,7 +118,7 @@ class NewHabitViewController: UIViewController {
         button.configuration = config
         
         button.clipsToBounds = true
-        button.layer.cornerRadius = 18
+        button.layer.cornerRadius = AppStyle.Sizes.cornerRadius
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -107,7 +129,7 @@ class NewHabitViewController: UIViewController {
     
     private func updateButtonState() {
         addNewHabitButton.isEnabled = validateFields(showErrors: hasAttemptedSave)
-        addNewHabitButton.backgroundColor = addNewHabitButton.isEnabled ? UIColor(named: "PrimaryColor") : .systemGray2
+        addNewHabitButton.backgroundColor = addNewHabitButton.isEnabled ? AppStyle.Colors.primaryColor : .systemGray2
         addNewHabitButton.setTitleColor(.white, for: .disabled)
     }
     
@@ -115,7 +137,7 @@ class NewHabitViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = AppStyle.Colors.backgroundColor
         setupComponents()
         setupErrorLabelConstraints()
         delegateTextFields()
@@ -222,9 +244,9 @@ class NewHabitViewController: UIViewController {
         
         for i in 0..<7 {
             let dayContainer = UIView()
-            dayContainer.layer.cornerRadius = 18
-            dayContainer.layer.borderWidth = 1
-            dayContainer.layer.borderColor = UIColor.systemGray5.cgColor
+            dayContainer.layer.cornerRadius = AppStyle.Sizes.cornerRadius
+            dayContainer.layer.borderWidth = AppStyle.Sizes.borderWidth
+            dayContainer.layer.borderColor = AppStyle.Colors.borderColor.cgColor
             dayContainer.translatesAutoresizingMaskIntoConstraints = false
             
             let dayStack = UIStackView()
@@ -236,7 +258,7 @@ class NewHabitViewController: UIViewController {
             
             let dayLabel = UILabel()
             dayLabel.text = dayTitles[i]
-            dayLabel.font = UIFont.systemFont(ofSize: 16)
+            dayLabel.font = AppStyle.Fonts.regularFont(size: 16)
             dayLabel.textAlignment = .center
             dayLabel.translatesAutoresizingMaskIntoConstraints = false
             
@@ -296,7 +318,7 @@ class NewHabitViewController: UIViewController {
             updateButtonState()
             print("После скрытия клавиатуры. Нет ошибок. Кнопка доступна")
         } else {
-            print("После скрытия клавиатуры. Есть ошибки. Кнопка становится серой")
+            print("После скрытия клавиатуры. Есть ошибки. Кнопка неактивна")
         }
     }
     
@@ -319,7 +341,7 @@ class NewHabitViewController: UIViewController {
             if showErrors {
                 habitErrorLabel.text = "А что именно?"
                 habitErrorLabel.isHidden = false
-                habitTextField.layer.borderColor = UIColor.red.cgColor
+                habitTextField.layer.borderColor = AppStyle.Colors.errorColor.cgColor
                 habitErrorLabelHeightConstraint.constant = 15
             }
         }
@@ -331,7 +353,7 @@ class NewHabitViewController: UIViewController {
             if showErrors {
                 timesPerDayErrorLabel.text = "Максимум 10, мы против насилия над собой"
                 timesPerDayErrorLabel.isHidden = false
-                timesPerDayTextField.layer.borderColor = UIColor.red.cgColor
+                timesPerDayTextField.layer.borderColor = AppStyle.Colors.errorColor.cgColor
                 timesPerDayErrorLabelHeightConstraint.constant = 15
             }
         }
@@ -341,8 +363,13 @@ class NewHabitViewController: UIViewController {
             if showErrors {
                 daysOfWeekErrorLabel.text = "Если не выбрать ни одного дня, в трекере нет смысла"
                 daysOfWeekErrorLabel.isHidden = false
-                highlightDaysOfWeekStack(with: .red)
+                daysOfWeekErrorLabelHeightConstraint.constant = 15
+                highlightDaysOfWeekStack(with: AppStyle.Colors.errorColor)
             }
+        } else {
+            daysOfWeekErrorLabel.isHidden = true
+            daysOfWeekErrorLabelHeightConstraint.constant = 0
+            highlightDaysOfWeekStack(with: AppStyle.Colors.borderColor)
         }
         
         if let text = monthsTextField.text, text.isEmpty {
@@ -352,7 +379,7 @@ class NewHabitViewController: UIViewController {
             if showErrors {
                 monthsErrorLabel.text = "Максимум 125, но мы восхищены горизонтом\nпланирования — это больше 10 лет!"
                 monthsErrorLabel.isHidden = false
-                monthsTextField.layer.borderColor = UIColor.red.cgColor
+                monthsTextField.layer.borderColor = AppStyle.Colors.errorColor.cgColor
             }
         }
         
@@ -366,10 +393,10 @@ class NewHabitViewController: UIViewController {
         daysOfWeekErrorLabel.isHidden = true
         monthsErrorLabel.isHidden = true
         
-        habitTextField.layer.borderColor = UIColor.systemGray5.cgColor
-        timesPerDayTextField.layer.borderColor = UIColor.systemGray5.cgColor
-        monthsTextField.layer.borderColor = UIColor.systemGray5.cgColor
-        highlightDaysOfWeekStack(with: UIColor.systemGray5)
+        habitTextField.layer.borderColor = AppStyle.Colors.borderColor.cgColor
+        timesPerDayTextField.layer.borderColor = AppStyle.Colors.borderColor.cgColor
+        monthsTextField.layer.borderColor = AppStyle.Colors.borderColor.cgColor
+        highlightDaysOfWeekStack(with: AppStyle.Colors.borderColor)
         
         habitErrorLabelHeightConstraint.constant = 0
         timesPerDayErrorLabelHeightConstraint.constant = 0
@@ -385,6 +412,7 @@ class NewHabitViewController: UIViewController {
     private func highlightDaysOfWeekStack(with color: UIColor) {
         for view in daysOfWeekStack.arrangedSubviews {
             view.layer.borderColor = color.cgColor
+            view.layer.borderWidth = AppStyle.Sizes.borderWidth
         }
     }
 
@@ -414,6 +442,8 @@ class NewHabitViewController: UIViewController {
     }
 }
 
+// MARK: - Extensions
+
 extension NewHabitViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         
@@ -424,7 +454,7 @@ extension NewHabitViewController: UITextFieldDelegate {
                 timesPerDayLabel.text = "раз в день"
             }
         }
-    
+        
         if textField == monthsTextField {
             if let text = textField.text, let value = Int(text), (1...125).contains(value) {
                 monthsLabel.text = monthText(for: value)
@@ -436,11 +466,18 @@ extension NewHabitViewController: UITextFieldDelegate {
 }
 
 extension UILabel {
-    static func styled(text: String, fontSize: CGFloat = 16, color: UIColor = .label, isBold: Bool = false, alignment: NSTextAlignment = .left, numberOfLines: Int = 1, isHidden: Bool = false) -> UILabel {
+    static func styled(text: String,
+                       fontSize: CGFloat = 16,
+                       color: UIColor = AppStyle.Colors.textColor,
+                       isBold: Bool = false,
+                       alignment: NSTextAlignment = .left,
+                       numberOfLines: Int = 1,
+                       isHidden: Bool = false
+    ) -> UILabel {
         let label = UILabel()
         label.text = text
         label.textColor = color
-        label.font = isBold ? .boldSystemFont(ofSize: fontSize) : .systemFont(ofSize: fontSize)
+        label.font = isBold ? AppStyle.Fonts.boldFont(size: fontSize) : AppStyle.Fonts.regularFont(size: fontSize)
         label.textAlignment = alignment
         label.numberOfLines = numberOfLines
         label.isHidden = isHidden
@@ -450,18 +487,22 @@ extension UILabel {
 }
 
 extension UITextField {
-    static func styled(placeholder: String, keyboardType: UIKeyboardType = .numberPad, alignment: NSTextAlignment = .left) -> UITextField {
+    static func styled(placeholder: String,
+                       keyboardType: UIKeyboardType = .numberPad,
+                       alignment: NSTextAlignment = .left
+    ) -> UITextField {
         let textField = UITextField()
         textField.placeholder = placeholder
         textField.borderStyle = .roundedRect
         textField.keyboardType = keyboardType
         textField.textAlignment = alignment
-        textField.layer.cornerRadius = 18
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.systemGray5.cgColor
+        textField.layer.cornerRadius = AppStyle.Sizes.cornerRadius
+        textField.layer.borderWidth = AppStyle.Sizes.borderWidth
+        textField.layer.borderColor = AppStyle.Colors.borderColor.cgColor
         textField.clipsToBounds = true
         textField.backgroundColor = .systemBackground
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }
 }
+
