@@ -91,8 +91,6 @@ class HabitsViewController: UICollectionViewController {
         view.backgroundColor = .systemBackground
         setupHistoryButton()
         setupCalendarLabel()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: historyButton)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: calendarLabel)
         
         collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: CustomElement.collectionHeader.rawValue, withReuseIdentifier: CustomElement.collectionHeader.rawValue)
         
@@ -175,12 +173,29 @@ extension HabitsViewController {
         historyButton.setTitle("История", for: .normal)
         historyButton.titleLabel?.font = AppStyle.Fonts.boldFont(size: 16)
         historyButton.addTarget(self, action: #selector(historyButtonTapped), for: .touchUpInside)
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: historyButton)
     }
     
     private func setupCalendarLabel() {
+        let container = UIView()
+        container.translatesAutoresizingMaskIntoConstraints = false
+        
         calendarLabel.text = "Январь"
         calendarLabel.textColor = AppStyle.Colors.textColor
         calendarLabel.font = AppStyle.Fonts.boldFont(size: 20)
+        calendarLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        container.addSubview(calendarLabel)
+        
+        NSLayoutConstraint.activate([
+            calendarLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 4),
+            calendarLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            calendarLabel.topAnchor.constraint(equalTo: container.topAnchor),
+            calendarLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor)
+            
+        ])
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: container)
     }
     
 }
