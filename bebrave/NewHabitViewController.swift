@@ -7,32 +7,6 @@
 
 import UIKit
 
-private struct AppStyle {
-    struct Colors {
-        static let primaryColor = UIColor(named: "PrimaryColor") ?? .systemPurple
-        static let errorColor = UIColor.red
-        static let borderColor = UIColor.systemGray5
-        static let textColor = UIColor.label
-        static let backgroundColor = UIColor.systemBackground
-    }
-    
-    struct Sizes {
-        static let cornerRadius: CGFloat = 18
-        static let borderWidth: CGFloat = 1
-        static let padding: CGFloat = 12
-    }
-    
-    struct Fonts {
-        static func boldFont(size: CGFloat) -> UIFont {
-            return UIFont.boldSystemFont(ofSize: size)
-        }
-        
-        static func regularFont(size: CGFloat) -> UIFont {
-            return UIFont.systemFont(ofSize: size)
-        }
-    }
-}
-
 class NewHabitViewController: UIViewController {
     
     // MARK: - UI components top down
