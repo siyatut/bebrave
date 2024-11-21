@@ -279,21 +279,15 @@ class NewHabitViewController: UIViewController {
         hasAttemptedSave = true
         if validateAndShowErrorsIfNeeded() {
             print("Сохраняем привычку")
+            updateButtonState()
             // Здесь будет логика сохранения привычки
         } else {
           print("После нажатия на кнопку. Есть ошибки. Кнопка недоступна")
         }
-        updateButtonState()
     }
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
-        if validateAndShowErrorsIfNeeded() {
-            updateButtonState()
-            print("После скрытия клавиатуры. Нет ошибок. Кнопка доступна")
-        } else {
-            print("После скрытия клавиатуры. Есть ошибки. Кнопка неактивна")
-        }
     }
     
     // MARK: - Animate hiding labels
