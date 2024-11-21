@@ -89,8 +89,8 @@ class HabitsViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        customiseHistoryButton()
-        customiseCalendarLabel()
+        setupHistoryButton()
+        setupCalendarLabel()
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: historyButton)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: calendarLabel)
         
@@ -164,21 +164,23 @@ extension HabitsViewController {
 
 extension HabitsViewController {
     
-    private func customiseHistoryButton() {
+    private func setupHistoryButton() {
+        var configuration = UIButton.Configuration.plain()
+        configuration.baseForegroundColor = AppStyle.Colors.primaryColor
+        configuration.image = UIImage(named: "History")
+        configuration.imagePadding = 4
+        configuration.imagePlacement = .leading
+        
+        historyButton.configuration = configuration
         historyButton.setTitle("История", for: .normal)
-        historyButton.setTitleColor(.tintColor, for: .normal)
-        historyButton.setImage(UIImage(named: "History"), for: .normal)
-        historyButton.contentVerticalAlignment = .fill
-        historyButton.contentHorizontalAlignment = .fill
-        historyButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4)
-        historyButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
+        historyButton.titleLabel?.font = AppStyle.Fonts.boldFont(size: 16)
         historyButton.addTarget(self, action: #selector(historyButtonTapped), for: .touchUpInside)
     }
     
-    private func customiseCalendarLabel() {
+    private func setupCalendarLabel() {
         calendarLabel.text = "Январь"
-        calendarLabel.textColor = .black
-        calendarLabel.font = .boldSystemFont(ofSize: 20)
+        calendarLabel.textColor = AppStyle.Colors.textColor
+        calendarLabel.font = AppStyle.Fonts.boldFont(size: 20)
     }
     
 }
