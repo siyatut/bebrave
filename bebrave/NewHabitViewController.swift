@@ -102,8 +102,9 @@ class NewHabitViewController: UIViewController {
     // MARK: - Button state update
     
     private func updateButtonState() {
-        addNewHabitButton.isEnabled = validateFields(showErrors: hasAttemptedSave)
-        addNewHabitButton.backgroundColor = addNewHabitButton.isEnabled ? AppStyle.Colors.primaryColor : .systemGray2
+        let isValid = validateFields(showErrors: false)
+        addNewHabitButton.isEnabled = isValid
+        addNewHabitButton.backgroundColor = isValid ? AppStyle.Colors.primaryColor : .systemGray2
         addNewHabitButton.setTitleColor(.white, for: .disabled)
     }
     
@@ -261,10 +262,6 @@ class NewHabitViewController: UIViewController {
     
     // MARK: - Interacting with button and checkbox
     
-    private func validateAndShowErrorsIfNeeded() -> Bool {
-        return validateFields(showErrors: true)
-    }
-    
     @objc private func checkboxTapped(_ sender: UITapGestureRecognizer) {
         guard let index = sender.view?.tag else { return }
         selectedDays[index].toggle()
@@ -277,7 +274,9 @@ class NewHabitViewController: UIViewController {
     
     @objc private func addNewHabitButtonTapped() {
         hasAttemptedSave = true
-        if validateAndShowErrorsIfNeeded() {
+        let isValid = validateFields(showErrors: true)
+        
+        if isValid {
             print("Сохраняем привычку")
             updateButtonState()
             // Здесь будет логика сохранения привычки
