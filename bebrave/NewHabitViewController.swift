@@ -74,28 +74,28 @@ class NewHabitViewController: UIViewController {
     
     // MARK: - Button
     
-    private let addNewHabitButton: UIButton = {
+    private lazy var addNewHabitButton: UIButton = {
         let button = UIButton(type: .system)
         
-        button.setTitle("Добавить привычку", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = AppStyle.Colors.primaryColor
-        
-        let plusImage = UIImage(named: "Plus")
-        let plusImageGray = UIImage(named: "Plus")?.withTintColor(.white, renderingMode: .alwaysOriginal)
-        
-        button.setImage(plusImage, for: .normal)
-        button.setImage(plusImageGray, for: .disabled)
-        
-        button.tintColor = .white
-        var config = UIButton.Configuration.plain()
-        config.imagePadding = 4
+        var config = UIButton.Configuration.filled()
+        config.title = "Добавить привычку"
         config.baseForegroundColor = .white
+        config.image = UIImage(named: "Plus")
+        config.imagePadding = 4
+        config.cornerStyle = .capsule
+        config.baseBackgroundColor = AppStyle.Colors.primaryColor
         button.configuration = config
         
-        button.clipsToBounds = true
-        button.layer.cornerRadius = AppStyle.Sizes.cornerRadius
+        button.configurationUpdateHandler = { button in
+            var updatedConfig = button.configuration
+            updatedConfig?.baseBackgroundColor = button.isEnabled
+            ? AppStyle.Colors.primaryColor
+            : .systemGray2
+            button.configuration = updatedConfig
+        }
+        
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(addNewHabitButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -104,10 +104,8 @@ class NewHabitViewController: UIViewController {
     // MARK: - Button state update
     
     private func updateButtonState() {
-        let isValid = validateFields(showErrors: false)
+        let isValid = validateFields(showErrors: hasAttemptedSave)
         addNewHabitButton.isEnabled = isValid
-        addNewHabitButton.backgroundColor = isValid ? AppStyle.Colors.primaryColor : .systemGray2
-        addNewHabitButton.setTitleColor(.white, for: .disabled)
     }
     
     // MARK: - Lifecycle
@@ -118,7 +116,6 @@ class NewHabitViewController: UIViewController {
         setupComponents()
         setupErrorLabelConstraints()
         delegateTextFields()
-        addNewHabitButton.addTarget(self, action: #selector(addNewHabitButtonTapped), for: .touchUpInside)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
     }
@@ -280,15 +277,16 @@ class NewHabitViewController: UIViewController {
         
         if isValid {
             print("Сохраняем привычку")
-            updateButtonState()
             // Здесь будет логика сохранения привычки
         } else {
           print("После нажатия на кнопку. Есть ошибки. Кнопка недоступна")
         }
+        updateButtonState()
     }
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
+        updateButtonState()
     }
     
     // MARK: - Animate hiding labels
