@@ -5,6 +5,8 @@
 //  Created by Anastasia Tyutinova on 16/10/2567 BE.
 //
 
+#warning("Так и не придумала, как изменять цвет кнопки на серый, если есть ошибки. Существующая логика не работает.")
+
 import UIKit
 
 class NewHabitViewController: UIViewController {
@@ -429,6 +431,18 @@ extension NewHabitViewController: UITextFieldDelegate {
                 monthsLabel.text = "месяцев"
             }
         }
+    }
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if textField == habitTextField {
+            if let currentText = textField.text {
+                let formattedText = currentText
+                    .trimmingCharacters(in: .whitespaces)
+                    .replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
+                textField.text = formattedText
+            }
+        }
+        return true
     }
 }
 
