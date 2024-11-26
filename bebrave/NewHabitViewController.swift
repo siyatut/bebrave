@@ -5,8 +5,6 @@
 //  Created by Anastasia Tyutinova on 16/10/2567 BE.
 //
 
-#warning("Возможно, есть затык с тем, что после исправления ошибки на кнопку нужно нажать дважды для сохранения привычки")
-
 import UIKit
 
 class NewHabitViewController: UIViewController {
@@ -259,7 +257,7 @@ class NewHabitViewController: UIViewController {
         }
     }
     
-    // MARK: - Interacting with button and checkbox
+    // MARK: - Interact with button and checkbox
     
     @objc private func checkboxTapped(_ sender: UITapGestureRecognizer) {
         guard let index = sender.view?.tag else { return }
@@ -269,6 +267,7 @@ class NewHabitViewController: UIViewController {
             let imageName = selectedDays[index] ? "CheckedCheckbox" : "UncheckedCheckbox"
             checkboxImageView.image = UIImage(named: imageName)
         }
+        updateButtonState()
     }
     
     @objc private func addNewHabitButtonTapped() {
