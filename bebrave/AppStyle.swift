@@ -14,6 +14,7 @@ struct AppStyle {
         static let borderColor = UIColor.systemGray5
         static let textColor = UIColor.label
         static let backgroundColor = UIColor.systemBackground
+        static let disabledButtonColor = UIColor.systemGray4
     }
     
     struct Sizes {

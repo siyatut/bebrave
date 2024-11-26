@@ -81,14 +81,13 @@ class NewHabitViewController: UIViewController {
         config.image = UIImage(named: "Plus")
         config.imagePadding = 4
         config.cornerStyle = .capsule
-        config.baseBackgroundColor = AppStyle.Colors.primaryColor
         button.configuration = config
         
         button.configurationUpdateHandler = { button in
             var updatedConfig = button.configuration
-            updatedConfig?.baseBackgroundColor = button.isEnabled
+            updatedConfig?.background.backgroundColor = button.isEnabled
             ? AppStyle.Colors.primaryColor
-            : .systemGray2
+            : AppStyle.Colors.disabledButtonColor
             button.configuration = updatedConfig
         }
         
