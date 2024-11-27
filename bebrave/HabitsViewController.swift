@@ -92,13 +92,30 @@ class HabitsViewController: UICollectionViewController {
         setupHistoryButton()
         setupCalendarLabel()
         
-        collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: CustomElement.collectionHeader.rawValue, withReuseIdentifier: CustomElement.collectionHeader.rawValue)
+        collectionView.register(
+            HeaderDaysCollectionView.self,
+            forSupplementaryViewOfKind: CustomElement.collectionHeader.rawValue,
+            withReuseIdentifier: CustomElement.collectionHeader.rawValue
+        )
         
-        collectionView.register(HabitsCell.self, forCellWithReuseIdentifier: CustomElement.habitsCell.rawValue)
-        collectionView.register(DiaryWriteCell.self, forCellWithReuseIdentifier: CustomElement.writeDiaryCell.rawValue)
-        collectionView.register(OutlineBackgroundView.self, forSupplementaryViewOfKind: CustomElement.outlineBackground.rawValue, withReuseIdentifier: CustomElement.outlineBackground.rawValue)
-        
-        collectionView.register(AddNewHabitView.self, forSupplementaryViewOfKind: CustomElement.sectionFooter.rawValue, withReuseIdentifier: CustomElement.sectionFooter.rawValue)
+        collectionView.register(
+            HabitsCell.self,
+            forCellWithReuseIdentifier: CustomElement.habitsCell.rawValue
+        )
+        collectionView.register(
+            DiaryWriteCell.self,
+            forCellWithReuseIdentifier: CustomElement.writeDiaryCell.rawValue
+        )
+        collectionView.register(
+            OutlineBackgroundView.self,
+            forSupplementaryViewOfKind: CustomElement.outlineBackground.rawValue,
+            withReuseIdentifier: CustomElement.outlineBackground.rawValue
+        )
+        collectionView.register(
+            AddNewHabitView.self,
+            forSupplementaryViewOfKind: CustomElement.sectionFooter.rawValue,
+            withReuseIdentifier: CustomElement.sectionFooter.rawValue
+        )
     }
 
 // MARK: - Objc methods
@@ -121,20 +138,31 @@ extension HabitsViewController {
         return 3
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         let isWriteDiary = indexPath.row == 2
         let reuseIdentifier = isWriteDiary
-            ? CustomElement.writeDiaryCell.rawValue
-            : CustomElement.habitsCell.rawValue
+        ? CustomElement.writeDiaryCell.rawValue
+        : CustomElement.habitsCell.rawValue
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         cell.backgroundColor = .systemBackground
-          //  .tintColor.withAlphaComponent(0.05)
+        //  .tintColor.withAlphaComponent(0.05)
         return cell
     }
     
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-#warning("Подумать, что тут происходит. Приложение крашится при запуске, не удаётся отобразить HeaderDaysCollectionView. Проверить последний case, возможно, переписать. Добавить else для всех сase, чтобы отображать корректные ошибки.")
-        let customElement = CustomElement(rawValue: kind)
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind
+        kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+#warning("Проверить, можно ли посимпатичнее переписать эту часть кода. Куда подевались writeDairyCell и habitsCell? Нужно ли обязательно прописывать return у OutlineBackgroundView? У остальных, думаю, обязательно нужно.")
+        guard let customElement = CustomElement(rawValue: kind) else {
+            assertionFailure("Unexpected supplementary kind: \(kind)")
+            return UICollectionReusableView()
+        }
         switch customElement {
         case .sectionFooter:
             if let footer = collectionView.dequeueReusableSupplementaryView(
@@ -146,6 +174,8 @@ extension HabitsViewController {
                 footer.parentViewController = self
                 return footer
             }
+            assertionFailure("Failed to dequeue AddNewHabitView")
+            return UICollectionReusableView()
         case .collectionHeader:
             if let header = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
@@ -156,13 +186,22 @@ extension HabitsViewController {
                 header.parentViewController = self
                 return header
             }
+            assertionFailure("Failed to dequeue HeaderDaysCollectionView")
+            return UICollectionReusableView()
         case .outlineBackground:
-            let outlineBackground = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomElement.outlineBackground.rawValue, for: indexPath)
-            return outlineBackground
-        case .none, .habitsCell, .writeDiaryCell:
-            fatalError()
+            if let outlineBackground = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: CustomElement.outlineBackground.rawValue,
+                for: indexPath
+            )as? OutlineBackgroundView {
+                return outlineBackground
+            }
+            assertionFailure("Failed to dequeue OutlineBackgroundView")
+            return UICollectionReusableView()
+        default:
+            assertionFailure("Unhandled custom element: \(customElement)")
+            return UICollectionReusableView()
         }
-        return UICollectionReusableView()
     }
 }
 

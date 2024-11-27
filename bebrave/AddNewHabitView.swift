@@ -11,6 +11,8 @@ class AddNewHabitView: UICollectionReusableView {
     
     // MARK: - UI Components
     
+    weak var parentViewController: UIViewController?
+    
     private let view: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -50,8 +52,6 @@ class AddNewHabitView: UICollectionReusableView {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    weak var parentViewController: UIViewController?
     
     // MARK: - Init
     
