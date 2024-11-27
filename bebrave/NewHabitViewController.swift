@@ -284,7 +284,6 @@ class NewHabitViewController: UIViewController {
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
-        updateButtonState()
     }
     
     // MARK: - Animate hiding labels
@@ -411,7 +410,6 @@ class NewHabitViewController: UIViewController {
 
 extension NewHabitViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        
         if textField == timesPerDayTextField {
             if let text = textField.text, let value = Int(text), (1...10).contains(value) {
                 timesPerDayLabel.text = dayText(for: value)
@@ -438,6 +436,7 @@ extension NewHabitViewController: UITextFieldDelegate {
                 textField.text = formattedText
             }
         }
+        updateButtonState()
         return true
     }
 }
