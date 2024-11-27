@@ -133,21 +133,29 @@ extension HabitsViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+#warning("Подумать, что тут происходит. Приложение крашится при запуске, не удаётся отобразить HeaderDaysCollectionView. Проверить последний case, возможно, переписать. Добавить else для всех сase, чтобы отображать корректные ошибки.")
         let customElement = CustomElement(rawValue: kind)
         switch customElement {
         case .sectionFooter:
-            if let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomElement.sectionFooter.rawValue, for: indexPath) as? AddNewHabitView {
-                footer.backgroundColor = .systemBackground 
+            if let footer = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: CustomElement.sectionFooter.rawValue,
+                for: indexPath
+            ) as? AddNewHabitView {
+                footer.backgroundColor = .systemBackground
                 footer.parentViewController = self
                 return footer
             }
-//            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomElement.sectionFooter.rawValue, for: indexPath)
-//            footer.backgroundColor = .orange.withAlphaComponent(0.05)
-//            return footer
         case .collectionHeader:
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomElement.collectionHeader.rawValue, for: indexPath)
-            header.backgroundColor = .red.withAlphaComponent(0.05)
-            return header
+            if let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: CustomElement.collectionHeader.rawValue,
+                for: indexPath
+            ) as? HeaderDaysCollectionView {
+                header.backgroundColor = .systemBackground
+                header.parentViewController = self
+                return header
+            }
         case .outlineBackground:
             let outlineBackground = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomElement.outlineBackground.rawValue, for: indexPath)
             return outlineBackground
