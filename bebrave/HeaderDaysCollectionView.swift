@@ -9,7 +9,7 @@ import UIKit
 
 class HeaderDaysCollectionView: UICollectionReusableView {
     
-    weak var parentViewController: UIViewController?
+    weak var parentHeaderViewController: UIViewController?
     
     // MARK: - UI Components
     

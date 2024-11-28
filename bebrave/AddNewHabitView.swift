@@ -11,7 +11,7 @@ class AddNewHabitView: UICollectionReusableView {
     
     // MARK: - UI Components
     
-    weak var parentViewController: UIViewController?
+    weak var parentFooterViewController: UIViewController?
     
     private let view: UIView = {
         let view = UIView()
@@ -106,7 +106,7 @@ class AddNewHabitView: UICollectionReusableView {
         let newHabitVC = NewHabitViewController()
         newHabitVC.modalPresentationStyle = .pageSheet
         print("По кнопке открыт экран «Добавить привычку»")
-        parentViewController?.present(newHabitVC, animated: true, completion: nil)
+        parentFooterViewController?.present(newHabitVC, animated: true, completion: nil)
     }
 }
 

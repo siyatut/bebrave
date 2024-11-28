@@ -171,7 +171,7 @@ extension HabitsViewController {
                 for: indexPath
             ) as? AddNewHabitView {
                 footer.backgroundColor = .systemBackground
-                footer.parentViewController = self
+                footer.parentFooterViewController = self
                 return footer
             }
             assertionFailure("Failed to dequeue AddNewHabitView")
@@ -183,7 +183,7 @@ extension HabitsViewController {
                 for: indexPath
             ) as? HeaderDaysCollectionView {
                 header.backgroundColor = .systemBackground
-                header.parentViewController = self
+                header.parentHeaderViewController = self
                 return header
             }
             assertionFailure("Failed to dequeue HeaderDaysCollectionView")
