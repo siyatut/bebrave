@@ -29,7 +29,7 @@ class NewHabitViewController: UIViewController {
     private lazy var timesPerDayLabel = UILabel.styled(text: "раз в день")
     
     private let daysOfWeekStack = UIStackView()
-    private var selectedDays: [Bool] = Array(repeating: true, count: 7)
+    private var selectedDays: [Bool] = Array(repeating: false, count: 7)
     private lazy var monthsTextField = UITextField.styled(placeholder: "1", alignment: .center)
     private lazy var monthsLabel = UILabel.styled(text: "месяц")
     
@@ -234,7 +234,7 @@ class NewHabitViewController: UIViewController {
             dayLabel.translatesAutoresizingMaskIntoConstraints = false
             
             let checkboxImageView = UIImageView()
-            checkboxImageView.image = UIImage(named: selectedDays[i] ? "CheckedCheckbox" : "UncheckedCheckbox")
+            checkboxImageView.image = UIImage(named: "UncheckedCheckbox")
             checkboxImageView.contentMode = .scaleAspectFit
             checkboxImageView.isUserInteractionEnabled = true
             checkboxImageView.tag = i
