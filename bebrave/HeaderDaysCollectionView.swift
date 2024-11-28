@@ -7,6 +7,8 @@
 
 import UIKit
 
+#warning("Добавила логику для отображения календарных дней, но не вынесла её в основной контроллер")
+
 class HeaderDaysCollectionView: UICollectionReusableView {
     
     weak var parentHeaderViewController: UIViewController?
@@ -24,7 +26,7 @@ class HeaderDaysCollectionView: UICollectionReusableView {
         return collectionView
     }()
     
-    private var daysData: [(day: Int, emoji: String)] = []
+    private var daysData: [(date: Date, emoji: String)] = []
     
     // MARK: - Initialization
     
@@ -63,12 +65,22 @@ class HeaderDaysCollectionView: UICollectionReusableView {
     private func generateDaysForCurrentMonth() {
         let calendar = Calendar.current
         let today = Date()
-        let range = calendar.range(of: .day, in: .month, for: today) ?? (1..<31)
         
-        daysData = range.map { day in
-        // Здесь будет логика по выбору эмодзи в зависимости от выполнения привычек
-            let emoji = "😌" // Пока что один эмодзи по умолчанию
-            return (day: day, emoji: emoji)
+        guard let monthRange = calendar.range(of: .day, in: .month, for: today),
+              let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: today))
+        else {
+            assertionFailure("Unable to calculate the range of days in the current month")
+            return
+        }
+        
+        daysData = monthRange.compactMap { day -> (date: Date, emoji: String)? in
+            let date = calendar.date(byAdding: .day, value: day - 1, to: startOfMonth)
+            assert(date != nil, "Не удалось создать дату для дня \(day)")
+            let emoji = "😌"
+            if let date = date {
+                return (date: date, emoji: emoji)
+            }
+            return nil
         }
         collectionView.reloadData()
     }
@@ -85,7 +97,7 @@ extension HeaderDaysCollectionView: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayCell", for: indexPath) as! DayCell
         let item = daysData[indexPath.item]
-        cell.configure(day: item.day, emoji: item.emoji)
+        cell.configure(date: item.date, emoji: item.emoji)
         return cell
     }
 }
@@ -118,6 +130,12 @@ private class DayCell: UICollectionViewCell {
         return label
     }()
     
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d"
+        return formatter
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
@@ -140,8 +158,9 @@ private class DayCell: UICollectionViewCell {
         ])
     }
     
-    func configure(day: Int, emoji: String) {
-        dayLabel.text = "\(day)"
+    func configure(date: Date, emoji: String) {
+        dayLabel.text = dateFormatter.string(from: date)
         emojiLabel.text = emoji
     }
+    
 }
