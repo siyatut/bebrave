@@ -151,6 +151,7 @@ private class DayCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
+        setupLayer()
     }
     
     required init?(coder: NSCoder) {
@@ -170,6 +171,13 @@ private class DayCell: UICollectionViewCell {
             dayLabel.topAnchor.constraint(equalTo: emojiLabel.bottomAnchor, constant: 4),
             dayLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
         ])
+    }
+    
+    private func setupLayer() {
+        contentView.layer.cornerRadius = AppStyle.Sizes.cornerRadius
+        contentView.layer.borderWidth = AppStyle.Sizes.borderWidth
+        contentView.layer.borderColor = AppStyle.Colors.borderColor.cgColor
+        contentView.layer.masksToBounds = true
     }
     
     func configure(date: Date, emoji: String) {
