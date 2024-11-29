@@ -5,6 +5,8 @@
 //  Created by Anastasia Tyutinova on 27/11/2567 BE.
 //
 
+#warning("Пофиксить ширину ячеек, чтобы они были похожи на дизайн. Сделала узкими слишком(")
+
 import UIKit
 
 class HeaderDaysCollectionView: UICollectionReusableView {
@@ -72,22 +74,20 @@ class HeaderDaysCollectionView: UICollectionReusableView {
     
     private func generateDaysForCurrentMonth() {
         var calendar = Calendar.current
-            let today = Date()
-
-            calendar.firstWeekday = 2
-
-            guard let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today)) else {
-                assertionFailure("Не удалось определить начало недели")
-                return
-            }
+        let today = Date()
         
-            daysData = (0..<7).compactMap { dayOffset -> (date: Date, emoji: String)? in
-                guard let date = calendar.date(byAdding: .day, value: dayOffset, to: startOfWeek) else { return nil }
-                let emoji = "😌"
-                return (date: calendar.startOfDay(for: date), emoji: emoji)
-            }
-
-            collectionView.reloadData()
+        calendar.firstWeekday = 2
+        guard let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today)) else {
+            assertionFailure("Не удалось определить начало недели")
+            return
+        }
+        
+        daysData = (0..<7).compactMap { dayOffset -> (date: Date, emoji: String)? in
+            guard let date = calendar.date(byAdding: .day, value: dayOffset, to: startOfWeek) else { return nil }
+            let emoji = "😌"
+            return (date: calendar.startOfDay(for: date), emoji: emoji)
+        }
+        collectionView.reloadData()
     }
 }
 
