@@ -102,7 +102,11 @@ extension HeaderDaysCollectionView: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayCell", for: indexPath) as! DayCell
         let item = daysData[indexPath.item]
-        cell.configure(date: item.date, emoji: item.emoji)
+        
+        let calendar = Calendar.current
+        let isCurrentDay = calendar.isDate(item.date, inSameDayAs: Date())
+        
+        cell.configure(date: item.date, emoji: item.emoji, isCurrentDay: isCurrentDay)
         return cell
     }
 }
@@ -126,7 +130,7 @@ private class DayCell: UICollectionViewCell {
     
     private let dayLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.font = AppStyle.Fonts.regularFont(size: 16)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -134,7 +138,7 @@ private class DayCell: UICollectionViewCell {
     
     private let emojiLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 24)
+        label.font = AppStyle.Fonts.regularFont(size: 20)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -180,9 +184,19 @@ private class DayCell: UICollectionViewCell {
         contentView.layer.masksToBounds = true
     }
     
-    func configure(date: Date, emoji: String) {
+    func configure(date: Date, emoji: String, isCurrentDay: Bool) {
         dayLabel.text = dateFormatter.string(from: date)
         emojiLabel.text = emoji
+        
+        if isCurrentDay {
+            contentView.backgroundColor = AppStyle.Colors.primaryColor
+            dayLabel.textColor = .white
+            emojiLabel.textColor = .white
+        } else {
+            contentView.backgroundColor = .clear
+            dayLabel.textColor = AppStyle.Colors.textColor
+            emojiLabel.textColor = AppStyle.Colors.textColor
+        }
     }
     
 }
