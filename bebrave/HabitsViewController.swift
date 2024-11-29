@@ -158,7 +158,7 @@ extension HabitsViewController {
         kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
-#warning("Проверить, можно ли посимпатичнее переписать эту часть кода. Куда подевались writeDairyCell и habitsCell? Нужно ли обязательно прописывать return у OutlineBackgroundView? У остальных, думаю, обязательно нужно.")
+#warning("Проверить, можно ли посимпатичнее переписать эту часть кода. Куда подевались writeDairyCell и habitsCell? Пропала одна строчка учить английский. Как раз из-за пропажи habitsCell? Нужно ли обязательно прописывать return у OutlineBackgroundView? У остальных, думаю, обязательно нужно.")
         guard let customElement = CustomElement(rawValue: kind) else {
             assertionFailure("Unexpected supplementary kind: \(kind)")
             return UICollectionReusableView()

@@ -7,8 +7,6 @@
 
 import UIKit
 
-#warning("Добавила логику для отображения календарных дней, но не вынесла её в основной контроллер")
-
 class HeaderDaysCollectionView: UICollectionReusableView {
     
     weak var parentHeaderViewController: UIViewController?
@@ -20,7 +18,7 @@ class HeaderDaysCollectionView: UICollectionReusableView {
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 8
         layout.minimumLineSpacing = 8
-        
+        layout.sectionInset = .zero
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
@@ -41,7 +39,17 @@ class HeaderDaysCollectionView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Setup Methods
+    // MARK: - Layout methods
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let totalSpacing = 8.0 * 6
+        let availableWidth = collectionView.bounds.width - totalSpacing
+        let itemWidth = availableWidth / 7
+        print("Доступная ширина: \(availableWidth), ширина айтема: \(itemWidth)")
+    }
+    
+    // MARK: - Setup methods
     
     private func setupCollectionView() {
         collectionView.delegate = self
@@ -60,29 +68,26 @@ class HeaderDaysCollectionView: UICollectionReusableView {
         ])
     }
     
-    // MARK: - Data Methods
+    // MARK: - Data methods
     
     private func generateDaysForCurrentMonth() {
-        let calendar = Calendar.current
-        let today = Date()
-        
-        guard let monthRange = calendar.range(of: .day, in: .month, for: today),
-              let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: today))
-        else {
-            assertionFailure("Unable to calculate the range of days in the current month")
-            return
-        }
-        
-        daysData = monthRange.compactMap { day -> (date: Date, emoji: String)? in
-            let date = calendar.date(byAdding: .day, value: day - 1, to: startOfMonth)
-            assert(date != nil, "Не удалось создать дату для дня \(day)")
-            let emoji = "😌"
-            if let date = date {
-                return (date: date, emoji: emoji)
+        var calendar = Calendar.current
+            let today = Date()
+
+            calendar.firstWeekday = 2
+
+            guard let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today)) else {
+                assertionFailure("Не удалось определить начало недели")
+                return
             }
-            return nil
-        }
-        collectionView.reloadData()
+        
+            daysData = (0..<7).compactMap { dayOffset -> (date: Date, emoji: String)? in
+                guard let date = calendar.date(byAdding: .day, value: dayOffset, to: startOfWeek) else { return nil }
+                let emoji = "😌"
+                return (date: calendar.startOfDay(for: date), emoji: emoji)
+            }
+
+            collectionView.reloadData()
     }
 }
 
@@ -106,13 +111,18 @@ extension HeaderDaysCollectionView: UICollectionViewDelegate, UICollectionViewDa
 
 extension HeaderDaysCollectionView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 50, height: 70)
+        let totalSpacing = 8.0 * 6
+        let availableWidth = collectionView.bounds.width - totalSpacing
+        let itemWidth = availableWidth / 7
+        return CGSize(width: itemWidth, height: 70) 
     }
 }
 
 // MARK: - DayCell
 
 private class DayCell: UICollectionViewCell {
+    
+    // MARK: - UI components of cell
     
     private let dayLabel: UILabel = {
         let label = UILabel()
@@ -136,6 +146,8 @@ private class DayCell: UICollectionViewCell {
         return formatter
     }()
     
+    // MARK: - Initialization
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
@@ -144,6 +156,8 @@ private class DayCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+   // MARK: - Setup methods
     
     private func setupLayout() {
         contentView.addSubview(dayLabel)
