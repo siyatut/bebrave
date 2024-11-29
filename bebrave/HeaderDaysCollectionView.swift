@@ -169,11 +169,11 @@ private class DayCell: UICollectionViewCell {
         contentView.addSubview(emojiLabel)
         
         NSLayoutConstraint.activate([
-            emojiLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
-            emojiLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            dayLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+            dayLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
-            dayLabel.topAnchor.constraint(equalTo: emojiLabel.bottomAnchor, constant: 4),
-            dayLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+            emojiLabel.topAnchor.constraint(equalTo: dayLabel.bottomAnchor, constant: 4),
+            emojiLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
         ])
     }
     
