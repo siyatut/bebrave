@@ -266,7 +266,7 @@ class NewHabitViewController: UIViewController {
             let imageName = selectedDays[index] ? "CheckedCheckbox" : "UncheckedCheckbox"
             checkboxImageView.image = UIImage(named: imageName)
         }
-        updateButtonState()
+        
     }
     
     @objc private func addNewHabitButtonTapped() {
@@ -284,6 +284,7 @@ class NewHabitViewController: UIViewController {
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
+        updateButtonState()
     }
     
     // MARK: - Animate hiding labels
