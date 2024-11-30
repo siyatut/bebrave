@@ -266,7 +266,7 @@ class NewHabitViewController: UIViewController {
             let imageName = selectedDays[index] ? "CheckedCheckbox" : "UncheckedCheckbox"
             checkboxImageView.image = UIImage(named: imageName)
         }
-        
+        updateButtonState()
     }
     
     @objc private func addNewHabitButtonTapped() {
@@ -284,6 +284,14 @@ class NewHabitViewController: UIViewController {
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
+        hasAttemptedSave = true
+        let isValid = validateFields(showErrors: true)
+        
+        if isValid {
+            print("После тапа по экрану нет ошибок. Можно сохранить привычку")
+        } else {
+          print("После тапа по экрану есть ошибки. Кнопка недоступна")
+        }
         updateButtonState()
     }
     

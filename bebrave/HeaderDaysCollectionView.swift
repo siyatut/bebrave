@@ -135,7 +135,7 @@ private class DayCell: UICollectionViewCell {
     
     private let emojiLabel: UILabel = {
         let label = UILabel()
-        label.font = AppStyle.Fonts.regularFont(size: 20)
+        label.font = AppStyle.Fonts.regularFont(size: 16)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -169,7 +169,8 @@ private class DayCell: UICollectionViewCell {
             dayLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             dayLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
-            emojiLabel.topAnchor.constraint(equalTo: dayLabel.bottomAnchor, constant: 4),
+            emojiLabel.topAnchor.constraint(equalTo: dayLabel.bottomAnchor, constant: 3),
+            emojiLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
             emojiLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
         ])
     }
