@@ -18,8 +18,8 @@ class HeaderDaysCollectionView: UICollectionReusableView {
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 8
-        layout.minimumLineSpacing = 8
+        layout.minimumInteritemSpacing = 4
+        layout.minimumLineSpacing = 4
         layout.sectionInset = .zero
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -45,10 +45,7 @@ class HeaderDaysCollectionView: UICollectionReusableView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        let totalSpacing = 8.0 * 6
-        let availableWidth = collectionView.bounds.width - totalSpacing
-        let itemWidth = availableWidth / 7
-        print("Доступная ширина: \(availableWidth), ширина айтема: \(itemWidth)")
+        print("CollectionView width: \(collectionView.bounds.width)")
     }
     
     // MARK: - Setup methods
@@ -115,10 +112,10 @@ extension HeaderDaysCollectionView: UICollectionViewDelegate, UICollectionViewDa
 
 extension HeaderDaysCollectionView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let totalSpacing = 8.0 * 6
-        let availableWidth = collectionView.bounds.width - totalSpacing
-        let itemWidth = availableWidth / 7
-        return CGSize(width: itemWidth, height: 70) 
+        let totalSpacing = 6 * 4
+        let availableWidth = collectionView.bounds.width - CGFloat(totalSpacing)
+        let itemWidth = floor(availableWidth / 7)
+        return CGSize(width: itemWidth, height: 70)
     }
 }
 
