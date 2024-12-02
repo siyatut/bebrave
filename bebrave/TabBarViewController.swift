@@ -18,8 +18,8 @@ class TabBarViewController: UITabBarController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tabBar.backgroundColor = .white
-        self.tabBar.tintColor = .black
+        self.tabBar.backgroundColor = .systemBackground
+        self.tabBar.tintColor = AppStyle.Colors.primaryColor
     }
     
     // MARK: — Setup view
