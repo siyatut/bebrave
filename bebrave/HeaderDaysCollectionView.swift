@@ -5,8 +5,6 @@
 //  Created by Anastasia Tyutinova on 27/11/2567 BE.
 //
 
-#warning("Помимо 3 эмодзи для будущих дней должен отрисовываться серый круг")
-
 import UIKit
 
 class HeaderDaysCollectionView: UICollectionReusableView {
@@ -171,7 +169,9 @@ private class DayCell: UICollectionViewCell {
             
             emojiLabel.topAnchor.constraint(equalTo: dayLabel.bottomAnchor, constant: 3),
             emojiLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
-            emojiLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+            emojiLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            emojiLabel.heightAnchor.constraint(equalToConstant: 20),
+            emojiLabel.widthAnchor.constraint(equalToConstant: 20)
         ])
     }
     
@@ -183,17 +183,32 @@ private class DayCell: UICollectionViewCell {
     }
     
     func configure(date: Date, emoji: String, isCurrentDay: Bool) {
+        let calendar = Calendar.current
+        let isFutureDay = date > calendar.startOfDay(for: Date())
+        
         dayLabel.text = dateFormatter.string(from: date)
-        emojiLabel.text = emoji
+            
         
         if isCurrentDay {
             contentView.backgroundColor = AppStyle.Colors.primaryColor
             dayLabel.textColor = .white
+            emojiLabel.text = emoji
             emojiLabel.textColor = .white
+            emojiLabel.backgroundColor = .clear
+        } else if isFutureDay {
+            contentView.backgroundColor = .clear
+            dayLabel.textColor = AppStyle.Colors.textColor
+            emojiLabel.text = nil
+            emojiLabel.backgroundColor = AppStyle.Colors.disabledButtonColor
+            emojiLabel.layer.cornerRadius = 10
+            emojiLabel.layer.masksToBounds = true
+            emojiLabel.layer.borderColor = UIColor.clear.cgColor
         } else {
             contentView.backgroundColor = .clear
             dayLabel.textColor = AppStyle.Colors.textColor
+            emojiLabel.text = emoji
             emojiLabel.textColor = AppStyle.Colors.textColor
+            emojiLabel.backgroundColor = .clear
         }
     }
     
