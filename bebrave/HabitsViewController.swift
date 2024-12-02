@@ -211,13 +211,13 @@ extension HabitsViewController {
     
     private func setupHistoryButton() {
         var configuration = UIButton.Configuration.plain()
-        configuration.baseForegroundColor = AppStyle.Colors.primaryColor
+        configuration.baseForegroundColor = AppStyle.Colors.secondaryColor
         configuration.image = UIImage(named: "History")
         configuration.imagePadding = 4
         configuration.imagePlacement = .leading
 
         let titleAttributes = AttributeContainer([
-                .font: AppStyle.Fonts.boldFont(size: 16)
+            .font: AppStyle.Fonts.regularFont(size: 16)
             ])
         configuration.attributedTitle = AttributedString("История", attributes: titleAttributes)
         historyButton.configuration = configuration

@@ -22,8 +22,8 @@ class AddNewHabitView: UICollectionReusableView {
     private let addNewHabitLabel: UILabel = {
         let label = UILabel()
         label.text = "Добавить привычку"
-        label.textColor = .tintColor
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = AppStyle.Colors.secondaryColor
+        label.font = AppStyle.Fonts.regularFont(size: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -31,6 +31,7 @@ class AddNewHabitView: UICollectionReusableView {
     private let plus: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "Plus")
+        view.tintColor = AppStyle.Colors.secondaryColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

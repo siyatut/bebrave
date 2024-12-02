@@ -10,6 +10,7 @@ import UIKit
 struct AppStyle {
     struct Colors {
         static let primaryColor = UIColor(named: "PrimaryColor") ?? .systemPurple
+        static let secondaryColor = UIColor(named: "SecondaryColor") ?? .tintColor
         static let errorColor = UIColor.red
         static let borderColor = UIColor.systemGray5
         static let textColor = UIColor.label
