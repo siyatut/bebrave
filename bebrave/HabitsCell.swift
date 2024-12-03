@@ -99,6 +99,15 @@ class HabitsCell: UICollectionViewCell {
             checkbox.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }
+    
+    // MARK: - Configure method
+    
+    func configure(with habit: Habit) {
+        habitsName.text = habit.title
+        habitsCount.text = "\(habit.progress.values.reduce(0, +)) из \(habit.frequency)"
+        let percentage = Int((Double(habit.progress.values.reduce(0, +)) / Double(habit.frequency)) * 100)
+        percentDone.text = "\(percentage)%"
+    }
 }
 
 
