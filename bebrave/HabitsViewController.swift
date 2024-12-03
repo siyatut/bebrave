@@ -228,14 +228,14 @@ extension HabitsViewController {
         configuration.attributedTitle = AttributedString("История", attributes: titleAttributes)
         historyButton.configuration = configuration
         historyButton.addTarget(self, action: #selector(historyButtonTapped), for: .touchUpInside)
-        
+
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: historyButton)
     }
     
     private func setupCalendarLabel() {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
-        
+#warning("Здесь нужно пофиксить, как отображается месяц. Он должен передаваться из календаря. Кроме того, в случае 2 месяцев в одной конкретной неделе, они оба должны передаваться через дефис")
         calendarLabel.text = "Январь"
         calendarLabel.textColor = AppStyle.Colors.textColor
         calendarLabel.font = AppStyle.Fonts.boldFont(size: 20)
