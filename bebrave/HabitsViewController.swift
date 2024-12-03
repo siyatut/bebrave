@@ -143,20 +143,34 @@ extension HabitsViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return habits.count + 1
     }
     
     override func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        let isWriteDiary = indexPath.row == 2
-        let reuseIdentifier = isWriteDiary
-        ? CustomElement.writeDiaryCell.rawValue
-        : CustomElement.habitsCell.rawValue
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-        cell.backgroundColor = .systemBackground
-        return cell
+        if indexPath.item == habits.count {
+            guard let diaryCell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: CustomElement.writeDiaryCell.rawValue,
+                for: indexPath
+            ) as? DiaryWriteCell else {
+                assertionFailure("Failed to dequeue DiaryWriteCell")
+                return UICollectionViewCell()
+            }
+            return diaryCell
+        } else {
+            guard let habitCell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: CustomElement.habitsCell.rawValue,
+                for: indexPath
+            ) as? HabitsCell else {
+                assertionFailure("Failed to dequeue HabitsCell")
+                return UICollectionViewCell()
+            }
+            let habit = habits[indexPath.item]
+            habitCell.configure(with: habit)
+            return habitCell
+        }
     }
     
     override func collectionView(
