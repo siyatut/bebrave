@@ -273,12 +273,27 @@ class NewHabitViewController: UIViewController {
         hasAttemptedSave = true
         let isValid = validateFields(showErrors: true)
         
-        if isValid {
-            print("Сохраняем привычку")
-            // Здесь будет логика сохранения привычки
-        } else {
-          print("После нажатия на кнопку. Есть ошибки. Кнопка недоступна")
+        guard isValid else {
+            print("После нажатия на кнопку. Есть ошибки. Кнопка недоступна")
+            updateButtonState()
+            return
         }
+        guard let title = habitTextField.text,
+              let frequencyText = timesPerDayTextField.text,
+              let frequency = Int(frequencyText) else {
+            print("Не удалось получить данные для создания привычки.")
+            updateButtonState()
+            return
+        }
+        let newHabit = Habit(
+            id: UUID(),
+            title: title,
+            frequency: frequency,
+            progress: [:] // Новый прогресс пока пустой
+        )
+        UserDefaultsManager.shared.addHabit(newHabit)
+        print("Привычка сохранена: \(newHabit.title)")
+        dismiss(animated: true, completion: nil)
         updateButtonState()
     }
     
