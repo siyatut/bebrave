@@ -9,6 +9,8 @@ import UIKit
 
 class NewHabitViewController: UIViewController {
     
+    weak var delegate: NewHabitDelegate?
+    
     // MARK: - UI components top down
     
     private let emojiImageView: UIImageView = {
@@ -292,6 +294,7 @@ class NewHabitViewController: UIViewController {
             progress: [:] // Новый прогресс пока пустой
         )
         UserDefaultsManager.shared.addHabit(newHabit)
+        delegate?.didAddNewHabit(newHabit)
         print("Привычка сохранена: \(newHabit.title)")
         dismiss(animated: true, completion: nil)
         updateButtonState()

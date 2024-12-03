@@ -15,7 +15,13 @@ enum CustomElement: String {
     case writeDiaryCell
 }
 
+protocol NewHabitDelegate: AnyObject {
+    func didAddNewHabit(_ habit: Habit)
+}
+
 class HabitsViewController: UICollectionViewController {
+    
+#warning("Подумать, как вот такие строчки как ниже маркировать в коде в этом и других файлах")
     
     private var habits: [Habit] = []
     
@@ -266,8 +272,14 @@ extension HabitsViewController {
         ])
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: container)
     }
-    
 }
 
+// MARK: - NewHabitDelegate extension
 
+extension HabitsViewController: NewHabitDelegate {
+    func didAddNewHabit(_ habit: Habit) {
+        habits.append(habit)
+        collectionView.reloadData()
+    }
+}
 
