@@ -13,7 +13,6 @@ class HabitsCell: UICollectionViewCell {
     
     private let habitsName: UILabel = {
         let label = UILabel()
-        label.text = "Учить английский"
         label.textColor = .label
         label.font = UIFont.systemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -22,7 +21,6 @@ class HabitsCell: UICollectionViewCell {
     
     private let percentDone: UILabel = {
         let label = UILabel()
-        label.text = "12 %"
         label.textColor = .secondaryLabel
         label.font = UIFont.systemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -32,13 +30,13 @@ class HabitsCell: UICollectionViewCell {
     private let starDivider: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "StarDivider")
+        view.tintColor = AppStyle.Colors.secondaryColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     private let habitsCount: UILabel = {
         let label = UILabel()
-        label.text = "2 из 3"
         label.textColor = .secondaryLabel
         label.font = UIFont.systemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false

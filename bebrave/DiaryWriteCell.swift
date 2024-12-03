@@ -23,6 +23,7 @@ class DiaryWriteCell: UICollectionViewCell {
     private let chevron: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "Chevron")
+        view.tintColor = AppStyle.Colors.secondaryColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
