@@ -26,6 +26,7 @@
 		52F1E56A2B7CE6330058F767 /* HabitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E5692B7CE6330058F767 /* HabitsViewController.swift */; };
 		52F1E56C2B7CE6B10058F767 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */; };
 		52F1E56E2B7CE6D10058F767 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */; };
+		52FBCF3A2CFF1677000206BC /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FBCF392CFF1673000206BC /* UserDefaultsManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		52F1E5692B7CE6330058F767 /* HabitsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsViewController.swift; sourceTree = "<group>"; };
 		52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
 		52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		52FBCF392CFF1673000206BC /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 		52F1E5382B7CDC300058F767 /* bebrave */ = {
 			isa = PBXGroup;
 			children = (
+				52FBCF392CFF1673000206BC /* UserDefaultsManager.swift */,
 				52F1E5392B7CDC300058F767 /* AppDelegate.swift */,
 				52F1E53B2B7CDC300058F767 /* SceneDelegate.swift */,
 				52F1E53D2B7CDC300058F767 /* TabBarViewController.swift */,
@@ -299,6 +302,7 @@
 				52F1E53C2B7CDC300058F767 /* SceneDelegate.swift in Sources */,
 				523AF3B92CBFBDE900EEFA8A /* NewHabitViewController.swift in Sources */,
 				52923ECF2CF70F080088E54B /* HeaderDaysCollectionView.swift in Sources */,
+				52FBCF3A2CFF1677000206BC /* UserDefaultsManager.swift in Sources */,
 				52F1E56A2B7CE6330058F767 /* HabitsViewController.swift in Sources */,
 				52F1E56E2B7CE6D10058F767 /* ProfileViewController.swift in Sources */,
 				523D41752C05FD3D00689F20 /* AddNewHabitView.swift in Sources */,

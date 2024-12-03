@@ -91,10 +91,12 @@ class HabitsCell: UICollectionViewCell {
             horizontalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             horizontalStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             horizontalStackView.trailingAnchor.constraint(lessThanOrEqualTo: checkbox.leadingAnchor, constant: 106),
+            
             percentDone.topAnchor.constraint(equalTo: horizontalStackView.bottomAnchor, constant: 4),
             percentDone.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
             percentDone.leadingAnchor.constraint(equalTo: horizontalStackView.leadingAnchor),
             percentDone.trailingAnchor.constraint(lessThanOrEqualTo: checkbox.leadingAnchor, constant: 106),
+            
             checkbox.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -23),
             checkbox.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])

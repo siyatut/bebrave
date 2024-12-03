@@ -17,6 +17,8 @@ enum CustomElement: String {
 
 class HabitsViewController: UICollectionViewController {
     
+    private var habits: [Habit] = []
+    
 // MARK: - UI components
     
     let historyButton = UIButton()
@@ -117,7 +119,13 @@ class HabitsViewController: UICollectionViewController {
             withReuseIdentifier: CustomElement.sectionFooter.rawValue
         )
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        habits = UserDefaultsManager.shared.loadHabits()
+        collectionView.reloadData()
+    }
+    
 // MARK: - Objc methods
     
     @objc private func historyButtonTapped() {
