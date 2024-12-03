@@ -56,7 +56,7 @@ class HabitsCell: UICollectionViewCell {
     private let checkbox: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "UncheckedCheckbox")?.withRenderingMode(.alwaysTemplate)
-        view.tintColor = .systemGray5
+        view.tintColor = AppStyle.Colors.borderColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
