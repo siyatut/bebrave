@@ -271,7 +271,7 @@ class NewHabitViewController: UIViewController {
             let imageName = selectedDays[index] ? "UncheckedCheckbox" : "CheckedCheckbox"
             checkboxImageView.image = UIImage(named: imageName)
         }
-        updateButtonState()
+        // updateButtonState()
     }
     
     @objc private func addNewHabitButtonTapped() {

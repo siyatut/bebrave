@@ -213,5 +213,12 @@ private class DayCell: UICollectionViewCell {
             emojiLabel.backgroundColor = .clear
         }
     }
-    
+}
+
+// MARK: - Public Methods
+
+extension HeaderDaysCollectionView {
+    func getDisplayedDates() -> [Date] {
+        return daysData.map { $0.date }
+    }
 }

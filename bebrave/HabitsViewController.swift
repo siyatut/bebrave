@@ -134,6 +134,9 @@ class HabitsViewController: UICollectionViewController {
         super.viewWillAppear(animated)
         habits = UserDefaultsManager.shared.loadHabits()
         collectionView.reloadData()
+        DispatchQueue.main.async {
+            self.updateCalendarLabel()
+        }
     }
     
 // MARK: - Action
@@ -260,8 +263,7 @@ extension HabitsViewController {
     private func setupCalendarLabel() {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
-#warning("Здесь нужно пофиксить, как отображается месяц. Он должен передаваться из календаря. Кроме того, в случае 2 месяцев в одной конкретной неделе, они оба должны передаваться через дефис")
-        calendarLabel.text = "Январь"
+        
         calendarLabel.textColor = AppStyle.Colors.textColor
         calendarLabel.font = AppStyle.Fonts.boldFont(size: 20)
         calendarLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -285,6 +287,40 @@ extension HabitsViewController: NewHabitDelegate {
     func didAddNewHabit(_ habit: Habit) {
         habits.append(habit)
         collectionView.reloadData()
+    }
+}
+
+// MARK: - Calendar label update
+
+extension HabitsViewController {
+    func updateCalendarLabel() {
+        guard let header = collectionView.visibleSupplementaryViews(
+            ofKind: CustomElement.collectionHeader.rawValue
+        ).first as? HeaderDaysCollectionView else {
+            assertionFailure("HeaderDaysCollectionView not found")
+            return
+        }
+        
+        let dates = header.getDisplayedDates()
+        
+        guard let firstDate = dates.first, let lastDate = dates.last else {
+            assertionFailure("Dates array is empty")
+            return
+        }
+        
+        let calendar = Calendar.current
+        let formatter = DateFormatter()
+        formatter.locale = Locale.current
+        formatter.dateFormat = "LLLL"
+        
+        let firstMonth = formatter.string(from: firstDate).capitalized
+        let lastMonth = formatter.string(from: lastDate).capitalized
+        
+        if calendar.isDate(firstDate, equalTo: lastDate, toGranularity: .month) {
+            calendarLabel.text = firstMonth
+        } else {
+            calendarLabel.text = "\(firstMonth) - \(lastMonth)"
+        }
     }
 }
 
