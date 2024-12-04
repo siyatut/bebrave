@@ -107,8 +107,6 @@ class AddNewHabitView: UICollectionReusableView {
     
     @objc private func addNewHabitButtonTapped() {
         let newHabitVC = NewHabitViewController()
-#warning("Вот здесь вот с делегатом что-то не так, на self ссылаться нельзя. Переписать")
-        newHabitVC.delegate = delegate
         newHabitVC.modalPresentationStyle = .pageSheet
         print("По кнопке открыт экран «Добавить привычку»")
         parentFooterViewController?.present(newHabitVC, animated: true, completion: nil)
