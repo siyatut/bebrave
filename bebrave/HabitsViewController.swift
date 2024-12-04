@@ -68,7 +68,7 @@ class HabitsViewController: UICollectionViewController {
             let footer = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .absolute(60)
+                    heightDimension: .absolute(48)
                 ),
                 elementKind: CustomElement.sectionFooter.rawValue,
                 alignment: .bottom,
