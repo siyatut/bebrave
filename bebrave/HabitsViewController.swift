@@ -204,7 +204,6 @@ extension HabitsViewController {
                 for: indexPath
             ) as? AddNewHabitView {
                 footer.backgroundColor = AppStyle.Colors.backgroundColor
-                footer.delegate = self
                 footer.parentFooterViewController = self
                 return footer
             }

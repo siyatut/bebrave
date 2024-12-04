@@ -293,7 +293,7 @@ class NewHabitViewController: UIViewController {
             id: UUID(),
             title: title,
             frequency: frequency,
-            progress: [:] // Новый прогресс пока пустой
+            progress: [:] 
         )
         UserDefaultsManager.shared.addHabit(newHabit)
         delegate?.didAddNewHabit(newHabit)

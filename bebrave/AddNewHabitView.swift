@@ -108,8 +108,13 @@ class AddNewHabitView: UICollectionReusableView {
 // MARK: - Action
     
     @objc private func addNewHabitButtonTapped() {
+        guard let parentVC = parentFooterViewController as? NewHabitDelegate else {
+            assertionFailure("parentFooterViewController не реализует NewHabitDelegate")
+            return
+        }
         let newHabitVC = NewHabitViewController()
         newHabitVC.modalPresentationStyle = .pageSheet
+        newHabitVC.delegate = parentVC
         print("По кнопке открыт экран «Добавить привычку»")
         parentFooterViewController?.present(newHabitVC, animated: true, completion: nil)
     }
