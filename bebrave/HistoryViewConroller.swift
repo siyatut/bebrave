@@ -9,21 +9,22 @@ import UIKit
 
 class HistoryViewController: UIViewController {
     
-    // MARK: - UI components
+// MARK: - UI components
+#warning("Когда буду писать этот экран, надо учесть цвет кнопки. Наверное, можно просто AccentColor поменять в Asset")
     
     let dismissButton = UIButton()
     
-    // MARK: - Lifecycle view
+// MARK: - Lifecycle view
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = AppStyle.Colors.backgroundColor
         title = "История"
     }
     
-    // MARK: - Objc methods
+// MARK: - Action
     
-    @objc private func dismissSelf() {
+    @objc private func dismiss() {
         self.navigationController?.popViewController(animated: true)
     }
 }

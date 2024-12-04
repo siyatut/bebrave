@@ -8,12 +8,16 @@
 
 import Foundation
 
+// MARK: - Habit Model
+
 struct Habit: Codable {
     let id: UUID
     var title: String
     var frequency: Int
     var progress: [Date: Int]
 }
+
+// MARK: - Habit Factory
 
 extension Habit {
     static func createNew(title: String, frequency: Int) -> Habit {
@@ -26,9 +30,13 @@ extension Habit {
     }
 }
 
+// MARK: - UserDefaults Keys
+
 enum UserDefaultsKeys {
     static let habits = "user_habits_key"
 }
+
+// MARK: - UserDefaults Manager
 
 final class UserDefaultsManager {
     static let shared = UserDefaultsManager()
@@ -36,13 +44,13 @@ final class UserDefaultsManager {
     
     private init() {}
     
-    // MARK: - Keys
+// MARK: - Keys
     
     private enum Keys {
         static let habits = "user_habits_key"
     }
     
-    // MARK: - Habits methods
+// MARK: - Public Methods
     
     func saveHabits(_ habits: [Habit]) {
         do {

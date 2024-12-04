@@ -7,6 +7,8 @@
 
 import UIKit
 
+// MARK: - Custom Elements
+
 enum CustomElement: String {
     case collectionHeader
     case sectionFooter
@@ -15,13 +17,15 @@ enum CustomElement: String {
     case writeDiaryCell
 }
 
+// MARK: - Delegate Protocol
+
 protocol NewHabitDelegate: AnyObject {
     func didAddNewHabit(_ habit: Habit)
 }
 
 class HabitsViewController: UICollectionViewController {
-    
-#warning("Подумать, как вот такие строчки как ниже маркировать в коде в этом и других файлах")
+ 
+// MARK: - Data Source
     
     private var habits: [Habit] = []
     
@@ -96,7 +100,7 @@ class HabitsViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = AppStyle.Colors.backgroundColor
         setupHistoryButton()
         setupCalendarLabel()
         
@@ -132,7 +136,7 @@ class HabitsViewController: UICollectionViewController {
         collectionView.reloadData()
     }
     
-// MARK: - Objc methods
+// MARK: - Action
     
     @objc private func historyButtonTapped() {
         let history = HistoryViewController()
@@ -196,7 +200,7 @@ extension HabitsViewController {
                 withReuseIdentifier: CustomElement.sectionFooter.rawValue,
                 for: indexPath
             ) as? AddNewHabitView {
-                footer.backgroundColor = .systemBackground
+                footer.backgroundColor = AppStyle.Colors.backgroundColor
                 footer.delegate = self
                 footer.parentFooterViewController = self
                 return footer
@@ -209,7 +213,7 @@ extension HabitsViewController {
                 withReuseIdentifier: CustomElement.collectionHeader.rawValue,
                 for: indexPath
             ) as? HeaderDaysCollectionView {
-                header.backgroundColor = .systemBackground
+                header.backgroundColor = AppStyle.Colors.backgroundColor
                 header.parentHeaderViewController = self
                 return header
             }
@@ -275,7 +279,7 @@ extension HabitsViewController {
     }
 }
 
-// MARK: - NewHabitDelegate extension
+// MARK: - NewHabitDelegate 
 
 extension HabitsViewController: NewHabitDelegate {
     func didAddNewHabit(_ habit: Habit) {

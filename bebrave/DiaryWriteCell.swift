@@ -9,7 +9,7 @@ import UIKit
 
 class DiaryWriteCell: UICollectionViewCell {
     
-    // MARK: - UI Components
+// MARK: - UI Components
     
     private let writeDiaryLabel: UILabel = {
         let label = UILabel()
@@ -28,7 +28,7 @@ class DiaryWriteCell: UICollectionViewCell {
         return view
     }()
     
-    // MARK: - Init
+// MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,7 +39,7 @@ class DiaryWriteCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Set up components
+// MARK: - Set up components
     
     private func setupComponents() {
         contentView.addSubview(writeDiaryLabel)

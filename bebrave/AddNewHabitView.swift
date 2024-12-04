@@ -9,9 +9,11 @@ import UIKit
 
 class AddNewHabitView: UICollectionReusableView {
     
+// MARK: - Parent view controller
+    
     weak var delegate: NewHabitDelegate?
     
-    // MARK: - UI Components
+// MARK: - UI Components
     
     weak var parentFooterViewController: UIViewController?
     
@@ -56,7 +58,7 @@ class AddNewHabitView: UICollectionReusableView {
         return view
     }()
     
-    // MARK: - Init
+// MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -67,7 +69,7 @@ class AddNewHabitView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Set up components
+// MARK: - Set up components
     
     func setupComponents() {
         addSubview(outlineBackgroundView)
@@ -103,7 +105,7 @@ class AddNewHabitView: UICollectionReusableView {
         ])
     }
     
-    // MARK: - Objc methods
+// MARK: - Action
     
     @objc private func addNewHabitButtonTapped() {
         let newHabitVC = NewHabitViewController()

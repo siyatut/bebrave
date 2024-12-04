@@ -9,7 +9,7 @@ import UIKit
 
 class HabitsCell: UICollectionViewCell {
     
-    // MARK: - UI Components
+// MARK: - UI Components
     
     private let habitsName: UILabel = {
         let label = UILabel()
@@ -62,7 +62,7 @@ class HabitsCell: UICollectionViewCell {
     }()
     
     
-    // MARK: - Init
+// MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -74,7 +74,7 @@ class HabitsCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Set up components
+// MARK: - Set up components
     
     private func setupComponents() {
         let views = [habitsName, starDivider, habitsCount]
@@ -100,7 +100,7 @@ class HabitsCell: UICollectionViewCell {
         ])
     }
     
-    // MARK: - Configure method
+// MARK: - Configure method
     
     func configure(with habit: Habit) {
         habitsName.text = habit.title
