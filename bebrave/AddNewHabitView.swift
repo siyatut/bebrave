@@ -51,9 +51,9 @@ class AddNewHabitView: UICollectionReusableView {
     private let outlineBackgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.systemGray5.cgColor
-        view.layer.cornerRadius = 18
+        view.layer.borderWidth = AppStyle.Sizes.borderWidth
+        view.layer.borderColor = AppStyle.Colors.borderColor.cgColor
+        view.layer.cornerRadius = AppStyle.Sizes.cornerRadius
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
