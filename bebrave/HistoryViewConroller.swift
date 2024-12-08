@@ -10,7 +10,7 @@ import UIKit
 class HistoryViewController: UIViewController {
     
 // MARK: - UI components
-#warning("Когда буду писать этот экран, надо учесть цвет кнопки. Наверное, можно просто AccentColor поменять в Asset")
+#warning("Когда буду писать этот экран, надо поменять цвет на тот, который secondaryColor. Наверное, можно просто AccentColor поменять в Asset")
     
     let dismissButton = UIButton()
     

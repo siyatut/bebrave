@@ -10,7 +10,7 @@
 
 #warning("Ни черта не работает с действиями. Нажатия не работают. Добавить нужную отрисовку в чекбоксе по нажатию + степень закрашивания ячейки + изменение процента и числа 1/2, например. Возможно, мешает outlineBackgroundView?")
 
-#warning("Нужна иллюстрация пустого состояния — можно сделать какую-нибудь надпись на фоне. Типа: пора что-нибудь добавить. Не получается добавить так, чтобы не накладывать на коллекцию.")
+#warning("Нужна иллюстрация пустого состояния — можно сделать какую-нибудь надпись на фоне. Типа: пора что-нибудь добавить. Надо переписывать layout и добавить ещё одну секцию для пустой вью. Кажется, это самый рабочий вариант.")
 
 import UIKit
 
@@ -18,7 +18,7 @@ import UIKit
 
 enum CustomElement: String {
     case collectionHeader
-    case sectionFooter
+    case collectionFooter
     case outlineBackground
     case habitsCell
     case writeDiaryCell
@@ -67,19 +67,10 @@ class HabitsViewController: UICollectionViewController {
                 ),
                 subitems: [item]
             )
-            let footer = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: .init(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .absolute(48)
-                ),
-                elementKind: CustomElement.sectionFooter.rawValue,
-                alignment: .bottom,
-                absoluteOffset: .init(x: 0, y: 24)
-            )
+            
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets = .init(top: 0, leading: 12, bottom: 0, trailing: 12)
             section.interGroupSpacing = 8
-            section.boundarySupplementaryItems = [footer]
             return section
         }
         let header = NSCollectionLayoutBoundarySupplementaryItem(
@@ -93,8 +84,21 @@ class HabitsViewController: UICollectionViewController {
         )
         header.extendsBoundary = true
         header.contentInsets = .init(top: 0, leading: 12, bottom: 0, trailing: 12)
+        
+        let footer = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .absolute(48)
+            ),
+            elementKind: CustomElement.collectionFooter.rawValue,
+            alignment: .bottom,
+            absoluteOffset: .init(x: 0, y: 24)
+        )
+        footer.extendsBoundary = true
+        footer.contentInsets = .init(top: 0, leading: 12, bottom: 0, trailing: 12)
+        
         let configuration = UICollectionViewCompositionalLayoutConfiguration()
-        configuration.boundarySupplementaryItems = [header]
+        configuration.boundarySupplementaryItems = [header, footer]
         let layout = UICollectionViewCompositionalLayout(sectionProvider: provider, configuration: configuration)
         super.init(collectionViewLayout: layout)
     }
@@ -132,8 +136,8 @@ class HabitsViewController: UICollectionViewController {
         )
         collectionView.register(
             AddNewHabitView.self,
-            forSupplementaryViewOfKind: CustomElement.sectionFooter.rawValue,
-            withReuseIdentifier: CustomElement.sectionFooter.rawValue
+            forSupplementaryViewOfKind: CustomElement.collectionFooter.rawValue,
+            withReuseIdentifier: CustomElement.collectionFooter.rawValue
         )
     }
     
@@ -204,10 +208,10 @@ extension HabitsViewController {
             return UICollectionReusableView()
         }
         switch customElement {
-        case .sectionFooter:
+        case .collectionFooter:
             if let footer = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
-                withReuseIdentifier: CustomElement.sectionFooter.rawValue,
+                withReuseIdentifier: CustomElement.collectionFooter.rawValue,
                 for: indexPath
             ) as? AddNewHabitView {
                 footer.backgroundColor = AppStyle.Colors.backgroundColor
