@@ -47,9 +47,9 @@ class TabBarViewController: UITabBarController {
     
     private func setupTabs() {
         
-        let habits = self.createNavigationController(with: "Привычки", and: UIImage(named: "Habits"), vc: HabitsViewController())
-        let diary = self.createNavigationController(with: "Дневник", and: UIImage(named: "Diary"), vc: DiaryViewController())
-        let settings = self.createNavigationController(with: "Профиль", and: UIImage(named: "Profile"), vc: ProfileViewController())
+        let habits = self.createNavigationController(with: "Привычки", and: UIImage(named: "Temporary tabbar icon"), vc: HabitsViewController())
+        let diary = self.createNavigationController(with: "Дневник", and: UIImage(named: "Temporary tabbar icon"), vc: DiaryViewController())
+        let settings = self.createNavigationController(with: "Профиль", and: UIImage(named: "Temporary tabbar icon"), vc: ProfileViewController())
         self.setViewControllers([habits, diary, settings], animated: true)
     }
     
