@@ -8,6 +8,9 @@
 import UIKit
 
 class EmptyStateCell: UICollectionViewCell {
+    
+// MARK: - UI components
+    
     private let label: UILabel = {
         let label = UILabel()
         label.textColor = AppStyle.Colors.textColor
@@ -18,6 +21,8 @@ class EmptyStateCell: UICollectionViewCell {
         label.text = "Пора что-нибудь добавить"
         return label
     }()
+
+// MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
