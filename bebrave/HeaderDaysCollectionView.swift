@@ -201,7 +201,7 @@ private class DayCell: UICollectionViewCell {
             contentView.backgroundColor = .clear
             dayLabel.textColor = AppStyle.Colors.textColor
             emojiLabel.text = nil
-            emojiLabel.backgroundColor = AppStyle.Colors.disabledButtonColor
+            emojiLabel.backgroundColor = AppStyle.Colors.backgroundEmptyStateColor
             emojiLabel.layer.cornerRadius = 10
             emojiLabel.layer.masksToBounds = true
             emojiLabel.layer.borderColor = UIColor.clear.cgColor
