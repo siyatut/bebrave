@@ -222,6 +222,7 @@ class NewHabitViewController: UIViewController {
             dayContainer.layer.cornerRadius = AppStyle.Sizes.cornerRadius
             dayContainer.layer.borderWidth = AppStyle.Sizes.borderWidth
             dayContainer.layer.borderColor = AppStyle.Colors.borderColor.cgColor
+            dayContainer.layer.masksToBounds = true
             dayContainer.translatesAutoresizingMaskIntoConstraints = false
             
             let dayStack = UIStackView()

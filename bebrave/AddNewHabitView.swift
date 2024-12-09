@@ -54,6 +54,8 @@ class AddNewHabitView: UICollectionReusableView {
         view.layer.borderWidth = AppStyle.Sizes.borderWidth
         view.layer.borderColor = AppStyle.Colors.borderColor.cgColor
         view.layer.cornerRadius = AppStyle.Sizes.cornerRadius
+#warning("Правильно добавила строчку ниже? Проверить этот момент")
+        view.layer.masksToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
