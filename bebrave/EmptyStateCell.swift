@@ -22,6 +22,9 @@ class EmptyStateCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(label)
+        contentView.backgroundColor = AppStyle.Colors.backgroundEmptyStateColor
+        contentView.layer.cornerRadius = AppStyle.Sizes.cornerRadius
+        contentView.layer.masksToBounds = true
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
