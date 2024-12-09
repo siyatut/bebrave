@@ -12,6 +12,8 @@
 
 #warning("Нужна иллюстрация пустого состояния — можно сделать какую-нибудь надпись на фоне. Типа: пора что-нибудь добавить. Надо переписывать layout и добавить ещё одну секцию для пустой вью. Кажется, это самый рабочий вариант.")
 
+#warning("Дополнительно обернуть dequeueReusableCell в кастомный хелпер, чтобы унифицировать обработку ошибок")
+
 import UIKit
 
 // MARK: - Custom Elements
@@ -44,7 +46,34 @@ class HabitsViewController: UICollectionViewController {
 // MARK: — Init
     
     init() {
+        super.init(collectionViewLayout: HabitsViewController.createLayout())
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    static func createLayout() -> UICollectionViewLayout {
         let provider: UICollectionViewCompositionalLayoutSectionProvider = { section, environment in
+            
+            if section == 1 {
+                    let item = NSCollectionLayoutItem(
+                        layoutSize: .init(
+                            widthDimension: .fractionalWidth(1),
+                            heightDimension: .fractionalHeight(1)
+                        )
+                    )
+                    let group = NSCollectionLayoutGroup.vertical(
+                        layoutSize: .init(
+                            widthDimension: .fractionalWidth(1),
+                            heightDimension: .absolute(312) // Фиксированная высота
+                        ),
+                        subitems: [item]
+                    )
+                    let section = NSCollectionLayoutSection(group: group)
+                    section.contentInsets = .init(top: 16, leading: 16, bottom: 16, trailing: 16)
+                    return section
+                }
             let background = NSCollectionLayoutSupplementaryItem(
                 layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
@@ -99,12 +128,7 @@ class HabitsViewController: UICollectionViewController {
         
         let configuration = UICollectionViewCompositionalLayoutConfiguration()
         configuration.boundarySupplementaryItems = [header, footer]
-        let layout = UICollectionViewCompositionalLayout(sectionProvider: provider, configuration: configuration)
-        super.init(collectionViewLayout: layout)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return UICollectionViewCompositionalLayout(sectionProvider: provider, configuration: configuration)
     }
     
 // MARK: - Lifecycle view
@@ -139,6 +163,10 @@ class HabitsViewController: UICollectionViewController {
             forSupplementaryViewOfKind: CustomElement.collectionFooter.rawValue,
             withReuseIdentifier: CustomElement.collectionFooter.rawValue
         )
+        collectionView.register(
+            EmptyStateCell.self,
+            forCellWithReuseIdentifier: "EmptyStateCell"
+        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -163,38 +191,59 @@ class HabitsViewController: UICollectionViewController {
 extension HabitsViewController {
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return habits.isEmpty ? 2 : 1
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return habits.count + 1
+        if habits.isEmpty && section == 1 {
+            return 1 // Одна ячейка для пустого состояния
+        }
+        if section == 0 {
+            return habits.count + 1 // Привычки + ячейка дневника
+        }
+        return 0
     }
     
     override func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        if indexPath.item == habits.count {
-            guard let diaryCell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: CustomElement.writeDiaryCell.rawValue,
+        if habits.isEmpty && indexPath.section == 1 {
+            guard let emptyStateCell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: "EmptyStateCell",
                 for: indexPath
-            ) as? DiaryWriteCell else {
-                assertionFailure("Failed to dequeue DiaryWriteCell")
+            ) as? EmptyStateCell else {
+                // Если приведение не удалось, возвращаем пустую ячейку и выводим ошибку
+                assertionFailure("Failed to dequeue EmptyStateCell")
                 return UICollectionViewCell()
             }
-            return diaryCell
-        } else {
-            guard let habitCell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: CustomElement.habitsCell.rawValue,
-                for: indexPath
-            ) as? HabitsCell else {
-                assertionFailure("Failed to dequeue HabitsCell")
-                return UICollectionViewCell()
-            }
-            let habit = habits[indexPath.item]
-            habitCell.configure(with: habit)
-            return habitCell
+            return emptyStateCell
         }
+        if indexPath.section == 0 {
+            if indexPath.item == habits.count {
+                guard let diaryCell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: CustomElement.writeDiaryCell.rawValue,
+                    for: indexPath
+                ) as? DiaryWriteCell else {
+                    assertionFailure("Failed to dequeue DiaryWriteCell")
+                    return UICollectionViewCell()
+                }
+                return diaryCell
+            } else {
+                guard let habitCell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: CustomElement.habitsCell.rawValue,
+                    for: indexPath
+                ) as? HabitsCell else {
+                    assertionFailure("Failed to dequeue HabitsCell")
+                    return UICollectionViewCell()
+                }
+                let habit = habits[indexPath.item]
+                habitCell.configure(with: habit)
+                return habitCell
+            }
+        }
+        assertionFailure("Unhandled case in cellForItemAt. Check section or indexPath logic.")
+        return UICollectionViewCell()
     }
     
     override func collectionView(

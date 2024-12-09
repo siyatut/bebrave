@@ -30,7 +30,7 @@ class OutlineBackgroundView: UICollectionReusableView {
 // MARK: - Drawing
     
     override func draw(_ rect: CGRect) {
-        let path = UIBezierPath(roundedRect: rect, cornerRadius: 18)
+        let path = UIBezierPath(roundedRect: rect, cornerRadius: AppStyle.Sizes.cornerRadius)
         path.lineWidth = 1
         UIColor.systemGray5.setStroke()
         path.stroke()
