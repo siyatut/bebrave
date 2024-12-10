@@ -14,7 +14,7 @@ class HabitsCell: UICollectionViewCell {
     private let habitsName: UILabel = {
         let label = UILabel()
         label.textColor = .label
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = AppStyle.Fonts.regularFont(size: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -22,7 +22,7 @@ class HabitsCell: UICollectionViewCell {
     private let percentDone: UILabel = {
         let label = UILabel()
         label.textColor = .secondaryLabel
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = AppStyle.Fonts.regularFont(size: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -38,7 +38,7 @@ class HabitsCell: UICollectionViewCell {
     private let habitsCount: UILabel = {
         let label = UILabel()
         label.textColor = .secondaryLabel
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = AppStyle.Fonts.boldFont(size: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

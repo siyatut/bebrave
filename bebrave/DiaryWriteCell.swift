@@ -15,7 +15,7 @@ class DiaryWriteCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "Заполнить дневник"
         label.textColor = .label
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = AppStyle.Fonts.regularFont(size: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
