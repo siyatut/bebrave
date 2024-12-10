@@ -24,6 +24,7 @@ class DiaryWriteCell: UICollectionViewCell {
         let view = UIImageView()
         view.image = UIImage(named: "Chevron")
         view.tintColor = AppStyle.Colors.secondaryColor
+        view.contentMode = .scaleAspectFit
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -44,14 +45,18 @@ class DiaryWriteCell: UICollectionViewCell {
     private func setupComponents() {
         contentView.addSubview(writeDiaryLabel)
         contentView.addSubview(chevron)
-#warning("Исправить ошибки с констрейнтами. Сейчас видно, что у лейбла проблема с длиной, а у картинки и с длиной, и с шириной :(")
+        
         NSLayoutConstraint.activate([
-            writeDiaryLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             writeDiaryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            writeDiaryLabel.trailingAnchor.constraint(greaterThanOrEqualTo: chevron.leadingAnchor, constant: -155),
+            writeDiaryLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            writeDiaryLabel.trailingAnchor.constraint(lessThanOrEqualTo: chevron.leadingAnchor, constant: -8),
+            
+            chevron.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -21),
             chevron.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            chevron.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -21)
-            ])
+            
+            chevron.widthAnchor.constraint(equalToConstant: 24),
+            chevron.heightAnchor.constraint(equalToConstant: 24)
+        ])
     }
 }
 
