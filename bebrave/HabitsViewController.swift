@@ -11,7 +11,11 @@
 
 #warning("№3: Добавить нужную отрисовку в чекбоксе по нажатию + степень закрашивания ячейки + изменение процента и числа 1/2, например")
 
-#warning("Дополнительно обернуть dequeueReusableCell в кастомный хелпер, чтобы унифицировать обработку ошибок?")
+#warning("№4: Нужно будет ещё добавить условия для пропуска привычки, когда по каким-то причинам пользователь не хочет выполнять её + условия, при котором она будет считаться невыполненной")
+
+#warning("№5: Дополнительно обернуть dequeueReusableCell в кастомный хелпер, чтобы унифицировать обработку ошибок?")
+
+#warning("№6: Добавить привычку залезает за серую черту таббара, когда много привычек одновременно. Пофиксить этот момент. Вообще нужна ли эта черта, потому что сбоку при прокрутке экрана тоже серая палочка залезает за неё...(")
 
 import UIKit
 
@@ -32,17 +36,17 @@ protocol NewHabitDelegate: AnyObject {
 }
 
 class HabitsViewController: UICollectionViewController {
- 
-// MARK: - Data Source
+    
+    // MARK: - Data Source
     
     private var habits: [Habit] = []
     
-// MARK: - UI components
+    // MARK: - UI components
     
     let historyButton = UIButton()
     let calendarLabel = UILabel()
     
-// MARK: — Init
+    // MARK: — Init
     
     init() {
         super.init(collectionViewLayout: HabitsViewController.createLayout())
@@ -52,29 +56,29 @@ class HabitsViewController: UICollectionViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-// MARK: - Create layout
+    // MARK: - Create layout
     
     static func createLayout() -> UICollectionViewLayout {
         let provider: UICollectionViewCompositionalLayoutSectionProvider = { section, environment in
             
             if section == 1 {
-                    let item = NSCollectionLayoutItem(
-                        layoutSize: .init(
-                            widthDimension: .fractionalWidth(1),
-                            heightDimension: .fractionalHeight(1)
-                        )
+                let item = NSCollectionLayoutItem(
+                    layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .fractionalHeight(1)
                     )
-                    let group = NSCollectionLayoutGroup.vertical(
-                        layoutSize: .init(
-                            widthDimension: .fractionalWidth(1),
-                            heightDimension: .absolute(312) // Фиксированная высота
-                        ),
-                        subitems: [item]
-                    )
-                    let section = NSCollectionLayoutSection(group: group)
-                    section.contentInsets = .init(top: 16, leading: 16, bottom: 16, trailing: 16)
-                    return section
-                }
+                )
+                let group = NSCollectionLayoutGroup.vertical(
+                    layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .absolute(312) // Фиксированная высота
+                    ),
+                    subitems: [item]
+                )
+                let section = NSCollectionLayoutSection(group: group)
+                section.contentInsets = .init(top: 16, leading: 16, bottom: 16, trailing: 16)
+                return section
+            }
             let background = NSCollectionLayoutSupplementaryItem(
                 layoutSize: .init(
                     widthDimension: .fractionalWidth(1),

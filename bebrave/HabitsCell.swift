@@ -7,9 +7,11 @@
 
 import UIKit
 
+#warning("Возможно, распознавание жестов не работает из-за конфликтов с Collection View и Navigation Controller")
+
 class HabitsCell: UICollectionViewCell {
     
-// MARK: - UI Components
+    // MARK: - UI Components
     
     private let habitsName: UILabel = {
         let label = UILabel()
@@ -58,23 +60,27 @@ class HabitsCell: UICollectionViewCell {
         view.image = UIImage(named: "UncheckedCheckbox")?.withRenderingMode(.alwaysTemplate)
         view.tintColor = AppStyle.Colors.borderColor
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.isUserInteractionEnabled = true
         return view
     }()
     
+    // MARK: - Properties
     
-// MARK: - Init
+    private var habit: Habit?
+    
+    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupComponents()
-        
+        setupGesture()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-// MARK: - Set up components
+    // MARK: - Set up components
     
     private func setupComponents() {
         let views = [habitsName, starDivider, habitsCount]
@@ -84,7 +90,10 @@ class HabitsCell: UICollectionViewCell {
         contentView.addSubview(horizontalStackView)
         contentView.addSubview(percentDone)
         contentView.addSubview(checkbox)
-    
+        
+        checkbox.backgroundColor = .red
+        contentView.gestureRecognizers?.forEach { print($0) }
+        
         NSLayoutConstraint.activate([
             horizontalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             horizontalStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
@@ -100,14 +109,65 @@ class HabitsCell: UICollectionViewCell {
         ])
     }
     
-// MARK: - Configure method
+    // MARK: - Setup gesture
+    
+    private func setupGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(checkboxTapped))
+        checkbox.addGestureRecognizer(tapGesture)
+    }
+    
+    // MARK: - Configure method
     
     func configure(with habit: Habit) {
+        self.habit = habit
+        
         habitsName.text = habit.title
-        habitsCount.text = "\(habit.progress.values.reduce(0, +)) из \(habit.frequency)"
-        let percentage = Int((Double(habit.progress.values.reduce(0, +)) / Double(habit.frequency)) * 100)
+        
+        let currentProgress = min(habit.progress.values.reduce(0, +), habit.frequency)
+        let targetProgress = max(habit.frequency, 1)
+        
+        habitsCount.text = "\(currentProgress) из \(targetProgress)"
+        
+        let percentage = Int((Double(currentProgress) / Double(targetProgress)) * 100)
         percentDone.text = "\(percentage)%"
+        
+        // Обновляем чекбокс
+        if currentProgress >= targetProgress {
+            checkbox.image = UIImage(named: "CheckedCheckbox")?.withRenderingMode(.alwaysTemplate)
+            checkbox.tintColor = .systemGreen
+            updateBackgroundColor(with: percentage)
+        } else {
+            checkbox.image = UIImage(named: "UncheckedCheckbox")?.withRenderingMode(.alwaysTemplate)
+            checkbox.tintColor = AppStyle.Colors.borderColor
+        }
+    }
+    
+    // MARK: - Update background color
+    
+    private func updateBackgroundColor(with percentage: Int) {
+        let alpha = max(0.1, CGFloat(percentage) / 100.0) // Минимум 10% прозрачности
+        let progressColor = UIColor.systemBlue.withAlphaComponent(alpha)
+        contentView.backgroundColor = progressColor
+    }
+    
+    // MARK: - Checkbox action
+    
+    @objc private func checkboxTapped() {
+        guard let habit = habit else { return }
+        
+        var currentProgress = habit.progress.values.reduce(0, +)
+        let targetProgress = habit.frequency
+        
+        if currentProgress < targetProgress {
+            currentProgress += 1
+            
+            var updatedHabit = habit
+            updatedHabit.progress[Date()] = currentProgress
+            UserDefaultsManager.shared.updateHabit(updatedHabit)
+            
+            DispatchQueue.main.async {
+                self.configure(with: updatedHabit)
+            }
+        }
     }
 }
-
-
