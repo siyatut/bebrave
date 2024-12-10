@@ -187,38 +187,6 @@ class HabitsViewController: UICollectionViewController {
         let history = HistoryViewController()
         self.navigationController?.pushViewController(history, animated: true)
     }
-    
-    func collectionView(
-            _ collectionView: UICollectionView,
-            trailingSwipeActionsConfigurationForItemAt indexPath: IndexPath
-        ) -> UISwipeActionsConfiguration? {
-            print("Swipe detected for section \(indexPath.section), item \(indexPath.item)")
-
-            guard indexPath.section == 0, indexPath.item < habits.count else {
-                return nil
-            }
-
-            let deleteAction = UIContextualAction(style: .destructive, title: "Удалить") { [weak self] _, _, completionHandler in
-                guard let self = self else { return }
-
-                let habitToRemove = self.habits[indexPath.item]
-                UserDefaultsManager.shared.deleteHabit(id: habitToRemove.id)
-                self.habits.remove(at: indexPath.item)
-
-                self.collectionView.performBatchUpdates {
-                    self.collectionView.deleteItems(at: [indexPath])
-                } completion: { _ in
-                    if self.habits.isEmpty {
-                        self.collectionView.reloadData()
-                    }
-                }
-
-                completionHandler(true)
-            }
-
-            deleteAction.backgroundColor = .systemRed
-            return UISwipeActionsConfiguration(actions: [deleteAction])
-        }
 }
 
 // MARK: — UICollectionViewDelegate
@@ -231,10 +199,10 @@ extension HabitsViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if habits.isEmpty && section == 1 {
-            return 1 // Одна ячейка для пустого состояния
+            return 1
         }
         if section == 0 {
-            return habits.count + 1 // Привычки + ячейка дневника
+            return habits.count + 1
         }
         return 0
     }
