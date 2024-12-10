@@ -44,7 +44,7 @@ class DiaryWriteCell: UICollectionViewCell {
     private func setupComponents() {
         contentView.addSubview(writeDiaryLabel)
         contentView.addSubview(chevron)
-   
+#warning("Исправить ошибки с констрейнтами. Сейчас видно, что у лейбла проблема с длиной, а у картинки и с длиной, и с шириной :(")
         NSLayoutConstraint.activate([
             writeDiaryLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             writeDiaryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
