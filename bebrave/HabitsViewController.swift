@@ -5,13 +5,13 @@
 //  Created by Anastasia Tyutinova on 14/2/2567 BE.
 //
 
-#warning("№1: Наконец-то добавила серое вью, но нужно поднастроить этот момент.")
+#warning("№1: Наконец-то добавила серое вью, но нужно поднастроить этот момент. А также перепроверить, что оно исчезает после добавления привычек и появляется после удаления.")
 
 #warning("№2: Остановилась на добавление удаления привычки свайпом. Также хотела бы реализовать левый свайп для редактирования привычки. Это действие должно открывать новый контроллер — редактирования привычки")
 
 #warning("№3: Ни черта не работает с действиями. Нажатия не работают. Добавить нужную отрисовку в чекбоксе по нажатию + степень закрашивания ячейки + изменение процента и числа 1/2, например. Возможно, мешает outlineBackgroundView?")
 
-#warning("Дополнительно обернуть dequeueReusableCell в кастомный хелпер, чтобы унифицировать обработку ошибок")
+#warning("Дополнительно обернуть dequeueReusableCell в кастомный хелпер, чтобы унифицировать обработку ошибок?")
 
 import UIKit
 
@@ -51,6 +51,8 @@ class HabitsViewController: UICollectionViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+// MARK: - Create layout
     
     static func createLayout() -> UICollectionViewLayout {
         let provider: UICollectionViewCompositionalLayoutSectionProvider = { section, environment in
