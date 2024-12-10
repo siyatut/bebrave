@@ -44,6 +44,7 @@ class DiaryWriteCell: UICollectionViewCell {
     private func setupComponents() {
         contentView.addSubview(writeDiaryLabel)
         contentView.addSubview(chevron)
+        chevron.setContentCompressionResistancePriority(.defaultLow + 1, for: .horizontal)
    
         NSLayoutConstraint.activate([
             writeDiaryLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
