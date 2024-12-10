@@ -5,11 +5,11 @@
 //  Created by Anastasia Tyutinova on 14/2/2567 BE.
 //
 
-#warning("№1: Наконец-то добавила серое вью, но нужно поднастроить этот момент. А также перепроверить, что оно исчезает после добавления привычек и появляется после удаления.")
+#warning("№1: Перепроверить, появляется ли серое вью после удаления привычек.")
 
 #warning("№2: Остановилась на добавление удаления привычки свайпом. Также хотела бы реализовать левый свайп для редактирования привычки. Это действие должно открывать новый контроллер — редактирования привычки")
 
-#warning("№3: Ни черта не работает с действиями. Нажатия не работают. Добавить нужную отрисовку в чекбоксе по нажатию + степень закрашивания ячейки + изменение процента и числа 1/2, например. Возможно, мешает outlineBackgroundView?")
+#warning("№3: Ни черта не работает с действиями. Нажатия не работают. Добавить нужную отрисовку в чекбоксе по нажатию + степень закрашивания ячейки + изменение процента и числа 1/2, например")
 
 #warning("Дополнительно обернуть dequeueReusableCell в кастомный хелпер, чтобы унифицировать обработку ошибок?")
 
@@ -137,6 +137,8 @@ class HabitsViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = AppStyle.Colors.backgroundColor
+        collectionView.delegate = self
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         setupHistoryButton()
         setupCalendarLabel()
         
@@ -185,6 +187,38 @@ class HabitsViewController: UICollectionViewController {
         let history = HistoryViewController()
         self.navigationController?.pushViewController(history, animated: true)
     }
+    
+    func collectionView(
+            _ collectionView: UICollectionView,
+            trailingSwipeActionsConfigurationForItemAt indexPath: IndexPath
+        ) -> UISwipeActionsConfiguration? {
+            print("Swipe detected for section \(indexPath.section), item \(indexPath.item)")
+
+            guard indexPath.section == 0, indexPath.item < habits.count else {
+                return nil
+            }
+
+            let deleteAction = UIContextualAction(style: .destructive, title: "Удалить") { [weak self] _, _, completionHandler in
+                guard let self = self else { return }
+
+                let habitToRemove = self.habits[indexPath.item]
+                UserDefaultsManager.shared.deleteHabit(id: habitToRemove.id)
+                self.habits.remove(at: indexPath.item)
+
+                self.collectionView.performBatchUpdates {
+                    self.collectionView.deleteItems(at: [indexPath])
+                } completion: { _ in
+                    if self.habits.isEmpty {
+                        self.collectionView.reloadData()
+                    }
+                }
+
+                completionHandler(true)
+            }
+
+            deleteAction.backgroundColor = .systemRed
+            return UISwipeActionsConfiguration(actions: [deleteAction])
+        }
 }
 
 // MARK: — UICollectionViewDelegate
