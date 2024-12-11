@@ -9,9 +9,7 @@ import UIKit
 
 #warning("Возможно, распознавание жестов не работает из-за конфликтов с Collection View и Navigation Controller")
 
-#warning("Добавила методы для отслеживания привычки, но пока что борюсь с проблемой выше.")
-
-class HabitsCell: UICollectionViewCell, UIGestureRecognizerDelegate {
+class HabitsCell: UICollectionViewCell {
     
     // MARK: - UI Components
     
@@ -92,7 +90,6 @@ class HabitsCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         contentView.addSubview(horizontalStackView)
         contentView.addSubview(percentDone)
         contentView.addSubview(checkbox)
-        contentView.bringSubviewToFront(checkbox)
         
         checkbox.backgroundColor = .red
         contentView.gestureRecognizers?.forEach { print($0) }
@@ -114,26 +111,9 @@ class HabitsCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     // MARK: - Setup gesture
     
-    override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        
-        // Удаляем UILongPressGestureRecognizer
-        contentView.gestureRecognizers?.forEach { recognizer in
-            if recognizer is UILongPressGestureRecognizer {
-                contentView.removeGestureRecognizer(recognizer)
-            }
-        }
-    }
-    
     private func setupGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(checkboxTapped))
-        tapGesture.delegate = self // Устанавливаем делегат
         checkbox.addGestureRecognizer(tapGesture)
-    }
-    
-    // Этот метод разрешает одновременную обработку нескольких жестов
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
     }
     
     // MARK: - Configure method
@@ -173,7 +153,6 @@ class HabitsCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     // MARK: - Checkbox action
     
     @objc private func checkboxTapped() {
-        print("Checkbox tapped!")
         guard let habit = habit else { return }
         
         var currentProgress = habit.progress.values.reduce(0, +)
