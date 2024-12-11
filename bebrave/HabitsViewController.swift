@@ -7,7 +7,7 @@
 
 #warning("№1: Перепроверить, появляется ли серое вью после удаления привычек.")
 
-#warning("№2: Привычка должна изменяться и удаляться в отдельном экране, не свайпами. Чёрт с этими свайпами. Хватит мучаться.")
+#warning("№2: Есть проблема с нажатием на ячейку, поэтому и не получается добавить действия свайпами. Когда сделаю это, можно переходить к следующему пункту")
 
 #warning("№3: Добавить нужную отрисовку в чекбоксе по нажатию + степень закрашивания ячейки + изменение процента и числа 1/2, например")
 
@@ -16,8 +16,6 @@
 #warning("№5: Дополнительно обернуть dequeueReusableCell в кастомный хелпер, чтобы унифицировать обработку ошибок?")
 
 #warning("№6: Добавить привычку залезает за серую черту таббара, когда много привычек одновременно. Пофиксить этот момент. Вообще нужна ли эта черта, потому что сбоку при прокрутке экрана тоже серая палочка залезает за неё...(")
-
-#warning("Дополнительно обернуть dequeueReusableCell в кастомный хелпер, чтобы унифицировать обработку ошибок?")
 
 import UIKit
 
@@ -42,6 +40,10 @@ class HabitsViewController: UICollectionViewController {
 // MARK: - Data Source
     
     private var habits: [Habit] = []
+
+// MARK: - Properties
+    
+    private var headerView: HeaderDaysCollectionView?
     
 // MARK: - UI components
     
@@ -286,9 +288,9 @@ extension HabitsViewController {
             ) as? HeaderDaysCollectionView {
                 header.backgroundColor = AppStyle.Colors.backgroundColor
                 header.parentHeaderViewController = self
+                headerView = header
                 return header
             }
-#warning("Если переключаться между вкладками, когда привычки промотаны вниз, то header становится невидимым и при возврате к экрану привычек приложение крашится.")
             assertionFailure("Failed to dequeue HeaderDaysCollectionView")
             return UICollectionReusableView()
         case .outlineBackground:
@@ -363,10 +365,8 @@ extension HabitsViewController: NewHabitDelegate {
 
 extension HabitsViewController {
     func updateCalendarLabel() {
-        guard let header = collectionView.visibleSupplementaryViews(
-            ofKind: CustomElement.collectionHeader.rawValue
-        ).first as? HeaderDaysCollectionView else {
-            assertionFailure("HeaderDaysCollectionView not found")
+        guard let header = headerView else {
+            print("Header is not visible or initialized.")
             return
         }
         
