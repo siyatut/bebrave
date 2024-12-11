@@ -15,8 +15,6 @@
 
 #warning("№5: Дополнительно обернуть dequeueReusableCell в кастомный хелпер, чтобы унифицировать обработку ошибок?")
 
-#warning("№6: Добавить привычку залезает за серую черту таббара, когда много привычек одновременно. Пофиксить этот момент. Вообще нужна ли эта черта, потому что сбоку при прокрутке экрана тоже серая палочка залезает за неё...(")
-
 import UIKit
 
 // MARK: - Custom Elements
@@ -64,7 +62,7 @@ class HabitsViewController: UICollectionViewController {
     
     static func createLayout() -> UICollectionViewLayout {
         let provider: UICollectionViewCompositionalLayoutSectionProvider = { section, environment in
-            
+// нужна ли вообще строка снизу. когда добавлю возможность удаления привычек, хорошо бы перепроверить
             if section == 1 {
                 let item = NSCollectionLayoutItem(
                     layoutSize: .init(
@@ -75,11 +73,12 @@ class HabitsViewController: UICollectionViewController {
                 let group = NSCollectionLayoutGroup.vertical(
                     layoutSize: .init(
                         widthDimension: .fractionalWidth(1),
-                        heightDimension: .absolute(312) // Фиксированная высота
+                        heightDimension: .absolute(312)
                     ),
                     subitems: [item]
                 )
                 let section = NSCollectionLayoutSection(group: group)
+// наверное, нужно будет поменять настройку ниже, у другой секции по 12
                 section.contentInsets = .init(top: 16, leading: 16, bottom: 16, trailing: 16)
                 return section
             }

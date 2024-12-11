@@ -21,26 +21,6 @@ class TabBarViewController: UITabBarController {
         self.tabBar.backgroundColor = AppStyle.Colors.backgroundColor
         self.tabBar.tintColor = AppStyle.Colors.primaryColor
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        if tabBar.subviews.contains(where: { $0.tag == 999 }) { return }
-        
-        let lineView = UIView()
-        lineView.backgroundColor = AppStyle.Colors.borderColor
-        lineView.translatesAutoresizingMaskIntoConstraints = false
-        lineView.tag = 999
-        
-        tabBar.addSubview(lineView)
-        
-        NSLayoutConstraint.activate([
-            lineView.heightAnchor.constraint(equalToConstant: 1),
-            lineView.leadingAnchor.constraint(equalTo: tabBar.leadingAnchor),
-            lineView.trailingAnchor.constraint(equalTo: tabBar.trailingAnchor),
-            lineView.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -7)
-        ])
-    }
         
     
 // MARK: — Setup tab bar
