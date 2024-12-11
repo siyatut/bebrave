@@ -140,6 +140,8 @@ class HabitsViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.interactivePopGestureRecognizer?.delaysTouchesBegan = false
+        navigationController?.interactivePopGestureRecognizer?.cancelsTouchesInView = false
         view.backgroundColor = AppStyle.Colors.backgroundColor
         collectionView.delegate = self
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
@@ -246,6 +248,7 @@ extension HabitsViewController {
                 }
                 let habit = habits[indexPath.item]
                 habitCell.configure(with: habit)
+                print("Gestures on cell: \(String(describing: habitCell.contentView.gestureRecognizers))")
                 return habitCell
             }
         }
@@ -302,6 +305,10 @@ extension HabitsViewController {
             assertionFailure("Unhandled custom element: \(customElement)")
             return UICollectionReusableView()
         }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+        return false
     }
 }
 
@@ -366,7 +373,7 @@ extension HabitsViewController {
             assertionFailure("HeaderDaysCollectionView not found")
             return
         }
-        
+#warning("Если переключаться между вкладками, когда привычки промотаны вниз, то header становится невидимым и при возврате к экрану привычек приложение крашится.")
         let dates = header.getDisplayedDates()
         
         guard let firstDate = dates.first, let lastDate = dates.last else {
@@ -390,3 +397,8 @@ extension HabitsViewController {
     }
 }
 
+extension HabitsViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true // Разрешаем одновременную обработку нескольких жестов
+    }
+}
