@@ -9,13 +9,15 @@ import UIKit
 
 class AddNewHabitView: UICollectionReusableView {
     
-// MARK: - Parent view controller
+// MARK: - Delegate Protocol
     
-    weak var delegate: NewHabitDelegate?
+   weak var delegate: NewHabitDelegate?
+    
+// MARK: - Parent view controller
+
+    weak var parentFooterViewController: UIViewController?
     
 // MARK: - UI Components
-    
-    weak var parentFooterViewController: UIViewController?
     
     private lazy var addNewHabitButton: UIButton = {
         var config = UIButton.Configuration.plain()
