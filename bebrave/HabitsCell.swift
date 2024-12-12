@@ -38,7 +38,7 @@ class HabitsCell: UICollectionViewCell {
     private let habitsCount: UILabel = {
         let label = UILabel()
         label.textColor = .secondaryLabel
-        label.font = AppStyle.Fonts.boldFont(size: 16)
+        label.font = AppStyle.Fonts.regularFont(size: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -48,7 +48,7 @@ class HabitsCell: UICollectionViewCell {
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .fill
-        stack.spacing = 5
+        stack.spacing = 2
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
