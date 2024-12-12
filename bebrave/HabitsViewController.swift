@@ -7,7 +7,7 @@
 
 #warning("№1: Перепроверить, появляется ли серое вью после удаления привычек.")
 
-#warning("№2: Есть проблема с нажатием на ячейку, поэтому и не получается добавить действия свайпами. Когда сделаю это, можно переходить к следующему пункту")
+#warning("№2: Добавить действия со свайпами, затем перейти к пункту ниже")
 
 #warning("№3: Добавить нужную отрисовку в чекбоксе по нажатию + степень закрашивания ячейки + изменение процента и числа 1/2, например")
 
@@ -60,7 +60,7 @@ class HabitsViewController: UICollectionViewController {
     
     static func createLayout() -> UICollectionViewLayout {
         let provider: UICollectionViewCompositionalLayoutSectionProvider = { section, environment in
-// нужна ли вообще строка снизу. когда добавлю возможность удаления привычек, хорошо бы перепроверить
+#warning("нужна ли вообще строка снизу. когда добавлю возможность удаления привычек, хорошо бы перепроверить")
             if section == 1 {
                 let item = NSCollectionLayoutItem(
                     layoutSize: .init(
@@ -76,7 +76,7 @@ class HabitsViewController: UICollectionViewController {
                     subitems: [item]
                 )
                 let section = NSCollectionLayoutSection(group: group)
-// наверное, нужно будет поменять настройку ниже, у другой секции по 12
+#warning("наверное, нужно будет поменять настройку ниже, у другой секции по 12")
                 section.contentInsets = .init(top: 16, leading: 16, bottom: 16, trailing: 16)
                 return section
             }
@@ -142,8 +142,6 @@ class HabitsViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = AppStyle.Colors.backgroundColor
-        collectionView.delegate = self
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         setupHistoryButton()
         setupCalendarLabel()
         
@@ -390,3 +388,11 @@ extension HabitsViewController {
     }
 }
 
+extension HabitsViewController {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 0, indexPath.item < habits.count {
+            let selectedHabit = habits[indexPath.item]
+            print("Selected habit: \(selectedHabit.title)")
+        }
+    }
+}

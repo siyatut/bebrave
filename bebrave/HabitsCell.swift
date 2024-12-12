@@ -67,11 +67,21 @@ class HabitsCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupComponents()
-        
+        setupTapGesture()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        tapGesture.cancelsTouchesInView = false
+        contentView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func handleTap() {
+        print("Cell tapped!")
     }
     
 // MARK: - Set up components

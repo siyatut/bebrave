@@ -9,6 +9,8 @@ import UIKit
 
 class AddNewHabitView: UICollectionReusableView {
     
+#warning("Здесь как будто непонятно зачем добавила outlinebackgroundview, ведь можно было просто кнопку настроить. Надо подумать над этим и переписать, скорее всего")
+    
 // MARK: - Parent view controller
     
     weak var delegate: NewHabitDelegate?
@@ -81,7 +83,7 @@ class AddNewHabitView: UICollectionReusableView {
     
         addNewHabitLabel.setContentHuggingPriority(.defaultHigh + 1, for: .horizontal)
         button.addTarget(self, action: #selector(addNewHabitButtonTapped), for: .touchUpInside)
-       
+        
         NSLayoutConstraint.activate([
             outlineBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor),
             outlineBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor),

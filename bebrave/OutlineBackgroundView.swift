@@ -14,6 +14,7 @@ class OutlineBackgroundView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .clear
+        isUserInteractionEnabled = false
     }
     
     required init?(coder: NSCoder) {
