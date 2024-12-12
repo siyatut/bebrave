@@ -9,8 +9,6 @@ import UIKit
 
 class AddNewHabitView: UICollectionReusableView {
     
-#warning("Здесь как будто непонятно зачем добавила outlinebackgroundview, ведь можно было просто кнопку настроить. Надо подумать над этим и переписать, скорее всего")
-    
 // MARK: - Parent view controller
     
     weak var delegate: NewHabitDelegate?
@@ -19,46 +17,30 @@ class AddNewHabitView: UICollectionReusableView {
     
     weak var parentFooterViewController: UIViewController?
     
-    private let view: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let addNewHabitLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Добавить привычку"
-        label.textColor = AppStyle.Colors.secondaryColor
-        label.font = AppStyle.Fonts.regularFont(size: 16)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let plus: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "Plus")
-        view.tintColor = AppStyle.Colors.secondaryColor
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let button: UIButton = {
-        let button = UIButton()
+    private lazy var addNewHabitButton: UIButton = {
+        var config = UIButton.Configuration.plain()
+        config.baseForegroundColor = AppStyle.Colors.secondaryColor
+        config.title = "Добавить привычку"
+        config.image = UIImage(named: "Plus")
+        config.imagePadding = 4
+        config.imagePlacement = .leading
+        config.titleAlignment = .center
+        config.attributedTitle = AttributedString(
+            "Добавить привычку",
+            attributes: AttributeContainer([.font: AppStyle.Fonts.regularFont(size: 16)])
+        )
+        
+        let button = UIButton(configuration: config)
         button.backgroundColor = .clear
-        button.isUserInteractionEnabled = true
         button.translatesAutoresizingMaskIntoConstraints = false
+        
+        button.layer.borderWidth = AppStyle.Sizes.borderWidth
+        button.layer.borderColor = AppStyle.Colors.borderColor.cgColor
+        button.layer.cornerRadius = AppStyle.Sizes.cornerRadius
+        button.layer.masksToBounds = true
+        
+        button.addTarget(self, action: #selector(addNewHabitButtonTapped), for: .touchUpInside)
         return button
-    }()
-    
-    private let outlineBackgroundView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .clear
-        view.layer.borderWidth = AppStyle.Sizes.borderWidth
-        view.layer.borderColor = AppStyle.Colors.borderColor.cgColor
-        view.layer.cornerRadius = AppStyle.Sizes.cornerRadius
-        view.layer.masksToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
     }()
     
 // MARK: - Init
@@ -75,36 +57,12 @@ class AddNewHabitView: UICollectionReusableView {
 // MARK: - Set up components
     
     func setupComponents() {
-        addSubview(outlineBackgroundView)
-        addSubview(view)
-        addSubview(button)
-        view.addSubview(addNewHabitLabel)
-        view.addSubview(plus)
-    
-        addNewHabitLabel.setContentHuggingPriority(.defaultHigh + 1, for: .horizontal)
-        button.addTarget(self, action: #selector(addNewHabitButtonTapped), for: .touchUpInside)
-        
+        addSubview(addNewHabitButton)
         NSLayoutConstraint.activate([
-            outlineBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            outlineBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            outlineBackgroundView.topAnchor.constraint(equalTo: topAnchor),
-            outlineBackgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            view.centerXAnchor.constraint(equalTo: centerXAnchor),
-            view.centerYAnchor.constraint(equalTo: centerYAnchor),
-            
-            addNewHabitLabel.topAnchor.constraint(equalTo: view.topAnchor),
-            addNewHabitLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            addNewHabitLabel.leadingAnchor.constraint(equalTo: plus.trailingAnchor, constant: 4),
-            addNewHabitLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            plus.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            plus.topAnchor.constraint(equalTo: addNewHabitLabel.topAnchor),
-            plus.bottomAnchor.constraint(equalTo: addNewHabitLabel.bottomAnchor),
-            
-            button.leadingAnchor.constraint(equalTo: leadingAnchor),
-            button.trailingAnchor.constraint(equalTo: trailingAnchor),
-            button.topAnchor.constraint(equalTo: topAnchor),
-            button.bottomAnchor.constraint(equalTo: bottomAnchor)
+            addNewHabitButton.leadingAnchor.constraint(equalTo: leadingAnchor),
+            addNewHabitButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+            addNewHabitButton.topAnchor.constraint(equalTo: topAnchor),
+            addNewHabitButton.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
     
