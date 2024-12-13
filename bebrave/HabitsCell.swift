@@ -52,11 +52,13 @@ class HabitsCell: UICollectionViewCell {
     
 // MARK: - Set up components
     
+    private func addSubviewsToStackView(_ stackView: UIStackView, views: [UIView]) {
+        views.forEach { stackView.addArrangedSubview($0) }
+    }
+
     private func setupComponents() {
-        let views = [habitsName, starDivider, habitsCount]
-        for view in views {
-            horizontalStackView.addArrangedSubview(view)
-        }
+        addSubviewsToStackView(horizontalStackView, views: [habitsName, starDivider, habitsCount])
+
         contentView.addSubview(horizontalStackView)
         contentView.addSubview(percentDone)
         contentView.addSubview(checkbox)
