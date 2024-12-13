@@ -11,38 +11,12 @@ class HabitsCell: UICollectionViewCell {
     
 // MARK: - UI Components
     
-    private let habitsName: UILabel = {
-        let label = UILabel()
-        label.textColor = .label
-        label.font = AppStyle.Fonts.regularFont(size: 16)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let percentDone: UILabel = {
-        let label = UILabel()
-        label.textColor = .secondaryLabel
-        label.font = AppStyle.Fonts.regularFont(size: 16)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let starDivider: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "StarDivider")
-        view.tintColor = AppStyle.Colors.secondaryColor
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let habitsCount: UILabel = {
-        let label = UILabel()
-        label.textColor = .secondaryLabel
-        label.font = AppStyle.Fonts.regularFont(size: 16)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
+    private lazy var habitsName = createLabel(textColor: .label, font: AppStyle.Fonts.regularFont(size: 16))
+    private lazy var percentDone = createLabel(textColor: .secondaryLabel, font: AppStyle.Fonts.regularFont(size: 16))
+    private lazy var habitsCount = createLabel(textColor: .secondaryLabel, font: AppStyle.Fonts.regularFont(size: 16))
+    private lazy var starDivider = createImageView(imageName: "StarDivider", tintColor: AppStyle.Colors.secondaryColor)
+    private lazy var checkbox = createImageView(imageName: "UncheckedCheckbox", tintColor: AppStyle.Colors.borderColor)
+
     private let horizontalStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
@@ -51,14 +25,6 @@ class HabitsCell: UICollectionViewCell {
         stack.spacing = 2
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
-    }()
-    
-    private let checkbox: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "UncheckedCheckbox")?.withRenderingMode(.alwaysTemplate)
-        view.tintColor = AppStyle.Colors.borderColor
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
     }()
     
     
@@ -120,4 +86,21 @@ class HabitsCell: UICollectionViewCell {
     }
 }
 
-
+extension HabitsCell {
+    
+    private func createLabel(textColor: UIColor, font: UIFont) -> UILabel {
+        let label = UILabel()
+        label.textColor = textColor
+        label.font = font
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
+    
+    private func createImageView(imageName: String, tintColor: UIColor) -> UIImageView {
+        let view = UIImageView()
+        view.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
+        view.tintColor = tintColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }
+}
