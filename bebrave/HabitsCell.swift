@@ -88,6 +88,8 @@ class HabitsCell: UICollectionViewCell {
     }
 }
 
+// MARK: - Methods to create label and image view
+
 extension HabitsCell {
     
     private func createLabel(textColor: UIColor, font: UIFont) -> UILabel {
