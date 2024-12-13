@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import SwipeCellKit
 
-class HabitsCell: UICollectionViewCell {
+class HabitsCell: SwipeCollectionViewCell {
     
 // MARK: - UI Components
     

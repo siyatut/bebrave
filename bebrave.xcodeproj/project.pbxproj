@@ -16,6 +16,7 @@
 		5252109B2BFC7F04009DB3F7 /* DiaryWriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5252109A2BFC7F04009DB3F7 /* DiaryWriteCell.swift */; };
 		52923ECF2CF70F080088E54B /* HeaderDaysCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */; };
 		52ACDD442CEF13CD00868730 /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ACDD432CEF13CD00868730 /* AppStyle.swift */; };
+		52CA95FC2D0C4DA800B16029 /* SwipeCellKit in Frameworks */ = {isa = PBXBuildFile; productRef = 52CA95FB2D0C4DA800B16029 /* SwipeCellKit */; };
 		52F1E53A2B7CDC300058F767 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E5392B7CDC300058F767 /* AppDelegate.swift */; };
 		52F1E53C2B7CDC300058F767 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E53B2B7CDC300058F767 /* SceneDelegate.swift */; };
 		52F1E53E2B7CDC300058F767 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E53D2B7CDC300058F767 /* TabBarViewController.swift */; };
@@ -81,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52CA95FC2D0C4DA800B16029 /* SwipeCellKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,6 +254,9 @@
 				ru,
 			);
 			mainGroup = 52F1E52D2B7CDC300058F767;
+			packageReferences = (
+				52CA95FA2D0C4DA800B16029 /* XCRemoteSwiftPackageReference "SwipeCellKit" */,
+			);
 			productRefGroup = 52F1E5372B7CDC300058F767 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -642,6 +647,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		52CA95FA2D0C4DA800B16029 /* XCRemoteSwiftPackageReference "SwipeCellKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwipeCellKit/SwipeCellKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		52CA95FB2D0C4DA800B16029 /* SwipeCellKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52CA95FA2D0C4DA800B16029 /* XCRemoteSwiftPackageReference "SwipeCellKit" */;
+			productName = SwipeCellKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 52F1E52E2B7CDC300058F767 /* Project object */;
 }

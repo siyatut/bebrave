@@ -14,6 +14,7 @@
 #warning("№4: Нужно будет ещё добавить условия для пропуска привычки, когда по каким-то причинам пользователь не хочет выполнять её + условия, при котором она будет считаться невыполненной")
 
 import UIKit
+import SwipeCellKit
 
 // MARK: - Custom Elements
 
@@ -243,6 +244,7 @@ extension HabitsViewController {
                     assertionFailure("Failed to dequeue HabitsCell")
                     return UICollectionViewCell()
                 }
+                habitCell.delegate = self
                 let habit = habits[indexPath.item]
                 habitCell.configure(with: habit)
                 return habitCell
@@ -396,3 +398,34 @@ extension HabitsViewController {
         }
     }
 }
+
+extension HabitsViewController: SwipeCollectionViewCellDelegate {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        editActionsForItemAt indexPath: IndexPath,
+        for orientation: SwipeActionsOrientation
+    ) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+
+        let deleteAction = SwipeAction(style: .destructive, title: "Удалить") { action, indexPath in
+            let habitToDelete = self.habits[indexPath.item]
+            self.habits.remove(at: indexPath.item)
+            collectionView.deleteItems(at: [indexPath])
+        }
+        deleteAction.image = UIImage(systemName: "trash")
+        deleteAction.backgroundColor = .systemRed
+        return [deleteAction]
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        editActionsOptionsForItemAt indexPath: IndexPath,
+        for orientation: SwipeActionsOrientation
+    ) -> SwipeOptions {
+        var options = SwipeOptions()
+        options.expansionStyle = .destructive
+        return options
+    }
+
+}
+
