@@ -78,6 +78,7 @@ class HabitsViewController: UICollectionViewController {
                 section.contentInsets = .init(top: 24, leading: 12, bottom: 0, trailing: 12)
                 return section
             }
+            
             let background = NSCollectionLayoutSupplementaryItem(
                 layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
@@ -407,13 +408,11 @@ extension HabitsViewController: SwipeCollectionViewCellDelegate {
     ) -> [SwipeAction]? {
         guard orientation == .right else { return nil }
         
-        // Проверка: это ячейка дневника?
         if indexPath.section == 0 && indexPath.item == habits.count {
             print("Diary cell cannot be swiped.")
             return nil
         }
-        
-        // Удаляем привычку
+
         guard indexPath.item < habits.count else {
             print("Invalid index for habit deletion.")
             return nil
@@ -427,10 +426,8 @@ extension HabitsViewController: SwipeCollectionViewCellDelegate {
             UserDefaultsManager.shared.deleteHabit(id: habitToDelete.id)
             
             if self.habits.isEmpty {
-                // Если все привычки удалены, перезагрузите секцию целиком
                 self.collectionView.reloadSections(IndexSet(integer: 0))
             } else {
-                // Иначе удаляем конкретный элемент
                 self.collectionView.performBatchUpdates {
                     self.collectionView.deleteItems(at: [indexPath])
                 }
