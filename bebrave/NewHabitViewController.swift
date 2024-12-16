@@ -7,6 +7,8 @@
 
 import UIKit
 
+#warning("Перепроверить логику отображения привычек снова. Вышла за разрешённый диапазон в количестве раз в день, кнопка стала серой, а ошибка не отобразилась, fuccck")
+
 class NewHabitViewController: UIViewController {
     
 // MARK: - Delegate

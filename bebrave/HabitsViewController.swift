@@ -5,7 +5,7 @@
 //  Created by Anastasia Tyutinova on 14/2/2567 BE.
 //
 
-#warning("№1: Добавить действия со свайпами, затем перейти к пункту ниже")
+#warning("№1: Добавить действия со свайпами, затем перейти к пункту ниже: попробовать убрать из уравнения ячейку дневника. Поможет ли это в удалении без краша?")
 
 #warning("№2: Добавить нужную отрисовку в чекбоксе по нажатию + степень закрашивания ячейки + изменение процента и числа 1/2, например")
 
@@ -60,7 +60,7 @@ class HabitsViewController: UICollectionViewController {
     static func createLayout() -> UICollectionViewLayout {
         let provider: UICollectionViewCompositionalLayoutSectionProvider = { section, environment in
 
-            if section == 1 {
+            if section == 0 {
                 let item = NSCollectionLayoutItem(
                     layoutSize: .init(
                         widthDimension: .fractionalWidth(1),
@@ -75,7 +75,7 @@ class HabitsViewController: UICollectionViewController {
                     subitems: [item]
                 )
                 let section = NSCollectionLayoutSection(group: group)
-                section.contentInsets = .init(top: 24, leading: 12, bottom: 0, trailing: 12)
+                section.contentInsets = .init(top: 12, leading: 12, bottom: 0, trailing: 12)
                 return section
             }
             
@@ -152,7 +152,6 @@ class HabitsViewController: UICollectionViewController {
             DiaryWriteCell.self,
             forCellWithReuseIdentifier: CustomElement.writeDiaryCell.rawValue
         )
-    
         collectionView.register(
             HeaderDaysCollectionView.self,
             forSupplementaryViewOfKind: CustomElement.collectionHeader.rawValue,
@@ -196,14 +195,14 @@ class HabitsViewController: UICollectionViewController {
 extension HabitsViewController {
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return habits.isEmpty ? 2 : 1
+        return habits.isEmpty ? 1 : 2
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let itemCount: Int
-        if habits.isEmpty && section == 1 {
+        if habits.isEmpty && section == 0 {
             itemCount = 1
-        } else if section == 0 {
+        } else if section == 1 {
             itemCount = habits.count + 1
         } else {
             itemCount = 0
@@ -217,7 +216,7 @@ extension HabitsViewController {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        if habits.isEmpty && indexPath.section == 1 {
+        if habits.isEmpty && indexPath.section == 0 {
             guard let emptyStateCell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "EmptyStateCell",
                 for: indexPath
@@ -227,7 +226,7 @@ extension HabitsViewController {
             }
             return emptyStateCell
         }
-        if indexPath.section == 0 {
+        if indexPath.section == 1 {
             if indexPath.item == habits.count {
                 guard let diaryCell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: CustomElement.writeDiaryCell.rawValue,
@@ -249,7 +248,7 @@ extension HabitsViewController {
                 let habit = habits[indexPath.item]
                 habitCell.configure(with: habit)
                 return habitCell
-            }
+             }
         }
         assertionFailure("Unhandled case in cellForItemAt. Check section or indexPath logic.")
         return UICollectionViewCell()
