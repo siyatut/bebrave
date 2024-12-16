@@ -5,7 +5,7 @@
 //  Created by Anastasia Tyutinova on 14/2/2567 BE.
 //
 
-#warning("№1: Добавить действия со свайпами, затем перейти к пункту ниже: попробовать убрать из уравнения ячейку дневника. Поможет ли это в удалении без краша?")
+#warning("№1: Добавить действия со свайпами, затем перейти к пункту ниже")
 
 #warning("№2: Добавить нужную отрисовку в чекбоксе по нажатию + степень закрашивания ячейки + изменение процента и числа 1/2, например")
 
@@ -176,6 +176,7 @@ class HabitsViewController: UICollectionViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         habits = UserDefaultsManager.shared.loadHabits()
+        print("Habits loaded: \(habits.map { $0.title })")
         collectionView.reloadData()
         DispatchQueue.main.async {
             self.updateCalendarLabel()
@@ -200,15 +201,15 @@ extension HabitsViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let itemCount: Int
-        if habits.isEmpty && section == 0 {
-            itemCount = 1
+        if section == 0 {
+            itemCount = habits.isEmpty ? 1 : 0
         } else if section == 1 {
             itemCount = habits.count + 1
         } else {
             itemCount = 0
         }
         
-        print("Section \(section): Expected \(itemCount) items")
+        print("Section \(section): Expected \(itemCount) items.")
         return itemCount
     }
     
@@ -217,6 +218,7 @@ extension HabitsViewController {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         if habits.isEmpty && indexPath.section == 0 {
+            print("Loading empty state cell.")
             guard let emptyStateCell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "EmptyStateCell",
                 for: indexPath
@@ -228,6 +230,7 @@ extension HabitsViewController {
         }
         if indexPath.section == 1 {
             if indexPath.item == habits.count {
+                print("Loading diary cell.")
                 guard let diaryCell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: CustomElement.writeDiaryCell.rawValue,
                     for: indexPath
@@ -237,6 +240,7 @@ extension HabitsViewController {
                 }
                 return diaryCell
             } else {
+                print("Loading habit cell at index \(indexPath.item).")
                 guard let habitCell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: CustomElement.habitsCell.rawValue,
                     for: indexPath
@@ -357,6 +361,33 @@ extension HabitsViewController: NewHabitDelegate {
         habits.append(habit)
         collectionView.reloadData()
     }
+    
+    func didDeleteHabit(at indexPath: IndexPath) {
+        
+        print("Deleting habit at indexPath: \(indexPath)")
+        let habitToDelete = habits[indexPath.item]
+        habits.remove(at: indexPath.item)
+        
+        let group = DispatchGroup()
+        
+        group.enter()
+        DispatchQueue.global(qos: .userInitiated).async {
+            UserDefaultsManager.shared.deleteHabit(id: habitToDelete.id)
+            group.leave()
+        }
+#warning("Все привычки окей удаляются, пока не остаётся одна последняя. Когда удаляю последнюю, крашится")
+        group.notify(queue: .main) {
+            print("Deleted habit: \(habitToDelete.title)")
+            if self.habits.isEmpty {
+                print("All habits removed. Reloading section.")
+                self.collectionView.reloadData()
+            } else {
+                self.collectionView.performBatchUpdates {
+                    self.collectionView.reloadSections(IndexSet(integer: 1))
+                }
+            }
+        }
+    }
 }
 
 // MARK: - Calendar label update
@@ -406,42 +437,23 @@ extension HabitsViewController: SwipeCollectionViewCellDelegate {
         editActionsForItemAt indexPath: IndexPath,
         for orientation: SwipeActionsOrientation
     ) -> [SwipeAction]? {
-        guard orientation == .right else { return nil }
+        print("Swipe detected at indexPath: \(indexPath), orientation: \(orientation)")
         
-        if indexPath.section == 0 && indexPath.item == habits.count {
-            print("Diary cell cannot be swiped.")
-            return nil
-        }
-
-        guard indexPath.item < habits.count else {
-            print("Invalid index for habit deletion.")
+        guard orientation == .right else { return nil }
+        guard indexPath.section == 1, indexPath.item < habits.count else {
+            print("Invalid swipe request: section \(indexPath.section), item \(indexPath.item)")
             return nil
         }
         
         let deleteAction = SwipeAction(style: .destructive, title: "Удалить") { [weak self] action, indexPath in
             guard let self = self else { return }
-            
-            let habitToDelete = self.habits[indexPath.item]
-            self.habits.remove(at: indexPath.item)
-            UserDefaultsManager.shared.deleteHabit(id: habitToDelete.id)
-            
-            if self.habits.isEmpty {
-                self.collectionView.reloadSections(IndexSet(integer: 0))
-            } else {
-                self.collectionView.performBatchUpdates {
-                    self.collectionView.deleteItems(at: [indexPath])
-                }
-            }
+            self.didDeleteHabit(at: indexPath)
         }
-        print("Attempting to delete habit at index \(indexPath.item)")
-        print("Remaining habits: \(self.habits.count)")
-        
-        print("Habits count after deletion: \(self.habits.count)")
-        print("CollectionView expects \(collectionView.numberOfItems(inSection: 1)) items.")
         
         deleteAction.image = UIImage(systemName: "trash")
         deleteAction.backgroundColor = .systemRed
         return [deleteAction]
+        
     }
 
     func collectionView(
