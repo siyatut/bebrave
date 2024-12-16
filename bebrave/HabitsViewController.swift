@@ -241,6 +241,7 @@ extension HabitsViewController {
                     withReuseIdentifier: CustomElement.habitsCell.rawValue,
                     for: indexPath
                 ) as? HabitsCell else {
+#warning("Вот это всё нужно будет потом переписать с do/catch")
                     assertionFailure("Failed to dequeue HabitsCell")
                     return UICollectionViewCell()
                 }
@@ -434,6 +435,9 @@ extension HabitsViewController: SwipeCollectionViewCellDelegate {
         }
         print("Attempting to delete habit at index \(indexPath.item)")
         print("Remaining habits: \(self.habits.count)")
+        
+        print("Habits count after deletion: \(self.habits.count)")
+        print("CollectionView expects \(collectionView.numberOfItems(inSection: 1)) items.")
         
         deleteAction.image = UIImage(systemName: "trash")
         deleteAction.backgroundColor = .systemRed
