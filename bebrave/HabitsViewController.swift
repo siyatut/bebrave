@@ -5,13 +5,11 @@
 //  Created by Anastasia Tyutinova on 14/2/2567 BE.
 //
 
-#warning("№1: Перепроверить, появляется ли серое вью после удаления привычек.")
+#warning("№1: Добавить действия со свайпами, затем перейти к пункту ниже")
 
-#warning("№2: Добавить действия со свайпами, затем перейти к пункту ниже")
+#warning("№2: Добавить нужную отрисовку в чекбоксе по нажатию + степень закрашивания ячейки + изменение процента и числа 1/2, например")
 
-#warning("№3: Добавить нужную отрисовку в чекбоксе по нажатию + степень закрашивания ячейки + изменение процента и числа 1/2, например")
-
-#warning("№4: Нужно будет ещё добавить условия для пропуска привычки, когда по каким-то причинам пользователь не хочет выполнять её + условия, при котором она будет считаться невыполненной")
+#warning("№3: Нужно будет ещё добавить условия для пропуска привычки, когда по каким-то причинам пользователь не хочет выполнять её + условия, при котором она будет считаться невыполненной")
 
 import UIKit
 import SwipeCellKit
@@ -61,7 +59,7 @@ class HabitsViewController: UICollectionViewController {
     
     static func createLayout() -> UICollectionViewLayout {
         let provider: UICollectionViewCompositionalLayoutSectionProvider = { section, environment in
-#warning("нужна ли вообще строка снизу. когда добавлю возможность удаления привычек, хорошо бы перепроверить")
+
             if section == 1 {
                 let item = NSCollectionLayoutItem(
                     layoutSize: .init(
@@ -77,8 +75,7 @@ class HabitsViewController: UICollectionViewController {
                     subitems: [item]
                 )
                 let section = NSCollectionLayoutSection(group: group)
-#warning("наверное, нужно будет поменять настройку ниже, у другой секции по 12")
-                section.contentInsets = .init(top: 16, leading: 16, bottom: 16, trailing: 16)
+                section.contentInsets = .init(top: 24, leading: 12, bottom: 0, trailing: 12)
                 return section
             }
             let background = NSCollectionLayoutSupplementaryItem(
@@ -202,13 +199,17 @@ extension HabitsViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let itemCount: Int
         if habits.isEmpty && section == 1 {
-            return 1
+            itemCount = 1
+        } else if section == 0 {
+            itemCount = habits.count + 1
+        } else {
+            itemCount = 0
         }
-        if section == 0 {
-            return habits.count + 1
-        }
-        return 0
+        
+        print("Section \(section): Expected \(itemCount) items")
+        return itemCount
     }
     
     override func collectionView(
@@ -220,7 +221,6 @@ extension HabitsViewController {
                 withReuseIdentifier: "EmptyStateCell",
                 for: indexPath
             ) as? EmptyStateCell else {
-                // Если приведение не удалось, возвращаем пустую ячейку и выводим ошибку
                 assertionFailure("Failed to dequeue EmptyStateCell")
                 return UICollectionViewCell()
             }
@@ -406,12 +406,39 @@ extension HabitsViewController: SwipeCollectionViewCellDelegate {
         for orientation: SwipeActionsOrientation
     ) -> [SwipeAction]? {
         guard orientation == .right else { return nil }
-
-        let deleteAction = SwipeAction(style: .destructive, title: "Удалить") { action, indexPath in
+        
+        // Проверка: это ячейка дневника?
+        if indexPath.section == 0 && indexPath.item == habits.count {
+            print("Diary cell cannot be swiped.")
+            return nil
+        }
+        
+        // Удаляем привычку
+        guard indexPath.item < habits.count else {
+            print("Invalid index for habit deletion.")
+            return nil
+        }
+        
+        let deleteAction = SwipeAction(style: .destructive, title: "Удалить") { [weak self] action, indexPath in
+            guard let self = self else { return }
+            
             let habitToDelete = self.habits[indexPath.item]
             self.habits.remove(at: indexPath.item)
-            collectionView.deleteItems(at: [indexPath])
+            UserDefaultsManager.shared.deleteHabit(id: habitToDelete.id)
+            
+            if self.habits.isEmpty {
+                // Если все привычки удалены, перезагрузите секцию целиком
+                self.collectionView.reloadSections(IndexSet(integer: 0))
+            } else {
+                // Иначе удаляем конкретный элемент
+                self.collectionView.performBatchUpdates {
+                    self.collectionView.deleteItems(at: [indexPath])
+                }
+            }
         }
+        print("Attempting to delete habit at index \(indexPath.item)")
+        print("Remaining habits: \(self.habits.count)")
+        
         deleteAction.image = UIImage(systemName: "trash")
         deleteAction.backgroundColor = .systemRed
         return [deleteAction]
