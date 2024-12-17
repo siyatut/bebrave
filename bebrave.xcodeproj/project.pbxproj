@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		52021A772BAC3D2000E9D8F1 /* OutlineBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52021A762BAC3D2000E9D8F1 /* OutlineBackgroundView.swift */; };
+		5219E2B02D12324500F41D97 /* CellError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219E2AF2D12324500F41D97 /* CellError.swift */; };
 		523AF3B92CBFBDE900EEFA8A /* NewHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523AF3B82CBFBDBD00EEFA8A /* NewHabitViewController.swift */; };
 		523D41752C05FD3D00689F20 /* AddNewHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523D41742C05FD3D00689F20 /* AddNewHabitView.swift */; };
 		5241DDD22B8F61F000C7ECF0 /* HistoryViewConroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */; };
@@ -16,7 +17,7 @@
 		5252109B2BFC7F04009DB3F7 /* DiaryWriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5252109A2BFC7F04009DB3F7 /* DiaryWriteCell.swift */; };
 		52923ECF2CF70F080088E54B /* HeaderDaysCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */; };
 		52ACDD442CEF13CD00868730 /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ACDD432CEF13CD00868730 /* AppStyle.swift */; };
-		52C996A52D11EAC7000E7648 /* UICollectionView+SupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C996A42D11EAC3000E7648 /* UICollectionView+SupplementaryView.swift */; };
+		52C996A52D11EAC7000E7648 /* UICollectionView+ReusableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C996A42D11EAC3000E7648 /* UICollectionView+ReusableViews.swift */; };
 		52C996A72D11EAEE000E7648 /* SupplementaryViewError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C996A62D11EAED000E7648 /* SupplementaryViewError.swift */; };
 		52C996A92D11EB25000E7648 /* CustomElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C996A82D11EB23000E7648 /* CustomElement.swift */; };
 		52CA95FC2D0C4DA800B16029 /* SwipeCellKit in Frameworks */ = {isa = PBXBuildFile; productRef = 52CA95FB2D0C4DA800B16029 /* SwipeCellKit */; };
@@ -54,6 +55,7 @@
 /* Begin PBXFileReference section */
 		52021A762BAC3D2000E9D8F1 /* OutlineBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineBackgroundView.swift; sourceTree = "<group>"; };
 		521584B02BA320FC009F1B5A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		5219E2AF2D12324500F41D97 /* CellError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellError.swift; sourceTree = "<group>"; };
 		523AF3B82CBFBDBD00EEFA8A /* NewHabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHabitViewController.swift; sourceTree = "<group>"; };
 		523D41742C05FD3D00689F20 /* AddNewHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewHabitView.swift; sourceTree = "<group>"; };
 		5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewConroller.swift; sourceTree = "<group>"; };
@@ -62,7 +64,7 @@
 		5252109A2BFC7F04009DB3F7 /* DiaryWriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryWriteCell.swift; sourceTree = "<group>"; };
 		52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderDaysCollectionView.swift; sourceTree = "<group>"; };
 		52ACDD432CEF13CD00868730 /* AppStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyle.swift; sourceTree = "<group>"; };
-		52C996A42D11EAC3000E7648 /* UICollectionView+SupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+SupplementaryView.swift"; sourceTree = "<group>"; };
+		52C996A42D11EAC3000E7648 /* UICollectionView+ReusableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+ReusableViews.swift"; sourceTree = "<group>"; };
 		52C996A62D11EAED000E7648 /* SupplementaryViewError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementaryViewError.swift; sourceTree = "<group>"; };
 		52C996A82D11EB23000E7648 /* CustomElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomElement.swift; sourceTree = "<group>"; };
 		52F1E5362B7CDC300058F767 /* bebrave.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bebrave.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -173,6 +175,7 @@
 		52C996AC2D11EBB5000E7648 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				5219E2AF2D12324500F41D97 /* CellError.swift */,
 				52C996A82D11EB23000E7648 /* CustomElement.swift */,
 				52C996A62D11EAED000E7648 /* SupplementaryViewError.swift */,
 			);
@@ -182,7 +185,7 @@
 		52C996AD2D11EBD2000E7648 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				52C996A42D11EAC3000E7648 /* UICollectionView+SupplementaryView.swift */,
+				52C996A42D11EAC3000E7648 /* UICollectionView+ReusableViews.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -380,6 +383,7 @@
 				5246C9762BC6C39D00BA7912 /* HabitsCell.swift in Sources */,
 				52F1E56C2B7CE6B10058F767 /* DiaryViewController.swift in Sources */,
 				5252109B2BFC7F04009DB3F7 /* DiaryWriteCell.swift in Sources */,
+				5219E2B02D12324500F41D97 /* CellError.swift in Sources */,
 				52F1E53A2B7CDC300058F767 /* AppDelegate.swift in Sources */,
 				52F1E53C2B7CDC300058F767 /* SceneDelegate.swift in Sources */,
 				523AF3B92CBFBDE900EEFA8A /* NewHabitViewController.swift in Sources */,
@@ -390,7 +394,7 @@
 				523D41752C05FD3D00689F20 /* AddNewHabitView.swift in Sources */,
 				52C996A92D11EB25000E7648 /* CustomElement.swift in Sources */,
 				524FC7022D075071004C839F /* EmptyStateCell.swift in Sources */,
-				52C996A52D11EAC7000E7648 /* UICollectionView+SupplementaryView.swift in Sources */,
+				52C996A52D11EAC7000E7648 /* UICollectionView+ReusableViews.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

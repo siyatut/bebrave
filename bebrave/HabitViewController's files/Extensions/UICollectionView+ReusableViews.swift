@@ -23,3 +23,18 @@ extension UICollectionView {
         return view
     }
 }
+
+extension UICollectionView {
+    func dequeueCell<T: UICollectionViewCell>(
+        withReuseIdentifier reuseIdentifier: String,
+        for indexPath: IndexPath
+    ) throws -> T {
+        guard let cell = dequeueReusableCell(
+            withReuseIdentifier: reuseIdentifier,
+            for: indexPath
+        ) as? T else {
+            throw CellError.dequeuingFailed(reuseIdentifier: reuseIdentifier)
+        }
+        return cell
+    }
+}

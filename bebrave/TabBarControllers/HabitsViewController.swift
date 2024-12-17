@@ -207,46 +207,42 @@ extension HabitsViewController {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        if habits.isEmpty && indexPath.section == 0 {
-            print("Loading empty state cell.")
-            guard let emptyStateCell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: "EmptyStateCell",
-                for: indexPath
-            ) as? EmptyStateCell else {
-                assertionFailure("Failed to dequeue EmptyStateCell")
-                return UICollectionViewCell()
+        do {
+            if habits.isEmpty && indexPath.section == 0 {
+                print("Loading empty state cell.")
+                let emptyStateCell: EmptyStateCell = try collectionView.dequeueCell(
+                    withReuseIdentifier: "EmptyStateCell",
+                    for: indexPath
+                )
+                return emptyStateCell
             }
-            return emptyStateCell
-        }
-        if indexPath.section == 1 {
-            if indexPath.item == habits.count {
-                print("Loading diary cell.")
-                guard let diaryCell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: CustomElement.writeDiaryCell.rawValue,
-                    for: indexPath
-                ) as? DiaryWriteCell else {
-                    assertionFailure("Failed to dequeue DiaryWriteCell")
-                    return UICollectionViewCell()
+            
+            if indexPath.section == 1 {
+                if indexPath.item == habits.count {
+                    print("Loading diary cell.")
+                    let diaryCell: DiaryWriteCell = try collectionView.dequeueCell(
+                        withReuseIdentifier: CustomElement.writeDiaryCell.rawValue,
+                        for: indexPath
+                    )
+                    return diaryCell
+                } else {
+                    print("Loading habit cell at index \(indexPath.item).")
+                    let habitCell: HabitsCell = try collectionView.dequeueCell(
+                        withReuseIdentifier: CustomElement.habitsCell.rawValue,
+                        for: indexPath
+                    )
+                    habitCell.delegate = self
+                    let habit = habits[indexPath.item]
+                    habitCell.configure(with: habit)
+                    return habitCell
                 }
-                return diaryCell
-            } else {
-                print("Loading habit cell at index \(indexPath.item).")
-                guard let habitCell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: CustomElement.habitsCell.rawValue,
-                    for: indexPath
-                ) as? HabitsCell else {
-#warning("Вот это всё нужно будет потом переписать с do/catch")
-                    assertionFailure("Failed to dequeue HabitsCell")
-                    return UICollectionViewCell()
-                }
-                habitCell.delegate = self
-                let habit = habits[indexPath.item]
-                habitCell.configure(with: habit)
-                return habitCell
-             }
+            }
+            
+            throw CellError.unhandledSectionOrIndexPath(indexPath)
+        } catch {
+            assertionFailure("Failed to load cell: \(error)")
+            return UICollectionViewCell()
         }
-        assertionFailure("Unhandled case in cellForItemAt. Check section or indexPath logic.")
-        return UICollectionViewCell()
     }
     
     override func collectionView(
