@@ -363,32 +363,28 @@ extension HabitsViewController: NewHabitDelegate {
     }
     
     func didDeleteHabit(at indexPath: IndexPath) {
-        
         print("Deleting habit at indexPath: \(indexPath)")
+
+        guard indexPath.section == 1, indexPath.item < habits.count else {
+            print("Invalid indexPath for deletion: \(indexPath)")
+            return
+        }
+        
         let habitToDelete = habits[indexPath.item]
         habits.remove(at: indexPath.item)
+        print("Deleted habit: \(habitToDelete.title)")
         
-        let group = DispatchGroup()
-        
-        group.enter()
-        DispatchQueue.global(qos: .userInitiated).async {
-            UserDefaultsManager.shared.deleteHabit(id: habitToDelete.id)
-            group.leave()
-        }
-#warning("Все привычки окей удаляются, пока не остаётся одна последняя. Когда удаляю последнюю, крашится")
-        group.notify(queue: .main) {
-            print("Deleted habit: \(habitToDelete.title)")
-            if self.habits.isEmpty {
-                print("All habits removed. Reloading section.")
-                self.collectionView.reloadData()
-            } else {
-                self.collectionView.performBatchUpdates {
-                    self.collectionView.reloadSections(IndexSet(integer: 1))
-                }
+        if self.habits.isEmpty {
+            print("All habits removed. Reloading section.")
+            self.collectionView.reloadData()
+        } else {
+            self.collectionView.performBatchUpdates {
+                self.collectionView.reloadSections(IndexSet(integer: 1))
             }
         }
     }
 }
+
 
 // MARK: - Calendar label update
 
