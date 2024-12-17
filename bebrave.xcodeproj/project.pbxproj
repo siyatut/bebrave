@@ -103,6 +103,56 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		52C9969F2D11E97C000E7648 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		52C996A02D11E984000E7648 /* UserDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				52FBCF392CFF1673000206BC /* UserDefaultsManager.swift */,
+			);
+			path = UserDefaults;
+			sourceTree = "<group>";
+		};
+		52C996A12D11E9AB000E7648 /* TabBarControllers */ = {
+			isa = PBXGroup;
+			children = (
+				52F1E53D2B7CDC300058F767 /* TabBarViewController.swift */,
+				52F1E5692B7CE6330058F767 /* HabitsViewController.swift */,
+				52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */,
+				52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */,
+			);
+			path = TabBarControllers;
+			sourceTree = "<group>";
+		};
+		52C996A22D11E9F2000E7648 /* App and Scene Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				52F1E5392B7CDC300058F767 /* AppDelegate.swift */,
+				52F1E53B2B7CDC300058F767 /* SceneDelegate.swift */,
+			);
+			path = "App and Scene Delegate";
+			sourceTree = "<group>";
+		};
+		52C996A32D11EA17000E7648 /* HabitViewController's files */ = {
+			isa = PBXGroup;
+			children = (
+				5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */,
+				524FC7012D075063004C839F /* EmptyStateCell.swift */,
+				52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */,
+				523D41742C05FD3D00689F20 /* AddNewHabitView.swift */,
+				52021A762BAC3D2000E9D8F1 /* OutlineBackgroundView.swift */,
+				5246C9752BC6C39D00BA7912 /* HabitsCell.swift */,
+				5252109A2BFC7F04009DB3F7 /* DiaryWriteCell.swift */,
+				523AF3B82CBFBDBD00EEFA8A /* NewHabitViewController.swift */,
+			);
+			path = "HabitViewController's files";
+			sourceTree = "<group>";
+		};
 		52F1E52D2B7CDC300058F767 = {
 			isa = PBXGroup;
 			children = (
@@ -126,22 +176,12 @@
 		52F1E5382B7CDC300058F767 /* bebrave */ = {
 			isa = PBXGroup;
 			children = (
-				52FBCF392CFF1673000206BC /* UserDefaultsManager.swift */,
-				52F1E5392B7CDC300058F767 /* AppDelegate.swift */,
-				52F1E53B2B7CDC300058F767 /* SceneDelegate.swift */,
 				52ACDD432CEF13CD00868730 /* AppStyle.swift */,
-				52F1E53D2B7CDC300058F767 /* TabBarViewController.swift */,
-				52F1E5692B7CE6330058F767 /* HabitsViewController.swift */,
-				524FC7012D075063004C839F /* EmptyStateCell.swift */,
-				52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */,
-				523D41742C05FD3D00689F20 /* AddNewHabitView.swift */,
-				52021A762BAC3D2000E9D8F1 /* OutlineBackgroundView.swift */,
-				5246C9752BC6C39D00BA7912 /* HabitsCell.swift */,
-				5252109A2BFC7F04009DB3F7 /* DiaryWriteCell.swift */,
-				523AF3B82CBFBDBD00EEFA8A /* NewHabitViewController.swift */,
-				5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */,
-				52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */,
-				52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */,
+				52C996A02D11E984000E7648 /* UserDefaults */,
+				52C996A22D11E9F2000E7648 /* App and Scene Delegate */,
+				52C996A12D11E9AB000E7648 /* TabBarControllers */,
+				52C996A32D11EA17000E7648 /* HabitViewController's files */,
+				52C9969F2D11E97C000E7648 /* Error */,
 				52F1E5422B7CDC330058F767 /* Assets.xcassets */,
 				52F1E5442B7CDC330058F767 /* LaunchScreen.storyboard */,
 				52F1E5472B7CDC330058F767 /* Info.plist */,
