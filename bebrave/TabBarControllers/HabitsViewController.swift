@@ -305,24 +305,23 @@ extension HabitsViewController: NewHabitDelegate {
     
     func didDeleteHabit(at indexPath: IndexPath) {
         print("Deleting habit at indexPath: \(indexPath)")
-
+        
         guard indexPath.section == 1, indexPath.item < habits.count else {
             print("Invalid indexPath for deletion: \(indexPath)")
             return
         }
         
-        let habitToDelete = habits[indexPath.item]
         habits.remove(at: indexPath.item)
-        print("Deleted habit: \(habitToDelete.title)")
+        print("Deleted habit: \(indexPath.item)")
         
-        if self.habits.isEmpty {
-            print("All habits removed. Reloading section.")
-            self.collectionView.reloadData()
-        } else {
-            self.collectionView.performBatchUpdates {
-                self.collectionView.reloadSections(IndexSet(integer: 1))
+        collectionView.performBatchUpdates({
+            collectionView.deleteItems(at: [indexPath])
+        }, completion: { _ in
+            if self.habits.isEmpty {
+                print("All habits removed. Reloading section.")
+                self.collectionView.reloadData()
             }
-        }
+        })
     }
 }
 
