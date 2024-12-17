@@ -16,6 +16,9 @@
 		5252109B2BFC7F04009DB3F7 /* DiaryWriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5252109A2BFC7F04009DB3F7 /* DiaryWriteCell.swift */; };
 		52923ECF2CF70F080088E54B /* HeaderDaysCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */; };
 		52ACDD442CEF13CD00868730 /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ACDD432CEF13CD00868730 /* AppStyle.swift */; };
+		52C996A52D11EAC7000E7648 /* UICollectionView+SupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C996A42D11EAC3000E7648 /* UICollectionView+SupplementaryView.swift */; };
+		52C996A72D11EAEE000E7648 /* SupplementaryViewError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C996A62D11EAED000E7648 /* SupplementaryViewError.swift */; };
+		52C996A92D11EB25000E7648 /* CustomElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C996A82D11EB23000E7648 /* CustomElement.swift */; };
 		52CA95FC2D0C4DA800B16029 /* SwipeCellKit in Frameworks */ = {isa = PBXBuildFile; productRef = 52CA95FB2D0C4DA800B16029 /* SwipeCellKit */; };
 		52F1E53A2B7CDC300058F767 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E5392B7CDC300058F767 /* AppDelegate.swift */; };
 		52F1E53C2B7CDC300058F767 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E53B2B7CDC300058F767 /* SceneDelegate.swift */; };
@@ -59,6 +62,9 @@
 		5252109A2BFC7F04009DB3F7 /* DiaryWriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryWriteCell.swift; sourceTree = "<group>"; };
 		52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderDaysCollectionView.swift; sourceTree = "<group>"; };
 		52ACDD432CEF13CD00868730 /* AppStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyle.swift; sourceTree = "<group>"; };
+		52C996A42D11EAC3000E7648 /* UICollectionView+SupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+SupplementaryView.swift"; sourceTree = "<group>"; };
+		52C996A62D11EAED000E7648 /* SupplementaryViewError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementaryViewError.swift; sourceTree = "<group>"; };
+		52C996A82D11EB23000E7648 /* CustomElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomElement.swift; sourceTree = "<group>"; };
 		52F1E5362B7CDC300058F767 /* bebrave.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bebrave.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52F1E5392B7CDC300058F767 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52F1E53B2B7CDC300058F767 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -103,13 +109,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		52C9969F2D11E97C000E7648 /* Error */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Error;
-			sourceTree = "<group>";
-		};
 		52C996A02D11E984000E7648 /* UserDefaults */ = {
 			isa = PBXGroup;
 			children = (
@@ -141,16 +140,51 @@
 		52C996A32D11EA17000E7648 /* HabitViewController's files */ = {
 			isa = PBXGroup;
 			children = (
+				52C996AD2D11EBD2000E7648 /* Extensions */,
+				52C996AC2D11EBB5000E7648 /* Models */,
+				52C996AB2D11EB8C000E7648 /* Cells */,
+				52C996AA2D11EB62000E7648 /* Views */,
 				5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */,
-				524FC7012D075063004C839F /* EmptyStateCell.swift */,
-				52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */,
-				523D41742C05FD3D00689F20 /* AddNewHabitView.swift */,
-				52021A762BAC3D2000E9D8F1 /* OutlineBackgroundView.swift */,
-				5246C9752BC6C39D00BA7912 /* HabitsCell.swift */,
-				5252109A2BFC7F04009DB3F7 /* DiaryWriteCell.swift */,
 				523AF3B82CBFBDBD00EEFA8A /* NewHabitViewController.swift */,
 			);
 			path = "HabitViewController's files";
+			sourceTree = "<group>";
+		};
+		52C996AA2D11EB62000E7648 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */,
+				523D41742C05FD3D00689F20 /* AddNewHabitView.swift */,
+				52021A762BAC3D2000E9D8F1 /* OutlineBackgroundView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		52C996AB2D11EB8C000E7648 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				5246C9752BC6C39D00BA7912 /* HabitsCell.swift */,
+				5252109A2BFC7F04009DB3F7 /* DiaryWriteCell.swift */,
+				524FC7012D075063004C839F /* EmptyStateCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		52C996AC2D11EBB5000E7648 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				52C996A82D11EB23000E7648 /* CustomElement.swift */,
+				52C996A62D11EAED000E7648 /* SupplementaryViewError.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		52C996AD2D11EBD2000E7648 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				52C996A42D11EAC3000E7648 /* UICollectionView+SupplementaryView.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		52F1E52D2B7CDC300058F767 = {
@@ -181,7 +215,6 @@
 				52C996A22D11E9F2000E7648 /* App and Scene Delegate */,
 				52C996A12D11E9AB000E7648 /* TabBarControllers */,
 				52C996A32D11EA17000E7648 /* HabitViewController's files */,
-				52C9969F2D11E97C000E7648 /* Error */,
 				52F1E5422B7CDC330058F767 /* Assets.xcassets */,
 				52F1E5442B7CDC330058F767 /* LaunchScreen.storyboard */,
 				52F1E5472B7CDC330058F767 /* Info.plist */,
@@ -340,6 +373,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				52F1E53E2B7CDC300058F767 /* TabBarViewController.swift in Sources */,
+				52C996A72D11EAEE000E7648 /* SupplementaryViewError.swift in Sources */,
 				52021A772BAC3D2000E9D8F1 /* OutlineBackgroundView.swift in Sources */,
 				5241DDD22B8F61F000C7ECF0 /* HistoryViewConroller.swift in Sources */,
 				52ACDD442CEF13CD00868730 /* AppStyle.swift in Sources */,
@@ -354,7 +388,9 @@
 				52F1E56A2B7CE6330058F767 /* HabitsViewController.swift in Sources */,
 				52F1E56E2B7CE6D10058F767 /* ProfileViewController.swift in Sources */,
 				523D41752C05FD3D00689F20 /* AddNewHabitView.swift in Sources */,
+				52C996A92D11EB25000E7648 /* CustomElement.swift in Sources */,
 				524FC7022D075071004C839F /* EmptyStateCell.swift in Sources */,
+				52C996A52D11EAC7000E7648 /* UICollectionView+SupplementaryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

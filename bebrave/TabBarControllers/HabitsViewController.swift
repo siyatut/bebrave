@@ -14,16 +14,6 @@
 import UIKit
 import SwipeCellKit
 
-// MARK: - Custom Elements
-
-enum CustomElement: String {
-    case collectionHeader
-    case collectionFooter
-    case outlineBackground
-    case habitsCell
-    case writeDiaryCell
-}
-
 // MARK: - Delegate Protocol
 
 protocol NewHabitDelegate: AnyObject {
@@ -261,52 +251,49 @@ extension HabitsViewController {
     
     override func collectionView(
         _ collectionView: UICollectionView,
-        viewForSupplementaryElementOfKind
-        kind: String,
+        viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
-        guard let customElement = CustomElement(rawValue: kind) else {
-            assertionFailure("Unexpected supplementary kind: \(kind)")
-            return UICollectionReusableView()
-        }
-        switch customElement {
-        case .collectionFooter:
-            if let footer = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: CustomElement.collectionFooter.rawValue,
-                for: indexPath
-            ) as? AddNewHabitView {
+        do {
+            guard let customElement = CustomElement(rawValue: kind) else {
+                throw SupplementaryViewError.unexpectedKind(kind)
+            }
+            
+            switch customElement {
+            case .collectionFooter:
+                let footer = try collectionView.dequeueSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: CustomElement.collectionFooter.rawValue,
+                    for: indexPath
+                ) as AddNewHabitView
                 footer.backgroundColor = AppStyle.Colors.backgroundColor
                 footer.parentFooterViewController = self
                 return footer
-            }
-            assertionFailure("Failed to dequeue AddNewHabitView")
-            return UICollectionReusableView()
-        case .collectionHeader:
-            if let header = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: CustomElement.collectionHeader.rawValue,
-                for: indexPath
-            ) as? HeaderDaysCollectionView {
+                
+            case .collectionHeader:
+                let header = try collectionView.dequeueSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: CustomElement.collectionHeader.rawValue,
+                    for: indexPath
+                ) as HeaderDaysCollectionView
                 header.backgroundColor = AppStyle.Colors.backgroundColor
                 header.parentHeaderViewController = self
                 headerView = header
                 return header
-            }
-            assertionFailure("Failed to dequeue HeaderDaysCollectionView")
-            return UICollectionReusableView()
-        case .outlineBackground:
-            if let outlineBackground = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: CustomElement.outlineBackground.rawValue,
-                for: indexPath
-            )as? OutlineBackgroundView {
+                
+            case .outlineBackground:
+                let outlineBackground = try collectionView.dequeueSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: CustomElement.outlineBackground.rawValue,
+                    for: indexPath
+                ) as OutlineBackgroundView
                 return outlineBackground
+                
+            default:
+                throw SupplementaryViewError.unhandledCustomElement(customElement)
             }
-            assertionFailure("Failed to dequeue OutlineBackgroundView")
-            return UICollectionReusableView()
-        default:
-            assertionFailure("Unhandled custom element: \(customElement)")
+        } catch {
+            assertionFailure("Failed to load supplementary view: \(error)")
             return UICollectionReusableView()
         }
     }
