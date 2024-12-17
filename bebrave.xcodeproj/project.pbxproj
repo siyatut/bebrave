@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		52021A772BAC3D2000E9D8F1 /* OutlineBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52021A762BAC3D2000E9D8F1 /* OutlineBackgroundView.swift */; };
 		5219E2B02D12324500F41D97 /* CellError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219E2AF2D12324500F41D97 /* CellError.swift */; };
+		5219E2B32D12371E00F41D97 /* HabitsViewController+Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219E2B22D12371300F41D97 /* HabitsViewController+Calendar.swift */; };
+		5219E2B62D1237B300F41D97 /* HabitsViewController+UISetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219E2B52D1237B100F41D97 /* HabitsViewController+UISetup.swift */; };
 		523AF3B92CBFBDE900EEFA8A /* NewHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523AF3B82CBFBDBD00EEFA8A /* NewHabitViewController.swift */; };
 		523D41752C05FD3D00689F20 /* AddNewHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523D41742C05FD3D00689F20 /* AddNewHabitView.swift */; };
 		5241DDD22B8F61F000C7ECF0 /* HistoryViewConroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */; };
@@ -56,6 +58,8 @@
 		52021A762BAC3D2000E9D8F1 /* OutlineBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineBackgroundView.swift; sourceTree = "<group>"; };
 		521584B02BA320FC009F1B5A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		5219E2AF2D12324500F41D97 /* CellError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellError.swift; sourceTree = "<group>"; };
+		5219E2B22D12371300F41D97 /* HabitsViewController+Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+Calendar.swift"; sourceTree = "<group>"; };
+		5219E2B52D1237B100F41D97 /* HabitsViewController+UISetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+UISetup.swift"; sourceTree = "<group>"; };
 		523AF3B82CBFBDBD00EEFA8A /* NewHabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHabitViewController.swift; sourceTree = "<group>"; };
 		523D41742C05FD3D00689F20 /* AddNewHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewHabitView.swift; sourceTree = "<group>"; };
 		5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewConroller.swift; sourceTree = "<group>"; };
@@ -111,6 +115,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5219E2B42D12372200F41D97 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				5219E2B22D12371300F41D97 /* HabitsViewController+Calendar.swift */,
+				5219E2B52D1237B100F41D97 /* HabitsViewController+UISetup.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		52C996A02D11E984000E7648 /* UserDefaults */ = {
 			isa = PBXGroup;
 			children = (
@@ -142,6 +155,7 @@
 		52C996A32D11EA17000E7648 /* HabitViewController's files */ = {
 			isa = PBXGroup;
 			children = (
+				5219E2B42D12372200F41D97 /* UI */,
 				52C996AD2D11EBD2000E7648 /* Extensions */,
 				52C996AC2D11EBB5000E7648 /* Models */,
 				52C996AB2D11EB8C000E7648 /* Cells */,
@@ -382,8 +396,10 @@
 				52ACDD442CEF13CD00868730 /* AppStyle.swift in Sources */,
 				5246C9762BC6C39D00BA7912 /* HabitsCell.swift in Sources */,
 				52F1E56C2B7CE6B10058F767 /* DiaryViewController.swift in Sources */,
+				5219E2B62D1237B300F41D97 /* HabitsViewController+UISetup.swift in Sources */,
 				5252109B2BFC7F04009DB3F7 /* DiaryWriteCell.swift in Sources */,
 				5219E2B02D12324500F41D97 /* CellError.swift in Sources */,
+				5219E2B32D12371E00F41D97 /* HabitsViewController+Calendar.swift in Sources */,
 				52F1E53A2B7CDC300058F767 /* AppDelegate.swift in Sources */,
 				52F1E53C2B7CDC300058F767 /* SceneDelegate.swift in Sources */,
 				523AF3B92CBFBDE900EEFA8A /* NewHabitViewController.swift in Sources */,

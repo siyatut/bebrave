@@ -28,7 +28,7 @@ class HabitsViewController: UICollectionViewController {
 
 // MARK: - Properties
     
-    private var headerView: HeaderDaysCollectionView?
+    var headerView: HeaderDaysCollectionView?
     
 // MARK: - UI components
     
@@ -175,7 +175,7 @@ class HabitsViewController: UICollectionViewController {
     
 // MARK: - Action
     
-    @objc private func historyButtonTapped() {
+    @objc func historyButtonTapped() {
         let history = HistoryViewController()
         self.navigationController?.pushViewController(history, animated: true)
     }
@@ -295,48 +295,6 @@ extension HabitsViewController {
     }
 }
 
-// MARK: — Customise navigation's items
-
-extension HabitsViewController {
-    
-    private func setupHistoryButton() {
-        var configuration = UIButton.Configuration.plain()
-        configuration.baseForegroundColor = AppStyle.Colors.secondaryColor
-        configuration.image = UIImage(named: "History")
-        configuration.imagePadding = 4
-        configuration.imagePlacement = .leading
-
-        let titleAttributes = AttributeContainer([
-            .font: AppStyle.Fonts.regularFont(size: 16)
-            ])
-        configuration.attributedTitle = AttributedString("История", attributes: titleAttributes)
-        historyButton.configuration = configuration
-        historyButton.addTarget(self, action: #selector(historyButtonTapped), for: .touchUpInside)
-
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: historyButton)
-    }
-    
-    private func setupCalendarLabel() {
-        let container = UIView()
-        container.translatesAutoresizingMaskIntoConstraints = false
-        
-        calendarLabel.textColor = AppStyle.Colors.textColor
-        calendarLabel.font = AppStyle.Fonts.boldFont(size: 20)
-        calendarLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        container.addSubview(calendarLabel)
-        
-        NSLayoutConstraint.activate([
-            calendarLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 4),
-            calendarLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            calendarLabel.topAnchor.constraint(equalTo: container.topAnchor),
-            calendarLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor)
-            
-        ])
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: container)
-    }
-}
-
 // MARK: - NewHabitDelegate 
 
 extension HabitsViewController: NewHabitDelegate {
@@ -364,39 +322,6 @@ extension HabitsViewController: NewHabitDelegate {
             self.collectionView.performBatchUpdates {
                 self.collectionView.reloadSections(IndexSet(integer: 1))
             }
-        }
-    }
-}
-
-
-// MARK: - Calendar label update
-
-extension HabitsViewController {
-    func updateCalendarLabel() {
-        guard let header = headerView else {
-            print("Header is not visible or initialized.")
-            return
-        }
-        
-        let dates = header.getDisplayedDates()
-        
-        guard let firstDate = dates.first, let lastDate = dates.last else {
-            assertionFailure("Dates array is empty")
-            return
-        }
-        
-        let calendar = Calendar.current
-        let formatter = DateFormatter()
-        formatter.locale = Locale.current
-        formatter.dateFormat = "LLLL"
-        
-        let firstMonth = formatter.string(from: firstDate).capitalized
-        let lastMonth = formatter.string(from: lastDate).capitalized
-        
-        if calendar.isDate(firstDate, equalTo: lastDate, toGranularity: .month) {
-            calendarLabel.text = firstMonth
-        } else {
-            calendarLabel.text = "\(firstMonth) - \(lastMonth)"
         }
     }
 }
