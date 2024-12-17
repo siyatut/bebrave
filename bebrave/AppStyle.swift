@@ -9,14 +9,14 @@ import UIKit
 
 struct AppStyle {
     struct Colors {
-        static let primaryColor = UIColor(named: "PrimaryColor") ?? .systemPurple
-        static let secondaryColor = UIColor(named: "SecondaryColor") ?? .tintColor
+        static let primaryColor = UIColor(named: "MyPrimaryColor") ?? .systemPurple
+        static let secondaryColor = UIColor(named: "MySecondaryColor") ?? .tintColor
         static let errorColor = UIColor.red
         static let borderColor = UIColor.systemGray5
         static let textColor = UIColor.label
         static let backgroundColor = UIColor.systemBackground
         static let disabledButtonColor = UIColor.systemGray5
-        static let backgroundEmptyStateColor = UIColor(named: "GrayColor") ?? .lightGray
+        static let backgroundEmptyStateColor = UIColor(named: "MyGrayColor") ?? .lightGray
     }
     
     struct Sizes {
