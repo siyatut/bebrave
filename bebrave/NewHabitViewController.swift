@@ -301,8 +301,8 @@ class NewHabitViewController: UIViewController {
         UserDefaultsManager.shared.addHabit(newHabit)
         delegate?.didAddNewHabit(newHabit)
         print("Привычка сохранена: \(newHabit.title)")
-        dismiss(animated: true, completion: nil)
         updateButtonState()
+        dismiss(animated: true, completion: nil)
     }
     
     @objc private func dismissKeyboard() {
