@@ -132,29 +132,22 @@
 			path = UserDefaults;
 			sourceTree = "<group>";
 		};
-		52C996A12D11E9AB000E7648 /* TabBarControllers */ = {
-			isa = PBXGroup;
-			children = (
-				52F1E53D2B7CDC300058F767 /* TabBarViewController.swift */,
-				52F1E5692B7CE6330058F767 /* HabitsViewController.swift */,
-				52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */,
-				52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */,
-			);
-			path = TabBarControllers;
-			sourceTree = "<group>";
-		};
 		52C996A22D11E9F2000E7648 /* App and Scene Delegate */ = {
 			isa = PBXGroup;
 			children = (
 				52F1E5392B7CDC300058F767 /* AppDelegate.swift */,
 				52F1E53B2B7CDC300058F767 /* SceneDelegate.swift */,
+				52F1E53D2B7CDC300058F767 /* TabBarViewController.swift */,
+				52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */,
+				52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */,
 			);
 			path = "App and Scene Delegate";
 			sourceTree = "<group>";
 		};
-		52C996A32D11EA17000E7648 /* HabitViewController's files */ = {
+		52C996A32D11EA17000E7648 /* HabitsViewController */ = {
 			isa = PBXGroup;
 			children = (
+				52F1E5692B7CE6330058F767 /* HabitsViewController.swift */,
 				5219E2B42D12372200F41D97 /* UI */,
 				52C996AD2D11EBD2000E7648 /* Extensions */,
 				52C996AC2D11EBB5000E7648 /* Models */,
@@ -163,7 +156,7 @@
 				5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */,
 				523AF3B82CBFBDBD00EEFA8A /* NewHabitViewController.swift */,
 			);
-			path = "HabitViewController's files";
+			path = HabitsViewController;
 			sourceTree = "<group>";
 		};
 		52C996AA2D11EB62000E7648 /* Views */ = {
@@ -230,8 +223,7 @@
 				52ACDD432CEF13CD00868730 /* AppStyle.swift */,
 				52C996A02D11E984000E7648 /* UserDefaults */,
 				52C996A22D11E9F2000E7648 /* App and Scene Delegate */,
-				52C996A12D11E9AB000E7648 /* TabBarControllers */,
-				52C996A32D11EA17000E7648 /* HabitViewController's files */,
+				52C996A32D11EA17000E7648 /* HabitsViewController */,
 				52F1E5422B7CDC330058F767 /* Assets.xcassets */,
 				52F1E5442B7CDC330058F767 /* LaunchScreen.storyboard */,
 				52F1E5472B7CDC330058F767 /* Info.plist */,
