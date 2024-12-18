@@ -165,11 +165,19 @@ class HabitsViewController: UICollectionViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("View will appear. Loading habits.")
+        
+        // Загружаем привычки из UserDefaults
         habits = UserDefaultsManager.shared.loadHabits()
         print("Habits loaded: \(habits.map { $0.title })")
+        
+        // Обновляем интерфейс
         collectionView.reloadData()
+        print("CollectionView reloaded. Current habits count: \(habits.count)")
+        
         DispatchQueue.main.async {
             self.updateCalendarLabel()
+            print("Calendar label updated.")
         }
     }
     
@@ -186,7 +194,9 @@ class HabitsViewController: UICollectionViewController {
 extension HabitsViewController {
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return habits.isEmpty ? 1 : 2
+        let sections = habits.isEmpty ? 1 : 2
+        print("Calculating number of sections. Habits count: \(habits.count). Returning sections: \(sections)")
+        return sections
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -198,8 +208,7 @@ extension HabitsViewController {
         } else {
             itemCount = 0
         }
-        
-        print("Section \(section): Expected \(itemCount) items.")
+        print("Calculating number of items in section \(section). Habits count: \(habits.count). Returning items: \(itemCount)")
         return itemCount
     }
     
@@ -209,7 +218,7 @@ extension HabitsViewController {
     ) -> UICollectionViewCell {
         do {
             if habits.isEmpty && indexPath.section == 0 {
-                print("Loading empty state cell.")
+                print("Returning empty state cell for indexPath: \(indexPath)")
                 let emptyStateCell: EmptyStateCell = try collectionView.dequeueCell(
                     withReuseIdentifier: "EmptyStateCell",
                     for: indexPath
@@ -219,20 +228,21 @@ extension HabitsViewController {
             
             if indexPath.section == 1 {
                 if indexPath.item == habits.count {
-                    print("Loading diary cell.")
+                    print("Returning diary write cell for indexPath: \(indexPath)")
                     let diaryCell: DiaryWriteCell = try collectionView.dequeueCell(
                         withReuseIdentifier: CustomElement.writeDiaryCell.rawValue,
                         for: indexPath
                     )
                     return diaryCell
                 } else {
-                    print("Loading habit cell at index \(indexPath.item).")
+                    print("Returning habit cell for index \(indexPath.item)")
                     let habitCell: HabitsCell = try collectionView.dequeueCell(
                         withReuseIdentifier: CustomElement.habitsCell.rawValue,
                         for: indexPath
                     )
                     habitCell.delegate = self
                     let habit = habits[indexPath.item]
+                    print("Configuring habit cell with habit: \(habit.title)")
                     habitCell.configure(with: habit)
                     return habitCell
                 }
@@ -304,21 +314,35 @@ extension HabitsViewController: NewHabitDelegate {
     }
     
     func didDeleteHabit(at indexPath: IndexPath) {
-        print("Deleting habit at indexPath: \(indexPath)")
+        print("Attempting to delete habit at indexPath: \(indexPath)")
+        print("Current habits count: \(habits.count)")
         
+        // Проверяем, что секция и индекс корректны
         guard indexPath.section == 1, indexPath.item < habits.count else {
             print("Invalid indexPath for deletion: \(indexPath)")
             return
         }
         
-        habits.remove(at: indexPath.item)
-        print("Deleted habit: \(indexPath.item)")
+        // Получаем привычку, которую нужно удалить
+        let habitToDelete = habits[indexPath.item]
+        print("Habit to delete: \(habitToDelete.title)")
         
+        // Удаляем привычку из массива
+        habits.remove(at: indexPath.item)
+        print("Habit removed from array. New habits count: \(habits.count)")
+        
+        // Удаляем привычку из UserDefaults
+        UserDefaultsManager.shared.deleteHabit(id: habitToDelete.id)
+        print("Habit deleted from UserDefaults. ID: \(habitToDelete.id)")
+        
+        // Анимация удаления
         collectionView.performBatchUpdates({
+            print("Deleting item at indexPath: \(indexPath) from collectionView")
             collectionView.deleteItems(at: [indexPath])
         }, completion: { _ in
+            print("Batch update completed.")
             if self.habits.isEmpty {
-                print("All habits removed. Reloading section.")
+                print("Habits array is empty. Reloading entire collectionView.")
                 self.collectionView.reloadData()
             }
         })
@@ -342,21 +366,24 @@ extension HabitsViewController: SwipeCollectionViewCellDelegate {
     ) -> [SwipeAction]? {
         print("Swipe detected at indexPath: \(indexPath), orientation: \(orientation)")
         
-        guard orientation == .right else { return nil }
+        guard orientation == .right else {
+            print("Invalid swipe orientation: \(orientation). Returning nil.")
+            return nil
+        }
+        
         guard indexPath.section == 1, indexPath.item < habits.count else {
-            print("Invalid swipe request: section \(indexPath.section), item \(indexPath.item)")
+            print("Invalid swipe request: section \(indexPath.section), item \(indexPath.item). Returning nil.")
             return nil
         }
         
         let deleteAction = SwipeAction(style: .destructive, title: "Удалить") { [weak self] action, indexPath in
-            guard let self = self else { return }
-            self.didDeleteHabit(at: indexPath)
+            print("Delete action triggered for indexPath: \(indexPath)")
+            self?.didDeleteHabit(at: indexPath)
         }
         
         deleteAction.image = UIImage(systemName: "trash")
         deleteAction.backgroundColor = .systemRed
         return [deleteAction]
-        
     }
 
     func collectionView(
