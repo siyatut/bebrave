@@ -22,6 +22,7 @@
 		52697D622D195920004B9D7E /* HabitsViewController+SwipeActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D612D19591E004B9D7E /* HabitsViewController+SwipeActions.swift */; };
 		52697D642D195A97004B9D7E /* HabitsViewController+NewHabitDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D632D195A95004B9D7E /* HabitsViewController+NewHabitDelegate.swift */; };
 		52923ECF2CF70F080088E54B /* HeaderDaysCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */; };
+		52AB21F22D19AF51006C7DF9 /* UIComponents+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AB21F12D19AF3D006C7DF9 /* UIComponents+Extensions.swift */; };
 		52ACDD442CEF13CD00868730 /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ACDD432CEF13CD00868730 /* AppStyle.swift */; };
 		52C996A52D11EAC7000E7648 /* UICollectionView+ReusableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C996A42D11EAC3000E7648 /* UICollectionView+ReusableViews.swift */; };
 		52C996A72D11EAEE000E7648 /* SupplementaryViewError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C996A62D11EAED000E7648 /* SupplementaryViewError.swift */; };
@@ -75,6 +76,7 @@
 		52697D612D19591E004B9D7E /* HabitsViewController+SwipeActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+SwipeActions.swift"; sourceTree = "<group>"; };
 		52697D632D195A95004B9D7E /* HabitsViewController+NewHabitDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+NewHabitDelegate.swift"; sourceTree = "<group>"; };
 		52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderDaysCollectionView.swift; sourceTree = "<group>"; };
+		52AB21F12D19AF3D006C7DF9 /* UIComponents+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIComponents+Extensions.swift"; sourceTree = "<group>"; };
 		52ACDD432CEF13CD00868730 /* AppStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyle.swift; sourceTree = "<group>"; };
 		52C996A42D11EAC3000E7648 /* UICollectionView+ReusableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+ReusableViews.swift"; sourceTree = "<group>"; };
 		52C996A62D11EAED000E7648 /* SupplementaryViewError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementaryViewError.swift; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 				52C996A22D11E9F2000E7648 /* App and Scene Delegate */,
 				52C996A02D11E984000E7648 /* UserDefaults */,
 				52ACDD432CEF13CD00868730 /* AppStyle.swift */,
+				52AB21F12D19AF3D006C7DF9 /* UIComponents+Extensions.swift */,
 				52F1E53D2B7CDC300058F767 /* TabBarViewController.swift */,
 				52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */,
 				52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */,
@@ -414,6 +417,7 @@
 				5252109B2BFC7F04009DB3F7 /* DiaryWriteCell.swift in Sources */,
 				5219E2B02D12324500F41D97 /* CellError.swift in Sources */,
 				5219E2B32D12371E00F41D97 /* HabitsViewController+Calendar.swift in Sources */,
+				52AB21F22D19AF51006C7DF9 /* UIComponents+Extensions.swift in Sources */,
 				52F1E53A2B7CDC300058F767 /* AppDelegate.swift in Sources */,
 				52F1E53C2B7CDC300058F767 /* SceneDelegate.swift in Sources */,
 				523AF3B92CBFBDE900EEFA8A /* NewHabitViewController.swift in Sources */,
