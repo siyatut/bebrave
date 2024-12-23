@@ -152,15 +152,6 @@ extension HabitsViewController: NewHabitDelegate {
     }
 }
 
-extension HabitsViewController {
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 0, indexPath.item < habits.count {
-            let selectedHabit = habits[indexPath.item]
-            print("Selected habit: \(selectedHabit.title)")
-        }
-    }
-}
-
 extension HabitsViewController: SwipeCollectionViewCellDelegate {
     func collectionView(
         _ collectionView: UICollectionView,
