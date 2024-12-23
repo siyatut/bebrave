@@ -18,6 +18,7 @@
 		524FC7022D075071004C839F /* EmptyStateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524FC7012D075063004C839F /* EmptyStateCell.swift */; };
 		5252109B2BFC7F04009DB3F7 /* DiaryWriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5252109A2BFC7F04009DB3F7 /* DiaryWriteCell.swift */; };
 		52697D5E2D195361004B9D7E /* HabitsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D5D2D19535F004B9D7E /* HabitsLayout.swift */; };
+		52697D602D1957A9004B9D7E /* HabitsViewController+CollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D5F2D1957A6004B9D7E /* HabitsViewController+CollectionViewDelegate.swift */; };
 		52923ECF2CF70F080088E54B /* HeaderDaysCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */; };
 		52ACDD442CEF13CD00868730 /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ACDD432CEF13CD00868730 /* AppStyle.swift */; };
 		52C996A52D11EAC7000E7648 /* UICollectionView+ReusableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C996A42D11EAC3000E7648 /* UICollectionView+ReusableViews.swift */; };
@@ -68,6 +69,7 @@
 		524FC7012D075063004C839F /* EmptyStateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateCell.swift; sourceTree = "<group>"; };
 		5252109A2BFC7F04009DB3F7 /* DiaryWriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryWriteCell.swift; sourceTree = "<group>"; };
 		52697D5D2D19535F004B9D7E /* HabitsLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsLayout.swift; sourceTree = "<group>"; };
+		52697D5F2D1957A6004B9D7E /* HabitsViewController+CollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+CollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderDaysCollectionView.swift; sourceTree = "<group>"; };
 		52ACDD432CEF13CD00868730 /* AppStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyle.swift; sourceTree = "<group>"; };
 		52C996A42D11EAC3000E7648 /* UICollectionView+ReusableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+ReusableViews.swift"; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 		52C996AD2D11EBD2000E7648 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				52697D5F2D1957A6004B9D7E /* HabitsViewController+CollectionViewDelegate.swift */,
 				52C996A42D11EAC3000E7648 /* UICollectionView+ReusableViews.swift */,
 			);
 			path = Extensions;
@@ -411,6 +414,7 @@
 				52FBCF3A2CFF1677000206BC /* UserDefaultsManager.swift in Sources */,
 				52F1E56A2B7CE6330058F767 /* HabitsViewController.swift in Sources */,
 				52F1E56E2B7CE6D10058F767 /* ProfileViewController.swift in Sources */,
+				52697D602D1957A9004B9D7E /* HabitsViewController+CollectionViewDelegate.swift in Sources */,
 				523D41752C05FD3D00689F20 /* AddNewHabitView.swift in Sources */,
 				52C996A92D11EB25000E7648 /* CustomElement.swift in Sources */,
 				524FC7022D075071004C839F /* EmptyStateCell.swift in Sources */,
