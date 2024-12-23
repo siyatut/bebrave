@@ -28,26 +28,36 @@ extension HabitsViewController: NewHabitDelegate {
         // Получаем привычку, которую нужно удалить
         let habitToDelete = habits[indexPath.item]
         print("Habit to delete: \(habitToDelete.title)")
+    
         
         // Удаляем привычку из массива
-        habits.remove(at: indexPath.item)
-        print("Habit removed from array. New habits count: \(habits.count)")
+        self.habits.remove(at: indexPath.item)
+        print("Habit removed from array. New habits count: \(self.habits.count)")
         
         // Удаляем привычку из UserDefaults
         UserDefaultsManager.shared.deleteHabit(id: habitToDelete.id)
         print("Habit deleted from UserDefaults. ID: \(habitToDelete.id)")
         
         // Анимация удаления
-        collectionView.performBatchUpdates({
-            print("Deleting item at indexPath: \(indexPath) from collectionView")
-            collectionView.deleteItems(at: [indexPath])
-        }, completion: { _ in
+//        collectionView.performBatchUpdates({
+//            print("Deleting item at indexPath: \(indexPath) from collectionView")
+//            collectionView.deleteItems(at: [indexPath])
+//            
+//        }, completion: { _ in
+//
+//
+//
+        
+#warning("По-хорошему имеет смысл отказать от этой библиотеки, попытаться разобраться в том, почему свайпы не работают, и настроить классическое удаление элементов из коллекции.")
+        
+        
             print("Batch update completed.")
             if self.habits.isEmpty {
                 print("Habits array is empty. Reloading entire collectionView.")
-                self.collectionView.reloadData()
+             //   self.collectionView.reloadData()
+#warning("Ошибка в 0 секции. Потому что в ней ничего не удаляется, но добавляется, когда элементов становится 0. Возможное решение, если оставить использовать эту библиотеку: использовать пустое состояние таблички как видимое и невидимое в зависимости от наличия привычек, но тогда дневник будет перекрываться.")
             }
-        })
+   //     })
     }
 }
 

@@ -27,7 +27,7 @@ enum HabitsLayout {
                     subitems: [item]
                 )
                 let section = NSCollectionLayoutSection(group: group)
-                section.contentInsets = .init(top: 12, leading: 12, bottom: 0, trailing: 12)
+                section.contentInsets = .init(top: 12, leading: 12, bottom: 12, trailing: 12)
                 return section
             }
             

@@ -12,9 +12,7 @@ import UIKit
 extension HabitsViewController {
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        let sections = habits.isEmpty ? 1 : 2 // здесь 2, потому что возвращаются обе секции, но если нет привычек, itemCount = 0
-        print("Calculating number of sections. Habits count: \(habits.count). Returning sections: \(sections)")
-        return sections
+        2
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
