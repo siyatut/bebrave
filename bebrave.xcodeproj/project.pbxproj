@@ -147,11 +147,6 @@
 			children = (
 				52F1E5392B7CDC300058F767 /* AppDelegate.swift */,
 				52F1E53B2B7CDC300058F767 /* SceneDelegate.swift */,
-				52F1E53D2B7CDC300058F767 /* TabBarViewController.swift */,
-				52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */,
-				52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */,
-				523AF3B82CBFBDBD00EEFA8A /* NewHabitViewController.swift */,
-				5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */,
 			);
 			path = "App and Scene Delegate";
 			sourceTree = "<group>";
@@ -231,9 +226,14 @@
 		52F1E5382B7CDC300058F767 /* bebrave */ = {
 			isa = PBXGroup;
 			children = (
-				52ACDD432CEF13CD00868730 /* AppStyle.swift */,
-				52C996A02D11E984000E7648 /* UserDefaults */,
 				52C996A22D11E9F2000E7648 /* App and Scene Delegate */,
+				52C996A02D11E984000E7648 /* UserDefaults */,
+				52ACDD432CEF13CD00868730 /* AppStyle.swift */,
+				52F1E53D2B7CDC300058F767 /* TabBarViewController.swift */,
+				52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */,
+				52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */,
+				523AF3B82CBFBDBD00EEFA8A /* NewHabitViewController.swift */,
+				5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */,
 				52C996A32D11EA17000E7648 /* HabitsViewController */,
 				52F1E5422B7CDC330058F767 /* Assets.xcassets */,
 				52F1E5442B7CDC330058F767 /* LaunchScreen.storyboard */,
