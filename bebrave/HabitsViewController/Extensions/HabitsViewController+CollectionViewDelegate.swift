@@ -56,7 +56,6 @@ extension HabitsViewController {
                         withReuseIdentifier: CustomElement.habitsCell.rawValue,
                         for: indexPath
                     )
-                    habitCell.delegate = self
                     let habit = habits[indexPath.item]
                     print("Configuring habit cell with habit: \(habit.title)")
                     habitCell.configure(with: habit)

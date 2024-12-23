@@ -8,7 +8,17 @@
 import UIKit
 import SwipeCellKit
 
-class HabitsCell: SwipeCollectionViewCell {
+class HabitsCell: UICollectionViewCell {
+    
+    private var panGesture: UIPanGestureRecognizer!
+    private var originalCenter: CGPoint = .zero
+    private let deleteIcon: UIImageView = {
+        let imageView = UIImageView(image: UIImage(systemName: "trash"))
+        imageView.tintColor = .red
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.alpha = 0
+        return imageView
+    }()
     
 // MARK: - UI Components
     
@@ -35,11 +45,15 @@ class HabitsCell: SwipeCollectionViewCell {
         super.init(frame: frame)
         setupComponents()
         setupTapGesture()
+        setupPanGesture()
+        setupDeleteIcon()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+// MARK: - Gestupe Methods
     
     private func setupTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
@@ -47,11 +61,59 @@ class HabitsCell: SwipeCollectionViewCell {
         contentView.addGestureRecognizer(tapGesture)
     }
     
+    private func setupPanGesture() {
+        panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        addGestureRecognizer(panGesture)
+    }
+    
+    @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: self)
+        
+        switch gesture.state {
+        case .began:
+            // Сохраняем начальную позицию ячейки
+            originalCenter = center
+        case .changed:
+            if translation.x < 0 { // Только если движение влево
+                // Сдвигаем ячейку
+                center = CGPoint(x: originalCenter.x + translation.x, y: originalCenter.y)
+                
+                // Показываем иконку удаления пропорционально свайпу
+                let alpha = min(1, abs(translation.x) / 100) // Используем abs, так как translation.x < 0
+                deleteIcon.alpha = alpha
+            }
+        case .ended:
+            let threshold: CGFloat = 100 // Минимальное расстояние для завершения свайпа
+            if abs(translation.x) > threshold && translation.x < 0 { // Свайп должен быть влево
+                // Уведомляем контроллер о свайпе
+                NotificationCenter.default.post(name: Notification.Name("CellDidSwipeRight"), object: self)
+            } else {
+                // Возвращаем ячейку в исходное положение
+                UIView.animate(withDuration: 0.3) {
+                    self.center = self.originalCenter
+                    self.deleteIcon.alpha = 0
+                }
+            }
+        default:
+            break
+        }
+    }
+    
     @objc private func handleTap() {
         print("Cell tapped!")
     }
     
 // MARK: - Set up components
+    
+    private func setupDeleteIcon() {
+        addSubview(deleteIcon)
+        NSLayoutConstraint.activate([
+            deleteIcon.centerYAnchor.constraint(equalTo: centerYAnchor),
+            deleteIcon.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            deleteIcon.widthAnchor.constraint(equalToConstant: 24),
+            deleteIcon.heightAnchor.constraint(equalToConstant: 24)
+        ])
+    }
     
     private func addSubviewsToStackView(_ stackView: UIStackView, views: [UIView]) {
         views.forEach { stackView.addArrangedSubview($0) }

@@ -5,11 +5,13 @@
 //  Created by Anastasia Tyutinova on 14/2/2567 BE.
 //
 
-#warning("№1: Добавить действия со свайпами, затем перейти к пункту ниже")
+#warning("№1: Переписать свайпы. Слева плавное через PanGesture — «Изменить» (открывает новый экран) и «Пропустить» закрашивает полосатым и не считает пропущенным этот день. Справа «Удалить» попробовать настроить через стандартное управление свайпами UISwipeActionsConfiguration. ИИ убеждает, что это всё-таки возможно")
 
-#warning("№2: Добавить нужную отрисовку в чекбоксе по нажатию + степень закрашивания ячейки + изменение процента и числа 1/2, например")
+#warning("№2: Переписать отрисовку серого пустого вью на коллекцию (пусть и закроет ячейку дневника), чтобы после удаления последней привычки не возникало той же самой ошибки")
 
-#warning("№3: Нужно будет ещё добавить условия для пропуска привычки, когда по каким-то причинам пользователь не хочет выполнять её + условия, при котором она будет считаться невыполненной")
+#warning("№3: Добавить нужную отрисовку в чекбоксе по нажатию + степень закрашивания ячейки + изменение процента и числа 1/2, например")
+
+#warning("№4: Нужно будет ещё добавить условия для пропуска привычки, когда по каким-то причинам пользователь не хочет выполнять её + условия, при котором она будет считаться невыполненной")
 
 import UIKit
 
@@ -20,21 +22,21 @@ protocol NewHabitDelegate: AnyObject {
 }
 
 class HabitsViewController: UICollectionViewController {
- 
-// MARK: - Data Source
+    
+    // MARK: - Data Source
     
     var habits: [Habit] = []
-
-// MARK: - Properties
+    
+    // MARK: - Properties
     
     var headerView: HeaderDaysCollectionView?
     
-// MARK: - UI components
+    // MARK: - UI components
     
     let historyButton = UIButton()
     let calendarLabel = UILabel()
     
-// MARK: — Init
+    // MARK: — Init
     
     init() {
         super.init(collectionViewLayout: HabitsLayout.createLayout())
@@ -44,11 +46,12 @@ class HabitsViewController: UICollectionViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-// MARK: - Lifecycle view
+    // MARK: - Lifecycle view
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = AppStyle.Colors.backgroundColor
+        setupNotificationObserver()
         setupHistoryButton()
         setupCalendarLabel()
         
@@ -99,7 +102,51 @@ class HabitsViewController: UICollectionViewController {
         }
     }
     
-// MARK: - Action
+    private func setupNotificationObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleCellSwipeRight(_:)), name: Notification.Name("CellDidSwipeRight"), object: nil)
+    }
+    
+#warning("Пока оставлю здесь, но скорее всего сам delete нужно будет вынести в отдельный метод или нет?")
+    @objc private func handleCellSwipeRight(_ notification: Notification) {
+        guard let cell = notification.object as? UICollectionViewCell,
+              let indexPath = collectionView.indexPath(for: cell) else { return }
+        
+        //  Проверяем, что секция и индекс корректны
+        guard indexPath.section == 1, indexPath.item < habits.count else {
+            print("Invalid indexPath for deletion: \(indexPath)")
+            return
+        }
+        
+        // Получаем привычку, которую нужно удалить
+        let habitToDelete = habits[indexPath.item]
+        print("Habit to delete: \(habitToDelete.title)")
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            cell.transform = CGAffineTransform(translationX: self.view.frame.width, y: 0)
+            cell.alpha = 0
+        }, completion: { _ in
+            // Удаление данных из массива после завершения анимации
+            
+            self.habits.remove(at: indexPath.item)
+            print("Habit removed from array. New habits count: \(self.habits.count)")
+            
+            // Удаляем привычку из UserDefaults
+            UserDefaultsManager.shared.deleteHabit(id: habitToDelete.id)
+            print("Habit deleted from UserDefaults. ID: \(habitToDelete.id)")
+            
+            // Удаление ячейки из коллекции
+            self.collectionView.performBatchUpdates({
+                self.collectionView.deleteItems(at: [indexPath])
+            }, completion: { _ in
+                // Сброс трансформации и прозрачности для повторного использования ячеек
+                cell.transform = .identity
+                cell.alpha = 1
+            })
+        })
+    }
+    
+    
+    // MARK: - Action
     
     @objc func historyButtonTapped() {
         let history = HistoryViewController()
