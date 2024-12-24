@@ -55,48 +55,20 @@ extension HabitsViewController {
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
-        do {
-            guard let customElement = CustomElement(rawValue: kind) else {
-                throw SupplementaryViewError.unexpectedKind(kind)
+        if kind == UICollectionView.elementKindSectionHeader {
+            guard let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: CustomElement.collectionHeader.rawValue,
+                for: indexPath
+            ) as? HeaderDaysCollectionView else {
+                assertionFailure("Failed to dequeue HeaderDaysCollectionView")
+                return UICollectionReusableView()
             }
-            
-            switch customElement {
-            case .collectionFooter:
-                let footer = try collectionView.dequeueSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier: CustomElement.collectionFooter.rawValue,
-                    for: indexPath
-                ) as AddNewHabitView
-                footer.backgroundColor = AppStyle.Colors.backgroundColor
-                footer.parentFooterViewController = self
-                return footer
-                
-            case .collectionHeader:
-                let header = try collectionView.dequeueSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier: CustomElement.collectionHeader.rawValue,
-                    for: indexPath
-                ) as HeaderDaysCollectionView
-                header.backgroundColor = AppStyle.Colors.backgroundColor
-                header.parentHeaderViewController = self
-                headerView = header
-                return header
-                
-            case .outlineBackground:
-                let outlineBackground = try collectionView.dequeueSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier: CustomElement.outlineBackground.rawValue,
-                    for: indexPath
-                ) as OutlineBackgroundView
-                return outlineBackground
-                
-            default:
-                throw SupplementaryViewError.unhandledCustomElement(customElement)
-            }
-        } catch {
-            assertionFailure("Failed to load supplementary view: \(error)")
-            return UICollectionReusableView()
+            return header
         }
+        
+        assertionFailure("Unexpected kind: \(kind)")
+        return UICollectionReusableView()
     }
 }
 

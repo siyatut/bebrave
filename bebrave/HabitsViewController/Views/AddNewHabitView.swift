@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddNewHabitView: UICollectionReusableView {
+class AddNewHabitButton: UIButton {
     
 // MARK: - Delegate Protocol
     
@@ -19,7 +19,7 @@ class AddNewHabitView: UICollectionReusableView {
     
 // MARK: - UI Components
     
-    private lazy var addNewHabitButton: UIButton = {
+    func addNewHabitButton() {
         var config = UIButton.Configuration.plain()
         config.baseForegroundColor = AppStyle.Colors.secondaryColor
         config.title = "Добавить привычку"
@@ -42,30 +42,17 @@ class AddNewHabitView: UICollectionReusableView {
         button.layer.masksToBounds = true
         
         button.addTarget(self, action: #selector(addNewHabitButtonTapped), for: .touchUpInside)
-        return button
-    }()
+    }
     
 // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupComponents()
+        addNewHabitButton()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-// MARK: - Set up components
-    
-    func setupComponents() {
-        addSubview(addNewHabitButton)
-        NSLayoutConstraint.activate([
-            addNewHabitButton.leadingAnchor.constraint(equalTo: leadingAnchor),
-            addNewHabitButton.trailingAnchor.constraint(equalTo: trailingAnchor),
-            addNewHabitButton.topAnchor.constraint(equalTo: topAnchor),
-            addNewHabitButton.bottomAnchor.constraint(equalTo: bottomAnchor),
-        ])
     }
     
 // MARK: - Action

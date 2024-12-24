@@ -30,6 +30,7 @@ class HabitsViewController: UICollectionViewController {
 // MARK: - Properties
     
     var headerView: HeaderDaysCollectionView?
+    let addHabitButton = AddNewHabitButton()
     
 // MARK: - UI components
     
@@ -46,7 +47,7 @@ class HabitsViewController: UICollectionViewController {
 // MARK: — Init
     
     init() {
-        super.init(collectionViewLayout: HabitsLayout.createLayout())
+        super.init(collectionViewLayout: HabitsFlowLayout())
     }
     
     required init?(coder: NSCoder) {
@@ -57,9 +58,13 @@ class HabitsViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = AppStyle.Colors.backgroundColor
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
         setupEmptyStateView()
         updateEmptyState()
-        view.backgroundColor = AppStyle.Colors.backgroundColor
+        setupAddHabitButton()
         setupNotificationObserver()
         setupHistoryButton()
         setupCalendarLabel()
@@ -73,19 +78,14 @@ class HabitsViewController: UICollectionViewController {
             forCellWithReuseIdentifier: CustomElement.writeDiaryCell.rawValue
         )
         collectionView.register(
-            HeaderDaysCollectionView.self,
-            forSupplementaryViewOfKind: CustomElement.collectionHeader.rawValue,
-            withReuseIdentifier: CustomElement.collectionHeader.rawValue
-        )
-        collectionView.register(
             OutlineBackgroundView.self,
             forSupplementaryViewOfKind: CustomElement.outlineBackground.rawValue,
-            withReuseIdentifier: CustomElement.outlineBackground.rawValue
+            withReuseIdentifier: "OutlineBackgroundView"
         )
         collectionView.register(
-            AddNewHabitView.self,
-            forSupplementaryViewOfKind: CustomElement.collectionFooter.rawValue,
-            withReuseIdentifier: CustomElement.collectionFooter.rawValue
+            HeaderDaysCollectionView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: CustomElement.collectionHeader.rawValue
         )
     }
     
@@ -115,6 +115,18 @@ class HabitsViewController: UICollectionViewController {
     
     func updateEmptyState() {
         emptyStateView.isHidden = !habits.isEmpty
+    }
+    
+    // MARK: - Setup Add Habit Button
+    private func setupAddHabitButton() {
+        view.addSubview(addHabitButton)
+        NSLayoutConstraint.activate([
+            addHabitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            addHabitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            addHabitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
+            addHabitButton.heightAnchor.constraint(equalToConstant: 60)
+        ])
+        view.bringSubviewToFront(addHabitButton)
     }
     
 // MARK: - Swipe gesture
@@ -170,5 +182,32 @@ class HabitsViewController: UICollectionViewController {
     @objc func historyButtonTapped() {
         let history = HistoryViewController()
         self.navigationController?.pushViewController(history, animated: true)
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension HabitsViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let width = collectionView.bounds.width - 24 // убираем отступы с обеих сторон
+        return CGSize(width: width, height: 70) 
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForSupplementaryViewOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> CGSize {
+        guard let customElement = CustomElement(rawValue: kind) else { return .zero }
+        
+        switch customElement {
+        case .outlineBackground:
+            let sectionHeight = CGFloat(habits.count) * 60 + CGFloat(habits.count - 1) * 8 // Высота всех ячеек + отступы
+            return CGSize(width: collectionView.bounds.width - 24, height: sectionHeight)
+            
+        default:
+            return .zero
+        }
     }
 }
