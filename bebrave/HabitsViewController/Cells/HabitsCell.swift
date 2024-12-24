@@ -68,7 +68,7 @@ class HabitsCell: UICollectionViewCell {
     
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: self)
-        
+#warning("Периодически рисунок trash при создании привычки заслоняет ячейку. Почему так происходит?")
         switch gesture.state {
         case .began:
             // Сохраняем начальную позицию ячейки

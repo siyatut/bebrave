@@ -58,6 +58,7 @@ class HabitsViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupEmptyStateView()
+        updateEmptyState()
         view.backgroundColor = AppStyle.Colors.backgroundColor
         setupNotificationObserver()
         setupHistoryButton()
