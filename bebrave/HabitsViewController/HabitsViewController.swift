@@ -7,7 +7,7 @@
 
 #warning("№1: Переписать свайпы. Слева плавное через PanGesture — «Изменить» (открывает новый экран) и «Пропустить» закрашивает полосатым и не считает пропущенным этот день. Справа «Удалить» попробовать настроить через стандартное управление свайпами UISwipeActionsConfiguration. ИИ убеждает, что это всё-таки возможно")
 
-#warning("№2: Переписать отрисовку серого пустого вью на коллекцию (пусть и закроет ячейку дневника), чтобы после удаления последней привычки не возникало той же самой ошибки")
+#warning("№2: Переписать отрисовку серого пустого вью на коллекцию (пусть и закроет ячейку дневника), чтобы после удаления последней привычки не возникало той же самой ошибки. UPD: переписала, но оно закрывает и кнопку добавить привычку, потому что та является footer секции")
 
 #warning("№3: Добавить нужную отрисовку в чекбоксе по нажатию + степень закрашивания ячейки + изменение процента и числа 1/2, например")
 
@@ -23,20 +23,27 @@ protocol NewHabitDelegate: AnyObject {
 
 class HabitsViewController: UICollectionViewController {
     
-    // MARK: - Data Source
+// MARK: - Data Source
     
     var habits: [Habit] = []
     
-    // MARK: - Properties
+// MARK: - Properties
     
     var headerView: HeaderDaysCollectionView?
     
-    // MARK: - UI components
+// MARK: - UI components
     
     let historyButton = UIButton()
     let calendarLabel = UILabel()
     
-    // MARK: — Init
+    private lazy var emptyStateView: UIView = {
+        let view = EmptyStateView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isHidden = true
+        return view
+    }()
+    
+// MARK: — Init
     
     init() {
         super.init(collectionViewLayout: HabitsLayout.createLayout())
@@ -46,10 +53,11 @@ class HabitsViewController: UICollectionViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Lifecycle view
+// MARK: - Lifecycle view
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupEmptyStateView()
         view.backgroundColor = AppStyle.Colors.backgroundColor
         setupNotificationObserver()
         setupHistoryButton()
@@ -78,29 +86,37 @@ class HabitsViewController: UICollectionViewController {
             forSupplementaryViewOfKind: CustomElement.collectionFooter.rawValue,
             withReuseIdentifier: CustomElement.collectionFooter.rawValue
         )
-        collectionView.register(
-            EmptyStateCell.self,
-            forCellWithReuseIdentifier: "EmptyStateCell"
-        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("View will appear. Loading habits.")
         
-        // Загружаем привычки из UserDefaults
         habits = UserDefaultsManager.shared.loadHabits()
         print("Habits loaded: \(habits.map { $0.title })")
         
-        // Обновляем интерфейс
         collectionView.reloadData()
         print("CollectionView reloaded. Current habits count: \(habits.count)")
         
         DispatchQueue.main.async {
             self.updateCalendarLabel()
-            print("Calendar label updated.")
         }
     }
+    
+    private func setupEmptyStateView() {
+        view.addSubview(emptyStateView)
+        NSLayoutConstraint.activate([
+            emptyStateView.topAnchor.constraint(equalTo: view.topAnchor, constant: 180),
+            emptyStateView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            emptyStateView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
+            emptyStateView.heightAnchor.constraint(equalToConstant: 312)
+        ])
+    }
+    
+    func updateEmptyState() {
+        emptyStateView.isHidden = !habits.isEmpty
+    }
+    
+// MARK: - Swipe gesture
     
     private func setupNotificationObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleCellSwipeRight(_:)), name: Notification.Name("CellDidSwipeRight"), object: nil)
@@ -111,9 +127,9 @@ class HabitsViewController: UICollectionViewController {
         guard let cell = notification.object as? UICollectionViewCell,
               let indexPath = collectionView.indexPath(for: cell) else { return }
         
-        //  Проверяем, что секция и индекс корректны
-        guard indexPath.section == 1, indexPath.item < habits.count else {
-            print("Invalid indexPath for deletion: \(indexPath)")
+        // Проверяем, что это не ячейка DiaryWriteCell
+        guard indexPath.item < habits.count else {
+            print("Attempted to delete DiaryWriteCell or invalid index")
             return
         }
         
@@ -132,6 +148,7 @@ class HabitsViewController: UICollectionViewController {
             
             // Удаляем привычку из UserDefaults
             UserDefaultsManager.shared.deleteHabit(id: habitToDelete.id)
+            
             print("Habit deleted from UserDefaults. ID: \(habitToDelete.id)")
             
             // Удаление ячейки из коллекции
@@ -141,12 +158,13 @@ class HabitsViewController: UICollectionViewController {
                 // Сброс трансформации и прозрачности для повторного использования ячеек
                 cell.transform = .identity
                 cell.alpha = 1
+                self.updateEmptyState()
             })
         })
     }
     
     
-    // MARK: - Action
+// MARK: - Action
     
     @objc func historyButtonTapped() {
         let history = HistoryViewController()

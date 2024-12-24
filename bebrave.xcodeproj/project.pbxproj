@@ -15,7 +15,7 @@
 		523D41752C05FD3D00689F20 /* AddNewHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523D41742C05FD3D00689F20 /* AddNewHabitView.swift */; };
 		5241DDD22B8F61F000C7ECF0 /* HistoryViewConroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */; };
 		5246C9762BC6C39D00BA7912 /* HabitsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5246C9752BC6C39D00BA7912 /* HabitsCell.swift */; };
-		524FC7022D075071004C839F /* EmptyStateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524FC7012D075063004C839F /* EmptyStateCell.swift */; };
+		524FC7022D075071004C839F /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524FC7012D075063004C839F /* EmptyStateView.swift */; };
 		5252109B2BFC7F04009DB3F7 /* DiaryWriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5252109A2BFC7F04009DB3F7 /* DiaryWriteCell.swift */; };
 		52697D5E2D195361004B9D7E /* HabitsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D5D2D19535F004B9D7E /* HabitsLayout.swift */; };
 		52697D602D1957A9004B9D7E /* HabitsViewController+CollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D5F2D1957A6004B9D7E /* HabitsViewController+CollectionViewDelegate.swift */; };
@@ -69,7 +69,7 @@
 		523D41742C05FD3D00689F20 /* AddNewHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewHabitView.swift; sourceTree = "<group>"; };
 		5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewConroller.swift; sourceTree = "<group>"; };
 		5246C9752BC6C39D00BA7912 /* HabitsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsCell.swift; sourceTree = "<group>"; };
-		524FC7012D075063004C839F /* EmptyStateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateCell.swift; sourceTree = "<group>"; };
+		524FC7012D075063004C839F /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		5252109A2BFC7F04009DB3F7 /* DiaryWriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryWriteCell.swift; sourceTree = "<group>"; };
 		52697D5D2D19535F004B9D7E /* HabitsLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsLayout.swift; sourceTree = "<group>"; };
 		52697D5F2D1957A6004B9D7E /* HabitsViewController+CollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+CollectionViewDelegate.swift"; sourceTree = "<group>"; };
@@ -177,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */,
+				524FC7012D075063004C839F /* EmptyStateView.swift */,
 				523D41742C05FD3D00689F20 /* AddNewHabitView.swift */,
 				52021A762BAC3D2000E9D8F1 /* OutlineBackgroundView.swift */,
 			);
@@ -188,7 +189,6 @@
 			children = (
 				5246C9752BC6C39D00BA7912 /* HabitsCell.swift */,
 				5252109A2BFC7F04009DB3F7 /* DiaryWriteCell.swift */,
-				524FC7012D075063004C839F /* EmptyStateCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -429,7 +429,7 @@
 				52697D602D1957A9004B9D7E /* HabitsViewController+CollectionViewDelegate.swift in Sources */,
 				523D41752C05FD3D00689F20 /* AddNewHabitView.swift in Sources */,
 				52C996A92D11EB25000E7648 /* CustomElement.swift in Sources */,
-				524FC7022D075071004C839F /* EmptyStateCell.swift in Sources */,
+				524FC7022D075071004C839F /* EmptyStateView.swift in Sources */,
 				52C996A52D11EAC7000E7648 /* UICollectionView+ReusableViews.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

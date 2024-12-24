@@ -12,20 +12,11 @@ import UIKit
 extension HabitsViewController {
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        2
+        1
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let itemCount: Int
-        if section == 0 {
-            itemCount = habits.isEmpty ? 1 : 0
-        } else if section == 1 {
-            itemCount = habits.count + 1
-        } else {
-            itemCount = 0
-        }
-        print("Calculating number of items in section \(section). Habits count: \(habits.count). Returning items: \(itemCount)")
-        return itemCount
+        return habits.count + 1  
     }
     
     override func collectionView(
@@ -33,36 +24,25 @@ extension HabitsViewController {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         do {
-            if habits.isEmpty && indexPath.section == 0 {
-                print("Returning empty state cell for indexPath: \(indexPath)")
-                let emptyStateCell: EmptyStateCell = try collectionView.dequeueCell(
-                    withReuseIdentifier: "EmptyStateCell",
+            if indexPath.item < habits.count {
+                print("Returning habit cell for index \(indexPath.item)")
+                let habitCell: HabitsCell = try collectionView.dequeueCell(
+                    withReuseIdentifier: CustomElement.habitsCell.rawValue,
                     for: indexPath
                 )
-                return emptyStateCell
+                let habit = habits[indexPath.item]
+                print("Configuring habit cell with habit: \(habit.title)")
+                habitCell.configure(with: habit)
+                return habitCell
             }
-            
-            if indexPath.section == 1 {
-                if indexPath.item == habits.count {
-                    print("Returning diary write cell for indexPath: \(indexPath)")
-                    let diaryCell: DiaryWriteCell = try collectionView.dequeueCell(
-                        withReuseIdentifier: CustomElement.writeDiaryCell.rawValue,
-                        for: indexPath
-                    )
-                    return diaryCell
-                } else {
-                    print("Returning habit cell for index \(indexPath.item)")
-                    let habitCell: HabitsCell = try collectionView.dequeueCell(
-                        withReuseIdentifier: CustomElement.habitsCell.rawValue,
-                        for: indexPath
-                    )
-                    let habit = habits[indexPath.item]
-                    print("Configuring habit cell with habit: \(habit.title)")
-                    habitCell.configure(with: habit)
-                    return habitCell
-                }
+            else if indexPath.item == habits.count {
+                print("Returning diary write cell for indexPath: \(indexPath)")
+                let diaryCell: DiaryWriteCell = try collectionView.dequeueCell(
+                    withReuseIdentifier: CustomElement.writeDiaryCell.rawValue,
+                    for: indexPath
+                )
+                return diaryCell
             }
-            
             throw CellError.unhandledSectionOrIndexPath(indexPath)
         } catch {
             assertionFailure("Failed to load cell: \(error)")

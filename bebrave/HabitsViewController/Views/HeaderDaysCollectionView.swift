@@ -45,7 +45,6 @@ class HeaderDaysCollectionView: UICollectionReusableView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        print("CollectionView width: \(collectionView.bounds.width)")
     }
     
 // MARK: - Setup methods

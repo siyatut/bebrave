@@ -12,6 +12,7 @@ import UIKit
 extension HabitsViewController: NewHabitDelegate {
     func didAddNewHabit(_ habit: Habit) {
         habits.append(habit)
+        updateEmptyState()
         collectionView.reloadData()
     }
 }

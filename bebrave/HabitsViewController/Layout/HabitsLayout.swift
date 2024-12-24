@@ -12,25 +12,6 @@ enum HabitsLayout {
     static func createLayout() -> UICollectionViewLayout {
         let provider: UICollectionViewCompositionalLayoutSectionProvider = { section, environment in
 
-            if section == 0 {
-                let item = NSCollectionLayoutItem(
-                    layoutSize: .init(
-                        widthDimension: .fractionalWidth(1),
-                        heightDimension: .fractionalHeight(1)
-                    )
-                )
-                let group = NSCollectionLayoutGroup.vertical(
-                    layoutSize: .init(
-                        widthDimension: .fractionalWidth(1),
-                        heightDimension: .absolute(312)
-                    ),
-                    subitems: [item]
-                )
-                let section = NSCollectionLayoutSection(group: group)
-                section.contentInsets = .init(top: 12, leading: 12, bottom: 12, trailing: 12)
-                return section
-            }
-            
             let background = NSCollectionLayoutSupplementaryItem(
                 layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
@@ -78,8 +59,9 @@ enum HabitsLayout {
             ),
             elementKind: CustomElement.collectionFooter.rawValue,
             alignment: .bottom,
-            absoluteOffset: .init(x: 0, y: 24)
+            absoluteOffset: .init(x: 0, y: 300)
         )
+#warning("Ну, получается, чтобы кнопка добавить привычку работала, нужно или вынести её вообще, чтобы она от layout не зависела, либо как-то на основании экрана подсчитывать, если такое возможно")
         footer.extendsBoundary = true
         footer.contentInsets = .init(top: 0, leading: 12, bottom: 0, trailing: 12)
         

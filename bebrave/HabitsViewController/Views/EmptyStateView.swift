@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EmptyStateCell: UICollectionViewCell {
+class EmptyStateView: UICollectionReusableView {
     
 // MARK: - UI components
     
@@ -26,14 +26,14 @@ class EmptyStateCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(label)
-        contentView.backgroundColor = AppStyle.Colors.backgroundEmptyStateColor
-        contentView.layer.cornerRadius = AppStyle.Sizes.cornerRadius
-        contentView.layer.masksToBounds = true
+        addSubview(label)
+        backgroundColor = AppStyle.Colors.backgroundEmptyStateColor
+        layer.cornerRadius = AppStyle.Sizes.cornerRadius
+        layer.masksToBounds = true
         NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            label.leadingAnchor.constraint(equalTo: leadingAnchor),
+            label.trailingAnchor.constraint(equalTo: trailingAnchor),
+            label.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
     
