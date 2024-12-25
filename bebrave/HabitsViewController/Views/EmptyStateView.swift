@@ -13,12 +13,12 @@ class EmptyStateView: UICollectionReusableView {
     
     private let label: UILabel = {
         let label = UILabel()
-        label.textColor = AppStyle.Colors.textColor
+        label.textColor = AppStyle.Colors.primaryColor
         label.font = AppStyle.Fonts.boldFont(size: 16)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Пора что-нибудь добавить"
+        label.text = "Пора что-нибудь сюда добавить"
         return label
     }()
 
