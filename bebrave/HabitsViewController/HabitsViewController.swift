@@ -65,8 +65,6 @@ class HabitsViewController: UICollectionViewController {
         view.backgroundColor = AppStyle.Colors.backgroundColor
 
         setupEmptyStateView()
-        updateEmptyState()
-
         setupNotificationObserver()
         
         setupHistoryButton()
