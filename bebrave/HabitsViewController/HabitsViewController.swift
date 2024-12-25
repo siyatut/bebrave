@@ -100,6 +100,8 @@ class HabitsViewController: UICollectionViewController {
         collectionView.reloadData()
         print("CollectionView reloaded. Current habits count: \(habits.count)")
         
+        updateEmptyState()
+        
         DispatchQueue.main.async {
             self.updateCalendarLabel()
         }
