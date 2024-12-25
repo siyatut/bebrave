@@ -23,7 +23,7 @@ class HabitsFlowLayout: UICollectionViewFlowLayout {
         scrollDirection = .vertical
         minimumInteritemSpacing = 8
         minimumLineSpacing = 8
-        sectionInset = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+        sectionInset = UIEdgeInsets(top: 24, left: 12, bottom: 24, right: 12)
         itemSize = CGSize(width: UIScreen.main.bounds.width - 24, height: 60)
     }
 }
