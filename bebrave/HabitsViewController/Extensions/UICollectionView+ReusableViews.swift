@@ -7,8 +7,6 @@
 
 import UIKit
 
-#warning("Вот это сейчас, получается, не использую. Подумать")
-
 extension UICollectionView {
     func dequeueSupplementaryView<T: UICollectionReusableView>(
         ofKind kind: String,

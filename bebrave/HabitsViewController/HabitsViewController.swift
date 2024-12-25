@@ -46,7 +46,7 @@ class HabitsViewController: UICollectionViewController {
 // MARK: — Init
     
     init() {
-        super.init(collectionViewLayout: HabitsFlowLayout())
+        super.init(collectionViewLayout: HabitsLayout.createLayout())
     }
     
     required init?(coder: NSCoder) {
@@ -80,16 +80,16 @@ class HabitsViewController: UICollectionViewController {
         collectionView.register(
             OutlineBackgroundView.self,
             forSupplementaryViewOfKind: CustomElement.outlineBackground.rawValue,
-            withReuseIdentifier: "OutlineBackgroundView"
+            withReuseIdentifier: CustomElement.outlineBackground.rawValue
         )
         collectionView.register(
             HeaderDaysCollectionView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            forSupplementaryViewOfKind: CustomElement.collectionHeader.rawValue,
             withReuseIdentifier: CustomElement.collectionHeader.rawValue
         )
         collectionView.register(
-            AddHabitFooterCollectionView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            AddNewHabitView.self,
+            forSupplementaryViewOfKind: CustomElement.collectionFooter.rawValue,
             withReuseIdentifier: CustomElement.collectionFooter.rawValue
         )
     }
@@ -175,53 +175,5 @@ class HabitsViewController: UICollectionViewController {
     @objc func historyButtonTapped() {
         let history = HistoryViewController()
         self.navigationController?.pushViewController(history, animated: true)
-    }
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout
-
-extension HabitsViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        referenceSizeForHeaderInSection section: Int
-    ) -> CGSize {
-        let width = collectionView.bounds.width - 24
-        return CGSize(width: width, height: 70) 
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        referenceSizeForFooterInSection section: Int
-    ) -> CGSize {
-        let width = collectionView.bounds.width - 24
-        return CGSize(width: width, height: 48)
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        referenceSizeForSupplementaryViewOfKind kind: String,
-        at indexPath: IndexPath
-    ) -> CGSize {
-        guard kind == CustomElement.outlineBackground.rawValue else { return .zero }
-        
-        let sectionHeight = CGFloat(habits.count) * 60 + CGFloat(habits.count - 1) * 8
-        return CGSize(width: collectionView.bounds.width - 24, height: sectionHeight)
-    }
-
-    
-    override func collectionView(
-        _ collectionView: UICollectionView,
-        willDisplaySupplementaryView view: UICollectionReusableView,
-        forElementKind elementKind: String,
-        at indexPath: IndexPath
-    ) {
-        if elementKind == UICollectionView.elementKindSectionHeader,
-           let header = view as? HeaderDaysCollectionView {
-            headerView = header
-            updateCalendarLabel()
-        }
     }
 }

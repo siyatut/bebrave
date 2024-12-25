@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddHabitFooterCollectionView: UICollectionReusableView {
+class AddNewHabitView: UICollectionReusableView {
     
 // MARK: - Delegate Protocol
     
@@ -62,8 +62,8 @@ class AddHabitFooterCollectionView: UICollectionReusableView {
         addSubview(addNewHabitButton)
         NSLayoutConstraint.activate([
             addNewHabitButton.topAnchor.constraint(equalTo: topAnchor),
-            addNewHabitButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
-            addNewHabitButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
+            addNewHabitButton.leadingAnchor.constraint(equalTo: leadingAnchor),
+            addNewHabitButton.trailingAnchor.constraint(equalTo: trailingAnchor),
             addNewHabitButton.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }

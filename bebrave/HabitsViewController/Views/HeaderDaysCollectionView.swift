@@ -56,8 +56,8 @@ class HeaderDaysCollectionView: UICollectionReusableView {
     private func setupLayout() {
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
+            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }

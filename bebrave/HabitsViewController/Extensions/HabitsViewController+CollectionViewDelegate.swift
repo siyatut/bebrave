@@ -16,7 +16,7 @@ extension HabitsViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return habits.count + 1  
+        return habits.count + 1
     }
     
     override func collectionView(
@@ -55,53 +55,58 @@ extension HabitsViewController {
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
-        if kind == UICollectionView.elementKindSectionHeader {
-            guard let header = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: CustomElement.collectionHeader.rawValue,
-                for: indexPath
-            ) as? HeaderDaysCollectionView else {
-                assertionFailure("Failed to dequeue HeaderDaysCollectionView")
-                return UICollectionReusableView()
+        do {
+            guard let customElement = CustomElement(rawValue: kind) else {
+                throw SupplementaryViewError.unexpectedKind(kind)
             }
-            return header
-        }
-#warning("Надо, наверное, сделать контроллер обычным и добавить туда коллекцию, чтобы привычку закрепить за tabbar и сверху прикрепить коллекцию. Иначе пустая секция будет перекрывать кнопку как футер")
-        if kind == UICollectionView.elementKindSectionFooter {
-            guard let footer = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: CustomElement.collectionFooter.rawValue,
-                for: indexPath
-            ) as? AddHabitFooterCollectionView else {
-                fatalError("Failed to dequeue AddHabitFooterCollectionView")
+            
+            switch customElement {
+            case .collectionFooter:
+                let footer = try collectionView.dequeueSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: CustomElement.collectionFooter.rawValue,
+                    for: indexPath
+                ) as AddNewHabitView
+                footer.backgroundColor = AppStyle.Colors.backgroundColor
+                footer.parentFooterViewController = self
+                return footer
+                
+            case .collectionHeader:
+                let header = try collectionView.dequeueSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: CustomElement.collectionHeader.rawValue,
+                    for: indexPath
+                ) as HeaderDaysCollectionView
+                header.backgroundColor = AppStyle.Colors.backgroundColor
+                headerView = header
+                return header
+                
+            case .outlineBackground:
+                let outlineBackground = try collectionView.dequeueSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: CustomElement.outlineBackground.rawValue,
+                    for: indexPath
+                ) as OutlineBackgroundView
+                return outlineBackground
+                
+            default:
+                throw SupplementaryViewError.unhandledCustomElement(customElement)
             }
-            footer.parentFooterViewController = self
-            return footer
+        } catch {
+            assertionFailure("Failed to load supplementary view: \(error)")
+            return UICollectionReusableView()
         }
-#warning("Не отрисовывается background")
-        if kind == CustomElement.outlineBackground.rawValue {
-            guard let backgroundView = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: "OutlineBackgroundView",
-                for: indexPath
-            ) as? OutlineBackgroundView else {
-                fatalError("Failed to dequeue OutlineBackgroundView")
-            }
-            return backgroundView
-        }
-        
-        assertionFailure("Unexpected kind: \(kind)")
-        return UICollectionReusableView()
     }
 }
 
-// MARK: - Print selected habit
-
-extension HabitsViewController {
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 0, indexPath.item < habits.count {
-            let selectedHabit = habits[indexPath.item]
-            print("Selected habit: \(selectedHabit.title)")
+    // MARK: - Print selected habit
+    
+    extension HabitsViewController {
+        override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            if indexPath.section == 0, indexPath.item < habits.count {
+                let selectedHabit = habits[indexPath.item]
+                print("Selected habit: \(selectedHabit.title)")
+            }
         }
     }
-}
+
