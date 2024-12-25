@@ -67,6 +67,18 @@ extension HabitsViewController {
             return header
         }
         
+        if kind == UICollectionView.elementKindSectionFooter {
+            guard let footer = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: CustomElement.collectionFooter.rawValue,
+                for: indexPath
+            ) as? AddHabitFooterCollectionView else {
+                fatalError("Failed to dequeue AddHabitFooterView")
+            }
+            footer.parentFooterViewController = self
+            return footer
+        }
+        
         assertionFailure("Unexpected kind: \(kind)")
         return UICollectionReusableView()
     }

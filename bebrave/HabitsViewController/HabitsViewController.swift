@@ -30,7 +30,6 @@ class HabitsViewController: UICollectionViewController {
 // MARK: - Properties
     
     var headerView: HeaderDaysCollectionView?
-    let addHabitButton = AddNewHabitButton()
     
 // MARK: - UI components
     
@@ -62,9 +61,9 @@ class HabitsViewController: UICollectionViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        setupEmptyStateView()
-        updateEmptyState()
-        setupAddHabitButton()
+//        setupEmptyStateView()
+//        updateEmptyState()
+
         setupNotificationObserver()
         
         setupHistoryButton()
@@ -87,6 +86,11 @@ class HabitsViewController: UICollectionViewController {
             HeaderDaysCollectionView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: CustomElement.collectionHeader.rawValue
+        )
+        collectionView.register(
+            AddHabitFooterCollectionView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: CustomElement.collectionFooter.rawValue
         )
     }
     
@@ -116,18 +120,6 @@ class HabitsViewController: UICollectionViewController {
     
     func updateEmptyState() {
         emptyStateView.isHidden = !habits.isEmpty
-    }
-    
-    // MARK: - Setup Add Habit Button
-    private func setupAddHabitButton() {
-        view.addSubview(addHabitButton)
-        NSLayoutConstraint.activate([
-            addHabitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            addHabitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
-            addHabitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
-            addHabitButton.heightAnchor.constraint(equalToConstant: 60)
-        ])
-        view.bringSubviewToFront(addHabitButton)
     }
     
 // MARK: - Swipe gesture
@@ -189,9 +181,22 @@ class HabitsViewController: UICollectionViewController {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension HabitsViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let width = collectionView.bounds.width - 24 // убираем отступы с обеих сторон
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int
+    ) -> CGSize {
+        let width = collectionView.bounds.width - 24
         return CGSize(width: width, height: 70) 
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForFooterInSection section: Int
+    ) -> CGSize {
+        let width = collectionView.bounds.width - 24
+        return CGSize(width: width, height: 48)
     }
     
     func collectionView(
