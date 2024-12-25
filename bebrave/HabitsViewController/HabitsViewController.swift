@@ -135,55 +135,25 @@ class HabitsViewController: UICollectionViewController {
         ])
     }
     
-// MARK: - Swipe gesture
+// MARK: - Notification observer
+    
     
     private func setupNotificationObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleCellSwipeRight(_:)), name: Notification.Name("CellDidSwipeRight"), object: nil)
     }
     
-#warning("Пока оставлю здесь, но скорее всего сам delete нужно будет вынести в отдельный метод или нет?")
+// MARK: - Swipe gesture
+    
     @objc private func handleCellSwipeRight(_ notification: Notification) {
+
         guard let cell = notification.object as? UICollectionViewCell,
-              let indexPath = collectionView.indexPath(for: cell) else { return }
-        
-        // Проверяем, что это не ячейка DiaryWriteCell
-        guard indexPath.item < habits.count else {
-            print("Attempted to delete DiaryWriteCell or invalid index")
-            return
-        }
-        
-        // Получаем привычку, которую нужно удалить
-        let habitToDelete = habits[indexPath.item]
-        print("Habit to delete: \(habitToDelete.title)")
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            cell.transform = CGAffineTransform(translationX: self.view.frame.width, y: 0)
-            cell.alpha = 0
-        }, completion: { _ in
-            // Удаление данных из массива после завершения анимации
+                  let indexPath = collectionView.indexPath(for: cell) else { return }
             
-            self.habits.remove(at: indexPath.item)
-            print("Habit removed from array. New habits count: \(self.habits.count)")
-            
-            // Удаляем привычку из UserDefaults
-            UserDefaultsManager.shared.deleteHabit(id: habitToDelete.id)
-            
-            print("Habit deleted from UserDefaults. ID: \(habitToDelete.id)")
-            
-            // Удаление ячейки из коллекции
-            self.collectionView.performBatchUpdates({
-                self.collectionView.deleteItems(at: [indexPath])
-            }, completion: { _ in
-                // Сброс трансформации и прозрачности для повторного использования ячеек
-                cell.transform = .identity
-                cell.alpha = 1
-                self.updateEmptyState()
-            })
-        })
+            deleteHabit(at: indexPath)
     }
     
     
-// MARK: - Action
+// MARK: - Tap action
     
     @objc func historyButtonTapped() {
         let history = HistoryViewController()
