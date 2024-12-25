@@ -66,17 +66,28 @@ extension HabitsViewController {
             }
             return header
         }
-        
+#warning("Надо, наверное, сделать контроллер обычным и добавить туда коллекцию, чтобы привычку закрепить за tabbar и сверху прикрепить коллекцию. Иначе пустая секция будет перекрывать кнопку как футер")
         if kind == UICollectionView.elementKindSectionFooter {
             guard let footer = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
                 withReuseIdentifier: CustomElement.collectionFooter.rawValue,
                 for: indexPath
             ) as? AddHabitFooterCollectionView else {
-                fatalError("Failed to dequeue AddHabitFooterView")
+                fatalError("Failed to dequeue AddHabitFooterCollectionView")
             }
             footer.parentFooterViewController = self
             return footer
+        }
+#warning("Не отрисовывается background")
+        if kind == CustomElement.outlineBackground.rawValue {
+            guard let backgroundView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: "OutlineBackgroundView",
+                for: indexPath
+            ) as? OutlineBackgroundView else {
+                fatalError("Failed to dequeue OutlineBackgroundView")
+            }
+            return backgroundView
         }
         
         assertionFailure("Unexpected kind: \(kind)")

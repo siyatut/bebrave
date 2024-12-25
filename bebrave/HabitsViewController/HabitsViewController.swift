@@ -205,17 +205,12 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
         referenceSizeForSupplementaryViewOfKind kind: String,
         at indexPath: IndexPath
     ) -> CGSize {
-        guard let customElement = CustomElement(rawValue: kind) else { return .zero }
+        guard kind == CustomElement.outlineBackground.rawValue else { return .zero }
         
-        switch customElement {
-        case .outlineBackground:
-            let sectionHeight = CGFloat(habits.count) * 60 + CGFloat(habits.count - 1) * 8 // Высота всех ячеек + отступы
-            return CGSize(width: collectionView.bounds.width - 24, height: sectionHeight)
-            
-        default:
-            return .zero
-        }
+        let sectionHeight = CGFloat(habits.count) * 60 + CGFloat(habits.count - 1) * 8
+        return CGSize(width: collectionView.bounds.width - 24, height: sectionHeight)
     }
+
     
     override func collectionView(
         _ collectionView: UICollectionView,
