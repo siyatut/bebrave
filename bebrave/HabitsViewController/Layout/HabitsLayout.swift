@@ -52,20 +52,8 @@ enum HabitsLayout {
         header.extendsBoundary = true
         header.contentInsets = .init(top: 0, leading: 12, bottom: 0, trailing: 12)
         
-        let footer = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: .init(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(48)
-            ),
-            elementKind: CustomElement.collectionFooter.rawValue,
-            alignment: .bottom,
-            absoluteOffset: .init(x: 0, y: 300)
-        )
-        footer.extendsBoundary = true
-        footer.contentInsets = .init(top: 0, leading: 12, bottom: 0, trailing: 12)
-        
         let configuration = UICollectionViewCompositionalLayoutConfiguration()
-        configuration.boundarySupplementaryItems = [header, footer]
+        configuration.boundarySupplementaryItems = [header]
         return UICollectionViewCompositionalLayout(sectionProvider: provider, configuration: configuration)
     }
 }

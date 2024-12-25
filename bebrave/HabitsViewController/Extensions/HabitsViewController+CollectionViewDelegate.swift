@@ -61,16 +61,6 @@ extension HabitsViewController {
             }
             
             switch customElement {
-            case .collectionFooter:
-                let footer = try collectionView.dequeueSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier: CustomElement.collectionFooter.rawValue,
-                    for: indexPath
-                ) as AddNewHabitView
-                footer.backgroundColor = AppStyle.Colors.backgroundColor
-                footer.parentFooterViewController = self
-                return footer
-                
             case .collectionHeader:
                 let header = try collectionView.dequeueSupplementaryView(
                     ofKind: kind,

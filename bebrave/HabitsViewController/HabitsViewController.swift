@@ -7,11 +7,9 @@
 
 #warning("№1: Переписать свайпы. Слева плавное через PanGesture — «Изменить» (открывает новый экран) и «Пропустить» закрашивает полосатым и не считает пропущенным этот день. Справа «Удалить» попробовать настроить через стандартное управление свайпами UISwipeActionsConfiguration. ИИ убеждает, что это всё-таки возможно")
 
-#warning("№2: Отказалась от CompositionalLayout в пользу UICollectionViewFlowLayout, теперь надо всё переписать в соответствии с этим решением. Кнопка добавить привычку не должна быть футером коллекции, чтобы закрепить её за таббаром")
+#warning("№2: Добавить нужную отрисовку в чекбоксе по нажатию + степень закрашивания ячейки + изменение процента и числа 1/2, например")
 
-#warning("№3: Добавить нужную отрисовку в чекбоксе по нажатию + степень закрашивания ячейки + изменение процента и числа 1/2, например")
-
-#warning("№4: Нужно будет ещё добавить условия для пропуска привычки, когда по каким-то причинам пользователь не хочет выполнять её + условия, при котором она будет считаться невыполненной")
+#warning("№3: Нужно будет ещё добавить условия для пропуска привычки, когда по каким-то причинам пользователь не хочет выполнять её + условия, при котором она будет считаться невыполненной")
 
 import UIKit
 
@@ -30,6 +28,13 @@ class HabitsViewController: UICollectionViewController {
 // MARK: - Properties
     
     var headerView: HeaderDaysCollectionView?
+    
+    private lazy var addNewHabitView: AddNewHabitView = {
+        let view = AddNewHabitView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.parentFooterViewController = self
+        return view
+    }()
     
 // MARK: - UI components
     
@@ -58,16 +63,15 @@ class HabitsViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = AppStyle.Colors.backgroundColor
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        
-//        setupEmptyStateView()
-//        updateEmptyState()
+
+        setupEmptyStateView()
+        updateEmptyState()
 
         setupNotificationObserver()
         
         setupHistoryButton()
         setupCalendarLabel()
+        setupAddNewHabitButton()
         
         collectionView.register(
             HabitsCell.self,
@@ -86,11 +90,6 @@ class HabitsViewController: UICollectionViewController {
             HeaderDaysCollectionView.self,
             forSupplementaryViewOfKind: CustomElement.collectionHeader.rawValue,
             withReuseIdentifier: CustomElement.collectionHeader.rawValue
-        )
-        collectionView.register(
-            AddNewHabitView.self,
-            forSupplementaryViewOfKind: CustomElement.collectionFooter.rawValue,
-            withReuseIdentifier: CustomElement.collectionFooter.rawValue
         )
     }
     
@@ -120,6 +119,17 @@ class HabitsViewController: UICollectionViewController {
     
     func updateEmptyState() {
         emptyStateView.isHidden = !habits.isEmpty
+    }
+    
+    private func setupAddNewHabitButton() {
+        view.addSubview(addNewHabitView)
+        
+        NSLayoutConstraint.activate([
+            addNewHabitView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12),
+            addNewHabitView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            addNewHabitView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
+            addNewHabitView.heightAnchor.constraint(equalToConstant: 50)
+        ])
     }
     
 // MARK: - Swipe gesture
