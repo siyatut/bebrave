@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwipeCellKit
 
 class HabitsCell: UICollectionViewCell {
     
