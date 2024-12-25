@@ -66,6 +66,7 @@ class HabitsViewController: UICollectionViewController {
         updateEmptyState()
         setupAddHabitButton()
         setupNotificationObserver()
+        
         setupHistoryButton()
         setupCalendarLabel()
         
@@ -208,6 +209,19 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
             
         default:
             return .zero
+        }
+    }
+    
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        willDisplaySupplementaryView view: UICollectionReusableView,
+        forElementKind elementKind: String,
+        at indexPath: IndexPath
+    ) {
+        if elementKind == UICollectionView.elementKindSectionHeader,
+           let header = view as? HeaderDaysCollectionView {
+            headerView = header
+            updateCalendarLabel()
         }
     }
 }
