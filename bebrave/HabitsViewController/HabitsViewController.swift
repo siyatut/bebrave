@@ -29,13 +29,6 @@ class HabitsViewController: UICollectionViewController {
     
     var headerView: HeaderDaysCollectionView?
     
-    private lazy var addNewHabitView: AddNewHabitView = {
-        let view = AddNewHabitView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.parentFooterViewController = self
-        return view
-    }()
-    
 // MARK: - UI components
     
     let historyButton = UIButton()
@@ -45,6 +38,13 @@ class HabitsViewController: UICollectionViewController {
         let view = EmptyStateView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isHidden = true
+        return view
+    }()
+    
+    private lazy var addNewHabitView: AddNewHabitView = {
+        let view = AddNewHabitView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.parentFooterViewController = self
         return view
     }()
     
@@ -107,6 +107,8 @@ class HabitsViewController: UICollectionViewController {
         }
     }
     
+// MARK: - Setup components
+    
     private func setupEmptyStateView() {
         view.addSubview(emptyStateView)
         NSLayoutConstraint.activate([
@@ -120,6 +122,7 @@ class HabitsViewController: UICollectionViewController {
     func updateEmptyState() {
         emptyStateView.isHidden = !habits.isEmpty
     }
+    
     
     private func setupAddNewHabitButton() {
         view.addSubview(addNewHabitView)
