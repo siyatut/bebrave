@@ -13,18 +13,19 @@
 
 import UIKit
 
-class HabitsViewController: UICollectionViewController {
+class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
-// MARK: - Data Source
+    // MARK: - Data Source
     
     var habits: [Habit] = []
     
-// MARK: - Properties
+    // MARK: - Properties
     
     var headerView: HeaderDaysCollectionView?
     
-// MARK: - UI components
+    // MARK: - UI components
     
+    var collectionView: UICollectionView!
     let historyButton = UIButton()
     let calendarLabel = UILabel()
     
@@ -42,28 +43,38 @@ class HabitsViewController: UICollectionViewController {
         return view
     }()
     
-// MARK: — Init
-    
-    init() {
-        super.init(collectionViewLayout: HabitsLayout.createLayout())
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-// MARK: - Lifecycle view
+    // MARK: - Lifecycle view
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = AppStyle.Colors.backgroundColor
-
+        setupAddNewHabitButton()
+        setupCollectionView()
         setupEmptyStateView()
-        setupNotificationObserver()
-        
         setupHistoryButton()
         setupCalendarLabel()
-        setupAddNewHabitButton()
+        setupNotificationObserver()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        habits = UserDefaultsManager.shared.loadHabits()
+        collectionView.reloadData()
+        updateEmptyState()
+        DispatchQueue.main.async {
+            self.updateCalendarLabel()
+        }
+    }
+    
+    // MARK: - Setup collection view
+    
+    func setupCollectionView() {
+        let layout = HabitsLayout.createLayout()
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        #warning("Появляется сетка после удаления элементов и не работает скроллинг")
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
         collectionView.register(
             HabitsCell.self,
@@ -83,25 +94,17 @@ class HabitsViewController: UICollectionViewController {
             forSupplementaryViewOfKind: CustomElement.collectionHeader.rawValue,
             withReuseIdentifier: CustomElement.collectionHeader.rawValue
         )
+        
+        view.addSubview(collectionView)
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: addNewHabitButton.topAnchor, constant: -12)
+        ])
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        habits = UserDefaultsManager.shared.loadHabits()
-        print("Habits loaded: \(habits.map { $0.title })")
-        
-        collectionView.reloadData()
-        print("CollectionView reloaded. Current habits count: \(habits.count)")
-        
-        updateEmptyState()
-        
-        DispatchQueue.main.async {
-            self.updateCalendarLabel()
-        }
-    }
-    
-// MARK: - Setup components
+    // MARK: - Setup components
     
     private func setupEmptyStateView() {
         view.addSubview(emptyStateView)
@@ -129,25 +132,24 @@ class HabitsViewController: UICollectionViewController {
         ])
     }
     
-// MARK: - Notification observer
-    
+    // MARK: - Notification observer
     
     private func setupNotificationObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleCellSwipeRight(_:)), name: Notification.Name("CellDidSwipeRight"), object: nil)
     }
     
-// MARK: - Swipe gesture
+    // MARK: - Swipe gesture
     
     @objc private func handleCellSwipeRight(_ notification: Notification) {
-
+        
         guard let cell = notification.object as? UICollectionViewCell,
-                  let indexPath = collectionView.indexPath(for: cell) else { return }
-            
-            deleteHabit(at: indexPath)
+              let indexPath = collectionView.indexPath(for: cell) else { return }
+        
+        deleteHabit(at: indexPath)
     }
     
     
-// MARK: - Tap action
+    // MARK: - Tap action
     
     @objc func historyButtonTapped() {
         let history = HistoryViewController()

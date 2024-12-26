@@ -7,19 +7,19 @@
 
 import UIKit
 
-// MARK: - UICollectionViewDelegate
+// MARK: - UICollectionView DataSource
 
 extension HabitsViewController {
     
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return habits.count + 1
     }
     
-    override func collectionView(
+    func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
@@ -50,7 +50,7 @@ extension HabitsViewController {
         }
     }
     
-    override func collectionView(
+    func collectionView(
         _ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
@@ -89,14 +89,14 @@ extension HabitsViewController {
     }
 }
 
-    // MARK: - Print selected habit
-    
-    extension HabitsViewController {
-        override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-            if indexPath.section == 0, indexPath.item < habits.count {
-                let selectedHabit = habits[indexPath.item]
-                print("Selected habit: \(selectedHabit.title)")
-            }
+// MARK: - UICollectionView Delegate
+
+extension HabitsViewController {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 0, indexPath.item < habits.count {
+            let selectedHabit = habits[indexPath.item]
+            print("Selected habit: \(selectedHabit.title)")
         }
     }
+}
 
