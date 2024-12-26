@@ -35,7 +35,7 @@ class HabitsViewController: UICollectionViewController {
         return view
     }()
     
-    private lazy var addNewHabitView: AddNewHabitView = {
+    private lazy var addNewHabitButton: AddNewHabitView = {
         let view = AddNewHabitView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.parentFooterViewController = self
@@ -119,13 +119,13 @@ class HabitsViewController: UICollectionViewController {
     
     
     private func setupAddNewHabitButton() {
-        view.addSubview(addNewHabitView)
+        view.addSubview(addNewHabitButton)
         
         NSLayoutConstraint.activate([
-            addNewHabitView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12),
-            addNewHabitView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
-            addNewHabitView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
-            addNewHabitView.heightAnchor.constraint(equalToConstant: 50)
+            addNewHabitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12),
+            addNewHabitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            addNewHabitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
+            addNewHabitButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
     
