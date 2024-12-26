@@ -23,7 +23,7 @@
 		52923ECF2CF70F080088E54B /* HeaderDaysCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */; };
 		52AB21F22D19AF51006C7DF9 /* UIComponents+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AB21F12D19AF3D006C7DF9 /* UIComponents+Extensions.swift */; };
 		52ACDD442CEF13CD00868730 /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ACDD432CEF13CD00868730 /* AppStyle.swift */; };
-		52C996A52D11EAC7000E7648 /* UICollectionView+ReusableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C996A42D11EAC3000E7648 /* UICollectionView+ReusableViews.swift */; };
+		52C996A52D11EAC7000E7648 /* UICollectionView+Dequeuing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C996A42D11EAC3000E7648 /* UICollectionView+Dequeuing.swift */; };
 		52C996A72D11EAEE000E7648 /* SupplementaryViewError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C996A62D11EAED000E7648 /* SupplementaryViewError.swift */; };
 		52C996A92D11EB25000E7648 /* CustomElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C996A82D11EB23000E7648 /* CustomElement.swift */; };
 		52F1E53A2B7CDC300058F767 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E5392B7CDC300058F767 /* AppDelegate.swift */; };
@@ -75,7 +75,7 @@
 		52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderDaysCollectionView.swift; sourceTree = "<group>"; };
 		52AB21F12D19AF3D006C7DF9 /* UIComponents+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIComponents+Extensions.swift"; sourceTree = "<group>"; };
 		52ACDD432CEF13CD00868730 /* AppStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyle.swift; sourceTree = "<group>"; };
-		52C996A42D11EAC3000E7648 /* UICollectionView+ReusableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+ReusableViews.swift"; sourceTree = "<group>"; };
+		52C996A42D11EAC3000E7648 /* UICollectionView+Dequeuing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Dequeuing.swift"; sourceTree = "<group>"; };
 		52C996A62D11EAED000E7648 /* SupplementaryViewError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementaryViewError.swift; sourceTree = "<group>"; };
 		52C996A82D11EB23000E7648 /* CustomElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomElement.swift; sourceTree = "<group>"; };
 		52F1E5362B7CDC300058F767 /* bebrave.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bebrave.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -204,7 +204,7 @@
 			children = (
 				52697D632D195A95004B9D7E /* HabitsViewController+NewHabitDelegate.swift */,
 				52697D5F2D1957A6004B9D7E /* HabitsViewController+CollectionViewDelegate.swift */,
-				52C996A42D11EAC3000E7648 /* UICollectionView+ReusableViews.swift */,
+				52C996A42D11EAC3000E7648 /* UICollectionView+Dequeuing.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -423,7 +423,7 @@
 				523D41752C05FD3D00689F20 /* AddNewHabitView.swift in Sources */,
 				52C996A92D11EB25000E7648 /* CustomElement.swift in Sources */,
 				524FC7022D075071004C839F /* EmptyStateView.swift in Sources */,
-				52C996A52D11EAC7000E7648 /* UICollectionView+ReusableViews.swift in Sources */,
+				52C996A52D11EAC7000E7648 /* UICollectionView+Dequeuing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
