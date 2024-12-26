@@ -13,12 +13,6 @@
 
 import UIKit
 
-// MARK: - Delegate Protocol
-
-protocol NewHabitDelegate: AnyObject {
-    func didAddNewHabit(_ habit: Habit)
-}
-
 class HabitsViewController: UICollectionViewController {
     
 // MARK: - Data Source

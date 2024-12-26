@@ -7,6 +7,12 @@
 
 import UIKit
 
+// MARK: - Delegate Protocol
+
+protocol NewHabitDelegate: AnyObject {
+    func didAddNewHabit(_ habit: Habit)
+}
+
 // MARK: - NewHabitDelegate
 
 extension HabitsViewController: NewHabitDelegate {
