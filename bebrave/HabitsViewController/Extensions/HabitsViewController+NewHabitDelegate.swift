@@ -29,7 +29,6 @@ extension HabitsViewController: NewHabitDelegate {
         }
         
         let habitToDelete = habits[indexPath.item]
-        print("Habit to delete: \(habitToDelete.title)")
         
         UIView.animate(withDuration: 0.3, animations: {
             if let cell = self.collectionView.cellForItem(at: indexPath) {
@@ -38,11 +37,7 @@ extension HabitsViewController: NewHabitDelegate {
             }
         }, completion: { _ in
             self.habits.remove(at: indexPath.item)
-            print("Habit removed from array. New habits count: \(self.habits.count)")
-            
             UserDefaultsManager.shared.deleteHabit(id: habitToDelete.id)
-            print("Habit deleted from UserDefaults. ID: \(habitToDelete.id)")
-            
             self.collectionView.performBatchUpdates({
                 self.collectionView.deleteItems(at: [indexPath])
             }, completion: { _ in

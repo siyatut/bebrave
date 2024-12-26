@@ -25,18 +25,15 @@ extension HabitsViewController {
     ) -> UICollectionViewCell {
         do {
             if indexPath.item < habits.count {
-                print("Returning habit cell for index \(indexPath.item)")
                 let habitCell: HabitsCell = try collectionView.dequeueCell(
                     withReuseIdentifier: CustomElement.habitsCell.rawValue,
                     for: indexPath
                 )
                 let habit = habits[indexPath.item]
-                print("Configuring habit cell with habit: \(habit.title)")
                 habitCell.configure(with: habit)
                 return habitCell
             }
             else if indexPath.item == habits.count {
-                print("Returning diary write cell for indexPath: \(indexPath)")
                 let diaryCell: DiaryWriteCell = try collectionView.dequeueCell(
                     withReuseIdentifier: CustomElement.writeDiaryCell.rawValue,
                     for: indexPath
