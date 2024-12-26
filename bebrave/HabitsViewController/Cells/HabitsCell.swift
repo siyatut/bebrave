@@ -19,14 +19,14 @@ class HabitsCell: UICollectionViewCell {
         return imageView
     }()
     
-// MARK: - UI Components
+    // MARK: - UI Components
     
     private lazy var habitsName = createLabel(textColor: .label, font: AppStyle.Fonts.regularFont(size: 16))
     private lazy var percentDone = createLabel(textColor: .secondaryLabel, font: AppStyle.Fonts.regularFont(size: 16))
     private lazy var habitsCount = createLabel(textColor: .secondaryLabel, font: AppStyle.Fonts.regularFont(size: 16))
     private lazy var starDivider = createImageView(imageName: "StarDivider", tintColor: AppStyle.Colors.secondaryColor)
     private lazy var checkbox = createImageView(imageName: "UncheckedCheckbox", tintColor: AppStyle.Colors.borderColor)
-
+    
     private let horizontalStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
@@ -38,7 +38,7 @@ class HabitsCell: UICollectionViewCell {
     }()
     
     
-// MARK: - Init
+    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -52,7 +52,7 @@ class HabitsCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-// MARK: - Gestupe Methods
+    // MARK: - Gestupe Methods
     
     private func setupTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
@@ -102,7 +102,7 @@ class HabitsCell: UICollectionViewCell {
         print("Cell tapped!")
     }
     
-// MARK: - Set up components
+    // MARK: - Set up components
     
     private func setupDeleteIcon() {
         addSubview(deleteIcon)
@@ -117,14 +117,14 @@ class HabitsCell: UICollectionViewCell {
     private func addSubviewsToStackView(_ stackView: UIStackView, views: [UIView]) {
         views.forEach { stackView.addArrangedSubview($0) }
     }
-
+    
     private func setupComponents() {
         addSubviewsToStackView(horizontalStackView, views: [habitsName, starDivider, habitsCount])
-
+        
         contentView.addSubview(horizontalStackView)
         contentView.addSubview(percentDone)
         contentView.addSubview(checkbox)
-    
+        
         NSLayoutConstraint.activate([
             horizontalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             horizontalStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
@@ -140,7 +140,7 @@ class HabitsCell: UICollectionViewCell {
         ])
     }
     
-// MARK: - Configure method
+    // MARK: - Configure method
     
     func configure(with habit: Habit) {
         habitsName.text = habit.title

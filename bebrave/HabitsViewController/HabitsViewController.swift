@@ -72,7 +72,7 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         let layout = HabitsLayout.createLayout()
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        #warning("Появляется сетка после удаления элементов и не работает скроллинг")
+#warning("Появляется сетка после удаления элементов и не работает скроллинг")
         collectionView.delegate = self
         collectionView.dataSource = self
         

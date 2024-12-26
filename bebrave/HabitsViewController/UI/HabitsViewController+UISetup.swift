@@ -17,14 +17,14 @@ extension HabitsViewController {
         configuration.image = UIImage(named: "History")
         configuration.imagePadding = 4
         configuration.imagePlacement = .leading
-
+        
         let titleAttributes = AttributeContainer([
             .font: AppStyle.Fonts.regularFont(size: 16)
-            ])
+        ])
         configuration.attributedTitle = AttributedString("История", attributes: titleAttributes)
         historyButton.configuration = configuration
         historyButton.addTarget(self, action: #selector(historyButtonTapped), for: .touchUpInside)
-
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: historyButton)
     }
     

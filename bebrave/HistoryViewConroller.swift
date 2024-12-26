@@ -9,7 +9,7 @@ import UIKit
 
 class HistoryViewController: UIViewController {
     
-// MARK: - Lifecycle view
+    // MARK: - Lifecycle view
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,7 +18,7 @@ class HistoryViewController: UIViewController {
         navigationController?.navigationBar.tintColor = AppStyle.Colors.secondaryColor
     }
     
-// MARK: - Action
+    // MARK: - Action
     
     @objc private func dismiss() {
         self.navigationController?.popViewController(animated: true)

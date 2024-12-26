@@ -9,11 +9,11 @@ import UIKit
 
 class NewHabitViewController: UIViewController {
     
-// MARK: - Delegate
+    // MARK: - Delegate
     
     weak var delegate: NewHabitDelegate?
     
-// MARK: - UI components top down
+    // MARK: - UI components top down
     
     private let emojiImageView: UIImageView = {
         let view = UIImageView()
@@ -37,7 +37,7 @@ class NewHabitViewController: UIViewController {
     private lazy var monthsTextField = UITextField.styled(placeholder: "1", alignment: .center)
     private lazy var monthsLabel = UILabel.styled(text: "месяц")
     
-// MARK: - Helper methods for text field
+    // MARK: - Helper methods for text field
     
     private func addPaddingToTextField(_ textField: UITextField, paddingWidth: CGFloat) {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: paddingWidth, height: textField.frame.height))
@@ -49,19 +49,19 @@ class NewHabitViewController: UIViewController {
         [habitTextField, timesPerDayTextField, monthsTextField].forEach { $0.delegate = self }
     }
     
-// MARK: - Error labels
+    // MARK: - Error labels
     
     private lazy var habitErrorLabel = UILabel.styled(text: "", fontSize: 12, color: AppStyle.Colors.errorColor, numberOfLines: 0, isHidden: true)
     private lazy var timesPerDayErrorLabel = UILabel.styled(text: "", fontSize: 12, color: AppStyle.Colors.errorColor, numberOfLines: 0, isHidden: true)
     private lazy var daysOfWeekErrorLabel = UILabel.styled(text: "", fontSize: 12, color: AppStyle.Colors.errorColor, numberOfLines: 0, isHidden: true)
     private lazy var monthsErrorLabel = UILabel.styled(text: "", fontSize: 12, color: AppStyle.Colors.errorColor, numberOfLines: 0, isHidden: true)
     
-// MARK: - Error label's height
+    // MARK: - Error label's height
     
     private var habitErrorLabelHeightConstraint: NSLayoutConstraint!
     private var timesPerDayErrorLabelHeightConstraint: NSLayoutConstraint!
     private var daysOfWeekErrorLabelHeightConstraint: NSLayoutConstraint!
-   
+    
     private func setupErrorLabelConstraints() {
         habitErrorLabelHeightConstraint = habitErrorLabel.heightAnchor.constraint(equalToConstant: 0)
         timesPerDayErrorLabelHeightConstraint = timesPerDayErrorLabel.heightAnchor.constraint(equalToConstant: 0)
@@ -74,7 +74,7 @@ class NewHabitViewController: UIViewController {
         ])
     }
     
-// MARK: - Button
+    // MARK: - Button
     
     private lazy var addNewHabitButton: UIButton = {
         let button = UIButton(type: .system)
@@ -100,7 +100,7 @@ class NewHabitViewController: UIViewController {
         return button
     }()
     
-// MARK: - Button state update
+    // MARK: - Button state update
     
     private var hasAttemptedSave = false
     
@@ -109,7 +109,7 @@ class NewHabitViewController: UIViewController {
         addNewHabitButton.isEnabled = isValid
     }
     
-// MARK: - Lifecycle
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,7 +121,7 @@ class NewHabitViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
     }
     
-// MARK: - Set up UI components
+    // MARK: - Set up UI components
     
     private func addSubviews(_ views: [UIView]) {
         views.forEach { view.addSubview($0) }
@@ -142,10 +142,10 @@ class NewHabitViewController: UIViewController {
         
         let timesPerDayStack = createStackView(arrangedSubviews: [timesPerDayTextField, timesPerDayLabel])
         let monthsStack = createStackView(arrangedSubviews: [monthsTextField, monthsLabel])
-    
+        
         let labels = [promiseLabel, habitErrorLabel, timesPerDayErrorLabel, daysOfWeekErrorLabel, monthsErrorLabel]
         let stacks = [timesPerDayStack, daysOfWeekStack, monthsStack]
-
+        
         addSubviews(labels + stacks)
         addSubviews([emojiImageView, addNewHabitButton, habitTextField])
         
@@ -208,7 +208,7 @@ class NewHabitViewController: UIViewController {
         ])
     }
     
-// MARK: - Set up daysOfWeekStack
+    // MARK: - Set up daysOfWeekStack
     
     private func setupDaysOfWeekStack() {
         daysOfWeekStack.axis = .horizontal
@@ -262,7 +262,7 @@ class NewHabitViewController: UIViewController {
         }
     }
     
-// MARK: - Interact with button and checkbox
+    // MARK: - Interact with button and checkbox
     
     @objc private func checkboxTapped(_ sender: UITapGestureRecognizer) {
         guard let index = sender.view?.tag else { return }
@@ -308,7 +308,7 @@ class NewHabitViewController: UIViewController {
         view.endEditing(true)
     }
     
-// MARK: - Animate hiding labels
+    // MARK: - Animate hiding labels
     
     private func animateLayoutChanges(duration: TimeInterval = 0.5) {
         UIView.animate(withDuration: duration, delay: 0, options: .curveEaseInOut) {
@@ -316,7 +316,7 @@ class NewHabitViewController: UIViewController {
         }
     }
     
-// MARK: - Reset error states
+    // MARK: - Reset error states
     
     func validateFields(showErrors: Bool = false) -> Bool {
         var isValid = true
@@ -401,8 +401,8 @@ class NewHabitViewController: UIViewController {
             view.layer.borderWidth = AppStyle.Sizes.borderWidth
         }
     }
-
-// MARK: - Change's method for the words "day" and "month"
+    
+    // MARK: - Change's method for the words "day" and "month"
     
     private func dayText(for value: Int) -> String {
         switch value {

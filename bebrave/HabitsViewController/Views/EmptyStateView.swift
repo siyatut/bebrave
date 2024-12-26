@@ -9,7 +9,7 @@ import UIKit
 
 class EmptyStateView: UICollectionReusableView {
     
-// MARK: - UI components
+    // MARK: - UI components
     
     private let label: UILabel = {
         let label = UILabel()
@@ -21,8 +21,8 @@ class EmptyStateView: UICollectionReusableView {
         label.text = "Пора что-нибудь сюда добавить"
         return label
     }()
-
-// MARK: - Init
+    
+    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -8,8 +8,8 @@
 import UIKit
 
 class OutlineBackgroundView: UICollectionReusableView {
-
-// MARK: - Init
+    
+    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,15 +20,15 @@ class OutlineBackgroundView: UICollectionReusableView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-// MARK: - Layout
+    
+    // MARK: - Layout
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        setNeedsDisplay() 
+        setNeedsDisplay()
     }
     
-// MARK: - Drawing
+    // MARK: - Drawing
     
     override func draw(_ rect: CGRect) {
         let path = UIBezierPath(roundedRect: rect, cornerRadius: AppStyle.Sizes.cornerRadius)

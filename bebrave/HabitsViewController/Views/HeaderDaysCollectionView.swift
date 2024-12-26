@@ -9,7 +9,7 @@ import UIKit
 
 class HeaderDaysCollectionView: UICollectionReusableView {
     
-// MARK: - UI components
+    // MARK: - UI components
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -24,7 +24,7 @@ class HeaderDaysCollectionView: UICollectionReusableView {
     
     private var daysData: [(date: Date, emoji: String)] = []
     
-// MARK: - Init
+    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,13 +37,13 @@ class HeaderDaysCollectionView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-// MARK: - Layout methods
+    // MARK: - Layout methods
     
     override func layoutSubviews() {
         super.layoutSubviews()
     }
     
-// MARK: - Setup methods
+    // MARK: - Setup methods
     
     private func setupCollectionView() {
         collectionView.delegate = self
@@ -62,7 +62,7 @@ class HeaderDaysCollectionView: UICollectionReusableView {
         ])
     }
     
-// MARK: - Data methods
+    // MARK: - Data methods
     
     private func generateDaysForCurrentMonth() {
         var calendar = Calendar.current
@@ -118,7 +118,7 @@ extension HeaderDaysCollectionView: UICollectionViewDelegateFlowLayout {
 
 private class DayCell: UICollectionViewCell {
     
-// MARK: - UI components of cell
+    // MARK: - UI components of cell
     
     private let dayLabel: UILabel = {
         let label = UILabel()
@@ -142,7 +142,7 @@ private class DayCell: UICollectionViewCell {
         return formatter
     }()
     
-// MARK: - Init
+    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -154,7 +154,7 @@ private class DayCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-// MARK: - Setup methods
+    // MARK: - Setup methods
     
     private func setupLayout() {
         contentView.addSubview(dayLabel)
@@ -184,7 +184,7 @@ private class DayCell: UICollectionViewCell {
         let isFutureDay = date > calendar.startOfDay(for: Date())
         
         dayLabel.text = dateFormatter.string(from: date)
-            
+        
         
         if isCurrentDay {
             contentView.backgroundColor = AppStyle.Colors.primaryColor

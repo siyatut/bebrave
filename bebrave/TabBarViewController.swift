@@ -9,7 +9,7 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
     
-// MARK: - Lifecycle 
+    // MARK: - Lifecycle 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,9 +21,9 @@ class TabBarViewController: UITabBarController {
         self.tabBar.backgroundColor = AppStyle.Colors.backgroundColor
         self.tabBar.tintColor = AppStyle.Colors.primaryColor
     }
-        
     
-// MARK: — Setup tab bar
+    
+    // MARK: — Setup tab bar
     
     private func setupTabs() {
         

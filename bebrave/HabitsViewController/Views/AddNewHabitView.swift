@@ -9,15 +9,15 @@ import UIKit
 
 class AddNewHabitView: UICollectionReusableView {
     
-// MARK: - Delegate Protocol
+    // MARK: - Delegate Protocol
     
-   weak var delegate: NewHabitDelegate?
+    weak var delegate: NewHabitDelegate?
     
-// MARK: - Parent view controller
-
+    // MARK: - Parent view controller
+    
     weak var parentFooterViewController: UIViewController?
     
-// MARK: - UI Components
+    // MARK: - UI Components
     
     lazy var addNewHabitButton: UIButton = {
         var config = UIButton.Configuration.plain()
@@ -45,7 +45,7 @@ class AddNewHabitView: UICollectionReusableView {
         return button
     }()
     
-// MARK: - Init
+    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -56,7 +56,7 @@ class AddNewHabitView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-// MARK: - Setup button
+    // MARK: - Setup button
     
     private func setupButton() {
         addSubview(addNewHabitButton)
@@ -69,7 +69,7 @@ class AddNewHabitView: UICollectionReusableView {
     }
     
     
-// MARK: - Action
+    // MARK: - Action
     
     @objc private func addNewHabitButtonTapped() {
         guard let parentVC = parentFooterViewController as? NewHabitDelegate else {
