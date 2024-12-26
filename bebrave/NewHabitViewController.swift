@@ -275,6 +275,7 @@ class NewHabitViewController: UIViewController {
     }
     
     @objc private func addNewHabitButtonTapped() {
+#warning("Кнопка становится неактивной, но ошибки не отображаются.")
         hasAttemptedSave = true
         let isValid = validateFields(showErrors: true)
         
