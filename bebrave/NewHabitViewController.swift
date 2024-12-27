@@ -300,12 +300,19 @@ class NewHabitViewController: UIViewController {
         UserDefaultsManager.shared.addHabit(newHabit)
         delegate?.didAddNewHabit(newHabit)
         print("Привычка сохранена: \(newHabit.title)")
-        updateButtonState()
         dismiss(animated: true, completion: nil)
     }
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
+        hasAttemptedSave = true
+        let isValid = validateFields(showErrors: true)
+        
+        guard isValid else {
+            print("После нажатия на экран есть ошибки. Кнопка недоступна")
+            updateButtonState()
+            return
+        }
     }
     
     // MARK: - Animate hiding labels
@@ -319,12 +326,14 @@ class NewHabitViewController: UIViewController {
     // MARK: - Reset error states
     
     func validateFields(showErrors: Bool = false) -> Bool {
+        print("Валидация началась")
         var isValid = true
         resetErrorStates(animated: true)
         
         if habitTextField.text?.isEmpty ?? true {
             isValid = false
             if showErrors {
+                print("Ошибка: Поле habitTextField пустое")
                 habitErrorLabel.text = "А что именно?"
                 habitErrorLabel.isHidden = false
                 habitTextField.layer.borderColor = AppStyle.Colors.errorColor.cgColor
