@@ -69,7 +69,7 @@ class HabitsCell: UICollectionViewCell {
     
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: self)
-#warning("Периодически рисунок trash при создании привычки заслоняет ячейку. Почему так происходит?")
+#warning("Периодически рисунок trash при создании привычки заслоняет ячейку. Почему так происходит? Возможно, сам принцип создания свайпа не совсем по канону, поэтому проблема и возникает. Перечитать, как добавлять удаление свайпом в коллекции")
         switch gesture.state {
         case .began:
             // Сохраняем начальную позицию ячейки
