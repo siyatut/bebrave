@@ -62,6 +62,8 @@ class HabitsCell: UICollectionViewCell {
     
     private func setupPanGesture() {
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        panGesture.cancelsTouchesInView = false
+        panGesture.delegate = self
         addGestureRecognizer(panGesture)
     }
     
@@ -168,5 +170,11 @@ extension HabitsCell {
         view.tintColor = tintColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }
+}
+
+extension HabitsCell: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return gestureRecognizer == panGesture
     }
 }

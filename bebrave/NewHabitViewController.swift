@@ -275,7 +275,6 @@ class NewHabitViewController: UIViewController {
     }
     
     @objc private func addNewHabitButtonTapped() {
-#warning("Кнопка становится неактивной, но ошибки не отображаются.")
         hasAttemptedSave = true
         let isValid = validateFields(showErrors: true)
         
@@ -326,14 +325,12 @@ class NewHabitViewController: UIViewController {
     // MARK: - Reset error states
     
     func validateFields(showErrors: Bool = false) -> Bool {
-        print("Валидация началась")
         var isValid = true
         resetErrorStates(animated: true)
         
         if habitTextField.text?.isEmpty ?? true {
             isValid = false
             if showErrors {
-                print("Ошибка: Поле habitTextField пустое")
                 habitErrorLabel.text = "А что именно?"
                 habitErrorLabel.isHidden = false
                 habitTextField.layer.borderColor = AppStyle.Colors.errorColor.cgColor
