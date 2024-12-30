@@ -17,7 +17,7 @@ class NewHabitViewController: UIViewController {
     
     private let emojiImageView: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "EmojiNewHabit")
+        view.image = .emojiNewHabit
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -82,7 +82,7 @@ class NewHabitViewController: UIViewController {
         var config = UIButton.Configuration.filled()
         config.title = "Добавить привычку"
         config.baseForegroundColor = .white
-        config.image = UIImage(named: "Plus")
+        config.image = .plus
         config.imagePadding = 4
         config.cornerStyle = .capsule
         button.configuration = config

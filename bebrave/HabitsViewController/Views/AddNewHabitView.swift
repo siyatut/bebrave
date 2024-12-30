@@ -23,7 +23,7 @@ class AddNewHabitView: UICollectionReusableView {
         var config = UIButton.Configuration.plain()
         config.baseForegroundColor = AppStyle.Colors.secondaryColor
         config.title = "Добавить привычку"
-        config.image = UIImage(named: "Plus")
+        config.image = .plus
         config.imagePadding = 4
         config.imagePlacement = .leading
         config.titleAlignment = .center

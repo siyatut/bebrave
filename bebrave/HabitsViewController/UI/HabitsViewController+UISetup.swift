@@ -14,7 +14,7 @@ extension HabitsViewController {
     func setupHistoryButton() {
         var configuration = UIButton.Configuration.plain()
         configuration.baseForegroundColor = AppStyle.Colors.secondaryColor
-        configuration.image = UIImage(named: "History")
+        configuration.image = .history
         configuration.imagePadding = 4
         configuration.imagePlacement = .leading
         
