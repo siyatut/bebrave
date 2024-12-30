@@ -52,7 +52,12 @@ class HabitsCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Gestupe Methods
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        deleteIcon.alpha = 0
+    }
+    
+    // MARK: - Gesture methods
     
     private func setupTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
@@ -69,7 +74,6 @@ class HabitsCell: UICollectionViewCell {
     
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: self)
-#warning("Периодически рисунок trash при создании привычки заслоняет ячейку. Почему так происходит? Возможно, сам принцип создания свайпа не совсем по канону, поэтому проблема и возникает. Перечитать, как добавлять удаление свайпом в коллекции. UPD: перечитала, не получается добавить свайп через UISwipeActionsConfiguration")
         switch gesture.state {
         case .began:
             // Сохраняем начальную позицию ячейки
