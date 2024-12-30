@@ -29,12 +29,12 @@ extension HabitsViewController {
         formatter.dateFormat = "LLLL"
         
         let firstMonth = formatter.string(from: firstDate).capitalized
-        let lastMonth = formatter.string(from: lastDate).capitalized
+        let lastMonth = formatter.string(from: lastDate).lowercased()
         
         if calendar.isDate(firstDate, equalTo: lastDate, toGranularity: .month) {
             calendarLabel.text = firstMonth
         } else {
-            calendarLabel.text = "\(firstMonth) - \(lastMonth)"
+            calendarLabel.text = "\(firstMonth)–\(lastMonth)"
         }
     }
 }
