@@ -58,18 +58,6 @@ class NewHabitViewController: UIViewController {
     var timesPerDayErrorLabelHeightConstraint: NSLayoutConstraint!
     var daysOfWeekErrorLabelHeightConstraint: NSLayoutConstraint!
     
-    func setupErrorLabelConstraints() {
-        habitErrorLabelHeightConstraint = habitErrorLabel.heightAnchor.constraint(equalToConstant: 0)
-        timesPerDayErrorLabelHeightConstraint = timesPerDayErrorLabel.heightAnchor.constraint(equalToConstant: 0)
-        daysOfWeekErrorLabelHeightConstraint = daysOfWeekErrorLabel.heightAnchor.constraint(equalToConstant: 0)
-        
-        NSLayoutConstraint.activate([
-            habitErrorLabelHeightConstraint,
-            timesPerDayErrorLabelHeightConstraint,
-            daysOfWeekErrorLabelHeightConstraint,
-        ])
-    }
-    
     // MARK: - Button
     
     lazy var addNewHabitButton: UIButton = {
