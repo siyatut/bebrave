@@ -19,6 +19,7 @@
 		5252109B2BFC7F04009DB3F7 /* DiaryWriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5252109A2BFC7F04009DB3F7 /* DiaryWriteCell.swift */; };
 		52652B8A2D2405DF00608550 /* NewHabitView+UISetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52652B892D2405DE00608550 /* NewHabitView+UISetup.swift */; };
 		52652B8C2D240BD200608550 /* NewHabitView+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52652B8B2D240BD000608550 /* NewHabitView+Validation.swift */; };
+		52652B8E2D240D2C00608550 /* NewHabitView+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52652B8D2D240D2A00608550 /* NewHabitView+Actions.swift */; };
 		52697D5E2D195361004B9D7E /* HabitsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D5D2D19535F004B9D7E /* HabitsLayout.swift */; };
 		52697D602D1957A9004B9D7E /* HabitsViewController+DataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D5F2D1957A6004B9D7E /* HabitsViewController+DataSourceDelegate.swift */; };
 		52697D642D195A97004B9D7E /* HabitsViewController+NewHabitDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D632D195A95004B9D7E /* HabitsViewController+NewHabitDelegate.swift */; };
@@ -73,6 +74,7 @@
 		5252109A2BFC7F04009DB3F7 /* DiaryWriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryWriteCell.swift; sourceTree = "<group>"; };
 		52652B892D2405DE00608550 /* NewHabitView+UISetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewHabitView+UISetup.swift"; sourceTree = "<group>"; };
 		52652B8B2D240BD000608550 /* NewHabitView+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewHabitView+Validation.swift"; sourceTree = "<group>"; };
+		52652B8D2D240D2A00608550 /* NewHabitView+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewHabitView+Actions.swift"; sourceTree = "<group>"; };
 		52697D5D2D19535F004B9D7E /* HabitsLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsLayout.swift; sourceTree = "<group>"; };
 		52697D5F2D1957A6004B9D7E /* HabitsViewController+DataSourceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+DataSourceDelegate.swift"; sourceTree = "<group>"; };
 		52697D632D195A95004B9D7E /* HabitsViewController+NewHabitDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+NewHabitDelegate.swift"; sourceTree = "<group>"; };
@@ -137,8 +139,9 @@
 		52652B882D24059700608550 /* NewHabitViewController */ = {
 			isa = PBXGroup;
 			children = (
-				52652B8B2D240BD000608550 /* NewHabitView+Validation.swift */,
+				52652B8D2D240D2A00608550 /* NewHabitView+Actions.swift */,
 				523AF3B82CBFBDBD00EEFA8A /* NewHabitViewController.swift */,
+				52652B8B2D240BD000608550 /* NewHabitView+Validation.swift */,
 				52652B892D2405DE00608550 /* NewHabitView+UISetup.swift */,
 			);
 			path = NewHabitViewController;
@@ -430,6 +433,7 @@
 				52F1E53C2B7CDC300058F767 /* SceneDelegate.swift in Sources */,
 				523AF3B92CBFBDE900EEFA8A /* NewHabitViewController.swift in Sources */,
 				52697D5E2D195361004B9D7E /* HabitsLayout.swift in Sources */,
+				52652B8E2D240D2C00608550 /* NewHabitView+Actions.swift in Sources */,
 				52923ECF2CF70F080088E54B /* HeaderDaysCollectionView.swift in Sources */,
 				52FBCF3A2CFF1677000206BC /* UserDefaultsManager.swift in Sources */,
 				52F1E56A2B7CE6330058F767 /* HabitsViewController.swift in Sources */,
