@@ -121,14 +121,14 @@ class NewHabitViewController: UIViewController {
 
     // MARK: - Change's method for the words "day" and "month"
     
-    private func dayText(for value: Int) -> String {
+    func dayText(for value: Int) -> String {
         switch value {
         case 2...4: return "раза в день"
         default: return "раз в день"
         }
     }
     
-    private func monthText(for value: Int) -> String {
+    func monthText(for value: Int) -> String {
         guard (1...125).contains(value) else { return "месяцев" }
         
         let lastDigit = value % 10
@@ -142,40 +142,5 @@ class NewHabitViewController: UIViewController {
         default:
             return "месяцев"
         }
-    }
-}
-
-// MARK: - UITextFieldDelegate
-
-extension NewHabitViewController: UITextFieldDelegate {
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-        if textField == timesPerDayTextField {
-            if let text = textField.text, let value = Int(text), (1...10).contains(value) {
-                timesPerDayLabel.text = dayText(for: value)
-            } else {
-                timesPerDayLabel.text = "раз в день"
-            }
-        }
-        
-        if textField == monthsTextField {
-            if let text = textField.text, let value = Int(text), (1...125).contains(value) {
-                monthsLabel.text = monthText(for: value)
-            } else {
-                monthsLabel.text = "месяцев"
-            }
-        }
-    }
-    
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        if textField == habitTextField {
-            if let currentText = textField.text {
-                let formattedText = currentText
-                    .trimmingCharacters(in: .whitespaces)
-                    .replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
-                textField.text = formattedText
-            }
-        }
-        updateButtonState()
-        return true
     }
 }
