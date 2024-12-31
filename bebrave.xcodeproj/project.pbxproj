@@ -21,6 +21,7 @@
 		52652B8C2D240BD200608550 /* NewHabitView+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52652B8B2D240BD000608550 /* NewHabitView+Validation.swift */; };
 		52652B8E2D240D2C00608550 /* NewHabitView+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52652B8D2D240D2A00608550 /* NewHabitView+Actions.swift */; };
 		52652B922D240EE900608550 /* NewHabitView+TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52652B912D240EE800608550 /* NewHabitView+TextFieldDelegate.swift */; };
+		52652B942D240FC900608550 /* NewHabitView+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52652B932D240FC700608550 /* NewHabitView+Formatting.swift */; };
 		52697D5E2D195361004B9D7E /* HabitsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D5D2D19535F004B9D7E /* HabitsLayout.swift */; };
 		52697D602D1957A9004B9D7E /* HabitsViewController+DataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D5F2D1957A6004B9D7E /* HabitsViewController+DataSourceDelegate.swift */; };
 		52697D642D195A97004B9D7E /* HabitsViewController+NewHabitDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D632D195A95004B9D7E /* HabitsViewController+NewHabitDelegate.swift */; };
@@ -77,6 +78,7 @@
 		52652B8B2D240BD000608550 /* NewHabitView+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewHabitView+Validation.swift"; sourceTree = "<group>"; };
 		52652B8D2D240D2A00608550 /* NewHabitView+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewHabitView+Actions.swift"; sourceTree = "<group>"; };
 		52652B912D240EE800608550 /* NewHabitView+TextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewHabitView+TextFieldDelegate.swift"; sourceTree = "<group>"; };
+		52652B932D240FC700608550 /* NewHabitView+Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewHabitView+Formatting.swift"; sourceTree = "<group>"; };
 		52697D5D2D19535F004B9D7E /* HabitsLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsLayout.swift; sourceTree = "<group>"; };
 		52697D5F2D1957A6004B9D7E /* HabitsViewController+DataSourceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+DataSourceDelegate.swift"; sourceTree = "<group>"; };
 		52697D632D195A95004B9D7E /* HabitsViewController+NewHabitDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+NewHabitDelegate.swift"; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				523AF3B82CBFBDBD00EEFA8A /* NewHabitViewController.swift */,
+				52652B932D240FC700608550 /* NewHabitView+Formatting.swift */,
 				52652B912D240EE800608550 /* NewHabitView+TextFieldDelegate.swift */,
 				52652B8D2D240D2A00608550 /* NewHabitView+Actions.swift */,
 				52652B8B2D240BD000608550 /* NewHabitView+Validation.swift */,
@@ -427,6 +430,7 @@
 				52ACDD442CEF13CD00868730 /* AppStyle.swift in Sources */,
 				5246C9762BC6C39D00BA7912 /* HabitsCell.swift in Sources */,
 				52F1E56C2B7CE6B10058F767 /* DiaryViewController.swift in Sources */,
+				52652B942D240FC900608550 /* NewHabitView+Formatting.swift in Sources */,
 				5219E2B62D1237B300F41D97 /* HabitsViewController+UISetup.swift in Sources */,
 				5252109B2BFC7F04009DB3F7 /* DiaryWriteCell.swift in Sources */,
 				5219E2B02D12324500F41D97 /* CellError.swift in Sources */,
