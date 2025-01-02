@@ -15,7 +15,9 @@ class HabitsCell: UICollectionViewCell {
     // МARK: - UI components for swipe
     
     private lazy var deleteHabitIcon = createImageView(imageName: "DeleteHabit", tintColor: .red, alpha: 0)
-    private lazy var changeHabitIcon = createImageView(imageName: "ChangeHabit", tintColor: .mySecondary, alpha: 0)
+    private lazy var changeHabitIcon = createImageView(imageName: "ChangeHabit", tintColor: AppStyle.Colors.secondaryColor, alpha: 0)
+    private lazy var deleteHabitLabel = createLabel(textColor: .red, font: AppStyle.Fonts.regularFont(size: 10), alpha: 0)
+    private lazy var changeHabitLabel = createLabel(textColor: AppStyle.Colors.secondaryColor, font: AppStyle.Fonts.regularFont(size: 10), alpha: 0)
     
     // MARK: - UI components
     
@@ -54,6 +56,8 @@ class HabitsCell: UICollectionViewCell {
         super.prepareForReuse()
         deleteHabitIcon.alpha = 0
         changeHabitIcon.alpha = 0
+        deleteHabitLabel.alpha = 0
+        changeHabitIcon.alpha = 0
     }
     
     // MARK: - Gesture methods
@@ -82,10 +86,14 @@ class HabitsCell: UICollectionViewCell {
             
             if translation.x < 0 {
                 deleteHabitIcon.alpha = min(1, abs(translation.x) / 100)
+                deleteHabitLabel.alpha = 1
                 changeHabitIcon.alpha = 0
+                changeHabitLabel.alpha = 0
             } else {
                 changeHabitIcon.alpha = min(1, translation.x / 100)
+                changeHabitLabel.alpha = 1
                 deleteHabitIcon.alpha = 0
+                deleteHabitLabel.alpha = 0
             }
             
         case .ended:
@@ -112,6 +120,8 @@ class HabitsCell: UICollectionViewCell {
             self.center = self.originalCenter
             self.deleteHabitIcon.alpha = 0
             self.changeHabitIcon.alpha = 0
+            self.deleteHabitLabel.alpha = 0
+            self.changeHabitLabel.alpha = 0
         }
     }
     
@@ -124,19 +134,28 @@ class HabitsCell: UICollectionViewCell {
     private func setupIcons() {
         addSubview(deleteHabitIcon)
         addSubview(changeHabitIcon)
+        addSubview(deleteHabitLabel)
+        addSubview(changeHabitLabel)
+        
+        deleteHabitLabel.text = "Удалить"
+        changeHabitLabel.text = "Изменить"
         
         NSLayoutConstraint.activate([
             deleteHabitIcon.centerYAnchor.constraint(equalTo: centerYAnchor),
             changeHabitIcon.centerYAnchor.constraint(equalTo: centerYAnchor),
         
-            deleteHabitIcon.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 15),
-            changeHabitIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -15),
+            deleteHabitIcon.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 30),
+            changeHabitIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -30),
+            deleteHabitLabel.centerXAnchor.constraint(equalTo: deleteHabitIcon.centerXAnchor),
+            changeHabitLabel.centerXAnchor.constraint(equalTo: changeHabitIcon.centerXAnchor),
             
             deleteHabitIcon.heightAnchor.constraint(equalToConstant: 20),
             deleteHabitIcon.widthAnchor.constraint(equalToConstant: 20),
+            deleteHabitLabel.topAnchor.constraint(equalTo: deleteHabitIcon.bottomAnchor, constant: 2),
             
             changeHabitIcon.heightAnchor.constraint(equalToConstant: 22),
             changeHabitIcon.widthAnchor.constraint(equalToConstant: 22),
+            changeHabitLabel.topAnchor.constraint(equalTo: changeHabitIcon.bottomAnchor, constant: 2)
         ])
     }
     
@@ -182,10 +201,11 @@ class HabitsCell: UICollectionViewCell {
 
 extension HabitsCell {
     
-    private func createLabel(textColor: UIColor, font: UIFont) -> UILabel {
+    private func createLabel(textColor: UIColor, font: UIFont, alpha: CGFloat = 1.0) -> UILabel {
         let label = UILabel()
         label.textColor = textColor
         label.font = font
+        label.alpha = alpha
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }
