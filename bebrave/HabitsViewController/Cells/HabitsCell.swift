@@ -212,7 +212,9 @@ class HabitsCell: UICollectionViewCell {
             percentDone.trailingAnchor.constraint(lessThanOrEqualTo: checkbox.leadingAnchor, constant: 106),
             
             checkbox.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -23),
-            checkbox.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            checkbox.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            checkbox.heightAnchor.constraint(equalToConstant: 20),
+            checkbox.widthAnchor.constraint(equalToConstant: 20)
         ])
     }
     
@@ -241,7 +243,6 @@ extension HabitsCell {
     private func createImageView(imageName: String, tintColor: UIColor, alpha: CGFloat = 1.0) -> UIImageView {
         let view = UIImageView()
         view.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
-#warning("Зачем задаю верхную строчку именно так, если устанавливаю высоту и ширину иконок?")
         view.tintColor = tintColor
         view.alpha = alpha
         view.translatesAutoresizingMaskIntoConstraints = false
