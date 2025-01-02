@@ -11,13 +11,7 @@ class HabitsCell: UICollectionViewCell {
     
     private var panGesture: UIPanGestureRecognizer!
     private var originalCenter: CGPoint = .zero
-    private let deleteIcon: UIImageView = {
-        let imageView = UIImageView(image: UIImage(systemName: "trash"))
-        imageView.tintColor = .red
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.alpha = 0
-        return imageView
-    }()
+    private lazy var deleteIcon = createImageView(imageName: "Trash", tintColor: .red, alpha: 0)
     
     // MARK: - UI Components
     
@@ -76,31 +70,26 @@ class HabitsCell: UICollectionViewCell {
         let translation = gesture.translation(in: self)
         switch gesture.state {
         case .began:
-            // Сохраняем начальную позицию ячейки
             originalCenter = center
         case .changed:
-            if translation.x < 0 { // Только если движение влево
-                // Сдвигаем ячейку
-                center = CGPoint(x: originalCenter.x + translation.x, y: originalCenter.y)
-                
-                // Показываем иконку удаления пропорционально свайпу
-                let alpha = min(1, abs(translation.x) / 100) // Используем abs, так как translation.x < 0
-                deleteIcon.alpha = alpha
-            }
+            guard translation.x < 0 else { return } // Лишь влево
+            center.x = originalCenter.x + translation.x
+            deleteIcon.alpha = min(1, abs(translation.x) / 100)
         case .ended:
-            let threshold: CGFloat = 100 // Минимальное расстояние для завершения свайпа
-            if abs(translation.x) > threshold && translation.x < 0 { // Свайп должен быть влево
-                // Уведомляем контроллер о свайпе
+            if abs(translation.x) > 100 && translation.x < 0 {
                 NotificationCenter.default.post(name: Notification.Name("CellDidSwipeRight"), object: self)
             } else {
-                // Возвращаем ячейку в исходное положение
-                UIView.animate(withDuration: 0.3) {
-                    self.center = self.originalCenter
-                    self.deleteIcon.alpha = 0
-                }
+                resetPosition()
             }
         default:
             break
+        }
+    }
+    
+    private func resetPosition() {
+        UIView.animate(withDuration: 0.3) {
+            self.center = self.originalCenter
+            self.deleteIcon.alpha = 0
         }
     }
     
@@ -114,9 +103,7 @@ class HabitsCell: UICollectionViewCell {
         addSubview(deleteIcon)
         NSLayoutConstraint.activate([
             deleteIcon.centerYAnchor.constraint(equalTo: centerYAnchor),
-            deleteIcon.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            deleteIcon.widthAnchor.constraint(equalToConstant: 24),
-            deleteIcon.heightAnchor.constraint(equalToConstant: 24)
+            deleteIcon.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -23),
         ])
     }
     
@@ -168,10 +155,11 @@ extension HabitsCell {
         return label
     }
     
-    private func createImageView(imageName: String, tintColor: UIColor) -> UIImageView {
+    private func createImageView(imageName: String, tintColor: UIColor, alpha: CGFloat = 1.0) -> UIImageView {
         let view = UIImageView()
         view.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
         view.tintColor = tintColor
+        view.alpha = alpha
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }
