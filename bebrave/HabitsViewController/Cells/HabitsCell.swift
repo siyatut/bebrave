@@ -11,9 +11,14 @@ class HabitsCell: UICollectionViewCell {
     
     private var panGesture: UIPanGestureRecognizer!
     private var originalCenter: CGPoint = .zero
-    private lazy var deleteIcon = createImageView(imageName: "Trash", tintColor: .red, alpha: 0)
     
-    // MARK: - UI Components
+    // МARK: - UI components for swipe
+    
+    private lazy var deleteHabitIcon = createImageView(imageName: "DeleteHabit", tintColor: .red, alpha: 0)
+    private lazy var changeHabitIcon = createImageView(imageName: "ChangeHabit", tintColor: .blue, alpha: 0)
+    private lazy var skipHabitIcon = createImageView(imageName: "SkipHabit", tintColor: .green, alpha: 0)
+    
+    // MARK: - UI components
     
     private lazy var habitsName = createLabel(textColor: .label, font: AppStyle.Fonts.regularFont(size: 16))
     private lazy var percentDone = createLabel(textColor: .secondaryLabel, font: AppStyle.Fonts.regularFont(size: 16))
@@ -39,7 +44,7 @@ class HabitsCell: UICollectionViewCell {
         setupComponents()
         setupTapGesture()
         setupPanGesture()
-        setupDeleteIcon()
+        setupIcons()
     }
     
     required init?(coder: NSCoder) {
@@ -48,7 +53,9 @@ class HabitsCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        deleteIcon.alpha = 0
+        deleteHabitIcon.alpha = 0
+        changeHabitIcon.alpha = 0
+        skipHabitIcon.alpha = 0
     }
     
     // MARK: - Gesture methods
@@ -74,7 +81,7 @@ class HabitsCell: UICollectionViewCell {
         case .changed:
             guard translation.x < 0 else { return } // Лишь влево
             center.x = originalCenter.x + translation.x
-            deleteIcon.alpha = min(1, abs(translation.x) / 100)
+            deleteHabitIcon.alpha = min(1, abs(translation.x) / 100)
         case .ended:
             if abs(translation.x) > 100 && translation.x < 0 {
                 NotificationCenter.default.post(name: Notification.Name("CellDidSwipeRight"), object: self)
@@ -89,7 +96,7 @@ class HabitsCell: UICollectionViewCell {
     private func resetPosition() {
         UIView.animate(withDuration: 0.3) {
             self.center = self.originalCenter
-            self.deleteIcon.alpha = 0
+            self.deleteHabitIcon.alpha = 0
         }
     }
     
@@ -99,11 +106,19 @@ class HabitsCell: UICollectionViewCell {
     
     // MARK: - Set up components
     
-    private func setupDeleteIcon() {
-        addSubview(deleteIcon)
+    private func setupIcons() {
+        addSubview(deleteHabitIcon)
+        addSubview(changeHabitIcon)
+        addSubview(skipHabitIcon)
         NSLayoutConstraint.activate([
-            deleteIcon.centerYAnchor.constraint(equalTo: centerYAnchor),
-            deleteIcon.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -23),
+            deleteHabitIcon.centerYAnchor.constraint(equalTo: centerYAnchor),
+            changeHabitIcon.centerYAnchor.constraint(equalTo: centerYAnchor),
+            skipHabitIcon.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            deleteHabitIcon.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -23),
+            changeHabitIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 23),
+            skipHabitIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 46),
+            
         ])
     }
     
