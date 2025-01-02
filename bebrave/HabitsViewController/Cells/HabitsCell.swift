@@ -141,8 +141,8 @@ class HabitsCell: UICollectionViewCell {
         changeHabitLabel.text = "Изменить"
         
         NSLayoutConstraint.activate([
-            deleteHabitIcon.centerYAnchor.constraint(equalTo: centerYAnchor),
-            changeHabitIcon.centerYAnchor.constraint(equalTo: centerYAnchor),
+            deleteHabitIcon.topAnchor.constraint(equalTo: topAnchor, constant: 13),
+            changeHabitIcon.topAnchor.constraint(equalTo: topAnchor, constant: 13),
         
             deleteHabitIcon.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 30),
             changeHabitIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -30),

@@ -15,7 +15,6 @@ struct Habit: Codable {
     var title: String
     var frequency: Int
     var progress: [Date: Int]
-    var isSkipped: Bool = false
 }
 
 // MARK: - Habit Factory
@@ -26,8 +25,7 @@ extension Habit {
             id: UUID(),
             title: title,
             frequency: frequency,
-            progress: [:],
-            isSkipped: false
+            progress: [:]
         )
     }
 }
