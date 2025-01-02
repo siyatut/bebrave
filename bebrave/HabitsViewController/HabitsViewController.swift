@@ -5,11 +5,13 @@
 //  Created by Anastasia Tyutinova on 14/2/2567 BE.
 //
 
-#warning("№1: Дописать свайпы. Слева плавное через PanGesture — «Изменить» (открывает новый экран) и «Пропустить» закрашивает полосатым и не считает пропущенным этот день")
+#warning("№1: Дописать свайпы")
 
 #warning("№2: Добавить нужную отрисовку в чекбоксе по нажатию + степень закрашивания ячейки + изменение процента и числа 1/2, например")
 
 #warning("№3: Нужно будет ещё добавить условия для пропуска привычки, когда по каким-то причинам пользователь не хочет выполнять её + условия, при котором она будет считаться невыполненной")
+
+#warning("№4: Кнопку «Пропустить сегодня» добавить во вью контроллер «Изменить привычку»")
 
 import UIKit
 
@@ -142,14 +144,6 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
             name: Notification.Name("DeleteHabit"),
             object: nil
         )
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleSkipHabitTap(_:)),
-            name: Notification.Name("SkipHabit"),
-            object: nil
-        )
-        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(handleChangeHabitTap(_:)),
@@ -168,26 +162,12 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         deleteHabit(at: indexPath)
     }
     
-    @objc private func handleSkipHabitTap(_ notification: Notification) {
-        guard let cell = notification.object as? HabitsCell,
-              let indexPath = collectionView.indexPath(for: cell) else { return }
-        
-        var habit = habits[indexPath.row]
-        
-        if let cell = collectionView.cellForItem(at: indexPath) as? HabitsCell {
-            cell.contentView.backgroundColor = AppStyle.Colors.borderColor
-        }
-        
-        habit.isSkipped = true
-        UserDefaultsManager.shared.saveHabits(habits)
-    }
-    
     @objc private func handleChangeHabitTap(_ notification: Notification) {
         guard let cell = notification.object as? HabitsCell,
               let indexPath = collectionView.indexPath(for: cell) else { return }
         
         let habit = habits[indexPath.row]
-        
+#warning("Настроить более плавное открытие контроллера")
         let changeHabitVC = ChangeHabitViewController(habit: habit)
         self.navigationController?.pushViewController(changeHabitVC, animated: true)
     }

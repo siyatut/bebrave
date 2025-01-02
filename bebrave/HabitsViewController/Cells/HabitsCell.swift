@@ -11,13 +11,11 @@ class HabitsCell: UICollectionViewCell {
     
     private var panGesture: UIPanGestureRecognizer!
     private var originalCenter: CGPoint = .zero
-    private var isRightSwipeActive = false
     
     // МARK: - UI components for swipe
     
     private lazy var deleteHabitIcon = createImageView(imageName: "DeleteHabit", tintColor: .red, alpha: 0)
-    private lazy var changeHabitIcon = createImageView(imageName: "ChangeHabit", tintColor: .blue, alpha: 0)
-    private lazy var skipHabitIcon = createImageView(imageName: "SkipHabit", tintColor: .green, alpha: 0)
+    private lazy var changeHabitIcon = createImageView(imageName: "ChangeHabit", tintColor: .mySecondary, alpha: 0)
     
     // MARK: - UI components
     
@@ -56,8 +54,6 @@ class HabitsCell: UICollectionViewCell {
         super.prepareForReuse()
         deleteHabitIcon.alpha = 0
         changeHabitIcon.alpha = 0
-        skipHabitIcon.alpha = 0
-        isRightSwipeActive = false
     }
     
     // MARK: - Gesture methods
@@ -75,51 +71,34 @@ class HabitsCell: UICollectionViewCell {
         addGestureRecognizer(panGesture)
     }
     
-#warning("Плохо вот это прописано: если свайпнуть вправо до середины, обратно не откатить свайп в левую сторону, чтобы ячейка встала на место. Ещё если сдвинуть несколько привычек вправо, а потом какую-то другую удалить, то у тех привычек будет видно иконки слева. Если прокрутить вправо, а потом попробовать влево, то в какой-то момент alpha иконок сбрасывается и остаётся просто ячейка с пустотой слева")
-    
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: self)
         switch gesture.state {
         case .began:
             originalCenter = center
-            isRightSwipeActive = false
             
         case .changed:
             center.x = originalCenter.x + translation.x
             
-            // Свайп влево (удаление)
             if translation.x < 0 {
                 deleteHabitIcon.alpha = min(1, abs(translation.x) / 100)
                 changeHabitIcon.alpha = 0
-                skipHabitIcon.alpha = 0
-                isRightSwipeActive = false
-            }
-            // Свайп вправо - показываем обе иконки
-            else if translation.x > 0 {
-                let progress = min(1, translation.x / 100)
-                changeHabitIcon.alpha = progress
-                skipHabitIcon.alpha = progress
+            } else {
+                changeHabitIcon.alpha = min(1, translation.x / 100)
                 deleteHabitIcon.alpha = 0
-                isRightSwipeActive = translation.x > 80
             }
             
         case .ended:
-            if translation.x < -100 { // Свайп влево - удаление
+            if translation.x < -100 {
                 UIView.animate(withDuration: 0.2) {
                     self.center.x = self.originalCenter.x - self.bounds.width
                 } completion: { _ in
                     NotificationCenter.default.post(name: Notification.Name("DeleteHabit"), object: self)
                 }
-            }
-            else if translation.x > 80 { // Свайп вправо - оставляем ячейку открытой
-                UIView.animate(withDuration: 0.2) {
-                    self.center.x = self.originalCenter.x + 100
-                    self.changeHabitIcon.alpha = 1
-                    self.skipHabitIcon.alpha = 1
-                }
-                isRightSwipeActive = true
-            }
-            else {
+            } else if translation.x > 100 {
+                NotificationCenter.default.post(name: Notification.Name("ChangeHabit"), object: self)
+                resetPosition()
+            } else {
                 resetPosition()
             }
             
@@ -127,29 +106,13 @@ class HabitsCell: UICollectionViewCell {
             break
         }
     }
-    
-    @objc private func changeHabitTapped() {
-        if isRightSwipeActive {
-            NotificationCenter.default.post(name: Notification.Name("ChangeHabit"), object: self)
-            resetPosition()
-        }
-    }
 
-    @objc private func skipHabitTapped() {
-        if isRightSwipeActive {
-            NotificationCenter.default.post(name: Notification.Name("SkipHabit"), object: self)
-            resetPosition()
-        }
-    }
-    
     private func resetPosition() {
         UIView.animate(withDuration: 0.3) {
             self.center = self.originalCenter
             self.deleteHabitIcon.alpha = 0
             self.changeHabitIcon.alpha = 0
-            self.skipHabitIcon.alpha = 0
         }
-        isRightSwipeActive = false
     }
     
     @objc private func handleTap() {
@@ -161,33 +124,19 @@ class HabitsCell: UICollectionViewCell {
     private func setupIcons() {
         addSubview(deleteHabitIcon)
         addSubview(changeHabitIcon)
-        addSubview(skipHabitIcon)
-        
-        let changeTap = UITapGestureRecognizer(target: self, action: #selector(changeHabitTapped))
-        changeHabitIcon.isUserInteractionEnabled = true
-        changeHabitIcon.addGestureRecognizer(changeTap)
-        
-        let skipTap = UITapGestureRecognizer(target: self, action: #selector(skipHabitTapped))
-        skipHabitIcon.isUserInteractionEnabled = true
-        skipHabitIcon.addGestureRecognizer(skipTap)
         
         NSLayoutConstraint.activate([
             deleteHabitIcon.centerYAnchor.constraint(equalTo: centerYAnchor),
             changeHabitIcon.centerYAnchor.constraint(equalTo: centerYAnchor),
-            skipHabitIcon.centerYAnchor.constraint(equalTo: centerYAnchor),
-            
+        
             deleteHabitIcon.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 15),
             changeHabitIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -15),
-            skipHabitIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -45),
             
             deleteHabitIcon.heightAnchor.constraint(equalToConstant: 20),
             deleteHabitIcon.widthAnchor.constraint(equalToConstant: 20),
             
             changeHabitIcon.heightAnchor.constraint(equalToConstant: 22),
             changeHabitIcon.widthAnchor.constraint(equalToConstant: 22),
-            
-            skipHabitIcon.heightAnchor.constraint(equalToConstant: 20),
-            skipHabitIcon.widthAnchor.constraint(equalToConstant: 20),
         ])
     }
     
