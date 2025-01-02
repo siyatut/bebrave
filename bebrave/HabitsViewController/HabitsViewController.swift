@@ -22,6 +22,7 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: - Properties
     
     var headerView: HeaderDaysCollectionView?
+
     
     // MARK: - UI components
     
@@ -135,19 +136,61 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: - Notification observer
     
     private func setupNotificationObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleCellSwipeRight(_:)), name: Notification.Name("DeleteHabit"), object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleDeleteHabit(_:)),
+            name: Notification.Name("DeleteHabit"),
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleSkipHabitTap(_:)),
+            name: Notification.Name("SkipHabit"),
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleChangeHabitTap(_:)),
+            name: Notification.Name("ChangeHabit"),
+            object: nil
+        )
     }
     
     // MARK: - Swipe gesture
     
-    @objc private func handleCellSwipeRight(_ notification: Notification) {
+    @objc private func handleDeleteHabit(_ notification: Notification) {
         
-        guard let cell = notification.object as? UICollectionViewCell,
+        guard let cell = notification.object as? HabitsCell,
               let indexPath = collectionView.indexPath(for: cell) else { return }
         
         deleteHabit(at: indexPath)
     }
     
+    @objc private func handleSkipHabitTap(_ notification: Notification) {
+        guard let cell = notification.object as? HabitsCell,
+              let indexPath = collectionView.indexPath(for: cell) else { return }
+        
+        var habit = habits[indexPath.row]
+        
+        if let cell = collectionView.cellForItem(at: indexPath) as? HabitsCell {
+            cell.contentView.backgroundColor = AppStyle.Colors.borderColor
+        }
+        
+        habit.isSkipped = true
+        UserDefaultsManager.shared.saveHabits(habits)
+    }
+    
+    @objc private func handleChangeHabitTap(_ notification: Notification) {
+        guard let cell = notification.object as? HabitsCell,
+              let indexPath = collectionView.indexPath(for: cell) else { return }
+        
+        let habit = habits[indexPath.row]
+        
+        let changeHabitVC = ChangeHabitViewController(habit: habit)
+        self.navigationController?.pushViewController(changeHabitVC, animated: true)
+    }
     
     // MARK: - Tap action
     

@@ -187,7 +187,7 @@ class HabitsCell: UICollectionViewCell {
             skipHabitIcon.heightAnchor.constraint(equalToConstant: 20),
             skipHabitIcon.widthAnchor.constraint(equalToConstant: 20),
         ])
-#warning("Дописать конкретные действия для левых свайпов + есть баг, если свайпнуть вправо до середины, обратно не откатить свайп в левую сторону, чтобы ячейка встала на место")
+#warning("Eсть баг, если свайпнуть вправо до середины, обратно не откатить свайп в левую сторону, чтобы ячейка встала на место")
     }
     
     private func addSubviewsToStackView(_ stackView: UIStackView, views: [UIView]) {
