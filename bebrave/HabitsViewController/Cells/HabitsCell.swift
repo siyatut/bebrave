@@ -76,6 +76,7 @@ class HabitsCell: UICollectionViewCell {
     }
     
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+#warning("Плохо вот это прописано. Если свайпнуть вправо до середины, обратно не откатить свайп в левую сторону, чтобы ячейка встала на место. Ещё если сдвинуть несколько привычек вправо, а потом какую-то другую удалить, то у тех привычек будет видно иконки слева")
         let translation = gesture.translation(in: self)
         switch gesture.state {
         case .began:
@@ -187,7 +188,6 @@ class HabitsCell: UICollectionViewCell {
             skipHabitIcon.heightAnchor.constraint(equalToConstant: 20),
             skipHabitIcon.widthAnchor.constraint(equalToConstant: 20),
         ])
-#warning("Eсть баг, если свайпнуть вправо до середины, обратно не откатить свайп в левую сторону, чтобы ячейка встала на место")
     }
     
     private func addSubviewsToStackView(_ stackView: UIStackView, views: [UIView]) {
