@@ -5,7 +5,7 @@
 //  Created by Anastasia Tyutinova on 14/2/2567 BE.
 //
 
-#warning("№1: Переписать свайпы. Слева плавное через PanGesture — «Изменить» (открывает новый экран) и «Пропустить» закрашивает полосатым и не считает пропущенным этот день")
+#warning("№1: Дописать свайпы. Слева плавное через PanGesture — «Изменить» (открывает новый экран) и «Пропустить» закрашивает полосатым и не считает пропущенным этот день")
 
 #warning("№2: Добавить нужную отрисовку в чекбоксе по нажатию + степень закрашивания ячейки + изменение процента и числа 1/2, например")
 
@@ -135,7 +135,7 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: - Notification observer
     
     private func setupNotificationObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleCellSwipeRight(_:)), name: Notification.Name("CellDidSwipeRight"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleCellSwipeRight(_:)), name: Notification.Name("DeleteHabit"), object: nil)
     }
     
     // MARK: - Swipe gesture

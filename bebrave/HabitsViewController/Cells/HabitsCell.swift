@@ -11,6 +11,7 @@ class HabitsCell: UICollectionViewCell {
     
     private var panGesture: UIPanGestureRecognizer!
     private var originalCenter: CGPoint = .zero
+    private var isRightSwipeActive = false
     
     // МARK: - UI components for swipe
     
@@ -56,6 +57,7 @@ class HabitsCell: UICollectionViewCell {
         deleteHabitIcon.alpha = 0
         changeHabitIcon.alpha = 0
         skipHabitIcon.alpha = 0
+        isRightSwipeActive = false
     }
     
     // MARK: - Gesture methods
@@ -78,18 +80,63 @@ class HabitsCell: UICollectionViewCell {
         switch gesture.state {
         case .began:
             originalCenter = center
+            isRightSwipeActive = false
+            
         case .changed:
-            guard translation.x < 0 else { return } // Лишь влево
             center.x = originalCenter.x + translation.x
-            deleteHabitIcon.alpha = min(1, abs(translation.x) / 100)
+            
+            // Свайп влево (удаление)
+            if translation.x < 0 {
+                deleteHabitIcon.alpha = min(1, abs(translation.x) / 100)
+                changeHabitIcon.alpha = 0
+                skipHabitIcon.alpha = 0
+                isRightSwipeActive = false
+            }
+            // Свайп вправо - показываем обе иконки
+            else if translation.x > 0 {
+                let progress = min(1, translation.x / 100)
+                changeHabitIcon.alpha = progress
+                skipHabitIcon.alpha = progress
+                deleteHabitIcon.alpha = 0
+                isRightSwipeActive = translation.x > 80
+            }
+            
         case .ended:
-            if abs(translation.x) > 100 && translation.x < 0 {
-                NotificationCenter.default.post(name: Notification.Name("CellDidSwipeRight"), object: self)
-            } else {
+            if translation.x < -100 { // Свайп влево - удаление
+                UIView.animate(withDuration: 0.2) {
+                    self.center.x = self.originalCenter.x - self.bounds.width
+                } completion: { _ in
+                    NotificationCenter.default.post(name: Notification.Name("DeleteHabit"), object: self)
+                }
+            }
+            else if translation.x > 80 { // Свайп вправо - оставляем ячейку открытой
+                UIView.animate(withDuration: 0.2) {
+                    self.center.x = self.originalCenter.x + 100
+                    self.changeHabitIcon.alpha = 1
+                    self.skipHabitIcon.alpha = 1
+                }
+                isRightSwipeActive = true
+            }
+            else {
                 resetPosition()
             }
+            
         default:
             break
+        }
+    }
+    
+    @objc private func changeHabitTapped() {
+        if isRightSwipeActive {
+            NotificationCenter.default.post(name: Notification.Name("ChangeHabit"), object: self)
+            resetPosition()
+        }
+    }
+
+    @objc private func skipHabitTapped() {
+        if isRightSwipeActive {
+            NotificationCenter.default.post(name: Notification.Name("SkipHabit"), object: self)
+            resetPosition()
         }
     }
     
@@ -97,7 +144,10 @@ class HabitsCell: UICollectionViewCell {
         UIView.animate(withDuration: 0.3) {
             self.center = self.originalCenter
             self.deleteHabitIcon.alpha = 0
+            self.changeHabitIcon.alpha = 0
+            self.skipHabitIcon.alpha = 0
         }
+        isRightSwipeActive = false
     }
     
     @objc private func handleTap() {
@@ -110,16 +160,34 @@ class HabitsCell: UICollectionViewCell {
         addSubview(deleteHabitIcon)
         addSubview(changeHabitIcon)
         addSubview(skipHabitIcon)
+        
+        let changeTap = UITapGestureRecognizer(target: self, action: #selector(changeHabitTapped))
+        changeHabitIcon.isUserInteractionEnabled = true
+        changeHabitIcon.addGestureRecognizer(changeTap)
+        
+        let skipTap = UITapGestureRecognizer(target: self, action: #selector(skipHabitTapped))
+        skipHabitIcon.isUserInteractionEnabled = true
+        skipHabitIcon.addGestureRecognizer(skipTap)
+        
         NSLayoutConstraint.activate([
             deleteHabitIcon.centerYAnchor.constraint(equalTo: centerYAnchor),
             changeHabitIcon.centerYAnchor.constraint(equalTo: centerYAnchor),
             skipHabitIcon.centerYAnchor.constraint(equalTo: centerYAnchor),
             
-            deleteHabitIcon.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -23),
-            changeHabitIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 23),
-            skipHabitIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 46),
+            deleteHabitIcon.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 15),
+            changeHabitIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -15),
+            skipHabitIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -45),
             
+            deleteHabitIcon.heightAnchor.constraint(equalToConstant: 20),
+            deleteHabitIcon.widthAnchor.constraint(equalToConstant: 20),
+            
+            changeHabitIcon.heightAnchor.constraint(equalToConstant: 22),
+            changeHabitIcon.widthAnchor.constraint(equalToConstant: 22),
+            
+            skipHabitIcon.heightAnchor.constraint(equalToConstant: 20),
+            skipHabitIcon.widthAnchor.constraint(equalToConstant: 20),
         ])
+#warning("Дописать конкретные действия для левых свайпов + есть баг, если свайпнуть вправо до середины, обратно не откатить свайп в левую сторону, чтобы ячейка встала на место")
     }
     
     private func addSubviewsToStackView(_ stackView: UIStackView, views: [UIView]) {
@@ -173,6 +241,7 @@ extension HabitsCell {
     private func createImageView(imageName: String, tintColor: UIColor, alpha: CGFloat = 1.0) -> UIImageView {
         let view = UIImageView()
         view.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
+#warning("Зачем задаю верхную строчку именно так, если устанавливаю высоту и ширину иконок?")
         view.tintColor = tintColor
         view.alpha = alpha
         view.translatesAutoresizingMaskIntoConstraints = false
