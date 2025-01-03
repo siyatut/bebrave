@@ -7,8 +7,6 @@
 
 import UIKit
 
-// MARK: — Customise navigation's items
-
 extension HabitsViewController {
     
     func setupHistoryButton() {
@@ -46,5 +44,41 @@ extension HabitsViewController {
             
         ])
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: container)
+    }
+    
+    func setupEmptyStateView() {
+        view.addSubview(emptyStateView)
+        NSLayoutConstraint.activate([
+            emptyStateView.topAnchor.constraint(equalTo: view.topAnchor, constant: 180),
+            emptyStateView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            emptyStateView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
+            emptyStateView.heightAnchor.constraint(equalToConstant: 312)
+        ])
+    }
+    
+    func setupAddNewHabitButton() {
+        view.addSubview(addNewHabitButton)
+        
+        NSLayoutConstraint.activate([
+            addNewHabitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12),
+            addNewHabitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            addNewHabitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
+            addNewHabitButton.heightAnchor.constraint(equalToConstant: 48)
+        ])
+    }
+    
+    func setupNotificationObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleDeleteHabit(_:)),
+            name: Notification.Name("DeleteHabit"),
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleChangeHabitTap(_:)),
+            name: Notification.Name("ChangeHabit"),
+            object: nil
+        )
     }
 }
