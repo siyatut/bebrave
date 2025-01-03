@@ -95,17 +95,3 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.navigationController?.pushViewController(history, animated: true)
     }
 }
-
-
-extension HabitsViewController {
-    private class CustomNavigationControllerDelegate: NSObject, UINavigationControllerDelegate {
-        private let customAnimator = CustomPushAnimator()
-        
-        func navigationController(_ navigationController: UINavigationController,
-                                  animationControllerFor operation: UINavigationController.Operation,
-                                  from fromVC: UIViewController,
-                                  to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-            return operation == .push ? customAnimator : nil
-        }
-    }
-}
