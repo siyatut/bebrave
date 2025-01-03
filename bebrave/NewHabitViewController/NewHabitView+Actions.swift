@@ -42,9 +42,14 @@ extension NewHabitViewController {
             progress: [:]
         )
         UserDefaultsManager.shared.addHabit(newHabit)
-        delegate?.didAddNewHabit(newHabit)
-        print("Привычка сохранена: \(newHabit.title)")
-        dismiss(animated: true, completion: nil)
+        
+        delegate?.willHideEmptyStateView()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.delegate?.didAddNewHabit(newHabit)
+            print("Привычка сохранена: \(newHabit.title)")
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     @objc func dismissKeyboard() {

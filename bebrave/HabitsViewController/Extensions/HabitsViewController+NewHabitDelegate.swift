@@ -11,6 +11,7 @@ import UIKit
 
 protocol NewHabitDelegate: AnyObject {
     func didAddNewHabit(_ habit: Habit)
+    func willHideEmptyStateView()
 }
 
 // MARK: - NewHabitDelegate
@@ -20,6 +21,12 @@ extension HabitsViewController: NewHabitDelegate {
         habits.append(habit)
         collectionView.reloadData()
         updateEmptyState(animated: true)
+    }
+    
+    func willHideEmptyStateView() {
+        if habits.isEmpty {
+            emptyStateView.animateVisibility(isVisible: false, transformEffect: true)
+        }
     }
     
     func deleteHabit(at indexPath: IndexPath) {

@@ -33,7 +33,7 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     let historyButton = UIButton()
     let calendarLabel = UILabel()
     
-    private lazy var emptyStateView: UIView = {
+    lazy var emptyStateView: UIView = {
         let view = EmptyStateView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isHidden = true

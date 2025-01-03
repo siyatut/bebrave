@@ -49,5 +49,3 @@ extension UIView {
         }
     }
 }
-
-#warning("Подумать, может быть, вообще добавить emptyStateView to NewHabitVC, чтобы при добавлении первой привычки ещё до закрытия экрана показывать emptyStateView")
