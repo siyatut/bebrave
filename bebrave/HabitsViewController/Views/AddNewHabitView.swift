@@ -7,6 +7,8 @@
 
 import UIKit
 
+#warning("Если эта часть больше не является частью коллекции, значит можно убрать UICollectionReusableView и переписать её здесь и в HabitsViewController?")
+
 class AddNewHabitView: UICollectionReusableView {
     
     // MARK: - Delegate Protocol
