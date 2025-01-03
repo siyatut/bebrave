@@ -33,7 +33,7 @@ class TabBarViewController: UITabBarController {
         self.setViewControllers([habits, diary, settings], animated: true)
     }
     
-    private func createNavigationController(with title: String, and image: UIImage?, vc: UIViewController) -> UINavigationController {
+    func createNavigationController(with title: String, and image: UIImage?, vc: UIViewController) -> UINavigationController {
         
         let navigationController = UINavigationController(rootViewController: vc)
         navigationController.tabBarItem.title = title

@@ -15,6 +15,10 @@ import UIKit
 
 class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    // MARK: - Delegate
+    
+    private let navigationDelegate = CustomNavigationControllerDelegate()
+    
     // MARK: - Data Source
     
     var habits: [Habit] = []
@@ -22,7 +26,6 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: - Properties
     
     var headerView: HeaderDaysCollectionView?
-
     
     // MARK: - UI components
     
@@ -49,6 +52,7 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = AppStyle.Colors.backgroundColor
+        navigationController?.delegate = navigationDelegate
         setupAddNewHabitButton()
         setupCollectionView()
         setupEmptyStateView()
@@ -66,6 +70,13 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
             self.updateCalendarLabel()
         }
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+           super.viewWillDisappear(animated)
+           if self.isMovingFromParent {
+               navigationController?.delegate = nil
+           }
+       }
     
     // MARK: - Setup collection view
     
@@ -165,7 +176,6 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
               let indexPath = collectionView.indexPath(for: cell) else { return }
         
         let habit = habits[indexPath.row]
-#warning("№4: Настроить более плавное открытие контроллера")
         let changeHabitVC = ChangeHabitViewController(habit: habit)
         self.navigationController?.pushViewController(changeHabitVC, animated: true)
     }
@@ -178,3 +188,16 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
 }
 
+
+extension HabitsViewController {
+    private class CustomNavigationControllerDelegate: NSObject, UINavigationControllerDelegate {
+        private let customAnimator = CustomPushAnimator()
+        
+        func navigationController(_ navigationController: UINavigationController,
+                                  animationControllerFor operation: UINavigationController.Operation,
+                                  from fromVC: UIViewController,
+                                  to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+            return operation == .push ? customAnimator : nil
+        }
+    }
+}
