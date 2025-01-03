@@ -153,6 +153,46 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		5259A40D2D28501B00EF60A2 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				52C996A42D11EAC3000E7648 /* UICollectionView+Dequeuing.swift */,
+				52AB21F12D19AF3D006C7DF9 /* UIComponents+Extensions.swift */,
+				5232E9DD2D27BA7D0069FD70 /* UIView+AnimateVisibility.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5259A40E2D28508200EF60A2 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */,
+				52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */,
+				52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */,
+				5259A40F2D28509800EF60A2 /* Habits */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		5259A40F2D28509800EF60A2 /* Habits */ = {
+			isa = PBXGroup;
+			children = (
+				52751BAC2D26ACE2008F84A8 /* ChangeHabitViewController.swift */,
+				52652B882D24059700608550 /* NewHabitViewController */,
+				52C996A32D11EA17000E7648 /* HabitsViewController */,
+			);
+			path = Habits;
+			sourceTree = "<group>";
+		};
+		5259A4122D2851F100EF60A2 /* NavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				5232E9D92D27B6ED0069FD70 /* CustomPushAnimator.swift */,
+				5259A40B2D284DC900EF60A2 /* CustomNavigationControllerDelegate.swift */,
+			);
+			path = NavigationController;
+			sourceTree = "<group>";
+		};
 		52652B882D24059700608550 /* NewHabitViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -241,7 +281,6 @@
 			children = (
 				52697D632D195A95004B9D7E /* HabitsViewController+NewHabitDelegate.swift */,
 				52697D5F2D1957A6004B9D7E /* HabitsViewController+DataSourceDelegate.swift */,
-				52C996A42D11EAC3000E7648 /* UICollectionView+Dequeuing.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -271,18 +310,11 @@
 			children = (
 				52C996A22D11E9F2000E7648 /* App and Scene Delegate */,
 				52C996A02D11E984000E7648 /* UserDefaults */,
+				5259A4122D2851F100EF60A2 /* NavigationController */,
 				52ACDD432CEF13CD00868730 /* AppStyle.swift */,
-				5232E9DD2D27BA7D0069FD70 /* UIView+AnimateVisibility.swift */,
-				5259A40B2D284DC900EF60A2 /* CustomNavigationControllerDelegate.swift */,
-				5232E9D92D27B6ED0069FD70 /* CustomPushAnimator.swift */,
-				52AB21F12D19AF3D006C7DF9 /* UIComponents+Extensions.swift */,
 				52F1E53D2B7CDC300058F767 /* TabBarViewController.swift */,
-				52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */,
-				52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */,
-				5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */,
-				52751BAC2D26ACE2008F84A8 /* ChangeHabitViewController.swift */,
-				52C996A32D11EA17000E7648 /* HabitsViewController */,
-				52652B882D24059700608550 /* NewHabitViewController */,
+				5259A40E2D28508200EF60A2 /* ViewControllers */,
+				5259A40D2D28501B00EF60A2 /* Extensions */,
 				52F1E5422B7CDC330058F767 /* Assets.xcassets */,
 				52F1E5442B7CDC330058F767 /* LaunchScreen.storyboard */,
 				52F1E5472B7CDC330058F767 /* Info.plist */,
