@@ -128,11 +128,15 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         ])
     }
     
-    func updateEmptyState() {
-        emptyStateView.isHidden = !habits.isEmpty
+    func updateEmptyState(animated: Bool = true) {
+        let shouldShowEmptyState = habits.isEmpty
+        
+        emptyStateView.animateVisibility(
+            isVisible: shouldShowEmptyState,
+            duration: animated ? 0.4 : 0.0,
+            transformEffect: true
+        )
     }
-    
-    
     private func setupAddNewHabitButton() {
         view.addSubview(addNewHabitButton)
         

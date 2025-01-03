@@ -12,6 +12,7 @@
 		5219E2B32D12371E00F41D97 /* HabitsViewController+Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219E2B22D12371300F41D97 /* HabitsViewController+Calendar.swift */; };
 		5219E2B62D1237B300F41D97 /* HabitsViewController+UISetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219E2B52D1237B100F41D97 /* HabitsViewController+UISetup.swift */; };
 		5232E9DA2D27B6F50069FD70 /* CustomPushAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232E9D92D27B6ED0069FD70 /* CustomPushAnimator.swift */; };
+		5232E9DE2D27BA990069FD70 /* UIView+AnimateVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232E9DD2D27BA7D0069FD70 /* UIView+AnimateVisibility.swift */; };
 		523AF3B92CBFBDE900EEFA8A /* NewHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523AF3B82CBFBDBD00EEFA8A /* NewHabitViewController.swift */; };
 		523D41752C05FD3D00689F20 /* AddNewHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523D41742C05FD3D00689F20 /* AddNewHabitView.swift */; };
 		5241DDD22B8F61F000C7ECF0 /* HistoryViewConroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */; };
@@ -71,6 +72,7 @@
 		5219E2B22D12371300F41D97 /* HabitsViewController+Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+Calendar.swift"; sourceTree = "<group>"; };
 		5219E2B52D1237B100F41D97 /* HabitsViewController+UISetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+UISetup.swift"; sourceTree = "<group>"; };
 		5232E9D92D27B6ED0069FD70 /* CustomPushAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPushAnimator.swift; sourceTree = "<group>"; };
+		5232E9DD2D27BA7D0069FD70 /* UIView+AnimateVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AnimateVisibility.swift"; sourceTree = "<group>"; };
 		523AF3B82CBFBDBD00EEFA8A /* NewHabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHabitViewController.swift; sourceTree = "<group>"; };
 		523D41742C05FD3D00689F20 /* AddNewHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewHabitView.swift; sourceTree = "<group>"; };
 		5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewConroller.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				52C996A22D11E9F2000E7648 /* App and Scene Delegate */,
 				52C996A02D11E984000E7648 /* UserDefaults */,
 				52ACDD432CEF13CD00868730 /* AppStyle.swift */,
+				5232E9DD2D27BA7D0069FD70 /* UIView+AnimateVisibility.swift */,
 				5232E9D92D27B6ED0069FD70 /* CustomPushAnimator.swift */,
 				52AB21F12D19AF3D006C7DF9 /* UIComponents+Extensions.swift */,
 				52F1E53D2B7CDC300058F767 /* TabBarViewController.swift */,
@@ -459,6 +462,7 @@
 				524FC7022D075071004C839F /* EmptyStateView.swift in Sources */,
 				52C996A52D11EAC7000E7648 /* UICollectionView+Dequeuing.swift in Sources */,
 				52652B8C2D240BD200608550 /* NewHabitView+Validation.swift in Sources */,
+				5232E9DE2D27BA990069FD70 /* UIView+AnimateVisibility.swift in Sources */,
 				52652B922D240EE900608550 /* NewHabitView+TextFieldDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

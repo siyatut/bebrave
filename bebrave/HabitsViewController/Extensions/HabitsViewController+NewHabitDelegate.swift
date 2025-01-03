@@ -19,7 +19,7 @@ extension HabitsViewController: NewHabitDelegate {
     func didAddNewHabit(_ habit: Habit) {
         habits.append(habit)
         collectionView.reloadData()
-        updateEmptyState()
+        updateEmptyState(animated: true)
     }
     
     func deleteHabit(at indexPath: IndexPath) {
@@ -41,7 +41,7 @@ extension HabitsViewController: NewHabitDelegate {
             self.collectionView.performBatchUpdates({
                 self.collectionView.deleteItems(at: [indexPath])
             }, completion: { _ in
-                self.updateEmptyState()
+                self.updateEmptyState(animated: true)
             })
         })
     }
