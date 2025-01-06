@@ -7,16 +7,13 @@
 
 import UIKit
 
-#warning("Если эта часть больше не является частью коллекции, значит можно убрать UICollectionReusableView и переписать её здесь и в HabitsViewController?")
+// TODO: - Возможно, стоит вообще использовать просто кнопку, а не вью
 
-class AddNewHabitView: UICollectionReusableView {
+class AddNewHabitView: UIView {
     
-    // MARK: - Delegate Protocol
+    // MARK: - Properties
     
     weak var delegate: NewHabitDelegate?
-    
-    // MARK: - Parent view controller
-    
     weak var parentFooterViewController: UIViewController?
     
     // MARK: - UI Components
@@ -49,8 +46,10 @@ class AddNewHabitView: UICollectionReusableView {
     
     // MARK: - Init
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(parentViewController: UIViewController) {
+        self.parentFooterViewController = parentViewController
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = false
         setupButton()
     }
     

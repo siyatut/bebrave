@@ -28,18 +28,12 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     var collectionView: UICollectionView!
     let historyButton = UIButton()
     let calendarLabel = UILabel()
+    lazy var addNewHabitButton = AddNewHabitView(parentViewController: self)
     
     lazy var emptyStateView: UIView = {
         let view = EmptyStateView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isHidden = true
-        return view
-    }()
-    
-    lazy var addNewHabitButton: AddNewHabitView = {
-        let view = AddNewHabitView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.parentFooterViewController = self
         return view
     }()
     
