@@ -97,11 +97,19 @@ class HabitsCell: UICollectionViewCell {
     private func drawCheckmark() {
         let size = checkbox.bounds.size
         let path = UIBezierPath()
-        path.move(to: CGPoint(x: size.width * 0.2, y: size.height * 0.5))
-        path.addLine(to: CGPoint(x: size.width * 0.4, y: size.height * 0.7))
-        path.addLine(to: CGPoint(x: size.width * 0.8, y: size.height * 0.3))
+        
+        // Начальная точка (левый конец)
+        path.move(to: CGPoint(x: size.width * 0.25, y: size.height * 0.4))
+        
+        // Средняя точка (угол галочки)
+        path.addLine(to: CGPoint(x: size.width * 0.5, y: size.height * 0.65))
+        
+        // Конечная точка (правая часть)
+        path.addLine(to: CGPoint(x: size.width * 0.95, y: size.height * 0.0))
         
         checkmarkLayer.path = path.cgPath
+        checkmarkLayer.lineCap = .round
+        checkmarkLayer.lineJoin = .round
         checkmarkLayer.isHidden = false
     }
     
