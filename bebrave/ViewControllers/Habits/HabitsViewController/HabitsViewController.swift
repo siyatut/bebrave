@@ -49,6 +49,9 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         setupHistoryButton()
         setupCalendarLabel()
         setupNotificationObserver()
+        UserDefaultsManager.shared.resetUncompletedHabits()
+        habits = UserDefaultsManager.shared.loadHabits()
+        scheduleMidnightCheck()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,5 +86,40 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     @objc func historyButtonTapped() {
         let history = HistoryViewController()
         self.navigationController?.pushViewController(history, animated: true)
+    }
+    
+    // MARK: - Handle uncompleted habits
+    
+    func scheduleMidnightCheck() {
+        let calendar = Calendar.current
+        let now = Date()
+        let nextMidnight = calendar.nextDate(after: now, matching: DateComponents(hour: 0), matchingPolicy: .strict) ?? now
+
+        let timer = Timer(fireAt: nextMidnight, interval: 0, target: self, selector: #selector(handleMidnight), userInfo: nil, repeats: false)
+        RunLoop.main.add(timer, forMode: .common)
+    }
+
+    @objc private func handleMidnight() {
+        UserDefaultsManager.shared.resetUncompletedHabits()
+        habits = UserDefaultsManager.shared.loadHabits()
+        collectionView.reloadData()
+        scheduleMidnightCheck() // Перезапуск таймера для следующего дня
+    }
+}
+
+
+extension HabitsViewController: HabitCellDelegate {
+    func markHabitAsNotCompleted(habit: Habit) {
+        var updatedHabit = habit
+        updatedHabit.resetToday()
+        UserDefaultsManager.shared.updateHabit(updatedHabit)
+        collectionView.reloadData()
+    }
+
+    func skipToday(habit: Habit) {
+        var updatedHabit = habit
+        updatedHabit.skipToday()
+        UserDefaultsManager.shared.updateHabit(updatedHabit)
+        collectionView.reloadData()
     }
 }

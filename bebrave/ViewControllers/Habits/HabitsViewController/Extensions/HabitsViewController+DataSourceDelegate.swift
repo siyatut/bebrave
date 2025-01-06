@@ -30,6 +30,7 @@ extension HabitsViewController {
                     for: indexPath
                 )
                 let habit = habits[indexPath.item]
+                habitCell.delegate = self
                 habitCell.configure(with: habit)
                 return habitCell
             }

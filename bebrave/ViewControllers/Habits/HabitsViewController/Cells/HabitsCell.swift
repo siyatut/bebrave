@@ -9,17 +9,23 @@ import UIKit
 
 // TODO: - Разделить код на разные файлы. Что-то тут точно можно вынести в другие
 
-class HabitsCell: UICollectionViewCell {
+protocol HabitCellDelegate: AnyObject {
+    func markHabitAsNotCompleted(habit: Habit)
+    func skipToday(habit: Habit)
+}
+
+class HabitsCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
     
     // MARK: - Properties
     
-        private var habit: Habit?
-        private var currentProgress: Int = 0 {
-            didSet {
-                updateHabitProgress()
-            }
+    weak var delegate: HabitCellDelegate?
+    private var habit: Habit?
+    private var currentProgress: Int = 0 {
+        didSet {
+            updateHabitProgress()
         }
-        
+    }
+    
     private let checkmarkLayer = CAShapeLayer()
     private var panGesture: UIPanGestureRecognizer!
     private var originalCenter: CGPoint = .zero
@@ -68,6 +74,9 @@ class HabitsCell: UICollectionViewCell {
         setupPanGesture()
         setupIcons()
         setupCheckmarkLayer()
+        
+        let interaction = UIContextMenuInteraction(delegate: self)
+        self.addInteraction(interaction)
     }
     
     required init?(coder: NSCoder) {
@@ -80,140 +89,6 @@ class HabitsCell: UICollectionViewCell {
         changeHabitIcon.alpha = 0
         deleteHabitLabel.alpha = 0
         changeHabitIcon.alpha = 0
-    }
-    
-    // MARK: - Checkmark methods
-    
-    private func setupCheckmarkLayer() {
-        checkmarkLayer.strokeColor = UIColor.black.cgColor
-        checkmarkLayer.fillColor = UIColor.clear.cgColor
-        checkmarkLayer.lineWidth = 2
-        checkmarkLayer.lineCap = .round
-        checkmarkLayer.lineJoin = .round
-        checkmarkLayer.isHidden = true
-        checkbox.layer.addSublayer(checkmarkLayer)
-    }
-    
-    private func drawCheckmark() {
-        let size = checkbox.bounds.size
-        let path = UIBezierPath()
-        
-        // Начальная точка (левый конец)
-        path.move(to: CGPoint(x: size.width * 0.25, y: size.height * 0.4))
-        
-        // Средняя точка (угол галочки)
-        path.addLine(to: CGPoint(x: size.width * 0.5, y: size.height * 0.65))
-        
-        // Конечная точка (правая часть)
-        path.addLine(to: CGPoint(x: size.width * 0.95, y: size.height * 0.0))
-        
-        checkmarkLayer.path = path.cgPath
-        checkmarkLayer.lineCap = .round
-        checkmarkLayer.lineJoin = .round
-        checkmarkLayer.isHidden = false
-    }
-    
-    private func clearCheckmark() {
-        checkmarkLayer.isHidden = true
-    }
-    
-    // MARK: - Gesture methods
-    
-    private func setupTapGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        tapGesture.cancelsTouchesInView = false
-        contentView.addGestureRecognizer(tapGesture)
-    }
-    
-    private func setupPanGesture() {
-        panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
-        panGesture.cancelsTouchesInView = false
-        panGesture.delegate = self
-        addGestureRecognizer(panGesture)
-    }
-    
-    @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
-        let translation = gesture.translation(in: self)
-        switch gesture.state {
-        case .began:
-            originalCenter = center
-            
-        case .changed:
-            center.x = originalCenter.x + translation.x
-            
-            if translation.x < 0 {
-                deleteHabitIcon.alpha = min(1, abs(translation.x) / 100)
-                deleteHabitLabel.alpha = 1
-                changeHabitIcon.alpha = 0
-                changeHabitLabel.alpha = 0
-            } else {
-                changeHabitIcon.alpha = min(1, translation.x / 100)
-                changeHabitLabel.alpha = 1
-                deleteHabitIcon.alpha = 0
-                deleteHabitLabel.alpha = 0
-            }
-            
-        case .ended:
-            if translation.x < -100 {
-                UIView.animate(withDuration: 0.2) {
-                    self.center.x = self.originalCenter.x - self.bounds.width
-                } completion: { _ in
-                    NotificationCenter.default.post(name: Notification.Name("DeleteHabit"), object: self)
-                }
-            } else if translation.x > 100 {
-                NotificationCenter.default.post(name: Notification.Name("ChangeHabit"), object: self)
-                resetPosition()
-            } else {
-                resetPosition()
-            }
-            
-        default:
-            break
-        }
-    }
-
-    private func resetPosition() {
-        UIView.animate(withDuration: 0.3) {
-            self.center = self.originalCenter
-            self.deleteHabitIcon.alpha = 0
-            self.changeHabitIcon.alpha = 0
-            self.deleteHabitLabel.alpha = 0
-            self.changeHabitLabel.alpha = 0
-        }
-    }
-    
-    // MARK: - Handle tap
-    
-    @objc private func handleTap() {
-        print("Cell tapped!")
-        guard var habit = habit, currentProgress < habit.frequency else { return }
-        
-        currentProgress += 1
-        habit.progress[Date()] = currentProgress
-        UserDefaultsManager.shared.updateHabit(habit)
-        updateHabitProgress()
-    }
-    
-    private func updateHabitProgress() {
-        guard let habit = habit else { return }
-        
-        let totalWidth = contentView.bounds.width
-        let percentage = CGFloat(currentProgress) / CGFloat(habit.frequency)
-        let newWidth = totalWidth * percentage
-        
-        habitsCount.text = "\(currentProgress) из \(habit.frequency)"
-        percentDone.text = "\(Int(percentage * 100))%"
-        
-        progressViewWidthConstraint.constant = newWidth
-        UIView.animate(withDuration: 0.3) {
-            self.contentView.layoutIfNeeded() 
-        }
-        
-        if percentage >= 1.0 {
-            drawCheckmark()
-        } else {
-            clearCheckmark()
-        }
     }
     
     // MARK: - Set up components
@@ -282,6 +157,161 @@ class HabitsCell: UICollectionViewCell {
             checkbox.heightAnchor.constraint(equalToConstant: 20),
             checkbox.widthAnchor.constraint(equalToConstant: 20)
         ])
+    }
+    
+    // MARK: - Checkmark methods
+    
+    private func setupCheckmarkLayer() {
+        checkmarkLayer.strokeColor = UIColor.black.cgColor
+        checkmarkLayer.fillColor = UIColor.clear.cgColor
+        checkmarkLayer.lineWidth = 2
+        checkmarkLayer.lineCap = .round
+        checkmarkLayer.lineJoin = .round
+        checkmarkLayer.isHidden = true
+        checkbox.layer.addSublayer(checkmarkLayer)
+    }
+    
+    private func drawCheckmark() {
+        let size = checkbox.bounds.size
+        let path = UIBezierPath()
+        
+        // Начальная точка (левый конец)
+        path.move(to: CGPoint(x: size.width * 0.25, y: size.height * 0.4))
+        
+        // Средняя точка (угол галочки)
+        path.addLine(to: CGPoint(x: size.width * 0.5, y: size.height * 0.65))
+        
+        // Конечная точка (правая часть)
+        path.addLine(to: CGPoint(x: size.width * 0.95, y: size.height * 0.0))
+        
+        checkmarkLayer.path = path.cgPath
+        checkmarkLayer.lineCap = .round
+        checkmarkLayer.lineJoin = .round
+        checkmarkLayer.isHidden = false
+    }
+    
+    private func clearCheckmark() {
+        checkmarkLayer.isHidden = true
+    }
+    
+    // MARK: - Gesture methods
+    
+    private func setupTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        tapGesture.cancelsTouchesInView = false
+        contentView.addGestureRecognizer(tapGesture)
+    }
+    
+    private func setupPanGesture() {
+        panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        panGesture.cancelsTouchesInView = false
+        panGesture.delegate = self
+        addGestureRecognizer(panGesture)
+    }
+    
+    // MARK: - Handle pan gesture
+    
+    @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: self)
+        switch gesture.state {
+        case .began:
+            originalCenter = center
+            
+        case .changed:
+            center.x = originalCenter.x + translation.x
+            
+            if translation.x < 0 {
+                deleteHabitIcon.alpha = min(1, abs(translation.x) / 100)
+                deleteHabitLabel.alpha = 1
+                changeHabitIcon.alpha = 0
+                changeHabitLabel.alpha = 0
+            } else {
+                changeHabitIcon.alpha = min(1, translation.x / 100)
+                changeHabitLabel.alpha = 1
+                deleteHabitIcon.alpha = 0
+                deleteHabitLabel.alpha = 0
+            }
+            
+        case .ended:
+            if translation.x < -100 {
+                UIView.animate(withDuration: 0.2) {
+                    self.center.x = self.originalCenter.x - self.bounds.width
+                } completion: { _ in
+                    NotificationCenter.default.post(name: Notification.Name("DeleteHabit"), object: self)
+                }
+            } else if translation.x > 100 {
+                NotificationCenter.default.post(name: Notification.Name("ChangeHabit"), object: self)
+                resetPosition()
+            } else {
+                resetPosition()
+            }
+            
+        default:
+            break
+        }
+    }
+
+    private func resetPosition() {
+        UIView.animate(withDuration: 0.3) {
+            self.center = self.originalCenter
+            self.deleteHabitIcon.alpha = 0
+            self.changeHabitIcon.alpha = 0
+            self.deleteHabitLabel.alpha = 0
+            self.changeHabitLabel.alpha = 0
+        }
+    }
+    
+    // MARK: - Handle tap gesture
+    
+    @objc private func handleTap() {
+        print("Cell tapped!")
+        guard var habit = habit, currentProgress < habit.frequency else { return }
+        
+        currentProgress += 1
+        habit.progress[Date()] = currentProgress
+        UserDefaultsManager.shared.updateHabit(habit)
+        updateHabitProgress()
+    }
+    
+    private func updateHabitProgress() {
+        guard let habit = habit else { return }
+        
+        let totalWidth = contentView.bounds.width
+        let percentage = CGFloat(currentProgress) / CGFloat(habit.frequency)
+        let newWidth = totalWidth * percentage
+        
+        habitsCount.text = "\(currentProgress) из \(habit.frequency)"
+        percentDone.text = "\(Int(percentage * 100))%"
+        
+        progressViewWidthConstraint.constant = newWidth
+        UIView.animate(withDuration: 0.3) {
+            self.contentView.layoutIfNeeded() 
+        }
+        
+        if percentage >= 1.0 {
+            drawCheckmark()
+        } else {
+            clearCheckmark()
+        }
+    }
+    
+    // MARK: - Handle long press
+    
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+            let cancelAction = UIAction(title: "Отменить выполнение", image: UIImage(systemName: "xmark.circle")) { _ in
+                guard let habit = self.habit else { return }
+                self.delegate?.markHabitAsNotCompleted(habit: habit)
+            }
+            
+            let skipAction = UIAction(title: "Пропустить сегодня", image: UIImage(systemName: "forward")) { _ in
+                guard let habit = self.habit else { return }
+                self.delegate?.skipToday(habit: habit)
+            }
+            
+            return UIMenu(title: "Опции", children: [cancelAction, skipAction])
+        }
     }
     
     // MARK: - Configure method
