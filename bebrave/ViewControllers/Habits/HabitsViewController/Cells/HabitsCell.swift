@@ -7,12 +7,25 @@
 
 import UIKit
 
+// TODO: - Разделить код на разные файлы. Что-то тут точно можно вынести в другие
+
 class HabitsCell: UICollectionViewCell {
     
+    // MARK: - Properties
+    
+        private var habit: Habit?
+        private var currentProgress: Int = 0 {
+            didSet {
+                updateHabitProgress()
+            }
+        }
+        
+    private let checkmarkLayer = CAShapeLayer()
     private var panGesture: UIPanGestureRecognizer!
     private var originalCenter: CGPoint = .zero
+    private var progressViewWidthConstraint: NSLayoutConstraint!
     
-    // МARK: - UI components for swipe
+    // MARK: -  UI components for swipe
     
     private lazy var deleteHabitIcon = createImageView(imageName: "DeleteHabit", tintColor: .red, alpha: 0)
     private lazy var changeHabitIcon = createImageView(imageName: "ChangeHabit", tintColor: AppStyle.Colors.secondaryColor, alpha: 0)
@@ -37,6 +50,12 @@ class HabitsCell: UICollectionViewCell {
         return stack
     }()
     
+    private let progressView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGreen
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     // MARK: - Init
     
@@ -46,6 +65,7 @@ class HabitsCell: UICollectionViewCell {
         setupTapGesture()
         setupPanGesture()
         setupIcons()
+        setupCheckmarkLayer()
     }
     
     required init?(coder: NSCoder) {
@@ -58,6 +78,33 @@ class HabitsCell: UICollectionViewCell {
         changeHabitIcon.alpha = 0
         deleteHabitLabel.alpha = 0
         changeHabitIcon.alpha = 0
+    }
+    
+    // MARK: - Checkmark methods
+    
+    private func setupCheckmarkLayer() {
+        checkmarkLayer.strokeColor = UIColor.black.cgColor
+        checkmarkLayer.fillColor = UIColor.clear.cgColor
+        checkmarkLayer.lineWidth = 2
+        checkmarkLayer.lineCap = .round
+        checkmarkLayer.lineJoin = .round
+        checkmarkLayer.isHidden = true
+        checkbox.layer.addSublayer(checkmarkLayer)
+    }
+    
+    private func drawCheckmark() {
+        let size = checkbox.bounds.size
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: size.width * 0.2, y: size.height * 0.5))
+        path.addLine(to: CGPoint(x: size.width * 0.4, y: size.height * 0.7))
+        path.addLine(to: CGPoint(x: size.width * 0.8, y: size.height * 0.3))
+        
+        checkmarkLayer.path = path.cgPath
+        checkmarkLayer.isHidden = false
+    }
+    
+    private func clearCheckmark() {
+        checkmarkLayer.isHidden = true
     }
     
     // MARK: - Gesture methods
@@ -125,8 +172,37 @@ class HabitsCell: UICollectionViewCell {
         }
     }
     
+    // MARK: - Handle tap
+    
     @objc private func handleTap() {
         print("Cell tapped!")
+        guard var habit = habit, currentProgress < habit.frequency else { return }
+        
+        currentProgress += 1
+        habit.progress[Date()] = currentProgress
+        updateHabitProgress()
+    }
+    
+    private func updateHabitProgress() {
+        guard let habit = habit else { return }
+        
+        let totalWidth = contentView.bounds.width
+        let percentage = CGFloat(currentProgress) / CGFloat(habit.frequency)
+        let newWidth = totalWidth * percentage
+        
+        habitsCount.text = "\(currentProgress) из \(habit.frequency)"
+        percentDone.text = "\(Int(percentage * 100))%"
+        
+        progressViewWidthConstraint.constant = newWidth
+        UIView.animate(withDuration: 0.3) {
+            self.contentView.layoutIfNeeded() 
+        }
+        
+        if percentage >= 1.0 {
+            drawCheckmark()
+        } else {
+            clearCheckmark()
+        }
     }
     
     // MARK: - Set up components
@@ -164,11 +240,22 @@ class HabitsCell: UICollectionViewCell {
     }
     
     private func setupComponents() {
-        addSubviewsToStackView(horizontalStackView, views: [habitsName, starDivider, habitsCount])
+        contentView.addSubview(progressView)
+        contentView.sendSubviewToBack(progressView)
+        progressViewWidthConstraint = progressView.widthAnchor.constraint(equalToConstant: 0)
+        
+        NSLayoutConstraint.activate([
+            progressView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            progressView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            progressView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            progressViewWidthConstraint
+        ])
         
         contentView.addSubview(horizontalStackView)
         contentView.addSubview(percentDone)
         contentView.addSubview(checkbox)
+        
+        addSubviewsToStackView(horizontalStackView, views: [habitsName, starDivider, habitsCount])
         
         NSLayoutConstraint.activate([
             horizontalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
@@ -190,10 +277,10 @@ class HabitsCell: UICollectionViewCell {
     // MARK: - Configure method
     
     func configure(with habit: Habit) {
+        self.habit = habit
+        self.currentProgress = habit.progress.values.reduce(0, +) // Рассчитываем текущий прогресс
         habitsName.text = habit.title
-        habitsCount.text = "\(habit.progress.values.reduce(0, +)) из \(habit.frequency)"
-        let percentage = Int((Double(habit.progress.values.reduce(0, +)) / Double(habit.frequency)) * 100)
-        percentDone.text = "\(percentage)%"
+        updateHabitProgress()
     }
 }
 
