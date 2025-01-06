@@ -45,7 +45,7 @@ extension NewHabitViewController {
         
         delegate?.willHideEmptyStateView()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             self.delegate?.didAddNewHabit(newHabit)
             print("Привычка сохранена: \(newHabit.title)")
             self.dismiss(animated: true, completion: nil)
