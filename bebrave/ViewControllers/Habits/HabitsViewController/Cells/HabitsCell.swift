@@ -241,7 +241,6 @@ class HabitsCell: UICollectionViewCell {
     
     private func setupComponents() {
         contentView.addSubview(progressView)
-        contentView.sendSubviewToBack(progressView)
         progressViewWidthConstraint = progressView.widthAnchor.constraint(equalToConstant: 0)
         
         NSLayoutConstraint.activate([
