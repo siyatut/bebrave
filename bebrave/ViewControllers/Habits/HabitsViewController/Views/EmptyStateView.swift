@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EmptyStateView: UICollectionReusableView {
+class EmptyStateView: UIView{
     
     // MARK: - UI components
     
