@@ -52,7 +52,7 @@ class HabitsCell: UICollectionViewCell {
     
     private let progressView: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemGreen
+        view.backgroundColor = AppStyle.Colors.progressViewColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -277,7 +277,7 @@ class HabitsCell: UICollectionViewCell {
     
     func configure(with habit: Habit) {
         self.habit = habit
-        self.currentProgress = habit.progress.values.reduce(0, +) // Рассчитываем текущий прогресс
+        self.currentProgress = habit.progress.values.reduce(0, +)
         habitsName.text = habit.title
         updateHabitProgress()
     }
