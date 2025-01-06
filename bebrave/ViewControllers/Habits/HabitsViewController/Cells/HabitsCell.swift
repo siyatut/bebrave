@@ -222,8 +222,8 @@ class HabitsCell: UICollectionViewCell {
             deleteHabitIcon.topAnchor.constraint(equalTo: topAnchor, constant: 13),
             changeHabitIcon.topAnchor.constraint(equalTo: topAnchor, constant: 13),
         
-            deleteHabitIcon.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 30),
-            changeHabitIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -30),
+            deleteHabitIcon.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 45),
+            changeHabitIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -45),
             deleteHabitLabel.centerXAnchor.constraint(equalTo: deleteHabitIcon.centerXAnchor),
             changeHabitLabel.centerXAnchor.constraint(equalTo: changeHabitIcon.centerXAnchor),
             
