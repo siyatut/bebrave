@@ -190,6 +190,7 @@ class HabitsCell: UICollectionViewCell {
         
         currentProgress += 1
         habit.progress[Date()] = currentProgress
+        UserDefaultsManager.shared.updateHabit(habit)
         updateHabitProgress()
     }
     
@@ -286,8 +287,14 @@ class HabitsCell: UICollectionViewCell {
     // MARK: - Configure method
     
     func configure(with habit: Habit) {
-        self.habit = habit
-        self.currentProgress = habit.progress.values.reduce(0, +)
+        
+        if let savedHabit = UserDefaultsManager.shared.loadHabits().first(where: { $0.id == habit.id }) {
+            self.habit = savedHabit
+        } else {
+            self.habit = habit
+        }
+        
+        self.currentProgress = self.habit?.progress.values.reduce(0, +) ?? 0
         habitsName.text = habit.title
         updateHabitProgress()
     }
