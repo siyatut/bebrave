@@ -53,6 +53,8 @@ class HabitsCell: UICollectionViewCell {
     private let progressView: UIView = {
         let view = UIView()
         view.backgroundColor = AppStyle.Colors.progressViewColor
+        view.layer.cornerRadius = AppStyle.Sizes.cornerRadius
+        view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
