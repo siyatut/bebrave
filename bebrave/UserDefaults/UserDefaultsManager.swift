@@ -6,7 +6,14 @@
 //
 
 
-import Foundation
+import UIKit
+
+enum HabitStatus {
+    case notCompleted
+    case partiallyCompleted(progress: Int, total: Int)
+    case completed
+    case skipped
+}
 
 // MARK: - Habit Model
 
@@ -15,6 +22,7 @@ struct Habit: Codable {
     var title: String
     var frequency: Int
     var progress: [Date: Int]
+    var skipDates: Set<Date>
 }
 
 // MARK: - Habit Factory
@@ -25,7 +33,8 @@ extension Habit {
             id: UUID(),
             title: title,
             frequency: frequency,
-            progress: [:]
+            progress: [:],
+            skipDates: []
         )
     }
 }
@@ -44,13 +53,32 @@ final class UserDefaultsManager {
     
     private init() {}
     
-// MARK: - Keys
+    // MARK: - Keys
     
     private enum Keys {
         static let habits = "user_habits_key"
     }
     
-// MARK: - Public Methods
+    // MARK: - Public Methods
+    
+    func resetUncompletedHabits() {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let yesterday = calendar.date(byAdding: .day, value: -1, to: today)!
+        
+        var habits = loadHabits()
+        for index in habits.indices {
+            if let lastProgressDate = habits[index].progress.keys.max(),
+               !calendar.isDate(lastProgressDate, inSameDayAs: today) {
+                // Если вчерашний день не был отмечен как пропущенный и не был выполнен
+                if !habits[index].skipDates.contains(yesterday) &&
+                    (habits[index].progress[yesterday] ?? 0) < habits[index].frequency {
+                    habits[index].progress[yesterday] = 0
+                }
+            }
+        }
+        saveHabits(habits)
+    }
     
     func saveHabits(_ habits: [Habit]) {
         do {
@@ -94,57 +122,61 @@ final class UserDefaultsManager {
     }
 }
 
-extension UserDefaultsManager {
-    func resetUncompletedHabits() {
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: Date())
-        
-        var habits = loadHabits()
-        for index in habits.indices {
-            // Если привычка не обновлена сегодня, сбросить её прогресс
-            if let lastProgressDate = habits[index].progress.keys.max(),
-               !calendar.isDate(lastProgressDate, inSameDayAs: today) {
-                habits[index].progress[today] = 0 // Условно "невыполнено"
-            }
-        }
-        saveHabits(habits)
-    }
-}
+// MARK: - Habit progress management
 
 extension Habit {
-    /// Проверяет, выполнена ли привычка за сегодня
-    func isCompletedToday() -> Bool {
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: Date())
-        return progress.keys.contains { calendar.isDate($0, inSameDayAs: today) }
-    }
-    
-    /// Отмечает привычку как выполненную
     mutating func markCompleted() {
         let today = Calendar.current.startOfDay(for: Date())
-        progress[today] = (progress[today] ?? 0) + 1
+        let currentProgress = progress[today] ?? 0
+        if currentProgress < frequency {
+            progress[today] = currentProgress + 1
+        }
     }
     
-    /// Пропускает текущий день
+    mutating func undoCompletion() {
+        let today = Calendar.current.startOfDay(for: Date())
+        let currentProgress = progress[today] ?? 0
+        if currentProgress > 0 {
+            progress[today] = currentProgress - 1
+        }
+    }
+    
     mutating func skipToday() {
         let today = Calendar.current.startOfDay(for: Date())
-        progress[today] = -1 // Условный "пропуск"
+        skipDates.insert(today)
     }
     
-    /// Сбрасывает выполнение привычки за сегодня
-    mutating func resetToday() {
-        let today = Calendar.current.startOfDay(for: Date())
-        progress[today] = nil
+    func getStatus(for date: Date = Date()) -> HabitStatus {
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: date)
+        
+        if skipDates.contains(startOfDay) {
+            return .skipped
+        }
+        
+        let progressForDay = progress[startOfDay] ?? 0
+        
+        if progressForDay == 0 {
+            return .notCompleted
+        } else if progressForDay < frequency {
+            return .partiallyCompleted(progress: progressForDay, total: frequency)
+        } else {
+            return .completed
+        }
     }
-}
-
-extension UserDefaultsManager {
-    func updateProgress(for habitID: UUID, date: Date, value: Int) {
-        var habits = loadHabits()
-        if let index = habits.firstIndex(where: { $0.id == habitID }) {
-            habits[index].progress[date] = value
-            saveHabits(habits)
+    
+    func getColor(for date: Date = Date()) -> UIColor {
+        switch getStatus(for: date) {
+        case .notCompleted:
+            return AppStyle.Colors.isUncompletedHabit
+        case .partiallyCompleted:
+            return AppStyle.Colors.progressViewColor
+        case .completed:
+            return AppStyle.Colors.progressViewColor
+        case .skipped:
+            return AppStyle.Colors.isSkippedHabit
         }
     }
 }
+
 

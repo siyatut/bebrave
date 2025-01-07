@@ -103,7 +103,7 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         UserDefaultsManager.shared.resetUncompletedHabits()
         habits = UserDefaultsManager.shared.loadHabits()
         collectionView.reloadData()
-        scheduleMidnightCheck() // Перезапуск таймера для следующего дня
+        scheduleMidnightCheck()
     }
 }
 
@@ -111,14 +111,15 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
 extension HabitsViewController: HabitCellDelegate {
     func markHabitAsNotCompleted(habit: Habit) {
         var updatedHabit = habit
-        updatedHabit.resetToday()
+        let today = Calendar.current.startOfDay(for: Date())
+        updatedHabit.progress[today] = 0  // Сбрасываем прогресс на сегодня
         UserDefaultsManager.shared.updateHabit(updatedHabit)
         collectionView.reloadData()
     }
 
     func skipToday(habit: Habit) {
         var updatedHabit = habit
-        updatedHabit.skipToday()
+        updatedHabit.skipDates.insert(Calendar.current.startOfDay(for: Date()))
         UserDefaultsManager.shared.updateHabit(updatedHabit)
         collectionView.reloadData()
     }

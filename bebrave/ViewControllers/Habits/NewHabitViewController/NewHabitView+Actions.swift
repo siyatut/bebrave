@@ -39,7 +39,8 @@ extension NewHabitViewController {
             id: UUID(),
             title: title,
             frequency: frequency,
-            progress: [:]
+            progress: [:],
+            skipDates: []
         )
         UserDefaultsManager.shared.addHabit(newHabit)
         

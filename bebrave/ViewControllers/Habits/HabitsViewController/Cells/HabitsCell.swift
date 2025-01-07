@@ -14,6 +14,12 @@ protocol HabitCellDelegate: AnyObject {
     func skipToday(habit: Habit)
 }
 
+private enum HabitColors {
+    static let normal = AppStyle.Colors.progressViewColor
+    static let skipped = AppStyle.Colors.isSkippedHabit
+    static let notCompleted = AppStyle.Colors.isUncompletedHabit
+}
+
 class HabitsCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
     
     // MARK: - Properties
@@ -59,8 +65,6 @@ class HabitsCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
     private let progressView: UIView = {
         let view = UIView()
         view.backgroundColor = AppStyle.Colors.progressViewColor
-        view.layer.cornerRadius = AppStyle.Sizes.cornerRadius
-        view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -105,7 +109,7 @@ class HabitsCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
         NSLayoutConstraint.activate([
             deleteHabitIcon.topAnchor.constraint(equalTo: topAnchor, constant: 13),
             changeHabitIcon.topAnchor.constraint(equalTo: topAnchor, constant: 13),
-        
+            
             deleteHabitIcon.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 45),
             changeHabitIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -45),
             deleteHabitLabel.centerXAnchor.constraint(equalTo: deleteHabitIcon.centerXAnchor),
@@ -250,7 +254,7 @@ class HabitsCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
             break
         }
     }
-
+    
     private func resetPosition() {
         UIView.animate(withDuration: 0.3) {
             self.center = self.originalCenter
@@ -267,10 +271,15 @@ class HabitsCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
         print("Cell tapped!")
         guard var habit = habit, currentProgress < habit.frequency else { return }
         
-        currentProgress += 1
-        habit.progress[Date()] = currentProgress
-        UserDefaultsManager.shared.updateHabit(habit)
-        updateHabitProgress()
+        let today = Calendar.current.startOfDay(for: Date())
+        
+        // Если еще не достигнут максимум выполнений
+        if currentProgress < habit.frequency {
+            currentProgress += 1
+            habit.progress[today] = currentProgress
+            UserDefaultsManager.shared.updateHabit(habit)
+            updateHabitProgress()
+        }
     }
     
     private func updateHabitProgress() {
@@ -285,7 +294,7 @@ class HabitsCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
         
         progressViewWidthConstraint.constant = newWidth
         UIView.animate(withDuration: 0.3) {
-            self.contentView.layoutIfNeeded() 
+            self.contentView.layoutIfNeeded()
         }
         
         if percentage >= 1.0 {
@@ -300,13 +309,13 @@ class HabitsCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
         
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-            let cancelAction = UIAction(title: "Отменить выполнение", image: UIImage(systemName: "xmark.circle")) { _ in
-                guard let habit = self.habit else { return }
+            let cancelAction = UIAction(title: "Отменить выполнение", image: UIImage(systemName: "xmark.circle")) { [weak self] _ in
+                guard let self = self, let habit = self.habit else { return }
                 self.delegate?.markHabitAsNotCompleted(habit: habit)
             }
             
-            let skipAction = UIAction(title: "Пропустить сегодня", image: UIImage(systemName: "forward")) { _ in
-                guard let habit = self.habit else { return }
+            let skipAction = UIAction(title: "Пропустить сегодня", image: UIImage(systemName: "forward")) { [weak self] _ in
+                guard let self = self, let habit = self.habit else { return }
                 self.delegate?.skipToday(habit: habit)
             }
             
@@ -320,13 +329,41 @@ class HabitsCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
         
         if let savedHabit = UserDefaultsManager.shared.loadHabits().first(where: { $0.id == habit.id }) {
             self.habit = savedHabit
+            
+            // Получаем сегодняшнюю дату
+            let today = Calendar.current.startOfDay(for: Date())
+            
+            // Проверяем статус на сегодня
+            if savedHabit.skipDates.contains(today) {
+                // Привычка пропущена
+                contentView.backgroundColor = HabitColors.skipped
+                habitsCount.text = "0"
+                percentDone.text = "0%"
+                clearCheckmark()
+                progressViewWidthConstraint.constant = 0
+            } else {
+                // Получаем прогресс за сегодня
+                self.currentProgress = savedHabit.progress[today] ?? 0
+                
+                if currentProgress == 0 {
+                    // Не выполнено
+                    contentView.backgroundColor = HabitColors.notCompleted
+                } else {
+                    // В процессе или выполнено
+                    progressView.backgroundColor = HabitColors.normal
+                }
+                
+                updateHabitProgress()
+            }
         } else {
             self.habit = habit
+            self.currentProgress = 0
+            updateHabitProgress()
         }
         
-        self.currentProgress = self.habit?.progress.values.reduce(0, +) ?? 0
         habitsName.text = habit.title
-        updateHabitProgress()
+        contentView.layer.cornerRadius = AppStyle.Sizes.cornerRadius
+        contentView.clipsToBounds = true
     }
 }
 
