@@ -14,12 +14,6 @@ protocol HabitCellDelegate: AnyObject {
     func skipToday(habit: Habit)
 }
 
-private enum HabitColors {
-    static let normal = AppStyle.Colors.progressViewColor
-    static let skipped = AppStyle.Colors.isSkippedHabit
-    static let notCompleted = AppStyle.Colors.isUncompletedHabit
-}
-
 class HabitsCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
     
     // MARK: - Properties
@@ -269,16 +263,24 @@ class HabitsCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
     
     @objc private func handleTap() {
         print("Cell tapped!")
-        guard var habit = habit, currentProgress < habit.frequency else { return }
-        
+        guard var habit = habit else { return }
         let today = Calendar.current.startOfDay(for: Date())
         
-        // Если еще не достигнут максимум выполнений
-        if currentProgress < habit.frequency {
-            currentProgress += 1
-            habit.progress[today] = currentProgress
+        if habit.skipDates.contains(today) {
+            habit.skipDates.remove(today)
+            
+            habit.progress[today] = 0
+            currentProgress = 0
             UserDefaultsManager.shared.updateHabit(habit)
-            updateHabitProgress()
+            configure(with: habit)
+            return
+        }
+        
+        if currentProgress < habit.frequency {
+            habit.markCompleted()
+            currentProgress += 1
+            UserDefaultsManager.shared.updateHabit(habit)
+            configure(with: habit)
         }
     }
     
@@ -326,44 +328,36 @@ class HabitsCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
     // MARK: - Configure method
     
     func configure(with habit: Habit) {
+        self.habit = habit
+        let today = Calendar.current.startOfDay(for: Date())
+        let status = habit.getStatus(for: today)
+        let progressColor: UIColor
         
-        if let savedHabit = UserDefaultsManager.shared.loadHabits().first(where: { $0.id == habit.id }) {
-            self.habit = savedHabit
-            
-            // Получаем сегодняшнюю дату
-            let today = Calendar.current.startOfDay(for: Date())
-            
-            // Проверяем статус на сегодня
-            if savedHabit.skipDates.contains(today) {
-                // Привычка пропущена
-                contentView.backgroundColor = HabitColors.skipped
-                habitsCount.text = "0"
-                percentDone.text = "0%"
-                clearCheckmark()
-                progressViewWidthConstraint.constant = 0
-            } else {
-                // Получаем прогресс за сегодня
-                self.currentProgress = savedHabit.progress[today] ?? 0
-                
-                if currentProgress == 0 {
-                    // Не выполнено
-                    contentView.backgroundColor = HabitColors.notCompleted
-                } else {
-                    // В процессе или выполнено
-                    progressView.backgroundColor = HabitColors.normal
-                }
-                
-                updateHabitProgress()
-            }
-        } else {
-            self.habit = habit
-            self.currentProgress = 0
+        switch status {
+        case .notCompleted:
+            progressColor = Calendar.current.isDateInToday(today) ?
+            AppStyle.Colors.backgroundColor : AppStyle.Colors.isUncompletedHabit
+            currentProgress = 0
+            clearCheckmark()
+        case .partiallyCompleted(let progress, _):
+            currentProgress = progress
+            progressColor = AppStyle.Colors.backgroundColor
             updateHabitProgress()
+        case .completed:
+            currentProgress = habit.frequency
+            progressColor = AppStyle.Colors.progressViewColor
+            drawCheckmark()
+        case .skipped:
+            currentProgress = 0
+            progressColor = AppStyle.Colors.isSkippedHabit
+            clearCheckmark()
         }
         
-        habitsName.text = habit.title
+        contentView.layer.backgroundColor = progressColor.cgColor
         contentView.layer.cornerRadius = AppStyle.Sizes.cornerRadius
-        contentView.clipsToBounds = true
+        contentView.layer.masksToBounds = true
+        
+        habitsName.text = habit.title
     }
 }
 

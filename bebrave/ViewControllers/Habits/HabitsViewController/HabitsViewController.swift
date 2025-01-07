@@ -5,9 +5,11 @@
 //  Created by Anastasia Tyutinova on 14/2/2567 BE.
 //
 
-#warning("№1: Доделать: если пользователь решил отменить выполнение, то прогресс должен уменьшиться на 1. Если решил пропустить сегодня, то привычка должна закраситься жёлтым. Если он не выполнил вообще (после 00:00 по таймзоне юзера), то серым. UPD: частично сделала, но не всё гладко работает, пересмотреть в HabitsCell")
+#warning("№1: Доделать плавность обновления UI после изменения статуса выполнения привычки. При отмене выполнения особенно жёстко заметно и при изменении на пропустить сегодня")
 
 #warning("№2: Переделать swipe gesture по типу реализации в Telegram. Убрать реализацию именно свайпа, мб кроме удаления. Посмотреть по ситуации. Тогда слева будет: «Изменить», «Отменить», «Пропустить», а справа «Удалить»")
+
+#warning("№3: Когда создать экран «История», проверить корректность работы статуса привычки «Не выполнена», если пользователь до 00:00 по своей таймзоне никак не взаимодействовал с ней")
 
 import UIKit
 
@@ -51,6 +53,8 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         setupHistoryButton()
         setupCalendarLabel()
         setupNotificationObserver()
+        
+        // Вот это логика для невыполненной привычки:
         UserDefaultsManager.shared.resetUncompletedHabits()
         habits = UserDefaultsManager.shared.loadHabits()
         scheduleMidnightCheck()
@@ -113,16 +117,25 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
 extension HabitsViewController: HabitCellDelegate {
     func markHabitAsNotCompleted(habit: Habit) {
         var updatedHabit = habit
-        let today = Calendar.current.startOfDay(for: Date())
-        updatedHabit.progress[today] = 0  // Сбрасываем прогресс на сегодня
+        updatedHabit.undoCompletion()
         UserDefaultsManager.shared.updateHabit(updatedHabit)
-        collectionView.reloadData()
+        
+        if let index = habits.firstIndex(where: { $0.id == habit.id }) {
+            habits[index] = updatedHabit
+            let indexPath = IndexPath(item: index, section: 0)
+            collectionView.reloadItems(at: [indexPath])
+        }
     }
 
     func skipToday(habit: Habit) {
         var updatedHabit = habit
-        updatedHabit.skipDates.insert(Calendar.current.startOfDay(for: Date()))
+        updatedHabit.skipToday()
         UserDefaultsManager.shared.updateHabit(updatedHabit)
-        collectionView.reloadData()
+        
+        if let index = habits.firstIndex(where: { $0.id == habit.id }) {
+            habits[index] = updatedHabit
+            let indexPath = IndexPath(item: index, section: 0)
+            collectionView.reloadItems(at: [indexPath])
+        }
     }
 }

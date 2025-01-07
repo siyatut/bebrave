@@ -69,12 +69,11 @@ final class UserDefaultsManager {
         var habits = loadHabits()
         for index in habits.indices {
             if let lastProgressDate = habits[index].progress.keys.max(),
-               !calendar.isDate(lastProgressDate, inSameDayAs: today) {
-                // Если вчерашний день не был отмечен как пропущенный и не был выполнен
-                if !habits[index].skipDates.contains(yesterday) &&
-                    (habits[index].progress[yesterday] ?? 0) < habits[index].frequency {
-                    habits[index].progress[yesterday] = 0
-                }
+               calendar.isDate(lastProgressDate, inSameDayAs: yesterday),
+               (habits[index].progress[yesterday] ?? 0) < habits[index].frequency,
+               !habits[index].skipDates.contains(yesterday) {
+                
+                habits[index].progress[yesterday] = 0
             }
         }
         saveHabits(habits)
@@ -125,6 +124,7 @@ final class UserDefaultsManager {
 // MARK: - Habit progress management
 
 extension Habit {
+    
     mutating func markCompleted() {
         let today = Calendar.current.startOfDay(for: Date())
         let currentProgress = progress[today] ?? 0
@@ -162,19 +162,6 @@ extension Habit {
             return .partiallyCompleted(progress: progressForDay, total: frequency)
         } else {
             return .completed
-        }
-    }
-    
-    func getColor(for date: Date = Date()) -> UIColor {
-        switch getStatus(for: date) {
-        case .notCompleted:
-            return AppStyle.Colors.isUncompletedHabit
-        case .partiallyCompleted:
-            return AppStyle.Colors.progressViewColor
-        case .completed:
-            return AppStyle.Colors.progressViewColor
-        case .skipped:
-            return AppStyle.Colors.isSkippedHabit
         }
     }
 }
