@@ -18,6 +18,8 @@ struct AppStyle {
         static let disabledButtonColor = UIColor.systemGray5
         static let backgroundEmptyStateColor = UIColor(named: "MyGrayColor") ?? .lightGray
         static let progressViewColor = UIColor(named: "MyGreenColor") ?? .systemGreen
+        static let isSkippedHabit = UIColor(named: "MyYellowColor") ?? .systemYellow
+        static let isUncompletedHabit = UIColor(named: "MyLightGrayColor") ?? .lightGray
     }
     
     struct Sizes {
