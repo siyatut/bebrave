@@ -15,6 +15,7 @@ class HabitEmojiCalculator {
         var totalFrequency = 0
         var skippedCount = 0
         
+        // Скипнутые привычки не влияют на расчёт эмодзи. Думаю, это в целом логично
         for habit in habits {
             let status = habit.getStatus(for: startOfDay)
             switch status {
