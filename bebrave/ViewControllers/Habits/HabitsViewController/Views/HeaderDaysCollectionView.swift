@@ -7,6 +7,8 @@
 
 import UIKit
 
+// TODO: -  Разделить код на разные файлы. Что-то тут точно можно вынести в другие
+
 class HeaderDaysCollectionView: UICollectionReusableView {
     
     // MARK: - UI components
