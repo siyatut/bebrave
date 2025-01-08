@@ -9,6 +9,8 @@
 
 #warning("№2: Когда создать экран «История», проверить корректность работы статуса привычки «Не выполнена», если пользователь до 00:00 по своей таймзоне никак не взаимодействовал с ней")
 
+#warning("№3: Как будто есть баг с сохранением прогресса привычки при перезапуске приложения")
+
 import UIKit
 
 class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {

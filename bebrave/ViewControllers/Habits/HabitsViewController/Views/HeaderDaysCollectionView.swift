@@ -74,10 +74,51 @@ class HeaderDaysCollectionView: UICollectionReusableView {
             return
         }
         
+        let habits = UserDefaultsManager.shared.loadHabits()
+
         daysData = (0..<7).compactMap { dayOffset -> (date: Date, emoji: String)? in
             guard let date = calendar.date(byAdding: .day, value: dayOffset, to: startOfWeek) else { return nil }
-            let emoji = "😌"
-            return (date: calendar.startOfDay(for: date), emoji: emoji)
+            let startOfDay = calendar.startOfDay(for: date)
+            
+            var totalProgress = 0
+            var totalFrequency = 0
+            var skippedCount = 0
+            
+            for habit in habits {
+                let status = habit.getStatus(for: startOfDay)
+                switch status {
+                case .completed:
+                    totalProgress += habit.frequency
+                    totalFrequency += habit.frequency
+                case .partiallyCompleted(let progress, let total):
+                    totalProgress += progress
+                    totalFrequency += total
+                case .skipped:
+                    skippedCount += 1
+                case .notCompleted:
+                    totalFrequency += habit.frequency
+                }
+            }
+            
+            if skippedCount == habits.count && habits.count > 0 {
+                return (date: startOfDay, emoji: "💤")
+            }
+            
+            let completionRate = totalFrequency > 0 ? (totalProgress * 100) / totalFrequency : 0
+            
+            let emoji: String
+            switch completionRate {
+            case 80...100:
+                emoji = "🎉" // Отлично
+            case 50..<80:
+                emoji = "🙂" // Хорошо
+            case 20..<50:
+                emoji = "😕" // Так себе
+            default:
+                emoji = "😞" // Плохо
+            }
+            
+            return (date: startOfDay, emoji: emoji)
         }
         collectionView.reloadData()
     }
