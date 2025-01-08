@@ -131,6 +131,7 @@ extension Habit {
         let currentProgress = progress[today] ?? 0
         if currentProgress < frequency {
             progress[today] = currentProgress + 1
+            UserDefaultsManager.shared.updateHabit(self)
         }
     }
     
@@ -139,12 +140,14 @@ extension Habit {
         let currentProgress = progress[today] ?? 0
         if currentProgress > 0 {
             progress[today] = currentProgress - 1
+            UserDefaultsManager.shared.updateHabit(self)
         }
     }
     
     mutating func skipToday() {
         let today = Calendar.current.startOfDay(for: Date())
         skipDates.insert(today)
+        UserDefaultsManager.shared.updateHabit(self)
     }
     
     func getStatus(for date: Date = Date()) -> HabitStatus {
