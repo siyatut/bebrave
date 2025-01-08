@@ -50,7 +50,7 @@ enum UserDefaultsKeys {
 final class UserDefaultsManager {
     static let shared = UserDefaultsManager()
     private let defaults = UserDefaults.standard
-    
+   
     private init() {}
     
     // MARK: - Keys
@@ -68,13 +68,14 @@ final class UserDefaultsManager {
         
         var habits = loadHabits()
         for index in habits.indices {
-            if let lastProgressDate = habits[index].progress.keys.max(),
-               calendar.isDate(lastProgressDate, inSameDayAs: yesterday),
-               (habits[index].progress[yesterday] ?? 0) < habits[index].frequency,
-               !habits[index].skipDates.contains(yesterday) {
-                
-                habits[index].progress[yesterday] = 0
+            // Проверяю: привычка была пропущена или выполнена вчера?
+            if habits[index].progress.keys.contains(yesterday) ||
+                habits[index].skipDates.contains(yesterday) {
+                continue // Пропускаю сброс для привычек, с которыми был контакт
             }
+            
+            // Если взаимодействия за вчера не было, сбрасываю прогресс
+            habits[index].progress[yesterday] = 0
         }
         saveHabits(habits)
     }
