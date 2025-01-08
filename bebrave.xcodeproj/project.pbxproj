@@ -49,6 +49,9 @@
 		52F1E56C2B7CE6B10058F767 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */; };
 		52F1E56E2B7CE6D10058F767 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */; };
 		52FBCF3A2CFF1677000206BC /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FBCF392CFF1673000206BC /* UserDefaultsManager.swift */; };
+		52FF7F432D2EB96A008EF1E2 /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FF7F422D2EB963008EF1E2 /* DayCell.swift */; };
+		52FF7F462D2EB9EF008EF1E2 /* HeaderDays+DataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FF7F452D2EB9D2008EF1E2 /* HeaderDays+DataSourceDelegate.swift */; };
+		52FF7F482D2EBACF008EF1E2 /* HabitEmojiCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FF7F472D2EBAC7008EF1E2 /* HabitEmojiCalculator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,6 +119,9 @@
 		52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
 		52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		52FBCF392CFF1673000206BC /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		52FF7F422D2EB963008EF1E2 /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCell.swift; sourceTree = "<group>"; };
+		52FF7F452D2EB9D2008EF1E2 /* HeaderDays+DataSourceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HeaderDays+DataSourceDelegate.swift"; sourceTree = "<group>"; };
+		52FF7F472D2EBAC7008EF1E2 /* HabitEmojiCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitEmojiCalculator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,6 +248,7 @@
 				52C996AC2D11EBB5000E7648 /* Models */,
 				52C996AB2D11EB8C000E7648 /* Cells */,
 				52C996AA2D11EB62000E7648 /* Views */,
+				52FF7F412D2EB909008EF1E2 /* HeaderDaysCollectionView */,
 			);
 			path = HabitsViewController;
 			sourceTree = "<group>";
@@ -249,7 +256,6 @@
 		52C996AA2D11EB62000E7648 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */,
 				523D41742C05FD3D00689F20 /* AddNewHabitView.swift */,
 				524FC7012D075063004C839F /* EmptyStateView.swift */,
 				52021A762BAC3D2000E9D8F1 /* OutlineBackgroundView.swift */,
@@ -337,6 +343,17 @@
 				52F1E55C2B7CDC330058F767 /* bebraveUITestsLaunchTests.swift */,
 			);
 			path = bebraveUITests;
+			sourceTree = "<group>";
+		};
+		52FF7F412D2EB909008EF1E2 /* HeaderDaysCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */,
+				52FF7F452D2EB9D2008EF1E2 /* HeaderDays+DataSourceDelegate.swift */,
+				52FF7F422D2EB963008EF1E2 /* DayCell.swift */,
+				52FF7F472D2EBAC7008EF1E2 /* HabitEmojiCalculator.swift */,
+			);
+			path = HeaderDaysCollectionView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -473,11 +490,13 @@
 			files = (
 				5232E9DA2D27B6F50069FD70 /* CustomPushAnimator.swift in Sources */,
 				52F1E53E2B7CDC300058F767 /* TabBarViewController.swift in Sources */,
+				52FF7F432D2EB96A008EF1E2 /* DayCell.swift in Sources */,
 				52C996A72D11EAEE000E7648 /* SupplementaryViewError.swift in Sources */,
 				52021A772BAC3D2000E9D8F1 /* OutlineBackgroundView.swift in Sources */,
 				52652B8A2D2405DF00608550 /* NewHabitView+UISetup.swift in Sources */,
 				5241DDD22B8F61F000C7ECF0 /* HistoryViewConroller.swift in Sources */,
 				52697D642D195A97004B9D7E /* HabitsViewController+NewHabitDelegate.swift in Sources */,
+				52FF7F462D2EB9EF008EF1E2 /* HeaderDays+DataSourceDelegate.swift in Sources */,
 				52ACDD442CEF13CD00868730 /* AppStyle.swift in Sources */,
 				52751BAD2D26ACEA008F84A8 /* ChangeHabitViewController.swift in Sources */,
 				5246C9762BC6C39D00BA7912 /* HabitsCell.swift in Sources */,
@@ -496,6 +515,7 @@
 				523AF3B92CBFBDE900EEFA8A /* NewHabitViewController.swift in Sources */,
 				52697D5E2D195361004B9D7E /* HabitsLayout.swift in Sources */,
 				52652B8E2D240D2C00608550 /* NewHabitView+Actions.swift in Sources */,
+				52FF7F482D2EBACF008EF1E2 /* HabitEmojiCalculator.swift in Sources */,
 				52923ECF2CF70F080088E54B /* HeaderDaysCollectionView.swift in Sources */,
 				52FBCF3A2CFF1677000206BC /* UserDefaultsManager.swift in Sources */,
 				52F1E56A2B7CE6330058F767 /* HabitsViewController.swift in Sources */,
