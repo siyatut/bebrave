@@ -295,7 +295,7 @@ class HabitsCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
         percentDone.text = "\(Int(percentage * 100))%"
         
         progressViewWidthConstraint.constant = newWidth
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseInOut]) {
             self.contentView.layoutIfNeeded()
         }
         
