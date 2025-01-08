@@ -84,6 +84,10 @@ class HeaderDaysCollectionView: UICollectionReusableView {
         }
         collectionView.reloadData()
     }
+    
+    func getDisplayedDates() -> [Date] {
+        return daysData.map { $0.date }
+    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -94,13 +98,5 @@ extension HeaderDaysCollectionView: UICollectionViewDelegateFlowLayout {
         let availableWidth = collectionView.bounds.width - CGFloat(totalSpacing)
         let itemWidth = floor(availableWidth / 7)
         return CGSize(width: itemWidth, height: 70)
-    }
-}
-
-// MARK: - Public Methods
-
-extension HeaderDaysCollectionView {
-    func getDisplayedDates() -> [Date] {
-        return daysData.map { $0.date }
     }
 }
