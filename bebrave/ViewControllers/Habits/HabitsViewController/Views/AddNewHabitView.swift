@@ -40,7 +40,7 @@ class AddNewHabitView: UIView {
         button.layer.cornerRadius = AppStyle.Sizes.cornerRadius
         button.layer.masksToBounds = true
         
-        button.addTarget(self, action: #selector(addNewHabitButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(presentAddHabitController), for: .touchUpInside)
         return button
     }()
     
@@ -72,7 +72,7 @@ class AddNewHabitView: UIView {
     
     // MARK: - Action
     
-    @objc private func addNewHabitButtonTapped() {
+    @objc private func presentAddHabitController() {
         guard let parentVC = parentFooterViewController as? NewHabitDelegate else {
             assertionFailure("parentFooterViewController не реализует NewHabitDelegate")
             return

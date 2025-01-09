@@ -80,7 +80,7 @@ class NewHabitViewController: UIViewController {
         }
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(addNewHabitButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(createHabitAction), for: .touchUpInside)
         return button
     }()
     

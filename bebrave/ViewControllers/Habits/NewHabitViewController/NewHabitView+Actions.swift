@@ -19,7 +19,7 @@ extension NewHabitViewController {
         }
     }
     
-    @objc func addNewHabitButtonTapped() {
+    @objc func createHabitAction() {
         hasAttemptedSave = true
         let isValid = validateFields(showErrors: true)
         
