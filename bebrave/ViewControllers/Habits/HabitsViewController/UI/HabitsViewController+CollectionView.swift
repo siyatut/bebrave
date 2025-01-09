@@ -10,13 +10,7 @@ import UIKit
 extension HabitsViewController {
     
     func setupCollectionView() {
-        let layout = HabitsLayout.createLayout()
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.showsVerticalScrollIndicator = true
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        
+
         collectionView.register(
             HabitCell.self,
             forCellWithReuseIdentifier: CustomElement.habitsCell.rawValue

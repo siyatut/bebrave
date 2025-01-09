@@ -27,10 +27,19 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // MARK: - UI components
     
-    var collectionView: UICollectionView!
     let historyButton = UIButton()
     let calendarLabel = UILabel()
     let addNewHabitButton = UIButton()
+    
+    lazy var collectionView: UICollectionView = {
+        let layout = HabitsLayout.createLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.showsVerticalScrollIndicator = true
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        return collectionView
+    }()
     
     lazy var emptyStateView: UIView = {
         let view = EmptyStateView()
