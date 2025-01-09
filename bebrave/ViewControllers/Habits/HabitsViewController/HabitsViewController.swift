@@ -59,7 +59,7 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         setupEmptyStateView()
         setupHistoryButton()
         setupCalendarLabel()
-        setupNotificationObserver()
+   //     setupNotificationObserver()
         
         // Вот это логика для невыполненной привычки:
         UserDefaultsManager.shared.resetUncompletedHabits()

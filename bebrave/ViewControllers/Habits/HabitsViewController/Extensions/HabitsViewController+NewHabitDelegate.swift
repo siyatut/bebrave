@@ -29,28 +29,50 @@ extension HabitsViewController: NewHabitDelegate {
         }
     }
     
-    func deleteHabit(at indexPath: IndexPath) {
-        guard indexPath.item < habits.count else {
-            print("Invalid index or attempt to delete DiaryWriteCell")
-            return
-        }
+    func deleteHabit(_ habit: Habit) {
+//        guard indexPath.item < habits.count else {
+//            print("Invalid index or attempt to delete DiaryWriteCell")
+//            return
+//        }
+//        
+//        let habitToDelete = habits[indexPath.item]
+//        
+//        UIView.animate(withDuration: 0.3, animations: {
+//            if let cell = self.collectionView.cellForItem(at: indexPath) {
+//                cell.transform = CGAffineTransform(translationX: self.view.frame.width, y: 0)
+//                cell.alpha = 0
+//            }
+//        }, completion: { _ in
+//            self.habits.remove(at: indexPath.item)
+//            UserDefaultsManager.shared.deleteHabit(id: habitToDelete.id)
+//            self.collectionView.performBatchUpdates({
+//                self.collectionView.deleteItems(at: [indexPath])
+//            }, completion: { _ in
+//                self.updateEmptyState(animated: true)
+//            })
+//        })
         
-        let habitToDelete = habits[indexPath.item]
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            if let cell = self.collectionView.cellForItem(at: indexPath) {
-                cell.transform = CGAffineTransform(translationX: self.view.frame.width, y: 0)
-                cell.alpha = 0
+        guard let index = habits.firstIndex(where: { $0.id == habit.id }) else {
+                print("Habit not found or already deleted")
+                return
             }
-        }, completion: { _ in
-            self.habits.remove(at: indexPath.item)
-            UserDefaultsManager.shared.deleteHabit(id: habitToDelete.id)
-            self.collectionView.performBatchUpdates({
-                self.collectionView.deleteItems(at: [indexPath])
+            
+            let indexPath = IndexPath(item: index, section: 0)
+
+            UIView.animate(withDuration: 0.3, animations: {
+                if let cell = self.collectionView.cellForItem(at: indexPath) {
+                    cell.transform = CGAffineTransform(translationX: self.view.frame.width, y: 0)
+                    cell.alpha = 0
+                }
             }, completion: { _ in
-                self.updateEmptyState(animated: true)
+                self.habits.remove(at: index)
+                UserDefaultsManager.shared.deleteHabit(id: habit.id)
+                self.collectionView.performBatchUpdates({
+                    self.collectionView.deleteItems(at: [indexPath])
+                }, completion: { _ in
+                    self.updateEmptyState(animated: true)
+                })
             })
-        })
     }
 }
 

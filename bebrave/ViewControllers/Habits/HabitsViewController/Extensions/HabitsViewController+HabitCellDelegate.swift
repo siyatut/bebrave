@@ -9,6 +9,16 @@ import UIKit
 
 extension HabitsViewController: HabitCellDelegate {
     
+    func editHabit(habit: Habit) {
+        let changeHabitVC = ChangeHabitViewController(habit: habit)
+        navigationController?.pushViewController(changeHabitVC, animated: true)
+    }
+    
+    func deleteHabit(habit: Habit) {
+        deleteHabit(habit)
+    }
+    
+    
     func markHabitAsNotCompleted(habit: Habit) {
         var updatedHabit = habit
         updatedHabit.undoCompletion()

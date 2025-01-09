@@ -12,9 +12,11 @@ import UIKit
 protocol HabitCellDelegate: AnyObject {
     func markHabitAsNotCompleted(habit: Habit)
     func skipToday(habit: Habit)
+    func editHabit(habit: Habit)
+    func deleteHabit(habit: Habit)
 }
 
-class HabitCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
+class HabitCell: UICollectionViewCell {
     
     // MARK: - Properties
     
@@ -25,26 +27,53 @@ class HabitCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
             updateHabitProgress()
         }
     }
-    
-    private let checkmarkLayer = CAShapeLayer()
+
     private var panGesture: UIPanGestureRecognizer!
+    private let swipeContainerView = UIView()
     private var originalCenter: CGPoint = .zero
-    private var progressViewWidthConstraint: NSLayoutConstraint!
+    private let buttonWidth: CGFloat = 80
+    private var isSwiped = false
     
     // MARK: -  UI components for swipe
     
-    private lazy var deleteHabitIcon = createImageView(imageName: "DeleteHabit", tintColor: .red, alpha: 0)
-    private lazy var changeHabitIcon = createImageView(imageName: "ChangeHabit", tintColor: AppStyle.Colors.secondaryColor, alpha: 0)
-    private lazy var deleteHabitLabel = createLabel(textColor: .red, font: AppStyle.Fonts.regularFont(size: 10), alpha: 0)
-    private lazy var changeHabitLabel = createLabel(textColor: AppStyle.Colors.secondaryColor, font: AppStyle.Fonts.regularFont(size: 10), alpha: 0)
+    private lazy var leftButtonContainer: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    private lazy var rightButtonContainer: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var editButton: UIButton = createSwipeButton(imageName: "pencil", color: .systemBlue, action: #selector(editHabit))
+    private lazy var skipButton: UIButton = createSwipeButton(imageName: "forward", color: .systemOrange, action: #selector(skipHabit))
+    private lazy var cancelButton: UIButton = createSwipeButton(imageName: "xmark.circle", color: .systemGray, action: #selector(cancelHabit))
+    private lazy var deleteButton: UIButton = createSwipeButton(imageName: "trash", color: .systemRed, action: #selector(confirmDelete))
+    
     
     // MARK: - UI components
+    
+    private lazy var contentContainer: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.layer.cornerRadius = AppStyle.Sizes.cornerRadius
+        view.layer.masksToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     private lazy var habitsName = createLabel(textColor: .label, font: AppStyle.Fonts.regularFont(size: 16))
     private lazy var percentDone = createLabel(textColor: .secondaryLabel, font: AppStyle.Fonts.regularFont(size: 16))
     private lazy var habitsCount = createLabel(textColor: .secondaryLabel, font: AppStyle.Fonts.regularFont(size: 16))
     private lazy var starDivider = createImageView(imageName: "StarDivider", tintColor: AppStyle.Colors.secondaryColor)
     private lazy var checkbox = createImageView(imageName: "UncheckedCheckbox", tintColor: AppStyle.Colors.borderColor)
+    private let checkmarkLayer = CAShapeLayer()
+    private var progressViewWidthConstraint: NSLayoutConstraint!
     
     private let horizontalStackView: UIStackView = {
         let stack = UIStackView()
@@ -70,11 +99,7 @@ class HabitCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
         setupComponents()
         setupTapGesture()
         setupPanGesture()
-        setupIcons()
         setupCheckmarkLayer()
-        
-        let interaction = UIContextMenuInteraction(delegate: self)
-        self.addInteraction(interaction)
     }
     
     required init?(coder: NSCoder) {
@@ -83,40 +108,20 @@ class HabitCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        deleteHabitIcon.alpha = 0
-        changeHabitIcon.alpha = 0
-        deleteHabitLabel.alpha = 0
-        changeHabitIcon.alpha = 0
+        isSwiped = false
+        resetPosition(animated: false)
     }
     
     // MARK: - Set up components
     
-    private func setupIcons() {
-        addSubview(deleteHabitIcon)
-        addSubview(changeHabitIcon)
-        addSubview(deleteHabitLabel)
-        addSubview(changeHabitLabel)
-        
-        deleteHabitLabel.text = "Удалить"
-        changeHabitLabel.text = "Изменить"
-        
-        NSLayoutConstraint.activate([
-            deleteHabitIcon.topAnchor.constraint(equalTo: topAnchor, constant: 13),
-            changeHabitIcon.topAnchor.constraint(equalTo: topAnchor, constant: 13),
-            
-            deleteHabitIcon.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 45),
-            changeHabitIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -45),
-            deleteHabitLabel.centerXAnchor.constraint(equalTo: deleteHabitIcon.centerXAnchor),
-            changeHabitLabel.centerXAnchor.constraint(equalTo: changeHabitIcon.centerXAnchor),
-            
-            deleteHabitIcon.heightAnchor.constraint(equalToConstant: 20),
-            deleteHabitIcon.widthAnchor.constraint(equalToConstant: 20),
-            deleteHabitLabel.topAnchor.constraint(equalTo: deleteHabitIcon.bottomAnchor, constant: 2),
-            
-            changeHabitIcon.heightAnchor.constraint(equalToConstant: 22),
-            changeHabitIcon.widthAnchor.constraint(equalToConstant: 22),
-            changeHabitLabel.topAnchor.constraint(equalTo: changeHabitIcon.bottomAnchor, constant: 2)
-        ])
+    private func createSwipeButton(imageName: String, color: UIColor, action: Selector) -> UIButton {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: imageName), for: .normal)
+        button.tintColor = .white
+        button.backgroundColor = color
+        button.addTarget(self, action: action, for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }
     
     private func addSubviewsToStackView(_ stackView: UIStackView, views: [UIView]) {
@@ -124,37 +129,91 @@ class HabitCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
     }
     
     private func setupComponents() {
-        contentView.addSubview(progressView)
+        
+        contentView.addSubview(leftButtonContainer)
+        contentView.addSubview(rightButtonContainer)
+        contentView.addSubview(contentContainer)
+        
+        NSLayoutConstraint.activate([
+            rightButtonContainer.leadingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            rightButtonContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
+            rightButtonContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            rightButtonContainer.widthAnchor.constraint(equalToConstant: buttonWidth * 1)
+        ])
+        NSLayoutConstraint.activate([
+            leftButtonContainer.trailingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            leftButtonContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
+            leftButtonContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            leftButtonContainer.widthAnchor.constraint(equalToConstant: buttonWidth * 3)
+        ])
+        
+        NSLayoutConstraint.activate([
+            contentContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            contentContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            contentContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
+            contentContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
+
+        contentContainer.addSubview(progressView)
         progressViewWidthConstraint = progressView.widthAnchor.constraint(equalToConstant: 0)
         
         NSLayoutConstraint.activate([
-            progressView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            progressView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            progressView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            progressView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
+            progressView.topAnchor.constraint(equalTo: contentContainer.topAnchor),
+            progressView.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor),
             progressViewWidthConstraint
         ])
         
-        contentView.addSubview(horizontalStackView)
-        contentView.addSubview(percentDone)
-        contentView.addSubview(checkbox)
+        contentContainer.addSubview(horizontalStackView)
+        contentContainer.addSubview(percentDone)
+        contentContainer.addSubview(checkbox)
         
         addSubviewsToStackView(horizontalStackView, views: [habitsName, starDivider, habitsCount])
         
         NSLayoutConstraint.activate([
-            horizontalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            horizontalStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            horizontalStackView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 16),
+            horizontalStackView.topAnchor.constraint(equalTo: contentContainer.topAnchor, constant: 10),
             horizontalStackView.trailingAnchor.constraint(lessThanOrEqualTo: checkbox.leadingAnchor, constant: 106),
             
             percentDone.topAnchor.constraint(equalTo: horizontalStackView.bottomAnchor, constant: 4),
-            percentDone.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
+            percentDone.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor, constant: -12),
             percentDone.leadingAnchor.constraint(equalTo: horizontalStackView.leadingAnchor),
             percentDone.trailingAnchor.constraint(lessThanOrEqualTo: checkbox.leadingAnchor, constant: 106),
             
-            checkbox.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -23),
-            checkbox.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            checkbox.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor, constant: -23),
+            checkbox.centerYAnchor.constraint(equalTo: contentContainer.centerYAnchor),
             checkbox.heightAnchor.constraint(equalToConstant: 20),
             checkbox.widthAnchor.constraint(equalToConstant: 20)
         ])
+        
+        leftButtonContainer.isHidden = false
+        rightButtonContainer.isHidden = false
+        
+        setupButtonConstraints()
+    }
+    
+    private func setupButtonConstraints() {
+        rightButtonContainer.addSubview(deleteButton)
+        print("Added deleteButton to rightButtonContainer")
+        
+        NSLayoutConstraint.activate([
+            deleteButton.leadingAnchor.constraint(equalTo: rightButtonContainer.leadingAnchor),
+            deleteButton.topAnchor.constraint(equalTo: rightButtonContainer.topAnchor),
+            deleteButton.bottomAnchor.constraint(equalTo: rightButtonContainer.bottomAnchor),
+            deleteButton.widthAnchor.constraint(equalToConstant: buttonWidth)
+        ])
+        
+        let leftButtons = [editButton, skipButton, cancelButton]
+        for (index, button) in leftButtons.enumerated() {
+            leftButtonContainer.addSubview(button)
+            print("Added \(button) to leftButtonContainer at index \(index)")
+            NSLayoutConstraint.activate([
+                button.trailingAnchor.constraint(equalTo: leftButtonContainer.trailingAnchor, constant: -CGFloat(index) * buttonWidth),
+                button.topAnchor.constraint(equalTo: leftButtonContainer.topAnchor),
+                button.bottomAnchor.constraint(equalTo: leftButtonContainer.bottomAnchor),
+                button.widthAnchor.constraint(equalToConstant: buttonWidth)
+            ])
+        }
     }
     
     // MARK: - Checkmark methods
@@ -211,51 +270,69 @@ class HabitCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
     
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: self)
+        let velocity = gesture.velocity(in: self)
+        print("Gesture state: \(gesture.state.rawValue), translationX: \(translation.x), velocityX: \(velocity.x)")
+        
         switch gesture.state {
         case .began:
-            originalCenter = center
             
+            originalCenter = contentContainer.center
+            leftButtonContainer.isHidden = false
+            rightButtonContainer.isHidden = false
+            print("Pan began. Original Center: \(originalCenter)")
         case .changed:
-            center.x = originalCenter.x + translation.x
-            
-            if translation.x < 0 {
-                deleteHabitIcon.alpha = min(1, abs(translation.x) / 100)
-                deleteHabitLabel.alpha = 1
-                changeHabitIcon.alpha = 0
-                changeHabitLabel.alpha = 0
-            } else {
-                changeHabitIcon.alpha = min(1, translation.x / 100)
-                changeHabitLabel.alpha = 1
-                deleteHabitIcon.alpha = 0
-                deleteHabitLabel.alpha = 0
+            if translation.x < 0 { // Левый свайп
+                contentContainer.transform = CGAffineTransform(translationX: max(translation.x, -buttonWidth), y: 0)
+            } else if translation.x > 0 { // Правый свайп
+                contentContainer.transform = CGAffineTransform(translationX: min(translation.x, buttonWidth * 3), y: 0)
             }
-            
+            print("Pan changed. Transform TX: \(contentContainer.transform.tx)")
         case .ended:
-            if translation.x < -100 {
-                UIView.animate(withDuration: 0.2) {
-                    self.center.x = self.originalCenter.x - self.bounds.width
-                } completion: { _ in
-                    NotificationCenter.default.post(name: Notification.Name("DeleteHabit"), object: self)
-                }
-            } else if translation.x > 100 {
-                NotificationCenter.default.post(name: Notification.Name("ChangeHabit"), object: self)
-                resetPosition()
+            print("Pan ended. Final translationX: \(translation.x), velocityX: \(velocity.x)")
+            if translation.x < -buttonWidth && velocity.x < -500 { // Левый свайп
+                showLeftSwipeAction()
+            } else if translation.x > buttonWidth && velocity.x > 500 { // Правый свайп
+                showRightSwipeActions()
             } else {
                 resetPosition()
             }
-            
         default:
             break
         }
     }
     
-    private func resetPosition() {
+    private func showRightSwipeActions() {
+        isSwiped = true
+        print("Showing right swipe actions. isSwiped: \(isSwiped)")
         UIView.animate(withDuration: 0.3) {
-            self.center = self.originalCenter
-            self.deleteHabitIcon.alpha = 0
-            self.changeHabitIcon.alpha = 0
-            self.deleteHabitLabel.alpha = 0
-            self.changeHabitLabel.alpha = 0
+            self.contentContainer.transform = CGAffineTransform(translationX: self.buttonWidth * 3, y: 0)
+            self.leftButtonContainer.isHidden = false
+            self.layoutIfNeeded()
+        }
+    }
+    
+    private func showLeftSwipeAction() {
+        isSwiped = true
+        print("Showing left swipe action. isSwiped: \(isSwiped)")
+        UIView.animate(withDuration: 0.3) {
+            self.contentContainer.transform = CGAffineTransform(translationX: -self.buttonWidth, y: 0)
+            self.rightButtonContainer.isHidden = false
+            self.layoutIfNeeded()
+        }
+    }
+    
+    @objc private func resetPosition(animated: Bool = true) {
+        isSwiped = false
+        print("Resetting position. isSwiped: \(isSwiped), animated: \(animated)")
+        let animations = {
+            self.contentContainer.transform = .identity
+            self.leftButtonContainer.isHidden = true
+            self.rightButtonContainer.isHidden = true
+        }
+        if animated {
+            UIView.animate(withDuration: 0.3, animations: animations)
+        } else {
+            animations()
         }
     }
     
@@ -306,29 +383,50 @@ class HabitCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
         }
     }
     
-    // MARK: - Handle long press
-    
-    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
-        
-        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-            let cancelAction = UIAction(title: "Отменить выполнение", image: UIImage(systemName: "xmark.circle")) { [weak self] _ in
-                guard let self = self, let habit = self.habit else { return }
-                self.delegate?.markHabitAsNotCompleted(habit: habit)
-            }
-            
-            let skipAction = UIAction(title: "Пропустить сегодня", image: UIImage(systemName: "forward")) { [weak self] _ in
-                guard let self = self, let habit = self.habit else { return }
-                self.delegate?.skipToday(habit: habit)
-            }
-            
-            return UIMenu(title: "Опции", children: [cancelAction, skipAction])
-        }
-    }
+    // MARK: - Button Actions
+       @objc private func editHabit() {
+           guard let habit = habit else { return }
+           delegate?.editHabit(habit: habit)
+           resetPosition()
+       }
+
+       @objc private func skipHabit() {
+           guard let habit = habit else { return }
+           delegate?.skipToday(habit: habit)
+           resetPosition()
+       }
+
+       @objc private func cancelHabit() {
+           guard let habit = habit else { return }
+           delegate?.markHabitAsNotCompleted(habit: habit)
+           resetPosition()
+       }
+
+       @objc private func confirmDelete() {
+           guard let habit = habit else { return }
+           let alert = UIAlertController(title: "", message: "Точно удаляем привычку?", preferredStyle: .alert)
+           alert.addAction(UIAlertAction(title: "Отмена", style: .cancel) { _ in
+               self.resetPosition()
+           })
+           alert.addAction(UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+               guard let self = self else { return }
+               self.delegate?.deleteHabit(habit: habit)
+               self.resetPosition()
+           })
+           
+           if let viewController = self.window?.rootViewController {
+               viewController.present(alert, animated: true, completion: nil)
+           }
+       }
+
     
     // MARK: - Configure method
     
     func configure(with habit: Habit) {
         self.habit = habit
+        print("Configuring cell for habit: \(habit.title), status: \(habit.getStatus(for: Date()))")
+        leftButtonContainer.isHidden = false
+        rightButtonContainer.isHidden = false
         let today = Calendar.current.startOfDay(for: Date())
         let status = habit.getStatus(for: today)
         let progressColor: UIColor
