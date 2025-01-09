@@ -18,7 +18,7 @@ extension HabitsViewController {
         collectionView.dataSource = self
         
         collectionView.register(
-            HabitsCell.self,
+            HabitCell.self,
             forCellWithReuseIdentifier: CustomElement.habitsCell.rawValue
         )
         collectionView.register(

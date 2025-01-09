@@ -14,7 +14,7 @@ protocol HabitCellDelegate: AnyObject {
     func skipToday(habit: Habit)
 }
 
-class HabitsCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
+class HabitCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
     
     // MARK: - Properties
     
@@ -363,7 +363,7 @@ class HabitsCell: UICollectionViewCell, UIContextMenuInteractionDelegate {
 
 // MARK: - Methods to create label and image view
 
-extension HabitsCell {
+extension HabitCell {
     
     private func createLabel(textColor: UIColor, font: UIFont, alpha: CGFloat = 1.0) -> UILabel {
         let label = UILabel()
@@ -384,7 +384,7 @@ extension HabitsCell {
     }
 }
 
-extension HabitsCell: UIGestureRecognizerDelegate {
+extension HabitCell: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return gestureRecognizer == panGesture
     }

@@ -25,7 +25,7 @@ extension HabitsViewController {
     ) -> UICollectionViewCell {
         do {
             if indexPath.item < habits.count {
-                let habitCell: HabitsCell = try collectionView.dequeueCell(
+                let habitCell: HabitCell = try collectionView.dequeueCell(
                     withReuseIdentifier: CustomElement.habitsCell.rawValue,
                     for: indexPath
                 )
