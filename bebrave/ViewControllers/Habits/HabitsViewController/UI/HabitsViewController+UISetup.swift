@@ -9,6 +9,8 @@ import UIKit
 
 extension HabitsViewController {
     
+    // MARK: - History button
+    
     func setupHistoryButton() {
         var configuration = UIButton.Configuration.plain()
         configuration.baseForegroundColor = AppStyle.Colors.secondaryColor
@@ -25,6 +27,8 @@ extension HabitsViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: historyButton)
     }
+    
+    // MARK: - Calendar label
     
     func setupCalendarLabel() {
         let container = UIView()
@@ -46,6 +50,8 @@ extension HabitsViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: container)
     }
     
+    // MARK: - Empty state view
+    
     func setupEmptyStateView() {
         view.addSubview(emptyStateView)
         NSLayoutConstraint.activate([
@@ -56,7 +62,39 @@ extension HabitsViewController {
         ])
     }
     
+    func updateEmptyState(animated: Bool = true) {
+        let shouldShowEmptyState = habits.isEmpty
+        
+        emptyStateView.animateVisibility(
+            isVisible: shouldShowEmptyState,
+            duration: animated ? 0.4 : 0.0,
+            transformEffect: true
+        )
+    }
+    
+    // MARK: - Add new habit button
+    
     func setupAddNewHabitButton() {
+        var config = UIButton.Configuration.plain()
+        config.baseForegroundColor = AppStyle.Colors.secondaryColor
+        config.title = "Добавить привычку"
+        config.image = .plus
+        config.imagePadding = 4
+        config.imagePlacement = .leading
+        config.titleAlignment = .center
+        config.attributedTitle = AttributedString(
+            "Добавить привычку",
+            attributes: AttributeContainer([.font: AppStyle.Fonts.regularFont(size: 16)])
+        )
+        
+        addNewHabitButton.configuration = config
+        addNewHabitButton.backgroundColor = .clear
+        addNewHabitButton.layer.borderWidth = AppStyle.Sizes.borderWidth
+        addNewHabitButton.layer.borderColor = AppStyle.Colors.borderColor.cgColor
+        addNewHabitButton.layer.cornerRadius = AppStyle.Sizes.cornerRadius
+        addNewHabitButton.layer.masksToBounds = true
+        addNewHabitButton.addTarget(self, action: #selector(presentAddHabitController), for: .touchUpInside)
+        addNewHabitButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(addNewHabitButton)
         
         NSLayoutConstraint.activate([
@@ -66,6 +104,8 @@ extension HabitsViewController {
             addNewHabitButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
+    
+    // MARK: - Notification
     
     func setupNotificationObserver() {
         NotificationCenter.default.addObserver(

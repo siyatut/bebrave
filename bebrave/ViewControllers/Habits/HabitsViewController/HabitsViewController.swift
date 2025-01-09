@@ -30,7 +30,7 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     var collectionView: UICollectionView!
     let historyButton = UIButton()
     let calendarLabel = UILabel()
-    lazy var addNewHabitButton = AddNewHabitView(parentViewController: self)
+    let addNewHabitButton = UIButton()
     
     lazy var emptyStateView: UIView = {
         let view = EmptyStateView()
@@ -75,21 +75,19 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
            }
        }
     
-    func updateEmptyState(animated: Bool = true) {
-        let shouldShowEmptyState = habits.isEmpty
-        
-        emptyStateView.animateVisibility(
-            isVisible: shouldShowEmptyState,
-            duration: animated ? 0.4 : 0.0,
-            transformEffect: true
-        )
-    }
-    
-    // MARK: - Tap action
+    // MARK: - Tap actions
     
     @objc func historyButtonTapped() {
         let history = HistoryViewController()
         self.navigationController?.pushViewController(history, animated: true)
+    }
+    
+    @objc func presentAddHabitController() {
+        let newHabitVC = NewHabitViewController()
+        newHabitVC.modalPresentationStyle = .pageSheet
+        newHabitVC.delegate = self
+        print("Открыт экран добавления привычки")
+        self.present(newHabitVC, animated: true, completion: nil)
     }
     
     // MARK: - Handle uncompleted habits
