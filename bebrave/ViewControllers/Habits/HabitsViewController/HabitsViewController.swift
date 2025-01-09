@@ -29,7 +29,7 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     let historyButton = UIButton()
     let calendarLabel = UILabel()
-    let addNewHabitButton = UIButton()
+    let createNewHabitButton = UIButton()
     
     lazy var collectionView: UICollectionView = {
         let layout = HabitsLayout.createLayout()

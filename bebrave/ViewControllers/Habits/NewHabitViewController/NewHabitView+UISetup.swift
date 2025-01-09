@@ -33,7 +33,7 @@ extension NewHabitViewController  {
         let stacks = [timesPerDayStack, daysOfWeekStack, monthsStack]
         
         addSubviews(labels + stacks)
-        addSubviews([emojiImageView, addNewHabitButton, habitTextField])
+        addSubviews([emojiImageView, didAddNewHabitButton, habitTextField])
         
         NSLayoutConstraint.activate([
             emojiImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
@@ -87,10 +87,10 @@ extension NewHabitViewController  {
             monthsTextField.widthAnchor.constraint(equalToConstant: 57),
             monthsTextField.heightAnchor.constraint(equalToConstant: 48),
             
-            addNewHabitButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -42),
-            addNewHabitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
-            addNewHabitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
-            addNewHabitButton.heightAnchor.constraint(equalToConstant: 48)
+            didAddNewHabitButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -42),
+            didAddNewHabitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            didAddNewHabitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
+            didAddNewHabitButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
     

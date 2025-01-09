@@ -60,7 +60,7 @@ class NewHabitViewController: UIViewController {
     
     // MARK: - Button
     
-    lazy var addNewHabitButton: UIButton = {
+    lazy var didAddNewHabitButton: UIButton = {
         let button = UIButton(type: .system)
         
         var config = UIButton.Configuration.filled()
@@ -90,7 +90,7 @@ class NewHabitViewController: UIViewController {
     
     func updateButtonState() {
         let isValid = validateFields(showErrors: hasAttemptedSave)
-        addNewHabitButton.isEnabled = isValid
+        didAddNewHabitButton.isEnabled = isValid
     }
     
     // MARK: - Lifecycle

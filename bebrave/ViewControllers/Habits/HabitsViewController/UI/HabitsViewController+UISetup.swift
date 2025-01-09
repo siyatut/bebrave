@@ -87,21 +87,21 @@ extension HabitsViewController {
             attributes: AttributeContainer([.font: AppStyle.Fonts.regularFont(size: 16)])
         )
         
-        addNewHabitButton.configuration = config
-        addNewHabitButton.backgroundColor = .clear
-        addNewHabitButton.layer.borderWidth = AppStyle.Sizes.borderWidth
-        addNewHabitButton.layer.borderColor = AppStyle.Colors.borderColor.cgColor
-        addNewHabitButton.layer.cornerRadius = AppStyle.Sizes.cornerRadius
-        addNewHabitButton.layer.masksToBounds = true
-        addNewHabitButton.addTarget(self, action: #selector(presentAddHabitController), for: .touchUpInside)
-        addNewHabitButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(addNewHabitButton)
+        createNewHabitButton.configuration = config
+        createNewHabitButton.backgroundColor = .clear
+        createNewHabitButton.layer.borderWidth = AppStyle.Sizes.borderWidth
+        createNewHabitButton.layer.borderColor = AppStyle.Colors.borderColor.cgColor
+        createNewHabitButton.layer.cornerRadius = AppStyle.Sizes.cornerRadius
+        createNewHabitButton.layer.masksToBounds = true
+        createNewHabitButton.addTarget(self, action: #selector(presentAddHabitController), for: .touchUpInside)
+        createNewHabitButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(createNewHabitButton)
         
         NSLayoutConstraint.activate([
-            addNewHabitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12),
-            addNewHabitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
-            addNewHabitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
-            addNewHabitButton.heightAnchor.constraint(equalToConstant: 48)
+            createNewHabitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12),
+            createNewHabitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            createNewHabitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
+            createNewHabitButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
     

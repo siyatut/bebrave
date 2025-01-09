@@ -35,7 +35,7 @@ extension HabitsViewController {
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: addNewHabitButton.topAnchor, constant: -12)
+            collectionView.bottomAnchor.constraint(equalTo: createNewHabitButton.topAnchor, constant: -12)
         ])
     }
 }
