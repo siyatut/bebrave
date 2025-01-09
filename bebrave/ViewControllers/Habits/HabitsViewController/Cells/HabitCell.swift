@@ -129,22 +129,24 @@ class HabitCell: UICollectionViewCell {
     }
     
     private func setupComponents() {
-        
-        contentView.addSubview(leftButtonContainer)
         contentView.addSubview(rightButtonContainer)
+        contentView.addSubview(leftButtonContainer)
         contentView.addSubview(contentContainer)
         
         NSLayoutConstraint.activate([
-            rightButtonContainer.leadingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            rightButtonContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
-            rightButtonContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            rightButtonContainer.widthAnchor.constraint(equalToConstant: buttonWidth * 1)
-        ])
-        NSLayoutConstraint.activate([
-            leftButtonContainer.trailingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            leftButtonContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            leftButtonContainer.trailingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
             leftButtonContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             leftButtonContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             leftButtonContainer.widthAnchor.constraint(equalToConstant: buttonWidth * 3)
+        ])
+        
+        NSLayoutConstraint.activate([
+            rightButtonContainer.leadingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
+            rightButtonContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            rightButtonContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
+            rightButtonContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            rightButtonContainer.widthAnchor.constraint(equalToConstant: buttonWidth)
         ])
         
         NSLayoutConstraint.activate([
@@ -153,6 +155,14 @@ class HabitCell: UICollectionViewCell {
             contentContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             contentContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+        
+        print("Left button container frame: \(leftButtonContainer.frame)")
+        print("Right button container frame: \(rightButtonContainer.frame)")
+        
+        contentView.clipsToBounds = false
+        leftButtonContainer.clipsToBounds = false
+        rightButtonContainer.clipsToBounds = false
+        contentContainer.clipsToBounds = true
 
         contentContainer.addSubview(progressView)
         progressViewWidthConstraint = progressView.widthAnchor.constraint(equalToConstant: 0)
@@ -198,9 +208,9 @@ class HabitCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             deleteButton.leadingAnchor.constraint(equalTo: rightButtonContainer.leadingAnchor),
+            deleteButton.trailingAnchor.constraint(equalTo: rightButtonContainer.trailingAnchor),
             deleteButton.topAnchor.constraint(equalTo: rightButtonContainer.topAnchor),
             deleteButton.bottomAnchor.constraint(equalTo: rightButtonContainer.bottomAnchor),
-            deleteButton.widthAnchor.constraint(equalToConstant: buttonWidth)
         ])
         
         let leftButtons = [editButton, skipButton, cancelButton]
@@ -208,7 +218,7 @@ class HabitCell: UICollectionViewCell {
             leftButtonContainer.addSubview(button)
             print("Added \(button) to leftButtonContainer at index \(index)")
             NSLayoutConstraint.activate([
-                button.trailingAnchor.constraint(equalTo: leftButtonContainer.trailingAnchor, constant: -CGFloat(index) * buttonWidth),
+                button.leadingAnchor.constraint(equalTo: leftButtonContainer.leadingAnchor, constant: CGFloat(index) * buttonWidth),
                 button.topAnchor.constraint(equalTo: leftButtonContainer.topAnchor),
                 button.bottomAnchor.constraint(equalTo: leftButtonContainer.bottomAnchor),
                 button.widthAnchor.constraint(equalToConstant: buttonWidth)
@@ -270,35 +280,30 @@ class HabitCell: UICollectionViewCell {
     
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: self)
-        let velocity = gesture.velocity(in: self)
-        print("Gesture state: \(gesture.state.rawValue), translationX: \(translation.x), velocityX: \(velocity.x)")
         
         switch gesture.state {
         case .began:
-            
+            // Запоминаем изначальную позицию центра
             originalCenter = contentContainer.center
-            leftButtonContainer.isHidden = false
-            rightButtonContainer.isHidden = false
-            print("Pan began. Original Center: \(originalCenter)")
+            
         case .changed:
-            if translation.x < 0 { // Левый свайп
-                contentContainer.transform = CGAffineTransform(translationX: max(translation.x, -buttonWidth), y: 0)
-            } else if translation.x > 0 { // Правый свайп
-                contentContainer.transform = CGAffineTransform(translationX: min(translation.x, buttonWidth * 3), y: 0)
-            }
-            print("Pan changed. Transform TX: \(contentContainer.transform.tx)")
+            // Свайп влево или вправо с ограничением по ширине кнопок
+            contentContainer.transform = CGAffineTransform(translationX: translation.x, y: 0)
+            
         case .ended:
-            print("Pan ended. Final translationX: \(translation.x), velocityX: \(velocity.x)")
-            if translation.x < -buttonWidth && velocity.x < -500 { // Левый свайп
+            // Решаем, что делать по завершении свайпа
+            if translation.x < -buttonWidth { // Левый свайп
                 showLeftSwipeAction()
-            } else if translation.x > buttonWidth && velocity.x > 500 { // Правый свайп
+            } else if translation.x > buttonWidth { // Правый свайп
                 showRightSwipeActions()
             } else {
-                resetPosition()
+                resetPosition() // Возвращаем в исходное положение
             }
+            
         default:
             break
         }
+        
     }
     
     private func showRightSwipeActions() {
