@@ -45,7 +45,7 @@ extension UITextField {
         textField.layer.cornerRadius = AppStyle.Sizes.cornerRadius
         textField.layer.borderWidth = AppStyle.Sizes.borderWidth
         textField.layer.borderColor = AppStyle.Colors.borderColor.cgColor
-        textField.clipsToBounds = true
+        textField.layer.masksToBounds = true
         textField.backgroundColor = .systemBackground
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
