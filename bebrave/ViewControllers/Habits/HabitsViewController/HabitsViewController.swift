@@ -5,7 +5,7 @@
 //  Created by Anastasia Tyutinova on 14/2/2567 BE.
 //
 
-#warning("№1: Переделать swipe gesture по типу реализации в Telegram. Убрать реализацию именно свайпа, мб кроме удаления. Посмотреть по ситуации. Тогда слева будет: «Изменить», «Отменить», «Пропустить», а справа «Удалить»")
+#warning("№1: Переделать swipe gesture по типу реализации в Telegram. Убрать реализацию именно свайпа, мб кроме удаления. Посмотреть по ситуации. Тогда слева будет: «Изменить», «Отменить», «Пропустить», а справа «Удалить». UPD: Почти сделала, но есть 2 проблемы: нужно, чтобы тап блокировался при свайпе для удаления привычки, а ещё ячейка не закрашивается в жёлтый при пропуске")
 
 #warning("№2: Когда создать экран «История», проверить корректность работы статуса привычки «Не выполнена», если пользователь до 00:00 по своей таймзоне никак не взаимодействовал с ней")
 
@@ -59,8 +59,7 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         setupEmptyStateView()
         setupHistoryButton()
         setupCalendarLabel()
-   //     setupNotificationObserver()
-        
+
         // Вот это логика для невыполненной привычки:
         UserDefaultsManager.shared.resetUncompletedHabits()
         habits = UserDefaultsManager.shared.loadHabits()

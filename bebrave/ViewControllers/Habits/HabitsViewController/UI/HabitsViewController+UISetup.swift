@@ -104,21 +104,4 @@ extension HabitsViewController {
             createNewHabitButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
-    
-    // MARK: - Notification
-    
-//    func setupNotificationObserver() {
-//        NotificationCenter.default.addObserver(
-//            self,
-//            selector: #selector(handleDeleteHabit(_:)),
-//            name: Notification.Name("DeleteHabit"),
-//            object: nil
-//        )
-//        NotificationCenter.default.addObserver(
-//            self,
-//            selector: #selector(handleChangeHabitTap(_:)),
-//            name: Notification.Name("ChangeHabit"),
-//            object: nil
-//        )
-//    }
 }

@@ -29,12 +29,21 @@ class HabitCell: UICollectionViewCell {
     }
 
     private var panGesture: UIPanGestureRecognizer!
-    private let swipeContainerView = UIView()
+    private var tapGesture: UITapGestureRecognizer!
     private var originalCenter: CGPoint = .zero
     private let buttonWidth: CGFloat = 80
     private var isSwiped = false
     
-    // MARK: -  UI components for swipe
+    // MARK: - Containers for UI components
+    
+    private lazy var contentContainer: UIView = {
+        let view = UIView()
+        view.backgroundColor = AppStyle.Colors.backgroundColor
+        view.layer.cornerRadius = AppStyle.Sizes.cornerRadius
+        view.layer.masksToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     private lazy var leftButtonContainer: UIView = {
         let view = UIView()
@@ -42,7 +51,7 @@ class HabitCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-
+    
     private lazy var rightButtonContainer: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
@@ -50,22 +59,15 @@ class HabitCell: UICollectionViewCell {
         return view
     }()
     
+    // MARK: -  Swipe buttons
+    
     private lazy var editButton: UIButton = createSwipeButton(imageName: "pencil", color: .systemBlue, action: #selector(editHabit))
     private lazy var skipButton: UIButton = createSwipeButton(imageName: "forward", color: .systemOrange, action: #selector(skipHabit))
     private lazy var cancelButton: UIButton = createSwipeButton(imageName: "xmark.circle", color: .systemGray, action: #selector(cancelHabit))
     private lazy var deleteButton: UIButton = createSwipeButton(imageName: "trash", color: .systemRed, action: #selector(confirmDelete))
     
     
-    // MARK: - UI components
-    
-    private lazy var contentContainer: UIView = {
-        let view = UIView()
-        view.backgroundColor = .clear
-        view.layer.cornerRadius = AppStyle.Sizes.cornerRadius
-        view.layer.masksToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    // MARK: - UI components for cell
     
     private lazy var habitsName = createLabel(textColor: .label, font: AppStyle.Fonts.regularFont(size: 16))
     private lazy var percentDone = createLabel(textColor: .secondaryLabel, font: AppStyle.Fonts.regularFont(size: 16))
@@ -114,16 +116,6 @@ class HabitCell: UICollectionViewCell {
     
     // MARK: - Set up components
     
-    private func createSwipeButton(imageName: String, color: UIColor, action: Selector) -> UIButton {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: imageName), for: .normal)
-        button.tintColor = .white
-        button.backgroundColor = color
-        button.addTarget(self, action: action, for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }
-    
     private func addSubviewsToStackView(_ stackView: UIStackView, views: [UIView]) {
         views.forEach { stackView.addArrangedSubview($0) }
     }
@@ -135,14 +127,14 @@ class HabitCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             leftButtonContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            leftButtonContainer.trailingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
+            leftButtonContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             leftButtonContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             leftButtonContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             leftButtonContainer.widthAnchor.constraint(equalToConstant: buttonWidth * 3)
         ])
         
         NSLayoutConstraint.activate([
-            rightButtonContainer.leadingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
+            rightButtonContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             rightButtonContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             rightButtonContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             rightButtonContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
@@ -155,9 +147,6 @@ class HabitCell: UICollectionViewCell {
             contentContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             contentContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-        
-        print("Left button container frame: \(leftButtonContainer.frame)")
-        print("Right button container frame: \(rightButtonContainer.frame)")
         
         contentView.clipsToBounds = false
         leftButtonContainer.clipsToBounds = false
@@ -204,19 +193,16 @@ class HabitCell: UICollectionViewCell {
     
     private func setupButtonConstraints() {
         rightButtonContainer.addSubview(deleteButton)
-        print("Added deleteButton to rightButtonContainer")
-        
         NSLayoutConstraint.activate([
-            deleteButton.leadingAnchor.constraint(equalTo: rightButtonContainer.leadingAnchor),
             deleteButton.trailingAnchor.constraint(equalTo: rightButtonContainer.trailingAnchor),
             deleteButton.topAnchor.constraint(equalTo: rightButtonContainer.topAnchor),
             deleteButton.bottomAnchor.constraint(equalTo: rightButtonContainer.bottomAnchor),
+            deleteButton.widthAnchor.constraint(equalToConstant: buttonWidth)
         ])
         
         let leftButtons = [editButton, skipButton, cancelButton]
         for (index, button) in leftButtons.enumerated() {
             leftButtonContainer.addSubview(button)
-            print("Added \(button) to leftButtonContainer at index \(index)")
             NSLayoutConstraint.activate([
                 button.leadingAnchor.constraint(equalTo: leftButtonContainer.leadingAnchor, constant: CGFloat(index) * buttonWidth),
                 button.topAnchor.constraint(equalTo: leftButtonContainer.topAnchor),
@@ -266,14 +252,17 @@ class HabitCell: UICollectionViewCell {
     private func setupTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         tapGesture.cancelsTouchesInView = false
+        tapGesture.delegate = self
         contentView.addGestureRecognizer(tapGesture)
+        print("Tap gesture initialized")
     }
     
     private func setupPanGesture() {
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
-        panGesture.cancelsTouchesInView = false
+        panGesture.cancelsTouchesInView = true
         panGesture.delegate = self
-        addGestureRecognizer(panGesture)
+        contentView.addGestureRecognizer(panGesture)
+        print("Pan gesture initialized")
     }
     
     // MARK: - Handle pan gesture
@@ -283,27 +272,25 @@ class HabitCell: UICollectionViewCell {
         
         switch gesture.state {
         case .began:
-            // Запоминаем изначальную позицию центра
+            print("Pan gesture began.")
             originalCenter = contentContainer.center
             
         case .changed:
-            // Свайп влево или вправо с ограничением по ширине кнопок
+            print("Pan gesture changed. Translation X: \(translation.x)")
             contentContainer.transform = CGAffineTransform(translationX: translation.x, y: 0)
             
         case .ended:
-            // Решаем, что делать по завершении свайпа
-            if translation.x < -buttonWidth { // Левый свайп
+            print("Pan gesture ended. Translation X: \(translation.x)")
+            if translation.x < -buttonWidth {
                 showLeftSwipeAction()
-            } else if translation.x > buttonWidth { // Правый свайп
+            } else if translation.x > buttonWidth {
                 showRightSwipeActions()
             } else {
-                resetPosition() // Возвращаем в исходное положение
+                resetPosition()
             }
-            
         default:
             break
         }
-        
     }
     
     private func showRightSwipeActions() {
@@ -328,7 +315,6 @@ class HabitCell: UICollectionViewCell {
     
     @objc private func resetPosition(animated: Bool = true) {
         isSwiped = false
-        print("Resetting position. isSwiped: \(isSwiped), animated: \(animated)")
         let animations = {
             self.contentContainer.transform = .identity
             self.leftButtonContainer.isHidden = true
@@ -344,11 +330,17 @@ class HabitCell: UICollectionViewCell {
     // MARK: - Handle tap gesture
     
     @objc private func handleTap() {
-        print("Cell tapped!")
-        guard var habit = habit else { return }
+        print("Cell tapped! isSwiped: \(isSwiped)")
+        
+        guard var habit = habit else {
+            print("No habit found. Exiting tap handler.")
+            return
+        }
+
         let today = Calendar.current.startOfDay(for: Date())
         
         if habit.skipDates.contains(today) {
+            print("Habit skipped today. Removing skip date.")
             habit.skipDates.remove(today)
             
             habit.progress[today] = 0
@@ -359,10 +351,13 @@ class HabitCell: UICollectionViewCell {
         }
         
         if currentProgress < habit.frequency {
+            print("Marking habit as completed.")
             habit.markCompleted()
             currentProgress += 1
             UserDefaultsManager.shared.updateHabit(habit)
             configure(with: habit)
+        } else {
+            print("Habit already completed.")
         }
     }
     
@@ -389,6 +384,7 @@ class HabitCell: UICollectionViewCell {
     }
     
     // MARK: - Button Actions
+    
        @objc private func editHabit() {
            guard let habit = habit else { return }
            delegate?.editHabit(habit: habit)
@@ -429,9 +425,6 @@ class HabitCell: UICollectionViewCell {
     
     func configure(with habit: Habit) {
         self.habit = habit
-        print("Configuring cell for habit: \(habit.title), status: \(habit.getStatus(for: Date()))")
-        leftButtonContainer.isHidden = false
-        rightButtonContainer.isHidden = false
         let today = Calendar.current.startOfDay(for: Date())
         let status = habit.getStatus(for: today)
         let progressColor: UIColor
@@ -485,10 +478,37 @@ extension HabitCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }
+    
+    private func createSwipeButton(imageName: String, color: UIColor, action: Selector) -> UIButton {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: imageName), for: .normal)
+        button.tintColor = .white
+        button.backgroundColor = color
+        button.addTarget(self, action: action, for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }
+    
 }
 
 extension HabitCell: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return gestureRecognizer == panGesture
+    
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer == panGesture {
+            print("Pan gesture should begin.")
+            return true
+        }
+        
+        if gestureRecognizer == tapGesture {
+            print("Tap gesture attempted. isSwiped: \(isSwiped)")
+            // Блокируем само начало tapGesture, если свайп активен
+            if isSwiped {
+                print("Blocking tap gesture because isSwiped is true.")
+                return false
+            }
+        }
+        
+        print("Gesture \(gestureRecognizer) allowed to begin.")
+        return true
     }
 }
