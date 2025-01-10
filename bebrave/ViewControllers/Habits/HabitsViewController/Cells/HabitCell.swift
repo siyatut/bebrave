@@ -444,6 +444,7 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         }
         
         contentContainer.layer.backgroundColor = progressColor.cgColor
+        contentView.layer.backgroundColor = progressColor.cgColor
         contentView.layer.cornerRadius = AppStyle.Sizes.cornerRadius
         contentView.layer.masksToBounds = true
         
