@@ -31,7 +31,7 @@ class HabitCell: UICollectionViewCell {
     private var panGesture: UIPanGestureRecognizer!
     private var tapGesture: UITapGestureRecognizer!
     private var originalCenter: CGPoint = .zero
-    private let buttonWidth: CGFloat = 80
+    private let buttonWidth: CGFloat = 50
     private var isSwiped = false
     
     // MARK: - Containers for UI components
@@ -121,6 +121,7 @@ class HabitCell: UICollectionViewCell {
     }
     
     private func setupComponents() {
+        
         contentView.addSubview(rightButtonContainer)
         contentView.addSubview(leftButtonContainer)
         contentView.addSubview(contentContainer)
@@ -130,7 +131,7 @@ class HabitCell: UICollectionViewCell {
             leftButtonContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             leftButtonContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             leftButtonContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            leftButtonContainer.widthAnchor.constraint(equalToConstant: buttonWidth * 3)
+            leftButtonContainer.widthAnchor.constraint(equalToConstant: buttonWidth * 2)
         ])
         
         NSLayoutConstraint.activate([
@@ -138,7 +139,7 @@ class HabitCell: UICollectionViewCell {
             rightButtonContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             rightButtonContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             rightButtonContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            rightButtonContainer.widthAnchor.constraint(equalToConstant: buttonWidth)
+            rightButtonContainer.widthAnchor.constraint(equalToConstant: buttonWidth * 2)
         ])
         
         NSLayoutConstraint.activate([
@@ -192,15 +193,18 @@ class HabitCell: UICollectionViewCell {
     }
     
     private func setupButtonConstraints() {
-        rightButtonContainer.addSubview(deleteButton)
-        NSLayoutConstraint.activate([
-            deleteButton.trailingAnchor.constraint(equalTo: rightButtonContainer.trailingAnchor),
-            deleteButton.topAnchor.constraint(equalTo: rightButtonContainer.topAnchor),
-            deleteButton.bottomAnchor.constraint(equalTo: rightButtonContainer.bottomAnchor),
-            deleteButton.widthAnchor.constraint(equalToConstant: buttonWidth)
-        ])
+        let rightButtons = [deleteButton, skipButton]
+        for (index, button) in rightButtons.enumerated() {
+            rightButtonContainer.addSubview(button)
+            NSLayoutConstraint.activate([
+                button.trailingAnchor.constraint(equalTo: rightButtonContainer.trailingAnchor, constant: -CGFloat(index) * buttonWidth),
+                button.topAnchor.constraint(equalTo: rightButtonContainer.topAnchor),
+                button.bottomAnchor.constraint(equalTo: rightButtonContainer.bottomAnchor),
+                button.widthAnchor.constraint(equalToConstant: buttonWidth)
+            ])
+        }
         
-        let leftButtons = [editButton, skipButton, cancelButton]
+        let leftButtons = [editButton, cancelButton]
         for (index, button) in leftButtons.enumerated() {
             leftButtonContainer.addSubview(button)
             NSLayoutConstraint.activate([
@@ -253,7 +257,7 @@ class HabitCell: UICollectionViewCell {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         tapGesture.cancelsTouchesInView = false
         tapGesture.delegate = self
-        contentView.addGestureRecognizer(tapGesture)
+        contentContainer.addGestureRecognizer(tapGesture)
         print("Tap gesture initialized")
     }
     
@@ -297,8 +301,9 @@ class HabitCell: UICollectionViewCell {
         isSwiped = true
         print("Showing right swipe actions. isSwiped: \(isSwiped)")
         UIView.animate(withDuration: 0.3) {
-            self.contentContainer.transform = CGAffineTransform(translationX: self.buttonWidth * 3, y: 0)
+            self.contentContainer.transform = CGAffineTransform(translationX: self.buttonWidth * 2, y: 0)
             self.leftButtonContainer.isHidden = false
+            self.rightButtonContainer.isHidden = true
             self.layoutIfNeeded()
         }
     }
@@ -307,8 +312,9 @@ class HabitCell: UICollectionViewCell {
         isSwiped = true
         print("Showing left swipe action. isSwiped: \(isSwiped)")
         UIView.animate(withDuration: 0.3) {
-            self.contentContainer.transform = CGAffineTransform(translationX: -self.buttonWidth, y: 0)
+            self.contentContainer.transform = CGAffineTransform(translationX: -self.buttonWidth * 2, y: 0)
             self.rightButtonContainer.isHidden = false
+            self.leftButtonContainer.isHidden = true
             self.layoutIfNeeded()
         }
     }
@@ -330,6 +336,7 @@ class HabitCell: UICollectionViewCell {
     // MARK: - Handle tap gesture
     
     @objc private func handleTap() {
+
         print("Cell tapped! isSwiped: \(isSwiped)")
         
         guard var habit = habit else {
