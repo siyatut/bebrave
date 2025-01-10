@@ -16,7 +16,7 @@ protocol HabitCellDelegate: AnyObject {
     func deleteHabit(habit: Habit)
 }
 
-class HabitCell: UICollectionViewCell {
+class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
     
@@ -258,7 +258,6 @@ class HabitCell: UICollectionViewCell {
         tapGesture.cancelsTouchesInView = false
         tapGesture.delegate = self
         contentContainer.addGestureRecognizer(tapGesture)
-        print("Tap gesture initialized")
     }
     
     private func setupPanGesture() {
@@ -266,7 +265,6 @@ class HabitCell: UICollectionViewCell {
         panGesture.cancelsTouchesInView = true
         panGesture.delegate = self
         contentView.addGestureRecognizer(panGesture)
-        print("Pan gesture initialized")
     }
     
     // MARK: - Handle pan gesture
@@ -276,15 +274,12 @@ class HabitCell: UICollectionViewCell {
         
         switch gesture.state {
         case .began:
-            print("Pan gesture began.")
             originalCenter = contentContainer.center
             
         case .changed:
-            print("Pan gesture changed. Translation X: \(translation.x)")
             contentContainer.transform = CGAffineTransform(translationX: translation.x, y: 0)
             
         case .ended:
-            print("Pan gesture ended. Translation X: \(translation.x)")
             if translation.x < -buttonWidth {
                 showLeftSwipeAction()
             } else if translation.x > buttonWidth {
@@ -299,7 +294,6 @@ class HabitCell: UICollectionViewCell {
     
     private func showRightSwipeActions() {
         isSwiped = true
-        print("Showing right swipe actions. isSwiped: \(isSwiped)")
         UIView.animate(withDuration: 0.3) {
             self.contentContainer.transform = CGAffineTransform(translationX: self.buttonWidth * 2, y: 0)
             self.leftButtonContainer.isHidden = false
@@ -310,7 +304,6 @@ class HabitCell: UICollectionViewCell {
     
     private func showLeftSwipeAction() {
         isSwiped = true
-        print("Showing left swipe action. isSwiped: \(isSwiped)")
         UIView.animate(withDuration: 0.3) {
             self.contentContainer.transform = CGAffineTransform(translationX: -self.buttonWidth * 2, y: 0)
             self.rightButtonContainer.isHidden = false
@@ -336,9 +329,6 @@ class HabitCell: UICollectionViewCell {
     // MARK: - Handle tap gesture
     
     @objc private func handleTap() {
-
-        print("Cell tapped! isSwiped: \(isSwiped)")
-        
         guard var habit = habit else {
             print("No habit found. Exiting tap handler.")
             return
@@ -347,9 +337,7 @@ class HabitCell: UICollectionViewCell {
         let today = Calendar.current.startOfDay(for: Date())
         
         if habit.skipDates.contains(today) {
-            print("Habit skipped today. Removing skip date.")
             habit.skipDates.remove(today)
-            
             habit.progress[today] = 0
             currentProgress = 0
             UserDefaultsManager.shared.updateHabit(habit)
@@ -358,7 +346,6 @@ class HabitCell: UICollectionViewCell {
         }
         
         if currentProgress < habit.frequency {
-            print("Marking habit as completed.")
             habit.markCompleted()
             currentProgress += 1
             UserDefaultsManager.shared.updateHabit(habit)
@@ -498,24 +485,3 @@ extension HabitCell {
     
 }
 
-extension HabitCell: UIGestureRecognizerDelegate {
-    
-    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        if gestureRecognizer == panGesture {
-            print("Pan gesture should begin.")
-            return true
-        }
-        
-        if gestureRecognizer == tapGesture {
-            print("Tap gesture attempted. isSwiped: \(isSwiped)")
-            // Блокируем само начало tapGesture, если свайп активен
-            if isSwiped {
-                print("Blocking tap gesture because isSwiped is true.")
-                return false
-            }
-        }
-        
-        print("Gesture \(gestureRecognizer) allowed to begin.")
-        return true
-    }
-}
