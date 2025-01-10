@@ -412,7 +412,7 @@ class HabitCell: UICollectionViewCell {
 
        @objc private func confirmDelete() {
            guard let habit = habit else { return }
-           let alert = UIAlertController(title: "", message: "Точно удаляем привычку?", preferredStyle: .alert)
+           let alert = UIAlertController(title: "Точно удаляем привычку?", message: "", preferredStyle: .alert)
            alert.addAction(UIAlertAction(title: "Отмена", style: .cancel) { _ in
                self.resetPosition()
            })
