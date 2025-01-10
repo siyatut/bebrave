@@ -443,7 +443,7 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
             clearCheckmark()
         }
         
-        contentView.layer.backgroundColor = progressColor.cgColor
+        contentContainer.layer.backgroundColor = progressColor.cgColor
         contentView.layer.cornerRadius = AppStyle.Sizes.cornerRadius
         contentView.layer.masksToBounds = true
         
