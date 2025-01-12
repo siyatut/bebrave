@@ -423,6 +423,8 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         let status = habit.getStatus(for: today)
         let progressColor: UIColor
         
+#warning("Если привычка completed, оба контейнера (contentView и containerView) закрашены и при свайпе не видно белый фон. Если частично выполнена, видно")
+        
         switch status {
         case .notCompleted:
             progressColor = Calendar.current.isDateInToday(today) ?
