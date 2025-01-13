@@ -43,4 +43,34 @@ extension HabitCell {
     func clearCheckmark() {
         checkmarkLayer.isHidden = true
     }
+    
+    func applySkippedHabitPattern(for status: HabitStatus) {
+        
+        guard case .skipped = status else { return }
+        
+        clearLayerPatterns()
+        
+        let patternLayer = CAShapeLayer()
+        patternLayer.frame = contentContainer.bounds
+        patternLayer.fillColor = AppStyle.Colors.isProgressHabitColor.cgColor
+        patternLayer.strokeColor = AppStyle.Colors.borderColor.cgColor
+        patternLayer.lineWidth = 2
+        
+        let path = UIBezierPath()
+        let step: CGFloat = 10
+        let diagonalLength = hypot(contentContainer.bounds.width, contentContainer.bounds.height)
+        
+        for x in stride(from: -diagonalLength, to: diagonalLength, by: step) {
+            path.move(to: CGPoint(x: x, y: 0))
+            path.addLine(to: CGPoint(x: x + diagonalLength, y: contentContainer.bounds.height))
+        }
+        
+        patternLayer.path = path.cgPath
+        patternLayer.lineDashPattern = [4, 4]
+        contentContainer.layer.insertSublayer(patternLayer, at: 0)
+    }
+    
+    func clearLayerPatterns() {
+        contentContainer.layer.sublayers?.removeAll { $0 is CAShapeLayer }
+    }
 }
