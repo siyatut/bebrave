@@ -41,6 +41,8 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     lazy var leftButtonContainer: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
+        view.layer.cornerRadius = AppStyle.Sizes.cornerRadius
+        view.layer.masksToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -48,6 +50,8 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     lazy var rightButtonContainer: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
+        view.layer.cornerRadius = AppStyle.Sizes.cornerRadius
+        view.layer.masksToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -118,6 +122,8 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         }
     }
     
+    // MARK: - Update habit progress
+    
     func updateHabitProgress() {
         guard let habit = habit else { return }
         
@@ -144,38 +150,35 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     func configure(with habit: Habit) {
         self.habit = habit
+        resetCellState()
+        
         let today = Calendar.current.startOfDay(for: Date())
         let status = habit.getStatus(for: today)
         
-        clearLayerPatterns()
-        clearCheckmark()
-        
-        let progressColor: UIColor
-        
         switch status {
         case .notCompleted:
-            progressColor = Calendar.current.isDateInToday(today) ?
+            contentContainer.backgroundColor = Calendar.current.isDateInToday(today) ?
             AppStyle.Colors.backgroundColor : AppStyle.Colors.isUncompletedHabitColor
-            currentProgress = 0
         case .partiallyCompleted(let progress, _):
             currentProgress = progress
-            progressColor = AppStyle.Colors.backgroundColor
             updateHabitProgress()
         case .completed:
             currentProgress = habit.frequency
-            progressColor = AppStyle.Colors.isProgressHabitColor
             drawCheckmark()
         case .skipped:
-            currentProgress = 0
-            progressColor = AppStyle.Colors.isProgressHabitColor
             applySkippedHabitPattern(for: status)
         }
-        
-        contentContainer.backgroundColor = progressColor
+
+        habitsName.text = habit.title
+    }
+    
+    func resetCellState() {
+        clearCheckmark()
+        clearLayerPatterns()
+        currentProgress = 0
+        contentContainer.backgroundColor = AppStyle.Colors.backgroundColor
         contentView.backgroundColor = AppStyle.Colors.isProgressHabitColor
         contentView.layer.cornerRadius = AppStyle.Sizes.cornerRadius
         contentView.layer.masksToBounds = true
-        
-        habitsName.text = habit.title
     }
 }
