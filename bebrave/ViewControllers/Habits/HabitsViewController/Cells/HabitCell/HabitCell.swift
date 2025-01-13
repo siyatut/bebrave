@@ -67,8 +67,16 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     lazy var habitsCount = createLabel(textColor: .secondaryLabel, font: AppStyle.Fonts.regularFont(size: 16))
     lazy var starDivider = createImageView(imageName: "StarDivider", tintColor: AppStyle.Colors.secondaryColor)
     lazy var checkbox = createImageView(imageName: "UncheckedCheckbox", tintColor: AppStyle.Colors.borderColor)
+    
     let checkmarkLayer = CAShapeLayer()
+    
     var progressViewWidthConstraint: NSLayoutConstraint!
+    let progressView: UIView = {
+        let view = UIView()
+        view.backgroundColor = AppStyle.Colors.isProgressHabitColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     let horizontalStackView: UIStackView = {
         let stack = UIStackView()
@@ -79,14 +87,7 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-    
-    let progressView: UIView = {
-        let view = UIView()
-        view.backgroundColor = AppStyle.Colors.isProgressHabitColor
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
+
     // MARK: - Init
     
     override init(frame: CGRect) {
@@ -138,48 +139,6 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
             clearCheckmark()
         }
     }
-    
-    // MARK: - Button Actions
-    
-    @objc private func editHabit() {
-        guard let habit = habit else { return }
-        delegate?.habitCell(self, didTriggerAction: .edit, for: habit)
-        resetPosition()
-    }
-
-    @objc private func skipHabit() {
-        guard let habit = habit else { return }
-        delegate?.habitCell(self, didTriggerAction: .skipToday, for: habit)
-        resetPosition()
-    }
-
-    @objc private func cancelHabit() {
-        guard let habit = habit else { return }
-        if habit.skipDates.contains(Calendar.current.startOfDay(for: Date())) {
-            delegate?.habitCell(self, didTriggerAction: .undoSkip, for: habit)
-        } else {
-            delegate?.habitCell(self, didTriggerAction: .unmarkCompletion, for: habit)
-        }
-        resetPosition()
-    }
-
-       @objc private func confirmDelete() {
-           guard let habit = habit else { return }
-           let alert = UIAlertController(title: "Точно удаляем привычку?", message: "", preferredStyle: .alert)
-           alert.addAction(UIAlertAction(title: "Отмена", style: .cancel) { _ in
-               self.resetPosition()
-           })
-           alert.addAction(UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
-               guard let self = self else { return }
-               self.delegate?.habitCell(self, didTriggerAction: .delete, for: habit)
-               self.resetPosition()
-           })
-           
-           if let viewController = self.window?.rootViewController {
-               viewController.present(alert, animated: true, completion: nil)
-           }
-       }
-
     
     // MARK: - Configure method
     
