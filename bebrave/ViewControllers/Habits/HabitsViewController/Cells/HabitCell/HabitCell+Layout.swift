@@ -42,13 +42,6 @@ extension HabitCell {
             contentContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
         
-        // По-моему, вот эти 4 строчки снизу можно удалить
-        
-        contentView.clipsToBounds = false
-        leftButtonContainer.clipsToBounds = false
-        rightButtonContainer.clipsToBounds = false
-        contentContainer.clipsToBounds = true
-
         contentContainer.addSubview(progressView)
         progressViewWidthConstraint = progressView.widthAnchor.constraint(equalToConstant: 0)
         
