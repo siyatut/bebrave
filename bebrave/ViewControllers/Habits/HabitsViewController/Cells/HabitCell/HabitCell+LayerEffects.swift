@@ -52,8 +52,7 @@ extension HabitCell {
         
         let patternLayer = CAShapeLayer()
         patternLayer.frame = contentContainer.bounds
-        patternLayer.fillColor = AppStyle.Colors.isProgressHabitColor.cgColor
-        patternLayer.strokeColor = AppStyle.Colors.borderColor.cgColor
+        patternLayer.strokeColor = AppStyle.Colors.isProgressHabitColor.cgColor
         patternLayer.lineWidth = 2
         
         let path = UIBezierPath()
