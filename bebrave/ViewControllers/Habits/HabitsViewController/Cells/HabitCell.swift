@@ -11,11 +11,15 @@ import UIKit
 
 // TODO: - Разделить код на разные файлы. Что-то тут точно можно вынести в другие
 
+enum HabitCellAction {
+    case edit
+    case delete
+    case skipToday
+    case unmarkCompletion
+}
+
 protocol HabitCellDelegate: AnyObject {
-    func markHabitAsNotCompleted(habit: Habit)
-    func skipToday(habit: Habit)
-    func editHabit(habit: Habit)
-    func deleteHabit(habit: Habit)
+    func habitCell(_ cell: HabitCell, didTriggerAction action: HabitCellAction, for habit: Habit)
 }
 
 class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
@@ -393,23 +397,23 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     // MARK: - Button Actions
     
-       @objc private func editHabit() {
-           guard let habit = habit else { return }
-           delegate?.editHabit(habit: habit)
-           resetPosition()
-       }
+    @objc private func editHabit() {
+        guard let habit = habit else { return }
+        delegate?.habitCell(self, didTriggerAction: .edit, for: habit)
+        resetPosition()
+    }
 
-       @objc private func skipHabit() {
-           guard let habit = habit else { return }
-           delegate?.skipToday(habit: habit)
-           resetPosition()
-       }
+    @objc private func skipHabit() {
+        guard let habit = habit else { return }
+        delegate?.habitCell(self, didTriggerAction: .skipToday, for: habit)
+        resetPosition()
+    }
 
-       @objc private func cancelHabit() {
-           guard let habit = habit else { return }
-           delegate?.markHabitAsNotCompleted(habit: habit)
-           resetPosition()
-       }
+    @objc private func cancelHabit() {
+        guard let habit = habit else { return }
+        delegate?.habitCell(self, didTriggerAction: .unmarkCompletion, for: habit)
+        resetPosition()
+    }
 
        @objc private func confirmDelete() {
            guard let habit = habit else { return }
@@ -419,7 +423,7 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
            })
            alert.addAction(UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
                guard let self = self else { return }
-               self.delegate?.deleteHabit(habit: habit)
+               self.delegate?.habitCell(self, didTriggerAction: .delete, for: habit)
                self.resetPosition()
            })
            
