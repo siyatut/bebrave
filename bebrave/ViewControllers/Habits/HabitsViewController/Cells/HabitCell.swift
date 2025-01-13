@@ -89,7 +89,7 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     private let progressView: UIView = {
         let view = UIView()
-        view.backgroundColor = AppStyle.Colors.progressViewColor
+        view.backgroundColor = AppStyle.Colors.isProgressHabitColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -112,6 +112,16 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         super.prepareForReuse()
         isSwiped = false
         resetPosition(animated: false)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        if let habit = habit {
+            let today = Calendar.current.startOfDay(for: Date())
+            let status = habit.getStatus(for: today)
+            applySkippedHabitPattern(for: status)
+        }
     }
     
     // MARK: - Set up components
@@ -148,6 +158,8 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
             contentContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             contentContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+        
+        // По-моему, вот эти 4 строчки снизу можно удалить
         
         contentView.clipsToBounds = false
         leftButtonContainer.clipsToBounds = false
@@ -421,36 +433,67 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         self.habit = habit
         let today = Calendar.current.startOfDay(for: Date())
         let status = habit.getStatus(for: today)
-        let progressColor: UIColor
         
-#warning("Если привычка completed, оба контейнера (contentView и containerView) закрашены и при свайпе не видно белый фон. Если частично выполнена, видно")
+        clearLayerPatterns()
+        clearCheckmark()
+        
+        let progressColor: UIColor
         
         switch status {
         case .notCompleted:
             progressColor = Calendar.current.isDateInToday(today) ?
-            AppStyle.Colors.backgroundColor : AppStyle.Colors.isUncompletedHabit
+            AppStyle.Colors.backgroundColor : AppStyle.Colors.isUncompletedHabitColor
             currentProgress = 0
-            clearCheckmark()
         case .partiallyCompleted(let progress, _):
             currentProgress = progress
             progressColor = AppStyle.Colors.backgroundColor
             updateHabitProgress()
         case .completed:
             currentProgress = habit.frequency
-            progressColor = AppStyle.Colors.progressViewColor
+            progressColor = AppStyle.Colors.isProgressHabitColor
             drawCheckmark()
         case .skipped:
             currentProgress = 0
-            progressColor = AppStyle.Colors.isSkippedHabit
-            clearCheckmark()
+            progressColor = AppStyle.Colors.isProgressHabitColor
+            applySkippedHabitPattern(for: status)
         }
         
-        contentContainer.layer.backgroundColor = progressColor.cgColor
-        contentView.layer.backgroundColor = progressColor.cgColor
+        contentContainer.backgroundColor = progressColor
+        contentView.backgroundColor = AppStyle.Colors.isProgressHabitColor
         contentView.layer.cornerRadius = AppStyle.Sizes.cornerRadius
         contentView.layer.masksToBounds = true
         
         habitsName.text = habit.title
+    }
+    
+    private func applySkippedHabitPattern(for status: HabitStatus) {
+        
+        guard case .skipped = status else { return }
+        
+        clearLayerPatterns()
+        
+        let patternLayer = CAShapeLayer()
+        patternLayer.frame = contentContainer.bounds
+        patternLayer.fillColor = AppStyle.Colors.isProgressHabitColor.cgColor
+        patternLayer.strokeColor = AppStyle.Colors.borderColor.cgColor
+        patternLayer.lineWidth = 2
+        
+        let path = UIBezierPath()
+        let step: CGFloat = 10
+        let diagonalLength = hypot(contentContainer.bounds.width, contentContainer.bounds.height)
+        
+        for x in stride(from: -diagonalLength, to: diagonalLength, by: step) {
+            path.move(to: CGPoint(x: x, y: 0))
+            path.addLine(to: CGPoint(x: x + diagonalLength, y: contentContainer.bounds.height))
+        }
+        
+        patternLayer.path = path.cgPath
+        patternLayer.lineDashPattern = [4, 4]
+        contentContainer.layer.insertSublayer(patternLayer, at: 0)
+    }
+    
+    private func clearLayerPatterns() {
+        contentContainer.layer.sublayers?.removeAll { $0 is CAShapeLayer }
     }
 }
 
