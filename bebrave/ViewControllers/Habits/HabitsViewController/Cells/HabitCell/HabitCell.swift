@@ -9,18 +9,6 @@ import UIKit
 
 // TODO: - Разделить код на разные файлы. Что-то тут точно можно вынести в другие
 
-enum HabitCellAction {
-    case edit
-    case delete
-    case skipToday
-    case unmarkCompletion
-    case undoSkip
-}
-
-protocol HabitCellDelegate: AnyObject {
-    func habitCell(_ cell: HabitCell, didTriggerAction action: HabitCellAction, for habit: Habit)
-}
-
 class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
@@ -494,38 +482,3 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         contentContainer.layer.sublayers?.removeAll { $0 is CAShapeLayer }
     }
 }
-
-// MARK: - Methods to create label and image view
-
-extension HabitCell {
-    
-    private func createLabel(textColor: UIColor, font: UIFont, alpha: CGFloat = 1.0) -> UILabel {
-        let label = UILabel()
-        label.textColor = textColor
-        label.font = font
-        label.alpha = alpha
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }
-    
-    private func createImageView(imageName: String, tintColor: UIColor, alpha: CGFloat = 1.0) -> UIImageView {
-        let view = UIImageView()
-        view.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
-        view.tintColor = tintColor
-        view.alpha = alpha
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }
-    
-    private func createSwipeButton(imageName: String, color: UIColor, action: Selector) -> UIButton {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: imageName), for: .normal)
-        button.tintColor = .white
-        button.backgroundColor = color
-        button.addTarget(self, action: action, for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }
-    
-}
-
