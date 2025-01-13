@@ -14,8 +14,8 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     // MARK: - Properties
     
     weak var delegate: HabitCellDelegate?
-    private var habit: Habit?
-    private var currentProgress: Int = 0 {
+    var habit: Habit?
+    var currentProgress: Int = 0 {
         didSet {
             updateHabitProgress()
         }
@@ -221,100 +221,7 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         }
     }
     
-    // MARK: - Gesture methods
-    
-    private func setupTapGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        tapGesture.cancelsTouchesInView = false
-        tapGesture.delegate = self
-        contentContainer.addGestureRecognizer(tapGesture)
-    }
-    
-    private func setupPanGesture() {
-        panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
-        panGesture.cancelsTouchesInView = true
-        panGesture.delegate = self
-        contentView.addGestureRecognizer(panGesture)
-    }
-    
-    // MARK: - Handle pan gesture
-    
-    @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
-        let translation = gesture.translation(in: self)
-        
-        switch gesture.state {
-        case .began:
-            originalCenter = contentContainer.center
-            
-        case .changed:
-            contentContainer.transform = CGAffineTransform(translationX: translation.x, y: 0)
-            
-        case .ended:
-            if translation.x < -buttonWidth {
-                showLeftSwipeAction()
-            } else if translation.x > buttonWidth {
-                showRightSwipeActions()
-            } else {
-                resetPosition()
-            }
-        default:
-            break
-        }
-    }
-    
-    private func showRightSwipeActions() {
-        isSwiped = true
-        UIView.animate(withDuration: 0.3) {
-            self.contentContainer.transform = CGAffineTransform(translationX: self.buttonWidth * 2, y: 0)
-            self.leftButtonContainer.isHidden = false
-            self.rightButtonContainer.isHidden = true
-            self.layoutIfNeeded()
-        }
-    }
-    
-    private func showLeftSwipeAction() {
-        isSwiped = true
-        UIView.animate(withDuration: 0.3) {
-            self.contentContainer.transform = CGAffineTransform(translationX: -self.buttonWidth * 2, y: 0)
-            self.rightButtonContainer.isHidden = false
-            self.leftButtonContainer.isHidden = true
-            self.layoutIfNeeded()
-        }
-    }
-    
-    @objc private func resetPosition(animated: Bool = true) {
-        isSwiped = false
-        let animations = {
-            self.contentContainer.transform = .identity
-            self.leftButtonContainer.isHidden = true
-            self.rightButtonContainer.isHidden = true
-        }
-        if animated {
-            UIView.animate(withDuration: 0.3, animations: animations)
-        } else {
-            animations()
-        }
-    }
-    
-    // MARK: - Handle tap gesture
-    
-    @objc private func handleTap() {
-        guard var habit = habit else {
-            print("No habit found. Exiting tap handler.")
-            return
-        }
-        
-        if currentProgress < habit.frequency {
-            habit.markCompleted()
-            currentProgress += 1
-            UserDefaultsManager.shared.updateHabit(habit)
-            configure(with: habit)
-        } else {
-            print("Habit already completed.")
-        }
-    }
-    
-    private func updateHabitProgress() {
+    func updateHabitProgress() {
         guard let habit = habit else { return }
         
         let totalWidth = contentView.bounds.width
