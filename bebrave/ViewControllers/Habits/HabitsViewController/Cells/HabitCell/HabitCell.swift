@@ -7,7 +7,9 @@
 
 import UIKit
 
-// TODO: - Разделить код на разные файлы. Что-то тут точно можно вынести в другие
+// TODO: - Возможно, что-то ещё можно вынести в другие файлы + надо создать метод для создания контейнеров, там похожие настройки.  Потом его нужно вынести в UIHelpers.
+
+// TODO: - Проверить настройки иконок в Assets, почитать про то, какие нужно выставлять для разных случаев
 
 class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
@@ -168,7 +170,7 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         case .skipped:
             applySkippedHabitPattern(for: status)
         }
-
+        
         habitsName.text = habit.title
     }
     
