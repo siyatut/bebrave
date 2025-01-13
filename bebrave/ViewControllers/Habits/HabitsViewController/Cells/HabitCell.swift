@@ -7,8 +7,6 @@
 
 import UIKit
 
-#warning("Поменять логику для skipped habit. Чтобы не нажатием на неё обновлялось состояние, а нажатием на «Отменить». Как бы отменить пропуск и начать выполнение")
-
 // TODO: - Разделить код на разные файлы. Что-то тут точно можно вынести в другие
 
 enum HabitCellAction {
@@ -16,6 +14,7 @@ enum HabitCellAction {
     case delete
     case skipToday
     case unmarkCompletion
+    case undoSkip
 }
 
 protocol HabitCellDelegate: AnyObject {
@@ -351,17 +350,6 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
             print("No habit found. Exiting tap handler.")
             return
         }
-
-        let today = Calendar.current.startOfDay(for: Date())
-        
-        if habit.skipDates.contains(today) {
-            habit.skipDates.remove(today)
-            habit.progress[today] = 0
-            currentProgress = 0
-            UserDefaultsManager.shared.updateHabit(habit)
-            configure(with: habit)
-            return
-        }
         
         if currentProgress < habit.frequency {
             habit.markCompleted()
@@ -411,7 +399,11 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
     @objc private func cancelHabit() {
         guard let habit = habit else { return }
-        delegate?.habitCell(self, didTriggerAction: .unmarkCompletion, for: habit)
+        if habit.skipDates.contains(Calendar.current.startOfDay(for: Date())) {
+            delegate?.habitCell(self, didTriggerAction: .undoSkip, for: habit)
+        } else {
+            delegate?.habitCell(self, didTriggerAction: .unmarkCompletion, for: habit)
+        }
         resetPosition()
     }
 

@@ -149,6 +149,12 @@ extension Habit {
         skipDates.insert(today)
     }
     
+    mutating func undoSkip() {
+        let today = Calendar.current.startOfDay(for: Date())
+        skipDates.remove(today)
+        progress[today] = 0
+    }
+    
     func getStatus(for date: Date = Date()) -> HabitStatus {
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: date)

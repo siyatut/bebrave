@@ -8,6 +8,7 @@
 import UIKit
 
 extension HabitsViewController: HabitCellDelegate {
+    
     func habitCell(_ cell: HabitCell, didTriggerAction action: HabitCellAction, for habit: Habit) {
         switch action {
         case .edit:
@@ -23,6 +24,11 @@ extension HabitsViewController: HabitCellDelegate {
         case .unmarkCompletion:
             var updatedHabit = habit
             updatedHabit.undoCompletion()
+            UserDefaultsManager.shared.updateHabit(updatedHabit)
+            reloadHabit(updatedHabit)
+        case .undoSkip:
+            var updatedHabit = habit
+            updatedHabit.undoSkip()
             UserDefaultsManager.shared.updateHabit(updatedHabit)
             reloadHabit(updatedHabit)
         }
