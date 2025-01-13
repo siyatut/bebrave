@@ -15,6 +15,7 @@
 		5232E9DE2D27BA990069FD70 /* UIView+AnimateVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232E9DD2D27BA7D0069FD70 /* UIView+AnimateVisibility.swift */; };
 		52359DAC2D3596E100207E09 /* HabitCellProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52359DAB2D3596DF00207E09 /* HabitCellProtocols.swift */; };
 		52359DAE2D35970300207E09 /* HabitCell+UIHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52359DAD2D35970200207E09 /* HabitCell+UIHelpers.swift */; };
+		52359DB02D35980A00207E09 /* HabitCell+LayerEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52359DAF2D35980600207E09 /* HabitCell+LayerEffects.swift */; };
 		523AF3B92CBFBDE900EEFA8A /* NewHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523AF3B82CBFBDBD00EEFA8A /* NewHabitViewController.swift */; };
 		5241DDD22B8F61F000C7ECF0 /* HistoryViewConroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */; };
 		5242479D2D2F9AF600C5E049 /* HabitsViewController+HabitCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5242479C2D2F9AE000C5E049 /* HabitsViewController+HabitCellDelegate.swift */; };
@@ -82,6 +83,7 @@
 		5232E9DD2D27BA7D0069FD70 /* UIView+AnimateVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AnimateVisibility.swift"; sourceTree = "<group>"; };
 		52359DAB2D3596DF00207E09 /* HabitCellProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCellProtocols.swift; sourceTree = "<group>"; };
 		52359DAD2D35970200207E09 /* HabitCell+UIHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCell+UIHelpers.swift"; sourceTree = "<group>"; };
+		52359DAF2D35980600207E09 /* HabitCell+LayerEffects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCell+LayerEffects.swift"; sourceTree = "<group>"; };
 		523AF3B82CBFBDBD00EEFA8A /* NewHabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHabitViewController.swift; sourceTree = "<group>"; };
 		5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewConroller.swift; sourceTree = "<group>"; };
 		5242479C2D2F9AE000C5E049 /* HabitsViewController+HabitCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+HabitCellDelegate.swift"; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 		52359DAA2D3596BF00207E09 /* HabitCell */ = {
 			isa = PBXGroup;
 			children = (
+				52359DAF2D35980600207E09 /* HabitCell+LayerEffects.swift */,
 				52359DAD2D35970200207E09 /* HabitCell+UIHelpers.swift */,
 				52359DAB2D3596DF00207E09 /* HabitCellProtocols.swift */,
 				5246C9752BC6C39D00BA7912 /* HabitCell.swift */,
@@ -504,6 +507,7 @@
 				52FF7F432D2EB96A008EF1E2 /* DayCell.swift in Sources */,
 				52C996A72D11EAEE000E7648 /* SupplementaryViewError.swift in Sources */,
 				52021A772BAC3D2000E9D8F1 /* OutlineBackgroundView.swift in Sources */,
+				52359DB02D35980A00207E09 /* HabitCell+LayerEffects.swift in Sources */,
 				52652B8A2D2405DF00608550 /* NewHabitView+UISetup.swift in Sources */,
 				5241DDD22B8F61F000C7ECF0 /* HistoryViewConroller.swift in Sources */,
 				52697D642D195A97004B9D7E /* HabitsViewController+NewHabitDelegate.swift in Sources */,

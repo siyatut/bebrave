@@ -21,15 +21,15 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         }
     }
 
-    private var panGesture: UIPanGestureRecognizer!
-    private var tapGesture: UITapGestureRecognizer!
-    private var originalCenter: CGPoint = .zero
-    private let buttonWidth: CGFloat = 50
-    private var isSwiped = false
+    var panGesture: UIPanGestureRecognizer!
+    var tapGesture: UITapGestureRecognizer!
+    var originalCenter: CGPoint = .zero
+    let buttonWidth: CGFloat = 50
+    var isSwiped = false
     
     // MARK: - Containers for UI components
     
-    private lazy var contentContainer: UIView = {
+    lazy var contentContainer: UIView = {
         let view = UIView()
         view.backgroundColor = AppStyle.Colors.backgroundColor
         view.layer.cornerRadius = AppStyle.Sizes.cornerRadius
@@ -38,14 +38,14 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         return view
     }()
     
-    private lazy var leftButtonContainer: UIView = {
+    lazy var leftButtonContainer: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var rightButtonContainer: UIView = {
+    lazy var rightButtonContainer: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -54,23 +54,23 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     // MARK: -  Swipe buttons
     
-    private lazy var editButton: UIButton = createSwipeButton(imageName: "pencil", color: .systemBlue, action: #selector(editHabit))
-    private lazy var skipButton: UIButton = createSwipeButton(imageName: "forward", color: .systemOrange, action: #selector(skipHabit))
-    private lazy var cancelButton: UIButton = createSwipeButton(imageName: "xmark.circle", color: .systemGray, action: #selector(cancelHabit))
-    private lazy var deleteButton: UIButton = createSwipeButton(imageName: "trash", color: .systemRed, action: #selector(confirmDelete))
+    lazy var editButton: UIButton = createSwipeButton(imageName: "pencil", color: .systemBlue, action: #selector(editHabit))
+    lazy var skipButton: UIButton = createSwipeButton(imageName: "forward", color: .systemOrange, action: #selector(skipHabit))
+    lazy var cancelButton: UIButton = createSwipeButton(imageName: "xmark.circle", color: .systemGray, action: #selector(cancelHabit))
+    lazy var deleteButton: UIButton = createSwipeButton(imageName: "trash", color: .systemRed, action: #selector(confirmDelete))
     
     
     // MARK: - UI components for cell
     
-    private lazy var habitsName = createLabel(textColor: .label, font: AppStyle.Fonts.regularFont(size: 16))
-    private lazy var percentDone = createLabel(textColor: .secondaryLabel, font: AppStyle.Fonts.regularFont(size: 16))
-    private lazy var habitsCount = createLabel(textColor: .secondaryLabel, font: AppStyle.Fonts.regularFont(size: 16))
-    private lazy var starDivider = createImageView(imageName: "StarDivider", tintColor: AppStyle.Colors.secondaryColor)
-    private lazy var checkbox = createImageView(imageName: "UncheckedCheckbox", tintColor: AppStyle.Colors.borderColor)
-    private let checkmarkLayer = CAShapeLayer()
-    private var progressViewWidthConstraint: NSLayoutConstraint!
+    lazy var habitsName = createLabel(textColor: .label, font: AppStyle.Fonts.regularFont(size: 16))
+    lazy var percentDone = createLabel(textColor: .secondaryLabel, font: AppStyle.Fonts.regularFont(size: 16))
+    lazy var habitsCount = createLabel(textColor: .secondaryLabel, font: AppStyle.Fonts.regularFont(size: 16))
+    lazy var starDivider = createImageView(imageName: "StarDivider", tintColor: AppStyle.Colors.secondaryColor)
+    lazy var checkbox = createImageView(imageName: "UncheckedCheckbox", tintColor: AppStyle.Colors.borderColor)
+    let checkmarkLayer = CAShapeLayer()
+    var progressViewWidthConstraint: NSLayoutConstraint!
     
-    private let horizontalStackView: UIStackView = {
+    let horizontalStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.alignment = .center
@@ -80,7 +80,7 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         return stack
     }()
     
-    private let progressView: UIView = {
+    let progressView: UIView = {
         let view = UIView()
         view.backgroundColor = AppStyle.Colors.isProgressHabitColor
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -119,7 +119,7 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     // MARK: - Set up components
     
-    private func addSubviewsToStackView(_ stackView: UIStackView, views: [UIView]) {
+    func addSubviewsToStackView(_ stackView: UIStackView, views: [UIView]) {
         views.forEach { stackView.addArrangedSubview($0) }
     }
     
@@ -219,41 +219,6 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
                 button.widthAnchor.constraint(equalToConstant: buttonWidth)
             ])
         }
-    }
-    
-    // MARK: - Checkmark methods
-    
-    private func setupCheckmarkLayer() {
-        checkmarkLayer.strokeColor = UIColor.black.cgColor
-        checkmarkLayer.fillColor = UIColor.clear.cgColor
-        checkmarkLayer.lineWidth = 2
-        checkmarkLayer.lineCap = .round
-        checkmarkLayer.lineJoin = .round
-        checkmarkLayer.isHidden = true
-        checkbox.layer.addSublayer(checkmarkLayer)
-    }
-    
-    private func drawCheckmark() {
-        let size = checkbox.bounds.size
-        let path = UIBezierPath()
-        
-        // Начальная точка (левый конец)
-        path.move(to: CGPoint(x: size.width * 0.25, y: size.height * 0.4))
-        
-        // Средняя точка (угол галочки)
-        path.addLine(to: CGPoint(x: size.width * 0.5, y: size.height * 0.65))
-        
-        // Конечная точка (правая часть)
-        path.addLine(to: CGPoint(x: size.width * 0.95, y: size.height * 0.0))
-        
-        checkmarkLayer.path = path.cgPath
-        checkmarkLayer.lineCap = .round
-        checkmarkLayer.lineJoin = .round
-        checkmarkLayer.isHidden = false
-    }
-    
-    private func clearCheckmark() {
-        checkmarkLayer.isHidden = true
     }
     
     // MARK: - Gesture methods
