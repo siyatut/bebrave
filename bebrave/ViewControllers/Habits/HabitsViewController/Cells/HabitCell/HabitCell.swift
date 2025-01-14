@@ -7,8 +7,6 @@
 
 import UIKit
 
-// TODO: - Возможно, что-то ещё можно вынести в другие файлы + надо создать метод для создания контейнеров, там похожие настройки.  Потом его нужно вынести в UIHelpers.
-
 // TODO: - Проверить настройки иконок в Assets, почитать про то, какие нужно выставлять для разных случаев
 
 class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
@@ -22,7 +20,7 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
             updateHabitProgress()
         }
     }
-
+    
     var panGesture: UIPanGestureRecognizer!
     var tapGesture: UITapGestureRecognizer!
     var originalCenter: CGPoint = .zero
@@ -65,7 +63,7 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-
+    
     // MARK: - Init
     
     override init(frame: CGRect) {
@@ -80,6 +78,8 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle methods
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         isSwiped = false
@@ -88,71 +88,11 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-
+        
         if let habit = habit {
             let today = Calendar.current.startOfDay(for: Date())
             let status = habit.getStatus(for: today)
             applySkippedHabitPattern(for: status)
         }
-    }
-    
-    // MARK: - Update habit progress
-    
-    func updateHabitProgress() {
-        guard let habit = habit else { return }
-        
-        let totalWidth = contentView.bounds.width
-        let percentage = CGFloat(currentProgress) / CGFloat(habit.frequency)
-        let newWidth = totalWidth * percentage
-        
-        habitsCount.text = "\(currentProgress) из \(habit.frequency)"
-        percentDone.text = "\(Int(percentage * 100))%"
-        
-        progressViewWidthConstraint.constant = newWidth
-        UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseInOut]) {
-            self.contentView.layoutIfNeeded()
-        }
-        
-        if percentage >= 1.0 {
-            drawCheckmark()
-        } else {
-            clearCheckmark()
-        }
-    }
-    
-    // MARK: - Configure method
-    
-    func configure(with habit: Habit) {
-        self.habit = habit
-        resetCellState()
-        
-        let today = Calendar.current.startOfDay(for: Date())
-        let status = habit.getStatus(for: today)
-        
-        switch status {
-        case .notCompleted:
-            contentContainer.backgroundColor = Calendar.current.isDateInToday(today) ?
-            AppStyle.Colors.backgroundColor : AppStyle.Colors.isUncompletedHabitColor
-        case .partiallyCompleted(let progress, _):
-            currentProgress = progress
-            updateHabitProgress()
-        case .completed:
-            currentProgress = habit.frequency
-            drawCheckmark()
-        case .skipped:
-            applySkippedHabitPattern(for: status)
-        }
-        
-        habitsName.text = habit.title
-    }
-    
-    func resetCellState() {
-        clearCheckmark()
-        clearLayerPatterns()
-        currentProgress = 0
-        contentContainer.backgroundColor = AppStyle.Colors.backgroundColor
-        contentView.backgroundColor = AppStyle.Colors.isProgressHabitColor
-        contentView.layer.cornerRadius = AppStyle.Sizes.cornerRadius
-        contentView.layer.masksToBounds = true
     }
 }
