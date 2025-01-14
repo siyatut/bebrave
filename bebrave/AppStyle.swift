@@ -8,6 +8,7 @@
 import UIKit
 
 struct AppStyle {
+    
     struct Colors {
         static let primaryColor = UIColor(named: "MyPrimaryColor") ?? .systemPurple
         static let secondaryColor = UIColor(named: "MySecondaryColor") ?? .tintColor
