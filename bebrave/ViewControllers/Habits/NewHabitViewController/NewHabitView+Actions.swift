@@ -9,6 +9,8 @@ import UIKit
 
 extension NewHabitViewController {
     
+    // TODO: - Изменить код так, чтобы можно было нажимать не только на чекбокс, а на весь контейнер
+    
     @objc func checkboxTapped(_ sender: UITapGestureRecognizer) {
         guard let index = sender.view?.tag else { return }
         selectedDays[index].toggle()
