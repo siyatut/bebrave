@@ -9,7 +9,11 @@ import UIKit
 
 extension HabitCell {
     
-    func createLabel(textColor: UIColor, font: UIFont, alpha: CGFloat = 1.0) -> UILabel {
+    func createLabel(
+        textColor: UIColor,
+        font: UIFont,
+        alpha: CGFloat = 1.0
+    ) -> UILabel {
         let label = UILabel()
         label.textColor = textColor
         label.font = font
@@ -18,7 +22,11 @@ extension HabitCell {
         return label
     }
     
-    func createImageView(imageName: String, tintColor: UIColor, alpha: CGFloat = 1.0) -> UIImageView {
+    func createImageView(
+        imageName: String,
+        tintColor: UIColor,
+        alpha: CGFloat = 1.0
+    ) -> UIImageView {
         let view = UIImageView()
         view.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
         view.tintColor = tintColor
@@ -27,7 +35,11 @@ extension HabitCell {
         return view
     }
     
-    func createSwipeButton(imageName: String, color: UIColor, action: Selector) -> UIButton {
+    func createSwipeButton(
+        imageName: String,
+        color: UIColor,
+        action: Selector
+    ) -> UIButton {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: imageName), for: .normal)
         button.tintColor = .white
@@ -37,6 +49,18 @@ extension HabitCell {
         return button
     }
     
+    func createContainer(
+        backgroundColor: UIColor = .clear,
+        cornerRadius: CGFloat = AppStyle.Sizes.cornerRadius,
+        masksToBounds: Bool = true
+    ) -> UIView {
+        let view = UIView()
+        view.backgroundColor = backgroundColor
+        view.layer.cornerRadius = cornerRadius
+        view.layer.masksToBounds = masksToBounds
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }
 }
 
 

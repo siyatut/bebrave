@@ -42,13 +42,13 @@ extension HabitCell {
             contentContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
         
-        contentContainer.addSubview(progressView)
-        progressViewWidthConstraint = progressView.widthAnchor.constraint(equalToConstant: 0)
+        contentContainer.addSubview(progressViewContainer)
+        progressViewWidthConstraint = progressViewContainer.widthAnchor.constraint(equalToConstant: 0)
         
         NSLayoutConstraint.activate([
-            progressView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
-            progressView.topAnchor.constraint(equalTo: contentContainer.topAnchor),
-            progressView.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor),
+            progressViewContainer.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
+            progressViewContainer.topAnchor.constraint(equalTo: contentContainer.topAnchor),
+            progressViewContainer.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor),
             progressViewWidthConstraint
         ])
         

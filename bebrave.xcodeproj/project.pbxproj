@@ -172,13 +172,13 @@
 		52359DAA2D3596BF00207E09 /* HabitCell */ = {
 			isa = PBXGroup;
 			children = (
+				5246C9752BC6C39D00BA7912 /* HabitCell.swift */,
 				52359DB52D359EA800207E09 /* HabitCell+ButtonActions.swift */,
 				52359DB32D359C7000207E09 /* HabitCell+Layout.swift */,
 				52359DB12D35987C00207E09 /* HabitCell+Gestures.swift */,
 				52359DAF2D35980600207E09 /* HabitCell+LayerEffects.swift */,
 				52359DAD2D35970200207E09 /* HabitCell+UIHelpers.swift */,
 				52359DAB2D3596DF00207E09 /* HabitCellProtocols.swift */,
-				5246C9752BC6C39D00BA7912 /* HabitCell.swift */,
 			);
 			path = HabitCell;
 			sourceTree = "<group>";

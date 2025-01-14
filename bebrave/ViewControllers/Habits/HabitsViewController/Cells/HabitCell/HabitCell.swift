@@ -31,32 +31,10 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     // MARK: - Containers for UI components
     
-    lazy var contentContainer: UIView = {
-        let view = UIView()
-        view.backgroundColor = AppStyle.Colors.backgroundColor
-        view.layer.cornerRadius = AppStyle.Sizes.cornerRadius
-        view.layer.masksToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    lazy var leftButtonContainer: UIView = {
-        let view = UIView()
-        view.backgroundColor = .clear
-        view.layer.cornerRadius = AppStyle.Sizes.cornerRadius
-        view.layer.masksToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    lazy var rightButtonContainer: UIView = {
-        let view = UIView()
-        view.backgroundColor = .clear
-        view.layer.cornerRadius = AppStyle.Sizes.cornerRadius
-        view.layer.masksToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    lazy var leftButtonContainer: UIView = createContainer()
+    lazy var rightButtonContainer: UIView = createContainer()
+    lazy var contentContainer: UIView = createContainer(backgroundColor: AppStyle.Colors.backgroundColor)
+    lazy var progressViewContainer: UIView = createContainer(backgroundColor: AppStyle.Colors.isProgressHabitColor, cornerRadius: 0)
     
     // MARK: -  Swipe buttons
     
@@ -77,12 +55,6 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     let checkmarkLayer = CAShapeLayer()
     
     var progressViewWidthConstraint: NSLayoutConstraint!
-    let progressView: UIView = {
-        let view = UIView()
-        view.backgroundColor = AppStyle.Colors.isProgressHabitColor
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
     
     let horizontalStackView: UIStackView = {
         let stack = UIStackView()
