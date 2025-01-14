@@ -7,8 +7,6 @@
 
 import UIKit
 
-// TODO: - Проверить настройки иконок в Assets, почитать про то, какие нужно выставлять для разных случаев
-
 class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
