@@ -108,6 +108,8 @@ extension NewHabitViewController  {
             dayContainer.layer.borderColor = AppStyle.Colors.borderColor.cgColor
             dayContainer.layer.masksToBounds = true
             dayContainer.translatesAutoresizingMaskIntoConstraints = false
+            dayContainer.tag = i
+            dayContainer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(checkboxTapped(_:))))
             
             let dayStack = UIStackView()
             dayStack.axis = .vertical
@@ -126,10 +128,9 @@ extension NewHabitViewController  {
             // checkboxImageView.image = UIImage(named: "UncheckedCheckbox")
             checkboxImageView.image = UIImage(named: selectedDays[i] ? "CheckedCheckbox" : "UncheckedCheckbox")
             checkboxImageView.contentMode = .scaleAspectFit
-            checkboxImageView.isUserInteractionEnabled = true
-            checkboxImageView.tag = i
+            checkboxImageView.isUserInteractionEnabled = false
+            checkboxImageView.tag = 999
             checkboxImageView.translatesAutoresizingMaskIntoConstraints = false
-            checkboxImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(checkboxTapped(_:))))
             
             dayStack.addArrangedSubview(dayLabel)
             dayStack.addArrangedSubview(checkboxImageView)
