@@ -34,7 +34,7 @@
 		52652B942D240FC900608550 /* BaseHabitView+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52652B932D240FC700608550 /* BaseHabitView+Formatting.swift */; };
 		52697D5E2D195361004B9D7E /* HabitsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D5D2D19535F004B9D7E /* HabitsLayout.swift */; };
 		52697D602D1957A9004B9D7E /* HabitsViewController+DataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D5F2D1957A6004B9D7E /* HabitsViewController+DataSourceDelegate.swift */; };
-		52697D642D195A97004B9D7E /* HabitsViewController+NewHabitDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D632D195A95004B9D7E /* HabitsViewController+NewHabitDelegate.swift */; };
+		52697D642D195A97004B9D7E /* HabitsViewController+HabitDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D632D195A95004B9D7E /* HabitsViewController+HabitDelegate.swift */; };
 		52751BAD2D26ACEA008F84A8 /* EditHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52751BAC2D26ACE2008F84A8 /* EditHabitViewController.swift */; };
 		527BDF4B2D363B7C00CBDAD6 /* HabitCell+UpdateLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527BDF4A2D363B6600CBDAD6 /* HabitCell+UpdateLogic.swift */; };
 		52923ECF2CF70F080088E54B /* HeaderDaysCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */; };
@@ -110,7 +110,7 @@
 		52652B932D240FC700608550 /* BaseHabitView+Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BaseHabitView+Formatting.swift"; sourceTree = "<group>"; };
 		52697D5D2D19535F004B9D7E /* HabitsLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsLayout.swift; sourceTree = "<group>"; };
 		52697D5F2D1957A6004B9D7E /* HabitsViewController+DataSourceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+DataSourceDelegate.swift"; sourceTree = "<group>"; };
-		52697D632D195A95004B9D7E /* HabitsViewController+NewHabitDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+NewHabitDelegate.swift"; sourceTree = "<group>"; };
+		52697D632D195A95004B9D7E /* HabitsViewController+HabitDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+HabitDelegate.swift"; sourceTree = "<group>"; };
 		52751BAC2D26ACE2008F84A8 /* EditHabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHabitViewController.swift; sourceTree = "<group>"; };
 		527BDF4A2D363B6600CBDAD6 /* HabitCell+UpdateLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCell+UpdateLogic.swift"; sourceTree = "<group>"; };
 		52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderDaysCollectionView.swift; sourceTree = "<group>"; };
@@ -329,7 +329,7 @@
 		52C996AD2D11EBD2000E7648 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				52697D632D195A95004B9D7E /* HabitsViewController+NewHabitDelegate.swift */,
+				52697D632D195A95004B9D7E /* HabitsViewController+HabitDelegate.swift */,
 				5242479C2D2F9AE000C5E049 /* HabitsViewController+HabitCellDelegate.swift */,
 				52697D5F2D1957A6004B9D7E /* HabitsViewController+DataSourceDelegate.swift */,
 			);
@@ -543,7 +543,7 @@
 				52652B8A2D2405DF00608550 /* BaseHabitView+UISetup.swift in Sources */,
 				5241DDD22B8F61F000C7ECF0 /* HistoryViewConroller.swift in Sources */,
 				52A762552D367F2D000A30EA /* UserDefaultsKeys.swift in Sources */,
-				52697D642D195A97004B9D7E /* HabitsViewController+NewHabitDelegate.swift in Sources */,
+				52697D642D195A97004B9D7E /* HabitsViewController+HabitDelegate.swift in Sources */,
 				52FF7F462D2EB9EF008EF1E2 /* HeaderDays+DataSourceDelegate.swift in Sources */,
 				52ACDD442CEF13CD00868730 /* AppStyle.swift in Sources */,
 				52751BAD2D26ACEA008F84A8 /* EditHabitViewController.swift in Sources */,

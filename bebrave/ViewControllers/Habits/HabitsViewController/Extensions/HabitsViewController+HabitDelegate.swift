@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - Delegate Protocol
 
-protocol NewHabitDelegate: AnyObject {
+protocol HabitDelegate: AnyObject {
     func didAddNewHabit(_ habit: Habit)
     func didEditHabit(_ habit: Habit)
     func willHideEmptyStateView()
@@ -17,7 +17,7 @@ protocol NewHabitDelegate: AnyObject {
 
 // MARK: - NewHabitDelegate
 
-extension HabitsViewController: NewHabitDelegate {
+extension HabitsViewController: HabitDelegate {
     func didAddNewHabit(_ habit: Habit) {
         habits.append(habit)
         collectionView.reloadData()

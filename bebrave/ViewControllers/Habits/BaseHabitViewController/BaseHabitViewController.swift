@@ -11,7 +11,7 @@ class BaseHabitViewController: UIViewController {
     
     // MARK: - Delegate
     
-    weak var delegate: NewHabitDelegate?
+    weak var delegate: HabitDelegate?
     
     // MARK: - UI components top down
     
