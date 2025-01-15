@@ -12,7 +12,7 @@ extension HabitsViewController: HabitCellDelegate {
     func habitCell(_ cell: HabitCell, didTriggerAction action: HabitCellAction, for habit: Habit) {
         switch action {
         case .edit:
-            let changeHabitVC = ChangeHabitViewController(habit: habit)
+            let changeHabitVC = EditHabitViewController(habit: habit)
             navigationController?.pushViewController(changeHabitVC, animated: true)
         case .delete:
             deleteHabit(habit)

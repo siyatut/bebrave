@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ChangeHabitViewController: UIViewController {
+class EditHabitViewController: UIViewController {
     
     private var habit: Habit
     
