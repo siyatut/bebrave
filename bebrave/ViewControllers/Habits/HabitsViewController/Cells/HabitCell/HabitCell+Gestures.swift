@@ -33,6 +33,7 @@ extension HabitCell {
         switch gesture.state {
         case .began:
             originalCenter = contentContainer.center
+            delegate?.habitCellDidStartSwipe(self)
             
         case .changed:
             contentContainer.transform = CGAffineTransform(translationX: translation.x, y: 0)
@@ -45,6 +46,7 @@ extension HabitCell {
             } else {
                 resetPosition()
             }
+            
         default:
             break
         }

@@ -17,4 +17,5 @@ enum HabitCellAction {
 
 protocol HabitCellDelegate: AnyObject {
     func habitCell(_ cell: HabitCell, didTriggerAction action: HabitCellAction, for habit: Habit)
+    func habitCellDidStartSwipe(_ cell: HabitCell)
 }

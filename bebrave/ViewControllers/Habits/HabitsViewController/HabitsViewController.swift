@@ -24,6 +24,7 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: - Properties
     
     var headerView: HeaderDaysCollectionView?
+    weak var swipedCell: HabitCell?
     
     // MARK: - UI components
     

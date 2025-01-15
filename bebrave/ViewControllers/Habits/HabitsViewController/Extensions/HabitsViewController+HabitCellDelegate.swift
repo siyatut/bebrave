@@ -41,4 +41,11 @@ extension HabitsViewController: HabitCellDelegate {
             collectionView.reloadItems(at: [indexPath])
         }
     }
+    
+    func habitCellDidStartSwipe(_ cell: HabitCell) {
+        if swipedCell != cell {
+            swipedCell?.resetPosition()
+            swipedCell = cell
+        }
+    }
 }
