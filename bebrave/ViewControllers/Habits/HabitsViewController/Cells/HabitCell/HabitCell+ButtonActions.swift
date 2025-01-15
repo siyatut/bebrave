@@ -33,15 +33,33 @@ extension HabitCell {
     
     @objc func confirmDelete() {
         guard let habit = habit else { return }
-        let alert = UIAlertController(title: "Точно удаляем привычку?", message: "", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel) { _ in
+        
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        
+        let titleFont = AppStyle.Fonts.boldFont(size: 16)
+        let messageFont = AppStyle.Fonts.regularFont(size: 12)
+        
+        let titleAttributes: [NSAttributedString.Key: Any] = [.font: titleFont, .foregroundColor: AppStyle.Colors.secondaryColor]
+        let messageAttributes: [NSAttributedString.Key: Any] = [.font: messageFont, .foregroundColor: AppStyle.Colors.textColor]
+        
+        let attributedTitle = NSAttributedString(string: "Точно удаляем привычку?", attributes: titleAttributes)
+        let attributedMessage = NSAttributedString(string: "восстановить прогресс не выйдет", attributes: messageAttributes)
+        
+        alert.setValue(attributedTitle, forKey: "attributedTitle")
+        alert.setValue(attributedMessage, forKey: "attributedMessage")
+        
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel) { _ in
             self.resetPosition()
-        })
-        alert.addAction(UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+        }
+        
+        let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
             guard let self = self else { return }
             self.delegate?.habitCell(self, didTriggerAction: .delete, for: habit)
             self.resetPosition()
-        })
+        }
+        
+        alert.addAction(cancelAction)
+        alert.addAction(deleteAction)
         
         if let viewController = self.window?.rootViewController {
             viewController.present(alert, animated: true, completion: nil)
