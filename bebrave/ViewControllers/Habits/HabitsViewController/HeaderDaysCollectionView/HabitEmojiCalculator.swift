@@ -14,7 +14,7 @@ class HabitEmojiCalculator {
         var totalProgress = 0
         var totalFrequency = 0
         var skippedCount = 0
-
+        
         for habit in habits {
             let status = habit.getStatus(for: startOfDay)
             switch status {

@@ -10,7 +10,7 @@ import UIKit
 extension HabitsViewController {
     
     func setupCollectionView() {
-
+        
         collectionView.register(
             HabitCell.self,
             forCellWithReuseIdentifier: CustomElement.habitsCell.rawValue

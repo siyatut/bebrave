@@ -23,13 +23,5 @@ class NewHabitViewController: BaseHabitViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         didSaveNewHabitButton.setTitle("Добавить привычку", for: .normal)
-        didSaveNewHabitButton.addTarget(self, action: #selector(createHabitAction), for: .touchUpInside)
-    }
-    
-    @objc private func createHabitAction() {
-        
-        guard let newHabit = createHabitFromFields() else { return }
-        delegate?.didAddNewHabit(newHabit)
-        dismiss(animated: true)
     }
 }

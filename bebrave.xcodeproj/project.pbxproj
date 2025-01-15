@@ -218,6 +218,7 @@
 		5259A40F2D28509800EF60A2 /* Habits */ = {
 			isa = PBXGroup;
 			children = (
+				523AF3B82CBFBDBD00EEFA8A /* BaseHabitViewController.swift */,
 				52FDA0ED2D37B0890081520A /* NewHabitViewController.swift */,
 				52751BAC2D26ACE2008F84A8 /* EditHabitViewController.swift */,
 				52652B882D24059700608550 /* BaseHabitViewController */,
@@ -238,7 +239,6 @@
 		52652B882D24059700608550 /* BaseHabitViewController */ = {
 			isa = PBXGroup;
 			children = (
-				523AF3B82CBFBDBD00EEFA8A /* BaseHabitViewController.swift */,
 				52652B932D240FC700608550 /* BaseHabitView+Formatting.swift */,
 				52652B912D240EE800608550 /* BaseHabitView+TextFieldDelegate.swift */,
 				52652B8D2D240D2A00608550 /* BaseHabitView+Actions.swift */,

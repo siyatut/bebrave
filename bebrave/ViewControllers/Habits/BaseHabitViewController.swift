@@ -130,7 +130,7 @@ class BaseHabitViewController: UIViewController {
               let monthFrequency = Int(monthFrequencyText) else {
             return nil
         }
-
+        
         return Habit(
             id: UUID(),
             title: title,

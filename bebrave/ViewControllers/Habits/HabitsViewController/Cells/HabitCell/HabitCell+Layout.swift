@@ -80,7 +80,7 @@ extension HabitCell {
         setupButtonConstraints()
     }
     
-   func setupButtonConstraints() {
+    func setupButtonConstraints() {
         let rightButtons = [deleteButton, skipButton]
         for (index, button) in rightButtons.enumerated() {
             rightButtonContainer.addSubview(button)

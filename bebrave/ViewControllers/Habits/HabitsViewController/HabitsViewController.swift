@@ -60,7 +60,7 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         setupEmptyStateView()
         setupHistoryButton()
         setupCalendarLabel()
-
+        
         // Вот это логика для невыполненной привычки:
         UserDefaultsManager.shared.resetUncompletedHabits()
         habits = UserDefaultsManager.shared.loadHabits()
@@ -78,11 +78,11 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-           super.viewWillDisappear(animated)
-           if self.isMovingFromParent {
-               navigationController?.delegate = nil
-           }
-       }
+        super.viewWillDisappear(animated)
+        if self.isMovingFromParent {
+            navigationController?.delegate = nil
+        }
+    }
     
     // MARK: - Tap actions
     
@@ -105,11 +105,11 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         let calendar = Calendar.current
         let now = Date()
         let nextMidnight = calendar.nextDate(after: now, matching: DateComponents(hour: 0), matchingPolicy: .strict) ?? now
-
+        
         let timer = Timer(fireAt: nextMidnight, interval: 0, target: self, selector: #selector(handleMidnight), userInfo: nil, repeats: false)
         RunLoop.main.add(timer, forMode: .common)
     }
-
+    
     @objc private func handleMidnight() {
         UserDefaultsManager.shared.resetUncompletedHabits()
         habits = UserDefaultsManager.shared.loadHabits()

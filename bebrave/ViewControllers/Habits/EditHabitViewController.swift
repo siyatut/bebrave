@@ -29,7 +29,6 @@ class EditHabitViewController: BaseHabitViewController {
             setupDaysOfWeekStack()
             monthsTextField.text = "\(habit.monthFrequency)"
         }
-        
         didSaveNewHabitButton.setTitle("Сохранить изменения", for: .normal)
         didSaveNewHabitButton.addTarget(self, action: #selector(saveHabit), for: .touchUpInside)
     }
@@ -53,7 +52,7 @@ class EditHabitViewController: BaseHabitViewController {
               let habitToEdit = habitToEdit else {
             return nil
         }
-
+        
         return Habit(
             id: habitToEdit.id,
             title: title,

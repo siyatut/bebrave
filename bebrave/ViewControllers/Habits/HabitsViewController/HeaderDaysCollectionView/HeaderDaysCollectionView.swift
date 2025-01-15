@@ -75,7 +75,7 @@ class HeaderDaysCollectionView: UICollectionReusableView {
         }
         
         let habits = UserDefaultsManager.shared.loadHabits()
-
+        
         daysData = (0..<7).compactMap { dayOffset -> (date: Date, emoji: String)? in
             guard let date = calendar.date(byAdding: .day, value: dayOffset, to: startOfWeek) else { return nil }
             let startOfDay = calendar.startOfDay(for: date)
