@@ -7,12 +7,12 @@
 
 import UIKit
 
-class EditHabitViewController: UIViewController {
+class EditHabitViewController: BaseHabitViewController {
     
-    private var habit: Habit
+    var habitToEdit: Habit?
     
     init(habit: Habit) {
-        self.habit = habit
+        self.habitToEdit = habit
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -22,6 +22,27 @@ class EditHabitViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = AppStyle.Colors.backgroundColor
+        if let habit = habitToEdit {
+            habitTextField.text = habit.title
+            timesPerDayTextField.text = "\(habit.frequency)"
+            selectedDays = habit.daysOfWeek
+            setupDaysOfWeekStack()
+            monthsTextField.text = "\(habit.monthFrequency)"
+        }
+        
+        didSaveNewHabitButton.setTitle("Сохранить изменения", for: .normal)
+        didSaveNewHabitButton.addTarget(self, action: #selector(saveHabit), for: .touchUpInside)
+    }
+    
+    override func handleHabitSave(_ habit: Habit) {
+        
+        UserDefaultsManager.shared.updateHabit(habit)
+        delegate?.didEditHabit(habit)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.delegate?.didEditHabit(habit)
+            print("Измененная привычка сохранена: \(habit.title)")
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 }

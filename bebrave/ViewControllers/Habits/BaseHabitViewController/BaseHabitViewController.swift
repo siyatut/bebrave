@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewHabitViewController: UIViewController {
+class BaseHabitViewController: UIViewController {
     
     // MARK: - Delegate
     
@@ -60,7 +60,7 @@ class NewHabitViewController: UIViewController {
     
     // MARK: - Button
     
-    lazy var didAddNewHabitButton: UIButton = {
+    lazy var didSaveNewHabitButton: UIButton = {
         let button = UIButton(type: .system)
         
         var config = UIButton.Configuration.filled()
@@ -80,7 +80,7 @@ class NewHabitViewController: UIViewController {
         }
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(createHabitAction), for: .touchUpInside)
+        button.addTarget(self, action: #selector(saveHabit), for: .touchUpInside)
         return button
     }()
     
@@ -90,7 +90,7 @@ class NewHabitViewController: UIViewController {
     
     func updateButtonState() {
         let isValid = validateFields(showErrors: hasAttemptedSave)
-        didAddNewHabitButton.isEnabled = isValid
+        didSaveNewHabitButton.isEnabled = isValid
     }
     
     // MARK: - Lifecycle
@@ -116,6 +116,11 @@ class NewHabitViewController: UIViewController {
         UIView.animate(withDuration: duration, delay: 0, options: .curveEaseInOut) {
             self.view.layoutIfNeeded()
         }
+    }
+    
+    func handleHabitSave(_ habit: Habit) {
+        // Реализуется в дочерних классах
+        fatalError("handleHabitSave(_:) должен быть переопределен в дочерних классах.")
     }
 }
 

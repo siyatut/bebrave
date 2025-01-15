@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension NewHabitViewController {
+extension BaseHabitViewController {
     
     func validateFields(showErrors: Bool = false) -> Bool {
         var isValid = true

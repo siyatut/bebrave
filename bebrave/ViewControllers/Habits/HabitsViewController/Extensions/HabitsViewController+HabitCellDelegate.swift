@@ -13,7 +13,7 @@ extension HabitsViewController: HabitCellDelegate {
         switch action {
         case .edit:
             let changeHabitVC = EditHabitViewController(habit: habit)
-            navigationController?.pushViewController(changeHabitVC, animated: true)
+            navigationController?.present(changeHabitVC, animated: true, completion: nil)
         case .delete:
             deleteHabit(habit)
         case .skipToday:

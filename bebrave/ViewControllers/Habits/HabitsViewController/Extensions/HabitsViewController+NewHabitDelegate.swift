@@ -11,6 +11,7 @@ import UIKit
 
 protocol NewHabitDelegate: AnyObject {
     func didAddNewHabit(_ habit: Habit)
+    func didEditHabit(_ habit: Habit)
     func willHideEmptyStateView()
 }
 
@@ -23,6 +24,15 @@ extension HabitsViewController: NewHabitDelegate {
         updateEmptyState(animated: true)
     }
     
+    func didEditHabit(_ habit: Habit) {
+        if let index = habits.firstIndex(where: { $0.id == habit.id }) {
+            habits[index] = habit
+            collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
+        } else {
+            print("Ошибка: Привычка для редактирования не найдена.")
+        }
+    }
+    
     func willHideEmptyStateView() {
         if habits.isEmpty {
             emptyStateView.animateVisibility(isVisible: false, transformEffect: true)
@@ -30,28 +40,6 @@ extension HabitsViewController: NewHabitDelegate {
     }
     
     func deleteHabit(_ habit: Habit) {
-//        guard indexPath.item < habits.count else {
-//            print("Invalid index or attempt to delete DiaryWriteCell")
-//            return
-//        }
-//        
-//        let habitToDelete = habits[indexPath.item]
-//        
-//        UIView.animate(withDuration: 0.3, animations: {
-//            if let cell = self.collectionView.cellForItem(at: indexPath) {
-//                cell.transform = CGAffineTransform(translationX: self.view.frame.width, y: 0)
-//                cell.alpha = 0
-//            }
-//        }, completion: { _ in
-//            self.habits.remove(at: indexPath.item)
-//            UserDefaultsManager.shared.deleteHabit(id: habitToDelete.id)
-//            self.collectionView.performBatchUpdates({
-//                self.collectionView.deleteItems(at: [indexPath])
-//            }, completion: { _ in
-//                self.updateEmptyState(animated: true)
-//            })
-//        })
-        
         guard let index = habits.firstIndex(where: { $0.id == habit.id }) else {
                 print("Habit not found or already deleted")
                 return

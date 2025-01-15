@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension NewHabitViewController {
+extension BaseHabitViewController {
     
     func dayText(for value: Int) -> String {
         switch value {

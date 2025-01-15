@@ -8,7 +8,7 @@
 import UIKit
 
 
-extension NewHabitViewController: UITextFieldDelegate {
+extension BaseHabitViewController: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         if textField == timesPerDayTextField {

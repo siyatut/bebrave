@@ -13,6 +13,8 @@ struct Habit: Codable {
     let id: UUID
     var title: String
     var frequency: Int
+    var monthFrequency: Int
+    var daysOfWeek: [Bool]
     var progress: [Date: Int]
     var skipDates: Set<Date>
 }
@@ -20,11 +22,18 @@ struct Habit: Codable {
 // MARK: - Habit Factory
 
 extension Habit {
-    static func createNew(title: String, frequency: Int) -> Habit {
+    static func createNew(
+        title: String,
+        frequency: Int,
+        monthFrequency: Int,
+        daysOfWeek: [Bool] = []
+    ) -> Habit {
         return Habit(
             id: UUID(),
             title: title,
             frequency: frequency,
+            monthFrequency: monthFrequency,
+            daysOfWeek: daysOfWeek,
             progress: [:],
             skipDates: []
         )
