@@ -119,8 +119,27 @@ class BaseHabitViewController: UIViewController {
     }
     
     func handleHabitSave(_ habit: Habit) {
-        // Реализуется в дочерних классах
         fatalError("handleHabitSave(_:) должен быть переопределен в дочерних классах.")
+    }
+    
+    func createHabitFromFields() -> Habit? {
+        guard let title = habitTextField.text,
+              let frequencyText = timesPerDayTextField.text,
+              let frequency = Int(frequencyText),
+              let monthFrequencyText = monthsTextField.text,
+              let monthFrequency = Int(monthFrequencyText) else {
+            return nil
+        }
+
+        return Habit(
+            id: UUID(),
+            title: title,
+            frequency: frequency,
+            monthFrequency: monthFrequency,
+            daysOfWeek: selectedDays,
+            progress: [:],
+            skipDates: []
+        )
     }
 }
 

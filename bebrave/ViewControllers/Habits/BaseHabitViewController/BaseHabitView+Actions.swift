@@ -50,23 +50,6 @@ extension BaseHabitViewController {
             return
         }
     }
-    
-    func createHabitFromFields() -> Habit? {
-        guard let title = habitTextField.text,
-              let frequencyText = timesPerDayTextField.text,
-              let frequency = Int(frequencyText),
-              let monthFrequencyText = monthsTextField.text,
-              let monthFrequency = Int(monthFrequencyText) else {
-            return nil
-        }
-        
-        return Habit.createNew(
-            title: title,
-            frequency: frequency,
-            monthFrequency: monthFrequency,
-            daysOfWeek: selectedDays
-        )
-    }
 }
 
 

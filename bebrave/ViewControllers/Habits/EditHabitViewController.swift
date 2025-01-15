@@ -35,14 +35,33 @@ class EditHabitViewController: BaseHabitViewController {
     }
     
     override func handleHabitSave(_ habit: Habit) {
-        
         UserDefaultsManager.shared.updateHabit(habit)
-        delegate?.didEditHabit(habit)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             self.delegate?.didEditHabit(habit)
             print("Измененная привычка сохранена: \(habit.title)")
             self.dismiss(animated: true, completion: nil)
         }
+    }
+    
+    override func createHabitFromFields() -> Habit? {
+        guard let title = habitTextField.text,
+              let frequencyText = timesPerDayTextField.text,
+              let frequency = Int(frequencyText),
+              let monthFrequencyText = monthsTextField.text,
+              let monthFrequency = Int(monthFrequencyText),
+              let habitToEdit = habitToEdit else {
+            return nil
+        }
+
+        return Habit(
+            id: habitToEdit.id,
+            title: title,
+            frequency: frequency,
+            monthFrequency: monthFrequency,
+            daysOfWeek: selectedDays,
+            progress: [:],
+            skipDates: []
+        )
     }
 }
