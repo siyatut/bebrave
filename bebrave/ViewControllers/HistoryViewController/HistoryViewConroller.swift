@@ -7,19 +7,6 @@
 
 import UIKit
 
-class HistoryHeaderView: UICollectionReusableView {
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .clear
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-}
-
 class HistoryViewController: UIViewController {
     
     // MARK: - UI Components
@@ -98,6 +85,22 @@ class HistoryViewController: UIViewController {
         
         collectionView.reloadData()
     }
+    
+    private func updateData(for period: Period) {
+        switch period {
+        case .week:
+            print("Показать данные за неделю")
+        case .month:
+            print("Показать данные за месяц")
+        case .halfYear:
+            print("Показать данные за полгода")
+        case .year:
+            print("Показать данные за год")
+        }
+        
+        calculateProgress()
+        collectionView.reloadData()
+    }
 }
 
 extension HistoryViewController: UICollectionViewDataSource {
@@ -107,8 +110,6 @@ extension HistoryViewController: UICollectionViewDataSource {
     ) -> Int {
         return habitsProgress.count
     }
-    
-    // TODO: - Переделать, ориентируясь на HabitsViewController
     
     func collectionView(
         _ collectionView: UICollectionView,
@@ -132,16 +133,20 @@ extension HistoryViewController: UICollectionViewDataSource {
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
         switch kind {
-        case UICollectionView.elementKindSectionHeader:
+        case CustomElement.historyHeader.rawValue:
             guard let header = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
                 withReuseIdentifier: CustomElement.historyHeader.rawValue,
                 for: indexPath
             ) as? HistoryHeaderView else {
-                fatalError("\(SupplementaryViewError.dequeuingFailed(kind: kind, reuseIdentifier: CustomElement.historyHeader.rawValue))")
+                fatalError("Не удалось deque header с типом \(kind)")
             }
             
-            // здесь должна быть настройка header
+            header.configure(
+                onPeriodChange: { [weak self] selectedPeriod in
+                    self?.updateData(for: selectedPeriod)
+                }
+            )
             return header
             
         case CustomElement.outlineBackground.rawValue:

@@ -7,7 +7,7 @@
 
 enum CustomElement: String {
     case collectionHeader
-    case historyHeader
+    case historyHeader = "historyHeader"
     case outlineBackground
     case habitsCell
     case writeDiaryCell

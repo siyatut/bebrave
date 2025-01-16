@@ -47,6 +47,7 @@
 		52C996A52D11EAC7000E7648 /* UICollectionView+Dequeuing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C996A42D11EAC3000E7648 /* UICollectionView+Dequeuing.swift */; };
 		52C996A72D11EAEE000E7648 /* SupplementaryViewError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C996A62D11EAED000E7648 /* SupplementaryViewError.swift */; };
 		52C996A92D11EB25000E7648 /* CustomElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C996A82D11EB23000E7648 /* CustomElement.swift */; };
+		52DE3E5D2D3976F700A221FC /* HistoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DE3E5C2D3976E200A221FC /* HistoryHeaderView.swift */; };
 		52F1E53A2B7CDC300058F767 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E5392B7CDC300058F767 /* AppDelegate.swift */; };
 		52F1E53C2B7CDC300058F767 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E53B2B7CDC300058F767 /* SceneDelegate.swift */; };
 		52F1E53E2B7CDC300058F767 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E53D2B7CDC300058F767 /* TabBarViewController.swift */; };
@@ -124,6 +125,7 @@
 		52C996A42D11EAC3000E7648 /* UICollectionView+Dequeuing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Dequeuing.swift"; sourceTree = "<group>"; };
 		52C996A62D11EAED000E7648 /* SupplementaryViewError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementaryViewError.swift; sourceTree = "<group>"; };
 		52C996A82D11EB23000E7648 /* CustomElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomElement.swift; sourceTree = "<group>"; };
+		52DE3E5C2D3976E200A221FC /* HistoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryHeaderView.swift; sourceTree = "<group>"; };
 		52F1E5362B7CDC300058F767 /* bebrave.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bebrave.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52F1E5392B7CDC300058F767 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52F1E53B2B7CDC300058F767 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */,
+				52DE3E5C2D3976E200A221FC /* HistoryHeaderView.swift */,
 				5209B4472D38F2910063CF1C /* HistoryViewController+ProgressCell.swift */,
 				5209B4452D38F2300063CF1C /* HistoryViewController+ProgressLayout.swift */,
 			);
@@ -561,6 +564,7 @@
 				52697D5E2D195361004B9D7E /* HabitsLayout.swift in Sources */,
 				52652B8E2D240D2C00608550 /* BaseHabitView+Actions.swift in Sources */,
 				52359DB62D359EBF00207E09 /* HabitCell+ButtonActions.swift in Sources */,
+				52DE3E5D2D3976F700A221FC /* HistoryHeaderView.swift in Sources */,
 				52A762512D367E68000A30EA /* Habit.swift in Sources */,
 				52FF7F482D2EBACF008EF1E2 /* HabitEmojiCalculator.swift in Sources */,
 				52923ECF2CF70F080088E54B /* HeaderDaysCollectionView.swift in Sources */,

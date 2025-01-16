@@ -23,7 +23,7 @@ enum ProgressLayout {
             let item = NSCollectionLayoutItem(
                 layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .absolute(80)
+                    heightDimension: .absolute(60)
                 ),
                 supplementaryItems: [background]
             )
@@ -31,7 +31,7 @@ enum ProgressLayout {
             let group = NSCollectionLayoutGroup.vertical(
                 layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .absolute(80)
+                    heightDimension: .absolute(60)
                 ),
                 subitems: [item]
             )

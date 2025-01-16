@@ -32,12 +32,12 @@ final class ProgressCell: UICollectionViewCell {
     
     private func setupUI() {
         habitNameLabel.font = AppStyle.Fonts.boldFont(size: 16)
-        progressLabel.font = AppStyle.Fonts.regularFont(size: 16)
+        progressLabel.font = AppStyle.Fonts.regularFont(size: 14)
         progressLabel.textAlignment = .right
         progressBar.progressTintColor = AppStyle.Colors.isProgressHabitColor
         progressBar.trackTintColor = AppStyle.Colors.isUncompletedHabitColor
-        progressBar.layer.cornerRadius = AppStyle.Sizes.cornerRadius
-        progressBar.clipsToBounds = true
+        progressBar.layer.cornerRadius = 5
+        progressBar.layer.masksToBounds = true
         progressBar.translatesAutoresizingMaskIntoConstraints = false
         
         let headerStackView = UIStackView(arrangedSubviews: [habitNameLabel, progressLabel])
@@ -46,16 +46,16 @@ final class ProgressCell: UICollectionViewCell {
     
         let stackView = UIStackView(arrangedSubviews: [headerStackView, progressBar])
         stackView.axis = .vertical
-        stackView.spacing = 8
+        stackView.spacing = 5
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         contentView.addSubview(stackView)
         
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-            stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
             
             progressBar.heightAnchor.constraint(equalToConstant: 15) 
         ])
