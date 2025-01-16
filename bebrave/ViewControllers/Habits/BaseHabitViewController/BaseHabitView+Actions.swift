@@ -22,6 +22,7 @@ extension BaseHabitViewController {
     
     @objc func saveHabit() {
         hasAttemptedSave = true
+        // TODO: - Cейчас нет времени разобраться, но почему здесь true? При этом работает всё нормально вроде...
         let isValid = validateFields(showErrors: true)
         
         guard isValid else {

@@ -45,7 +45,7 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         return view
     }()
     
-    // MARK: - Lifecycle view
+    // MARK: - Lifecycle 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,8 +82,8 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: - Tap actions
     
     @objc func historyButtonTapped() {
-        let history = HistoryViewController()
-        self.navigationController?.pushViewController(history, animated: true)
+        let historyVC = HistoryViewController(habits: habits) 
+        self.navigationController?.pushViewController(historyVC, animated: true)
     }
     
     @objc func presentAddHabitController() {

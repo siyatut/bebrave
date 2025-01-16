@@ -76,7 +76,7 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Lifecycle methods
+    // MARK: - Lifecycle 
     
     override func prepareForReuse() {
         super.prepareForReuse()

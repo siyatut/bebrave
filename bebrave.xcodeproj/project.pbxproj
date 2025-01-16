@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		52021A772BAC3D2000E9D8F1 /* OutlineBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52021A762BAC3D2000E9D8F1 /* OutlineBackgroundView.swift */; };
+		5209B4462D38F23F0063CF1C /* HistoryViewController+ProgressLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5209B4452D38F2300063CF1C /* HistoryViewController+ProgressLayout.swift */; };
+		5209B4482D38F2A60063CF1C /* HistoryViewController+ProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5209B4472D38F2910063CF1C /* HistoryViewController+ProgressCell.swift */; };
+		5209B44A2D38F2C00063CF1C /* HabitProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5209B4492D38F2B90063CF1C /* HabitProgress.swift */; };
 		5219E2B02D12324500F41D97 /* CellError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219E2AF2D12324500F41D97 /* CellError.swift */; };
 		5219E2B32D12371E00F41D97 /* HabitsViewController+Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219E2B22D12371300F41D97 /* HabitsViewController+Calendar.swift */; };
 		5219E2B62D1237B300F41D97 /* HabitsViewController+UISetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219E2B52D1237B100F41D97 /* HabitsViewController+UISetup.swift */; };
@@ -81,6 +84,9 @@
 
 /* Begin PBXFileReference section */
 		52021A762BAC3D2000E9D8F1 /* OutlineBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineBackgroundView.swift; sourceTree = "<group>"; };
+		5209B4452D38F2300063CF1C /* HistoryViewController+ProgressLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistoryViewController+ProgressLayout.swift"; sourceTree = "<group>"; };
+		5209B4472D38F2910063CF1C /* HistoryViewController+ProgressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistoryViewController+ProgressCell.swift"; sourceTree = "<group>"; };
+		5209B4492D38F2B90063CF1C /* HabitProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitProgress.swift; sourceTree = "<group>"; };
 		521584B02BA320FC009F1B5A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		5219E2AF2D12324500F41D97 /* CellError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellError.swift; sourceTree = "<group>"; };
 		5219E2B22D12371300F41D97 /* HabitsViewController+Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+Calendar.swift"; sourceTree = "<group>"; };
@@ -165,6 +171,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5209B4442D38F2140063CF1C /* HistoryViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */,
+				5209B4472D38F2910063CF1C /* HistoryViewController+ProgressCell.swift */,
+				5209B4452D38F2300063CF1C /* HistoryViewController+ProgressLayout.swift */,
+			);
+			path = HistoryViewController;
+			sourceTree = "<group>";
+		};
 		5219E2B42D12372200F41D97 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -203,7 +219,7 @@
 		5259A40E2D28508200EF60A2 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */,
+				5209B4442D38F2140063CF1C /* HistoryViewController */,
 				52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */,
 				52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */,
 				5259A40F2D28509800EF60A2 /* Habits */,
@@ -248,6 +264,7 @@
 			children = (
 				52A762502D367E62000A30EA /* Habit.swift */,
 				52A762522D367EA5000A30EA /* HabitStatus.swift */,
+				5209B4492D38F2B90063CF1C /* HabitProgress.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -546,6 +563,7 @@
 				52F1E53A2B7CDC300058F767 /* AppDelegate.swift in Sources */,
 				52359DAE2D35970300207E09 /* HabitCell+UIHelpers.swift in Sources */,
 				52F1E53C2B7CDC300058F767 /* SceneDelegate.swift in Sources */,
+				5209B44A2D38F2C00063CF1C /* HabitProgress.swift in Sources */,
 				523AF3B92CBFBDE900EEFA8A /* BaseHabitViewController.swift in Sources */,
 				52359DAC2D3596E100207E09 /* HabitCellProtocols.swift in Sources */,
 				52697D5E2D195361004B9D7E /* HabitsLayout.swift in Sources */,
@@ -556,8 +574,10 @@
 				52923ECF2CF70F080088E54B /* HeaderDaysCollectionView.swift in Sources */,
 				52FBCF3A2CFF1677000206BC /* UserDefaultsManager.swift in Sources */,
 				52F1E56A2B7CE6330058F767 /* HabitsViewController.swift in Sources */,
+				5209B4482D38F2A60063CF1C /* HistoryViewController+ProgressCell.swift in Sources */,
 				52A762532D367EA5000A30EA /* HabitStatus.swift in Sources */,
 				52F1E56E2B7CE6D10058F767 /* ProfileViewController.swift in Sources */,
+				5209B4462D38F23F0063CF1C /* HistoryViewController+ProgressLayout.swift in Sources */,
 				52697D602D1957A9004B9D7E /* HabitsViewController+DataSourceDelegate.swift in Sources */,
 				52C996A92D11EB25000E7648 /* CustomElement.swift in Sources */,
 				524FC7022D075071004C839F /* EmptyStateView.swift in Sources */,
