@@ -8,14 +8,17 @@
 import UIKit
 
 final class ProgressCell: UICollectionViewCell {
+    
     static let identifier = "ProgressCell"
     
     // MARK: - UI Components
+    
     private let habitNameLabel = UILabel()
     private let progressLabel = UILabel()
     private let progressBar = UIProgressView(progressViewStyle: .bar)
     
     // MARK: - Init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -26,6 +29,7 @@ final class ProgressCell: UICollectionViewCell {
     }
     
     // MARK: - Setup
+    
     private func setupUI() {
         habitNameLabel.font = .boldSystemFont(ofSize: 16)
         habitNameLabel.textColor = .label
@@ -52,6 +56,7 @@ final class ProgressCell: UICollectionViewCell {
     }
     
     // MARK: - Configure
+    
     func configure(with habit: HabitProgress) {
         habitNameLabel.text = habit.name
         progressLabel.text = "\(habit.completedDays) / \(habit.totalDays)"

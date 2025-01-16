@@ -11,6 +11,8 @@ class EditHabitViewController: BaseHabitViewController {
     
     var habitToEdit: Habit?
     
+    // MARK: - Init
+    
     init(habit: Habit) {
         self.habitToEdit = habit
         super.init(nibName: nil, bundle: nil)
@@ -19,6 +21,8 @@ class EditHabitViewController: BaseHabitViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +36,8 @@ class EditHabitViewController: BaseHabitViewController {
         didSaveNewHabitButton.setTitle("Сохранить изменения", for: .normal)
         didSaveNewHabitButton.addTarget(self, action: #selector(saveHabit), for: .touchUpInside)
     }
+    
+    // MARK: - Handle performing habit
     
     override func handleHabitSave(_ habit: Habit) {
         UserDefaultsManager.shared.updateHabit(habit)
