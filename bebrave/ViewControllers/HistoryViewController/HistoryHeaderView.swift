@@ -20,16 +20,16 @@ class HistoryHeaderView: UICollectionReusableView {
     
     private let segmentedControl: UISegmentedControl = {
         let control = UISegmentedControl(items: ["Неделя", "Месяц", "Полгода", "Год"])
-        control.selectedSegmentIndex = 1 
+        control.selectedSegmentIndex = 1
         control.translatesAutoresizingMaskIntoConstraints = false
         return control
     }()
     
     private let dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "01.01.2025 - 31.01.2025" 
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .gray
+        label.text = "01.01.2025 - 31.01.2025"
+        label.font = AppStyle.Fonts.regularFont(size: 14)
+        label.textColor = .secondaryLabel
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -119,7 +119,7 @@ class HistoryHeaderView: UICollectionReusableView {
         }
         
         if let start = startDate, let end = endDate {
-            return "\(formatter.string(from: start)) - \(formatter.string(from: end))"
+            return "\(formatter.string(from: start))——\(formatter.string(from: end))"
         }
         return ""
     }

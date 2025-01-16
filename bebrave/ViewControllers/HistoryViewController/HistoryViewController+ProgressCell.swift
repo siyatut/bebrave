@@ -21,18 +21,20 @@ final class ProgressCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupUI()
+        setupProgressCell()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Setup
+    // MARK: - Setup UI
     
-    private func setupUI() {
-        habitNameLabel.font = AppStyle.Fonts.boldFont(size: 16)
+    private func setupProgressCell() {
+        habitNameLabel.font = AppStyle.Fonts.regularFont(size: 16)
         progressLabel.font = AppStyle.Fonts.regularFont(size: 14)
+        habitNameLabel.textColor = .label
+        progressLabel.textColor = .secondaryLabel
         progressLabel.textAlignment = .right
         progressBar.progressTintColor = AppStyle.Colors.isProgressHabitColor
         progressBar.trackTintColor = AppStyle.Colors.isUncompletedHabitColor
