@@ -15,6 +15,8 @@ extension HeaderDaysCollectionView: UICollectionViewDelegate, UICollectionViewDa
         return daysData.count
     }
     
+    // TODO: - Переделать, ориентируясь на HabitsViewController
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayCell", for: indexPath) as! DayCell
         let item = daysData[indexPath.item]

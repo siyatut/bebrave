@@ -36,6 +36,8 @@ final class ProgressCell: UICollectionViewCell {
         progressLabel.textAlignment = .right
         progressBar.progressTintColor = AppStyle.Colors.isProgressHabitColor
         progressBar.trackTintColor = AppStyle.Colors.isUncompletedHabitColor
+        progressBar.layer.cornerRadius = AppStyle.Sizes.cornerRadius
+        progressBar.clipsToBounds = true
         progressBar.translatesAutoresizingMaskIntoConstraints = false
         
         let headerStackView = UIStackView(arrangedSubviews: [habitNameLabel, progressLabel])
@@ -64,5 +66,11 @@ final class ProgressCell: UICollectionViewCell {
         habitNameLabel.text = habit.name
         progressLabel.text = "\(habit.completedDays) / \(habit.totalDays)"
         progressBar.progress = Float(habit.completedDays) / Float(habit.totalDays)
+    }
+    
+    private func calculateProgress(for habit: Habit) -> Float {
+        let totalFrequency = habit.frequency
+        let completed = habit.progress.values.reduce(0, +)
+        return totalFrequency > 0 ? Float(completed) / Float(totalFrequency) : 0.0
     }
 }

@@ -7,6 +7,19 @@
 
 import UIKit
 
+class HistoryHeaderView: UICollectionReusableView {
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .clear
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
 class HistoryViewController: UIViewController {
     
     // MARK: - UI Components
@@ -43,7 +56,24 @@ class HistoryViewController: UIViewController {
     private func setupCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: ProgressLayout.createLayout())
         collectionView.dataSource = self
-        collectionView.register(ProgressCell.self, forCellWithReuseIdentifier: ProgressCell.identifier)
+        
+        collectionView.register(
+            ProgressCell.self,
+            forCellWithReuseIdentifier: CustomElement.progressCell.rawValue
+        )
+        
+        collectionView.register(
+            HistoryHeaderView.self,
+            forSupplementaryViewOfKind: CustomElement.historyHeader.rawValue,
+            withReuseIdentifier: CustomElement.historyHeader.rawValue
+        )
+        
+        collectionView.register(
+            OutlineBackgroundView.self,
+            forSupplementaryViewOfKind: CustomElement.outlineBackground.rawValue,
+            withReuseIdentifier: CustomElement.outlineBackground.rawValue
+        )
+        
         view.addSubview(collectionView)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -71,14 +101,63 @@ class HistoryViewController: UIViewController {
 }
 
 extension HistoryViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         return habitsProgress.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProgressCell.identifier, for: indexPath) as! ProgressCell
-        cell.configure(with: habitsProgress[indexPath.item])
+    // TODO: - Переделать, ориентируясь на HabitsViewController
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: CustomElement.progressCell.rawValue,
+            for: indexPath
+        ) as? ProgressCell else {
+            fatalError("\(CellError.dequeuingFailed(reuseIdentifier: CustomElement.progressCell.rawValue))")
+        }
+        
+        let habitProgress = habitsProgress[indexPath.row]
+        cell.configure(with: habitProgress)
         return cell
     }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            guard let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: CustomElement.historyHeader.rawValue,
+                for: indexPath
+            ) as? HistoryHeaderView else {
+                fatalError("\(SupplementaryViewError.dequeuingFailed(kind: kind, reuseIdentifier: CustomElement.historyHeader.rawValue))")
+            }
+            
+            // здесь должна быть настройка header
+            return header
+            
+        case CustomElement.outlineBackground.rawValue:
+            guard let background = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: CustomElement.outlineBackground.rawValue,
+                for: indexPath
+            ) as? OutlineBackgroundView else {
+                fatalError("\(SupplementaryViewError.dequeuingFailed(kind: kind, reuseIdentifier: CustomElement.outlineBackground.rawValue))")
+            }
+            return background
+            
+        default:
+            fatalError("\(SupplementaryViewError.unexpectedKind(kind))")
+        }
+    }
+    
 }
 

@@ -11,7 +11,6 @@ enum ProgressLayout {
     
     static func createLayout() -> UICollectionViewLayout {
         let provider: UICollectionViewCompositionalLayoutSectionProvider = { section, environment in
-            
             let background = NSCollectionLayoutSupplementaryItem(
                 layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
@@ -24,7 +23,7 @@ enum ProgressLayout {
             let item = NSCollectionLayoutItem(
                 layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .absolute(70)
+                    heightDimension: .absolute(80)
                 ),
                 supplementaryItems: [background]
             )
@@ -32,7 +31,7 @@ enum ProgressLayout {
             let group = NSCollectionLayoutGroup.vertical(
                 layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .absolute(70)
+                    heightDimension: .absolute(80)
                 ),
                 subitems: [item]
             )
@@ -40,25 +39,20 @@ enum ProgressLayout {
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets = .init(top: 0, leading: 12, bottom: 0, trailing: 12)
             section.interGroupSpacing = 8
-            
             return section
         }
         
         let header = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(70)
+                heightDimension: .absolute(90)
             ),
-            elementKind: CustomElement.collectionHeader.rawValue,
-            alignment: .top,
-            absoluteOffset: .init(x: 0, y: -24)
+            elementKind: CustomElement.historyHeader.rawValue,
+            alignment: .top
         )
-        header.extendsBoundary = true
-        header.contentInsets = .init(top: 0, leading: 12, bottom: 0, trailing: 12)
         
         let configuration = UICollectionViewCompositionalLayoutConfiguration()
         configuration.boundarySupplementaryItems = [header]
-        
         return UICollectionViewCompositionalLayout(sectionProvider: provider, configuration: configuration)
     }
 }
