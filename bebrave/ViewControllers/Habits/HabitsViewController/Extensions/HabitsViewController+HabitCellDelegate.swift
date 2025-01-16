@@ -13,6 +13,7 @@ extension HabitsViewController: HabitCellDelegate {
         switch action {
         case .edit:
             let changeHabitVC = EditHabitViewController(habit: habit)
+            changeHabitVC.modalPresentationStyle = .pageSheet
             changeHabitVC.delegate = self
             navigationController?.present(changeHabitVC, animated: true, completion: nil)
         case .delete:
