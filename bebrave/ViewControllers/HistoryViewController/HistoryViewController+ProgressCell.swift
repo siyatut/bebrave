@@ -15,7 +15,7 @@ final class ProgressCell: UICollectionViewCell {
     
     private let habitNameLabel = UILabel()
     private let progressLabel = UILabel()
-    private let progressBar = UIProgressView(progressViewStyle: .bar)
+    private let progressBar = UIProgressView()
     
     // MARK: - Init
     
@@ -31,30 +31,33 @@ final class ProgressCell: UICollectionViewCell {
     // MARK: - Setup
     
     private func setupUI() {
-        habitNameLabel.font = .boldSystemFont(ofSize: 16)
-        habitNameLabel.textColor = .label
+        habitNameLabel.font = AppStyle.Fonts.boldFont(size: 16)
+        progressLabel.font = AppStyle.Fonts.regularFont(size: 16)
+        progressLabel.textAlignment = .right
+        progressBar.progressTintColor = AppStyle.Colors.isProgressHabitColor
+        progressBar.trackTintColor = AppStyle.Colors.isUncompletedHabitColor
+        progressBar.translatesAutoresizingMaskIntoConstraints = false
         
-        progressLabel.font = .systemFont(ofSize: 14)
-        progressLabel.textColor = .secondaryLabel
+        let headerStackView = UIStackView(arrangedSubviews: [habitNameLabel, progressLabel])
+        headerStackView.axis = .horizontal
+        headerStackView.distribution = .fillProportionally
+    
+        let stackView = UIStackView(arrangedSubviews: [headerStackView, progressBar])
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        progressBar.progressTintColor = .systemGreen
-        progressBar.trackTintColor = .systemGray5
+        contentView.addSubview(stackView)
         
-        // Stack View
-        let stack = UIStackView(arrangedSubviews: [habitNameLabel, progressBar, progressLabel])
-        stack.axis = .vertical
-        stack.spacing = 4
-        contentView.addSubview(stack)
-        
-        stack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            stack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+            stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            
+            progressBar.heightAnchor.constraint(equalToConstant: 15) 
         ])
     }
-    
     // MARK: - Configure
     
     func configure(with habit: HabitProgress) {

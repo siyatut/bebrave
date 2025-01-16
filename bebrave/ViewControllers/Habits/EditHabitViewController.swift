@@ -9,6 +9,8 @@ import UIKit
 
 class EditHabitViewController: BaseHabitViewController {
     
+    // TODO: - Можно цвет кнопки в этом случае сделать другим, например. Как будто так экраны визуально будут более различимы
+    
     var habitToEdit: Habit?
     
     // MARK: - Init
