@@ -13,10 +13,6 @@ import UIKit
 
 class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    // MARK: - Delegate
-    
-    private let navigationDelegate = CustomNavigationControllerDelegate()
-    
     // MARK: - Data Source
     
     var habits: [Habit] = []
@@ -54,7 +50,6 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = AppStyle.Colors.backgroundColor
-        navigationController?.delegate = navigationDelegate
         setupAddNewHabitButton()
         setupCollectionView()
         setupEmptyStateView()

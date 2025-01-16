@@ -11,7 +11,6 @@
 		5219E2B02D12324500F41D97 /* CellError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219E2AF2D12324500F41D97 /* CellError.swift */; };
 		5219E2B32D12371E00F41D97 /* HabitsViewController+Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219E2B22D12371300F41D97 /* HabitsViewController+Calendar.swift */; };
 		5219E2B62D1237B300F41D97 /* HabitsViewController+UISetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219E2B52D1237B100F41D97 /* HabitsViewController+UISetup.swift */; };
-		5232E9DA2D27B6F50069FD70 /* CustomPushAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232E9D92D27B6ED0069FD70 /* CustomPushAnimator.swift */; };
 		5232E9DE2D27BA990069FD70 /* UIView+AnimateVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232E9DD2D27BA7D0069FD70 /* UIView+AnimateVisibility.swift */; };
 		52359DAC2D3596E100207E09 /* HabitCellProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52359DAB2D3596DF00207E09 /* HabitCellProtocols.swift */; };
 		52359DAE2D35970300207E09 /* HabitCell+UIHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52359DAD2D35970200207E09 /* HabitCell+UIHelpers.swift */; };
@@ -26,7 +25,6 @@
 		524FC7022D075071004C839F /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524FC7012D075063004C839F /* EmptyStateView.swift */; };
 		5252109B2BFC7F04009DB3F7 /* DiaryWriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5252109A2BFC7F04009DB3F7 /* DiaryWriteCell.swift */; };
 		5259A4062D284ACF00EF60A2 /* HabitsViewController+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5259A4052D284ACD00EF60A2 /* HabitsViewController+CollectionView.swift */; };
-		5259A40C2D284DCB00EF60A2 /* CustomNavigationControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5259A40B2D284DC900EF60A2 /* CustomNavigationControllerDelegate.swift */; };
 		52652B8A2D2405DF00608550 /* BaseHabitView+UISetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52652B892D2405DE00608550 /* BaseHabitView+UISetup.swift */; };
 		52652B8C2D240BD200608550 /* BaseHabitView+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52652B8B2D240BD000608550 /* BaseHabitView+Validation.swift */; };
 		52652B8E2D240D2C00608550 /* BaseHabitView+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52652B8D2D240D2A00608550 /* BaseHabitView+Actions.swift */; };
@@ -87,7 +85,6 @@
 		5219E2AF2D12324500F41D97 /* CellError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellError.swift; sourceTree = "<group>"; };
 		5219E2B22D12371300F41D97 /* HabitsViewController+Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+Calendar.swift"; sourceTree = "<group>"; };
 		5219E2B52D1237B100F41D97 /* HabitsViewController+UISetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+UISetup.swift"; sourceTree = "<group>"; };
-		5232E9D92D27B6ED0069FD70 /* CustomPushAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPushAnimator.swift; sourceTree = "<group>"; };
 		5232E9DD2D27BA7D0069FD70 /* UIView+AnimateVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AnimateVisibility.swift"; sourceTree = "<group>"; };
 		52359DAB2D3596DF00207E09 /* HabitCellProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCellProtocols.swift; sourceTree = "<group>"; };
 		52359DAD2D35970200207E09 /* HabitCell+UIHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCell+UIHelpers.swift"; sourceTree = "<group>"; };
@@ -102,7 +99,6 @@
 		524FC7012D075063004C839F /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		5252109A2BFC7F04009DB3F7 /* DiaryWriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryWriteCell.swift; sourceTree = "<group>"; };
 		5259A4052D284ACD00EF60A2 /* HabitsViewController+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+CollectionView.swift"; sourceTree = "<group>"; };
-		5259A40B2D284DC900EF60A2 /* CustomNavigationControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationControllerDelegate.swift; sourceTree = "<group>"; };
 		52652B892D2405DE00608550 /* BaseHabitView+UISetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BaseHabitView+UISetup.swift"; sourceTree = "<group>"; };
 		52652B8B2D240BD000608550 /* BaseHabitView+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BaseHabitView+Validation.swift"; sourceTree = "<group>"; };
 		52652B8D2D240D2A00608550 /* BaseHabitView+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BaseHabitView+Actions.swift"; sourceTree = "<group>"; };
@@ -225,15 +221,6 @@
 				52C996A32D11EA17000E7648 /* HabitsViewController */,
 			);
 			path = Habits;
-			sourceTree = "<group>";
-		};
-		5259A4122D2851F100EF60A2 /* NavigationController */ = {
-			isa = PBXGroup;
-			children = (
-				5232E9D92D27B6ED0069FD70 /* CustomPushAnimator.swift */,
-				5259A40B2D284DC900EF60A2 /* CustomNavigationControllerDelegate.swift */,
-			);
-			path = NavigationController;
 			sourceTree = "<group>";
 		};
 		52652B882D24059700608550 /* BaseHabitViewController */ = {
@@ -362,7 +349,6 @@
 				52C996A22D11E9F2000E7648 /* App and Scene Delegate */,
 				52A7624F2D367E54000A30EA /* Models */,
 				52C996A02D11E984000E7648 /* UserDefaults */,
-				5259A4122D2851F100EF60A2 /* NavigationController */,
 				52ACDD432CEF13CD00868730 /* AppStyle.swift */,
 				52F1E53D2B7CDC300058F767 /* TabBarViewController.swift */,
 				5259A40E2D28508200EF60A2 /* ViewControllers */,
@@ -534,7 +520,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5232E9DA2D27B6F50069FD70 /* CustomPushAnimator.swift in Sources */,
 				52F1E53E2B7CDC300058F767 /* TabBarViewController.swift in Sources */,
 				52FF7F432D2EB96A008EF1E2 /* DayCell.swift in Sources */,
 				52C996A72D11EAEE000E7648 /* SupplementaryViewError.swift in Sources */,
@@ -554,7 +539,6 @@
 				52652B942D240FC900608550 /* BaseHabitView+Formatting.swift in Sources */,
 				5219E2B62D1237B300F41D97 /* HabitsViewController+UISetup.swift in Sources */,
 				5252109B2BFC7F04009DB3F7 /* DiaryWriteCell.swift in Sources */,
-				5259A40C2D284DCB00EF60A2 /* CustomNavigationControllerDelegate.swift in Sources */,
 				5219E2B02D12324500F41D97 /* CellError.swift in Sources */,
 				5219E2B32D12371E00F41D97 /* HabitsViewController+Calendar.swift in Sources */,
 				5259A4062D284ACF00EF60A2 /* HabitsViewController+CollectionView.swift in Sources */,
