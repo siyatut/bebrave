@@ -20,12 +20,16 @@ class HistoryHeaderView: UICollectionReusableView {
     
     private let periodButton: UIButton = {
         var config = UIButton.Configuration.plain()
-        config.title = "Неделя"
-        config.baseForegroundColor = .label
-        config.image = UIImage(systemName: "chevron.down")
+        config.baseForegroundColor = AppStyle.Colors.primaryColor
+        config.image = UIImage(systemName: "chevron.down.circle.fill")
         config.imagePlacement = .leading
         config.imagePadding = 4
         config.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+        
+        let textAttributes = AttributeContainer([
+            .font: AppStyle.Fonts.regularFont(size: 14)
+        ])
+        config.attributedTitle = AttributedString("Неделя", attributes: textAttributes)
         
         let button = UIButton(configuration: config, primaryAction: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -34,9 +38,8 @@ class HistoryHeaderView: UICollectionReusableView {
     
     private let dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "01.01.2025 - 31.01.2025"
-        label.font = AppStyle.Fonts.regularFont(size: 14)
-        label.textColor = .secondaryLabel
+        label.font = AppStyle.Fonts.regularFont(size: 16)
+        label.textColor = .label
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -60,8 +63,6 @@ class HistoryHeaderView: UICollectionReusableView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setupView()
-        setupActions()
     }
     
     // MARK: - Setup UI
@@ -72,7 +73,7 @@ class HistoryHeaderView: UICollectionReusableView {
         
         NSLayoutConstraint.activate([
             dateLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            dateLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            dateLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 28),
             dateLabel.trailingAnchor.constraint(lessThanOrEqualTo: periodButton.leadingAnchor, constant: -10),
             dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
             
