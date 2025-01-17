@@ -18,11 +18,18 @@ class HistoryHeaderView: UICollectionReusableView {
     
     // MARK: - UI components
     
-    private let segmentedControl: UISegmentedControl = {
-        let control = UISegmentedControl(items: ["Неделя", "Месяц", "Полгода", "Год"])
-        control.selectedSegmentIndex = 1
-        control.translatesAutoresizingMaskIntoConstraints = false
-        return control
+    private let periodButton: UIButton = {
+        var config = UIButton.Configuration.plain()
+        config.title = "Неделя"
+        config.baseForegroundColor = .label
+        config.image = UIImage(systemName: "chevron.down")
+        config.imagePlacement = .leading
+        config.imagePadding = 4
+        config.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+        
+        let button = UIButton(configuration: config, primaryAction: nil)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     private let dateLabel: UILabel = {
@@ -36,6 +43,12 @@ class HistoryHeaderView: UICollectionReusableView {
     }()
     
     private var onPeriodChange: ((Period) -> Void)?
+    private var selectedPeriod: Period = .week {
+        didSet {
+            updateUIForSelectedPeriod()
+        }
+    }
+    
     
     // MARK: - Init
     
@@ -54,38 +67,63 @@ class HistoryHeaderView: UICollectionReusableView {
     // MARK: - Setup UI
     
     private func setupView() {
-        addSubview(segmentedControl)
+        addSubview(periodButton)
         addSubview(dateLabel)
         
         NSLayoutConstraint.activate([
-            segmentedControl.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            segmentedControl.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            segmentedControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            
-            dateLabel.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 8),
+            dateLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             dateLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
+            dateLabel.trailingAnchor.constraint(lessThanOrEqualTo: periodButton.leadingAnchor, constant: -10),
+            dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+            
+            periodButton.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            periodButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            periodButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
         ])
+        
+        updateUIForSelectedPeriod()
     }
     
     // MARK: - Actions
     
     private func setupActions() {
-        segmentedControl.addTarget(self, action: #selector(periodChanged), for: .valueChanged)
+        periodButton.menu = createPeriodMenu()
+        periodButton.showsMenuAsPrimaryAction = true
     }
     
-    @objc private func periodChanged() {
-        let selectedPeriod: Period
-        switch segmentedControl.selectedSegmentIndex {
-        case 0: selectedPeriod = .week
-        case 1: selectedPeriod = .month
-        case 2: selectedPeriod = .halfYear
-        case 3: selectedPeriod = .year
-        default: return
-        }
+    private func createPeriodMenu() -> UIMenu {
+        return UIMenu(title: "Выберите период", children: [
+            UIAction(title: "Неделя", state: selectedPeriod == .week ? .on : .off) { _ in
+                self.selectedPeriod = .week
+                self.onPeriodChange?(.week)
+            },
+            UIAction(title: "Месяц", state: selectedPeriod == .month ? .on : .off) { _ in
+                self.selectedPeriod = .month
+                self.onPeriodChange?(.month)
+            },
+            UIAction(title: "Полгода", state: selectedPeriod == .halfYear ? .on : .off) { _ in
+                self.selectedPeriod = .halfYear
+                self.onPeriodChange?(.halfYear)
+            },
+            UIAction(title: "Год", state: selectedPeriod == .year ? .on : .off) { _ in
+                self.selectedPeriod = .year
+                self.onPeriodChange?(.year)
+            }
+        ])
+    }
     
-        onPeriodChange?(selectedPeriod)
+    // MARK: - Update UI
+    
+    private func updateUIForSelectedPeriod() {
+        let periodTitle: String
+        switch selectedPeriod {
+        case .week: periodTitle = "Неделя"
+        case .month: periodTitle = "Месяц"
+        case .halfYear: periodTitle = "Полгода"
+        case .year: periodTitle = "Год"
+        }
+        periodButton.setTitle(periodTitle, for: .normal)
+        dateLabel.text = calculateDateRange(for: selectedPeriod)
     }
     
     // MARK: - Configure
@@ -119,7 +157,7 @@ class HistoryHeaderView: UICollectionReusableView {
         }
         
         if let start = startDate, let end = endDate {
-            return "\(formatter.string(from: start))——\(formatter.string(from: end))"
+            return "\(formatter.string(from: start))—\(formatter.string(from: end))"
         }
         return ""
     }
