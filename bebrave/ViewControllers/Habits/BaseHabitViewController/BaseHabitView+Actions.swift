@@ -22,7 +22,7 @@ extension BaseHabitViewController {
     
     @objc func saveHabit() {
         hasAttemptedSave = true
-        // TODO: - Cейчас нет времени разобраться, но почему здесь true? При этом работает всё нормально вроде...
+        // TODO: - Cпросить у Ильи. С трудом понимаю, как переписать этот момент с валидацией, потому что если пишу не так, то есть кейсы, в которых кнопка блокируется, а ошибки не всплывают. Так что оставила вот так.
         let isValid = validateFields(showErrors: true)
         
         guard isValid else {

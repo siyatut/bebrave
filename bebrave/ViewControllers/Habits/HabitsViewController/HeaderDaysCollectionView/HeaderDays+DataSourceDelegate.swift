@@ -15,16 +15,19 @@ extension HeaderDaysCollectionView: UICollectionViewDelegate, UICollectionViewDa
         return daysData.count
     }
     
-    // TODO: - Переделать, ориентируясь на HabitsViewController
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayCell", for: indexPath) as! DayCell
-        let item = daysData[indexPath.item]
-        
-        let calendar = Calendar.current
-        let isCurrentDay = calendar.isDate(item.date, inSameDayAs: Date())
-        
-        cell.configure(date: item.date, emoji: item.emoji, isCurrentDay: isCurrentDay)
-        return cell
+        do {
+            let cell: DayCell = try collectionView.dequeueCell(withReuseIdentifier: "DayCell", for: indexPath)
+            let item = daysData[indexPath.item]
+            
+            let calendar = Calendar.current
+            let isCurrentDay = calendar.isDate(item.date, inSameDayAs: Date())
+            
+            cell.configure(date: item.date, emoji: item.emoji, isCurrentDay: isCurrentDay)
+            return cell
+        } catch {
+            assertionFailure("Error dequeuing DayCell: \(error)")
+            return UICollectionViewCell()
+        }
     }
 }
