@@ -45,7 +45,7 @@ enum ProgressLayout {
         let header = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(40)
+                heightDimension: .absolute(60)
             ),
             elementKind: CustomElement.historyHeader.rawValue,
             alignment: .top

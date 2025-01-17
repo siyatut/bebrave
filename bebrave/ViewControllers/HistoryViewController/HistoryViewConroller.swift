@@ -34,7 +34,6 @@ class HistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = AppStyle.Colors.backgroundColor
-        title = "История"
         navigationController?.navigationBar.tintColor = AppStyle.Colors.secondaryColor
         setupCollectionView()
         calculateProgress()

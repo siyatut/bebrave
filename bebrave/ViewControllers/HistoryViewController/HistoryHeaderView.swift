@@ -14,6 +14,8 @@ enum Period {
     case year
 }
 
+// TODO: - При переключении периода в periodButton, не запоминает в меню выбора, какой период выбран прямо сейчас — по умолчанию неделя. Хорошо бы, чтобы запоминалось, а ещё при смене экрана сохранялся последний выбранный период. 
+
 class HistoryHeaderView: UICollectionReusableView {
     
     // MARK: - UI components
@@ -25,11 +27,13 @@ class HistoryHeaderView: UICollectionReusableView {
         config.imagePlacement = .leading
         config.imagePadding = 4
         config.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-        
-        let textAttributes = AttributeContainer([
-            .font: AppStyle.Fonts.regularFont(size: 14)
-        ])
-        config.attributedTitle = AttributedString("Неделя", attributes: textAttributes)
+        config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 12, weight: .medium)
+
+        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
+            var attributes = incoming
+            attributes.font = AppStyle.Fonts.regularFont(size: 16)
+            return attributes
+        }
         
         let button = UIButton(configuration: config, primaryAction: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -38,7 +42,7 @@ class HistoryHeaderView: UICollectionReusableView {
     
     private let dateLabel: UILabel = {
         let label = UILabel()
-        label.font = AppStyle.Fonts.regularFont(size: 16)
+        label.font = AppStyle.Fonts.boldFont(size: 18)
         label.textColor = .label
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -93,7 +97,7 @@ class HistoryHeaderView: UICollectionReusableView {
     }
     
     private func createPeriodMenu() -> UIMenu {
-        return UIMenu(title: "Выберите период", children: [
+        return UIMenu(title: "Выберите период:", children: [
             UIAction(title: "Неделя", state: selectedPeriod == .week ? .on : .off) { _ in
                 self.selectedPeriod = .week
                 self.onPeriodChange?(.week)
@@ -158,7 +162,7 @@ class HistoryHeaderView: UICollectionReusableView {
         }
         
         if let start = startDate, let end = endDate {
-            return "\(formatter.string(from: start))—\(formatter.string(from: end))"
+            return "\(formatter.string(from: start)) — \(formatter.string(from: end))"
         }
         return ""
     }
