@@ -19,7 +19,7 @@
 		52359DAE2D35970300207E09 /* HabitCell+UIHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52359DAD2D35970200207E09 /* HabitCell+UIHelpers.swift */; };
 		52359DB02D35980A00207E09 /* HabitCell+LayerEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52359DAF2D35980600207E09 /* HabitCell+LayerEffects.swift */; };
 		52359DB22D35987E00207E09 /* HabitCell+Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52359DB12D35987C00207E09 /* HabitCell+Gestures.swift */; };
-		52359DB42D359C7100207E09 /* HabitCell+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52359DB32D359C7000207E09 /* HabitCell+Layout.swift */; };
+		52359DB42D359C7100207E09 /* HabitCell+SetupUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52359DB32D359C7000207E09 /* HabitCell+SetupUI.swift */; };
 		52359DB62D359EBF00207E09 /* HabitCell+ButtonActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52359DB52D359EA800207E09 /* HabitCell+ButtonActions.swift */; };
 		523AF3B92CBFBDE900EEFA8A /* BaseHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523AF3B82CBFBDBD00EEFA8A /* BaseHabitViewController.swift */; };
 		5241DDD22B8F61F000C7ECF0 /* HistoryViewConroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */; };
@@ -97,7 +97,7 @@
 		52359DAD2D35970200207E09 /* HabitCell+UIHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCell+UIHelpers.swift"; sourceTree = "<group>"; };
 		52359DAF2D35980600207E09 /* HabitCell+LayerEffects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCell+LayerEffects.swift"; sourceTree = "<group>"; };
 		52359DB12D35987C00207E09 /* HabitCell+Gestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCell+Gestures.swift"; sourceTree = "<group>"; };
-		52359DB32D359C7000207E09 /* HabitCell+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCell+Layout.swift"; sourceTree = "<group>"; };
+		52359DB32D359C7000207E09 /* HabitCell+SetupUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCell+SetupUI.swift"; sourceTree = "<group>"; };
 		52359DB52D359EA800207E09 /* HabitCell+ButtonActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCell+ButtonActions.swift"; sourceTree = "<group>"; };
 		523AF3B82CBFBDBD00EEFA8A /* BaseHabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseHabitViewController.swift; sourceTree = "<group>"; };
 		5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewConroller.swift; sourceTree = "<group>"; };
@@ -200,7 +200,7 @@
 				5246C9752BC6C39D00BA7912 /* HabitCell.swift */,
 				527BDF4A2D363B6600CBDAD6 /* HabitCell+UpdateLogic.swift */,
 				52359DB52D359EA800207E09 /* HabitCell+ButtonActions.swift */,
-				52359DB32D359C7000207E09 /* HabitCell+Layout.swift */,
+				52359DB32D359C7000207E09 /* HabitCell+SetupUI.swift */,
 				52359DB12D35987C00207E09 /* HabitCell+Gestures.swift */,
 				52359DAF2D35980600207E09 /* HabitCell+LayerEffects.swift */,
 				52359DAD2D35970200207E09 /* HabitCell+UIHelpers.swift */,
@@ -547,7 +547,7 @@
 				527BDF4B2D363B7C00CBDAD6 /* HabitCell+UpdateLogic.swift in Sources */,
 				5246C9762BC6C39D00BA7912 /* HabitCell.swift in Sources */,
 				52F1E56C2B7CE6B10058F767 /* DiaryViewController.swift in Sources */,
-				52359DB42D359C7100207E09 /* HabitCell+Layout.swift in Sources */,
+				52359DB42D359C7100207E09 /* HabitCell+SetupUI.swift in Sources */,
 				52652B942D240FC900608550 /* BaseHabitView+Formatting.swift in Sources */,
 				5219E2B62D1237B300F41D97 /* HabitsViewController+UISetup.swift in Sources */,
 				5252109B2BFC7F04009DB3F7 /* DiaryWriteCell.swift in Sources */,

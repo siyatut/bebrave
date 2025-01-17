@@ -7,6 +7,8 @@
 
 import UIKit
 
+// TODO: - Спросить у Ильи, как настроить выравнивание края ячейки при свайпе, чтобы не было видно фон контейнера
+
 class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
