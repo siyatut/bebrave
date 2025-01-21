@@ -60,8 +60,5 @@ extension HabitCell {
         clearLayerPatterns()
         currentProgress = 0
         contentContainer.backgroundColor = AppStyle.Colors.backgroundColor
-        contentView.backgroundColor = AppStyle.Colors.isProgressHabitColor
-        contentView.layer.cornerRadius = AppStyle.Sizes.cornerRadius
-        contentView.layer.masksToBounds = true
     }
 }

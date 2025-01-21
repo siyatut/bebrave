@@ -77,7 +77,7 @@ extension HabitCell {
         let animations = {
             self.contentContainer.transform = .identity
             self.leftButtonContainer.isHidden = true
-            self.rightButtonContainer.isHidden = true
+            self.rightButtonContainer.isHidden = false
         }
         if animated {
             UIView.animate(withDuration: 0.3, animations: animations)
