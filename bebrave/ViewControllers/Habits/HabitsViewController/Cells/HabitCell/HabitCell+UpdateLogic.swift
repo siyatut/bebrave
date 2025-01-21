@@ -24,6 +24,8 @@ extension HabitCell {
             self.contentView.layoutIfNeeded()
         }
         
+        checkbox.isHidden = percentage < 1.0
+        
         if percentage >= 1.0 {
             drawCheckmark()
         } else {
@@ -48,6 +50,8 @@ extension HabitCell {
         case .completed:
             currentProgress = habit.frequency
             drawCheckmark()
+            setupCheckboxBackground()
+            checkbox.isHidden = false
         case .skipped:
             applySkippedHabitPattern(for: status)
         }
@@ -59,5 +63,20 @@ extension HabitCell {
         clearCheckmark()
         clearLayerPatterns()
         currentProgress = 0
+        checkbox.isHidden = true
+    }
+    
+    func setupCheckboxBackground() {
+        checkbox.layer.sublayers?.filter { $0.name == "InnerWhiteLayer" }.forEach { $0.removeFromSuperlayer() }
+        
+        
+        let innerWhiteLayer = CALayer()
+        innerWhiteLayer.name = "InnerWhiteLayer"
+    
+        innerWhiteLayer.frame = checkbox.bounds
+        innerWhiteLayer.cornerRadius = 6
+        innerWhiteLayer.backgroundColor = UIColor.white.cgColor
+    
+        checkbox.layer.insertSublayer(innerWhiteLayer, at: 0)
     }
 }

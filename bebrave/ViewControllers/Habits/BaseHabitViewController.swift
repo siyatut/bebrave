@@ -7,8 +7,6 @@
 
 import UIKit
 
-#warning("Пропустила, что в макете чекбокс выполненный не закрашивался вместе с ячейкой, а оставался белым. Подумать, хочу ли я вообще это менять или так норм оставить")
-
 class BaseHabitViewController: UIViewController {
     
     // MARK: - Delegate
