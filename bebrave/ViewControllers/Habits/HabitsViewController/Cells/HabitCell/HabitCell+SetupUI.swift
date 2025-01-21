@@ -61,12 +61,15 @@ extension HabitCell {
         contentContainer.addSubview(percentDone)
         contentContainer.addSubview(checkbox)
         
+        habitsName.lineBreakMode = .byTruncatingTail
+        habitsName.numberOfLines = 1
+        
         addSubviewsToStackView(horizontalStackView, views: [habitsName, starDivider, habitsCount])
         
         NSLayoutConstraint.activate([
             horizontalStackView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 16),
             horizontalStackView.topAnchor.constraint(equalTo: contentContainer.topAnchor, constant: 10),
-            horizontalStackView.trailingAnchor.constraint(lessThanOrEqualTo: checkbox.leadingAnchor, constant: 106),
+            horizontalStackView.trailingAnchor.constraint(lessThanOrEqualTo: checkbox.leadingAnchor, constant: -23),
             
             percentDone.topAnchor.constraint(equalTo: horizontalStackView.bottomAnchor, constant: 4),
             percentDone.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor, constant: -12),
