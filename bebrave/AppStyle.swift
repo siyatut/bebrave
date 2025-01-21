@@ -11,6 +11,7 @@ struct AppStyle {
     
     struct Colors {
         static let primaryColor = UIColor(named: "MyPrimaryColor") ?? .systemPurple
+        static let primaryGreenColor = UIColor(named: "MyPrimaryGreenColor") ?? .systemGreen
         static let secondaryColor = UIColor(named: "MySecondaryColor") ?? .tintColor
         static let errorColor = UIColor.red
         static let borderColor = UIColor.systemGray5

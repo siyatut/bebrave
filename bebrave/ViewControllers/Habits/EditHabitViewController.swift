@@ -9,8 +9,6 @@ import UIKit
 
 class EditHabitViewController: BaseHabitViewController {
     
-    // TODO: - Можно цвет кнопки в этом случае сделать другим, например. Как будто так экраны визуально будут более различимы
-    
     var habitToEdit: Habit?
     
     // MARK: - Init
@@ -35,6 +33,7 @@ class EditHabitViewController: BaseHabitViewController {
             setupDaysOfWeekStack()
             monthsTextField.text = "\(habit.monthFrequency)"
         }
+        didSaveNewHabitButton.configuration?.baseBackgroundColor = AppStyle.Colors.primaryGreenColor
         didSaveNewHabitButton.setTitle("Сохранить изменения", for: .normal)
         didSaveNewHabitButton.addTarget(self, action: #selector(saveHabit), for: .touchUpInside)
     }

@@ -65,19 +65,12 @@ class BaseHabitViewController: UIViewController {
         
         var config = UIButton.Configuration.filled()
         config.title = "Добавить привычку"
+        config.baseBackgroundColor = AppStyle.Colors.primaryColor
         config.baseForegroundColor = .white
         config.image = .plus
         config.imagePadding = 4
         config.cornerStyle = .capsule
         button.configuration = config
-        
-        button.configurationUpdateHandler = { button in
-            var updatedConfig = button.configuration
-            updatedConfig?.background.backgroundColor = button.isEnabled
-            ? AppStyle.Colors.primaryColor
-            : AppStyle.Colors.disabledButtonColor
-            button.configuration = updatedConfig
-        }
         
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(saveHabit), for: .touchUpInside)
