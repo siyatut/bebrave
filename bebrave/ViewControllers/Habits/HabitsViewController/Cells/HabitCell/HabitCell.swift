@@ -7,8 +7,6 @@
 
 import UIKit
 
-// TODO: - Спросить у Ильи, как настроить выравнивание края ячейки при свайпе, чтобы не было видно фон контейнера. Точнее, чтобы край сдвигаемой ячейки совпадал с краем кнопки свайпа, но был в этот момент нескруглённым, иначе фон сзади видно.
-
 class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
@@ -31,8 +29,8 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     lazy var leftButtonContainer: UIView = createContainer()
     lazy var rightButtonContainer: UIView = createContainer()
-    lazy var contentContainer: UIView = createContainer(backgroundColor: AppStyle.Colors.backgroundColor)
-    lazy var progressViewContainer: UIView = createContainer(backgroundColor: AppStyle.Colors.isProgressHabitColor, cornerRadius: 0)
+    lazy var contentContainer: UIView = createContainer()
+    lazy var progressViewContainer: UIView = createContainer(backgroundColor: AppStyle.Colors.isProgressHabitColor)
     
     // MARK: -  Swipe buttons
     

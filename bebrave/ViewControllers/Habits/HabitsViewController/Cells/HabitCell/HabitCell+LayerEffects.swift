@@ -44,6 +44,20 @@ extension HabitCell {
         checkmarkLayer.isHidden = true
     }
     
+    // MARK: - Skipped habit pattern
+    
+    func createDiagonalPattern(in rect: CGRect) -> UIBezierPath {
+        let path = UIBezierPath()
+        let step: CGFloat = 10
+        let diagonalLength = hypot(rect.width, rect.height)
+
+        for x in stride(from: -diagonalLength, to: diagonalLength, by: step) {
+            path.move(to: CGPoint(x: x, y: 0))
+            path.addLine(to: CGPoint(x: x + diagonalLength, y: rect.height))
+        }
+        return path
+    }
+    
     func applySkippedHabitPattern(for status: HabitStatus) {
         
         guard case .skipped = status else { return }
@@ -54,17 +68,7 @@ extension HabitCell {
         patternLayer.frame = contentContainer.bounds
         patternLayer.strokeColor = AppStyle.Colors.isProgressHabitColor.cgColor
         patternLayer.lineWidth = 2
-        
-        let path = UIBezierPath()
-        let step: CGFloat = 10
-        let diagonalLength = hypot(contentContainer.bounds.width, contentContainer.bounds.height)
-        
-        for x in stride(from: -diagonalLength, to: diagonalLength, by: step) {
-            path.move(to: CGPoint(x: x, y: 0))
-            path.addLine(to: CGPoint(x: x + diagonalLength, y: contentContainer.bounds.height))
-        }
-        
-        patternLayer.path = path.cgPath
+        patternLayer.path = createDiagonalPattern(in: contentContainer.bounds).cgPath
         patternLayer.lineDashPattern = [4, 4]
         contentContainer.layer.insertSublayer(patternLayer, at: 0)
     }

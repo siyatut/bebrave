@@ -19,6 +19,11 @@ extension HabitCell {
         contentView.addSubview(leftButtonContainer)
         contentView.addSubview(contentContainer)
         
+        contentView.layer.cornerRadius = AppStyle.Sizes.cornerRadius
+        contentView.layer.masksToBounds = true
+        
+        contentContainer.layer.masksToBounds = true
+        
         NSLayoutConstraint.activate([
             leftButtonContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             leftButtonContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),

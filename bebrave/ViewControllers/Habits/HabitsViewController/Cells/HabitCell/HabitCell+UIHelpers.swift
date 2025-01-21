@@ -49,15 +49,9 @@ extension HabitCell {
         return button
     }
     
-    func createContainer(
-        backgroundColor: UIColor = .clear,
-        cornerRadius: CGFloat = AppStyle.Sizes.cornerRadius,
-        masksToBounds: Bool = true
-    ) -> UIView {
+    func createContainer(backgroundColor: UIColor = AppStyle.Colors.backgroundColor) -> UIView {
         let view = UIView()
         view.backgroundColor = backgroundColor
-        view.layer.cornerRadius = cornerRadius
-        view.layer.masksToBounds = masksToBounds
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }

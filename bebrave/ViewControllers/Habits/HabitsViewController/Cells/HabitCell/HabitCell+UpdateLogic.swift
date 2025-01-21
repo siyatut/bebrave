@@ -59,6 +59,5 @@ extension HabitCell {
         clearCheckmark()
         clearLayerPatterns()
         currentProgress = 0
-        contentContainer.backgroundColor = AppStyle.Colors.backgroundColor
     }
 }
