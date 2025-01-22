@@ -12,6 +12,7 @@ extension BaseHabitViewController {
     @objc func checkboxTapped(_ sender: UITapGestureRecognizer) {
         guard let index = sender.view?.tag else { return }
         selectedDays[index].toggle()
+        updateButtonState()
         
         if let dayContainer = sender.view,
            let checkboxImageView = dayContainer.viewWithTag(999) as? UIImageView {
@@ -22,18 +23,13 @@ extension BaseHabitViewController {
     
     @objc func saveHabit() {
         hasAttemptedSave = true
-        // TODO: - Cпросить у Ильи. С трудом понимаю, как переписать этот момент с валидацией, потому что если пишу не так, то есть кейсы, в которых кнопка блокируется, а ошибки не всплывают. Так что оставила вот так.
-        let isValid = validateFields(showErrors: true)
-        
-        guard isValid else {
+        guard validateFields(showErrors: true) else {
             print("Поля содержат ошибки. Кнопка недоступна.")
-            updateButtonState()
             return
         }
         
         guard let habit = createHabitFromFields() else {
             print("Не удалось создать объект привычки.")
-            updateButtonState()
             return
         }
         
@@ -43,12 +39,6 @@ extension BaseHabitViewController {
     @objc func dismissKeyboard() {
         view.endEditing(true)
         hasAttemptedSave = true
-        let isValid = validateFields(showErrors: true)
-        
-        guard isValid else {
-            print("После нажатия на экран есть ошибки. Кнопка недоступна.")
-            updateButtonState()
-            return
-        }
+        let _ = validateFields(showErrors: true)
     }
 }
