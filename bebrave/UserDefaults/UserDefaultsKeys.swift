@@ -9,4 +9,5 @@ import Foundation
 
 enum UserDefaultsKeys {
     static let habits = "user_habits_key"
+    static let selectedPeriod = "selected_period_key"
 }

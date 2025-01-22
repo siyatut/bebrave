@@ -15,13 +15,30 @@ final class UserDefaultsManager {
     
     private init() {}
     
-    // MARK: - Keys
+    // MARK: - Period methods
     
-    private enum Keys {
-        static let habits = "user_habits_key"
+    func saveSelectedPeriod(_ period: Period) {
+        do {
+            let encodedData = try JSONEncoder().encode(period)
+            defaults.set(encodedData, forKey: UserDefaultsKeys.selectedPeriod)
+        } catch {
+            assertionFailure("Ошибка при сохранении периода: \(error)")
+        }
     }
     
-    // MARK: - Public Methods
+    func loadSelectedPeriod() -> Period? {
+        guard let data = defaults.data(forKey: UserDefaultsKeys.selectedPeriod) else {
+            return nil
+        }
+        do {
+            return try JSONDecoder().decode(Period.self, from: data)
+        } catch {
+            print("Ошибка при загрузке периода: \(error)")
+            return nil
+        }
+    }
+    
+    // MARK: - Habit methods
     
     func resetUncompletedHabits() {
         let calendar = Calendar.current
@@ -45,14 +62,14 @@ final class UserDefaultsManager {
     func saveHabits(_ habits: [Habit]) {
         do {
             let encodedData = try JSONEncoder().encode(habits)
-            defaults.set(encodedData, forKey: Keys.habits)
+            defaults.set(encodedData, forKey: UserDefaultsKeys.habits)
         } catch {
             assertionFailure("Ошибка при сохранении привычек: \(error)")
         }
     }
     
     func loadHabits() -> [Habit] {
-        guard let data = defaults.data(forKey: Keys.habits) else {
+        guard let data = defaults.data(forKey: UserDefaultsKeys.habits) else {
             return []
         }
         do {

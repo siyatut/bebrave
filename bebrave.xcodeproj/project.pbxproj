@@ -36,6 +36,7 @@
 		52697D5E2D195361004B9D7E /* HabitsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D5D2D19535F004B9D7E /* HabitsLayout.swift */; };
 		52697D602D1957A9004B9D7E /* HabitsViewController+DataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D5F2D1957A6004B9D7E /* HabitsViewController+DataSourceDelegate.swift */; };
 		52697D642D195A97004B9D7E /* HabitsViewController+HabitDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D632D195A95004B9D7E /* HabitsViewController+HabitDelegate.swift */; };
+		5269FBDD2D40C9EE003A6AC9 /* Period.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5269FBDC2D40C9EA003A6AC9 /* Period.swift */; };
 		52751BAD2D26ACEA008F84A8 /* EditHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52751BAC2D26ACE2008F84A8 /* EditHabitViewController.swift */; };
 		527BDF4B2D363B7C00CBDAD6 /* HabitCell+UpdateLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527BDF4A2D363B6600CBDAD6 /* HabitCell+UpdateLogic.swift */; };
 		52923ECF2CF70F080088E54B /* HeaderDaysCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */; };
@@ -114,6 +115,7 @@
 		52697D5D2D19535F004B9D7E /* HabitsLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsLayout.swift; sourceTree = "<group>"; };
 		52697D5F2D1957A6004B9D7E /* HabitsViewController+DataSourceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+DataSourceDelegate.swift"; sourceTree = "<group>"; };
 		52697D632D195A95004B9D7E /* HabitsViewController+HabitDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+HabitDelegate.swift"; sourceTree = "<group>"; };
+		5269FBDC2D40C9EA003A6AC9 /* Period.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Period.swift; sourceTree = "<group>"; };
 		52751BAC2D26ACE2008F84A8 /* EditHabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHabitViewController.swift; sourceTree = "<group>"; };
 		527BDF4A2D363B6600CBDAD6 /* HabitCell+UpdateLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCell+UpdateLogic.swift"; sourceTree = "<group>"; };
 		52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderDaysCollectionView.swift; sourceTree = "<group>"; };
@@ -266,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				52A762502D367E62000A30EA /* Habit.swift */,
+				5269FBDC2D40C9EA003A6AC9 /* Period.swift */,
 				52A762522D367EA5000A30EA /* HabitStatus.swift */,
 				5209B4492D38F2B90063CF1C /* HabitProgress.swift */,
 				52C996A82D11EB23000E7648 /* CustomElement.swift */,
@@ -535,6 +538,7 @@
 				52F1E53E2B7CDC300058F767 /* TabBarViewController.swift in Sources */,
 				52FF7F432D2EB96A008EF1E2 /* DayCell.swift in Sources */,
 				52C996A72D11EAEE000E7648 /* SupplementaryViewError.swift in Sources */,
+				5269FBDD2D40C9EE003A6AC9 /* Period.swift in Sources */,
 				52021A772BAC3D2000E9D8F1 /* OutlineBackgroundView.swift in Sources */,
 				52359DB02D35980A00207E09 /* HabitCell+LayerEffects.swift in Sources */,
 				52652B8A2D2405DF00608550 /* BaseHabitView+UISetup.swift in Sources */,

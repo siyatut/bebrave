@@ -7,15 +7,6 @@
 
 import UIKit
 
-enum Period {
-    case week
-    case month
-    case halfYear
-    case year
-}
-
-// TODO: - При переключении периода в periodButton, не запоминает в меню выбора, какой период выбран прямо сейчас — по умолчанию неделя. Хорошо бы, чтобы запоминалось, а ещё при смене экрана сохранялся последний выбранный период. 
-
 class HistoryHeaderView: UICollectionReusableView {
     
     // MARK: - UI components
@@ -28,7 +19,7 @@ class HistoryHeaderView: UICollectionReusableView {
         config.imagePadding = 4
         config.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 12, weight: .medium)
-
+        
         config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
             var attributes = incoming
             attributes.font = AppStyle.Fonts.regularFont(size: 16)
@@ -50,8 +41,11 @@ class HistoryHeaderView: UICollectionReusableView {
     }()
     
     private var onPeriodChange: ((Period) -> Void)?
-    private var selectedPeriod: Period = .week {
+    private var selectedPeriod: Period = {
+        return UserDefaultsManager.shared.loadSelectedPeriod() ?? .week
+    }() {
         didSet {
+            UserDefaultsManager.shared.saveSelectedPeriod(selectedPeriod)
             updateUIForSelectedPeriod()
         }
     }
@@ -129,6 +123,7 @@ class HistoryHeaderView: UICollectionReusableView {
         }
         periodButton.setTitle(periodTitle, for: .normal)
         dateLabel.text = calculateDateRange(for: selectedPeriod)
+        periodButton.menu = createPeriodMenu()
     }
     
     // MARK: - Configure
@@ -162,7 +157,7 @@ class HistoryHeaderView: UICollectionReusableView {
         }
         
         if let start = startDate, let end = endDate {
-            return "\(formatter.string(from: start))—\(formatter.string(from: end))"
+            return "\(formatter.string(from: start))–\(formatter.string(from: end))"
         }
         return ""
     }
