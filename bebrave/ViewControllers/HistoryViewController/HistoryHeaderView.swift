@@ -13,12 +13,11 @@ class HistoryHeaderView: UICollectionReusableView {
     
     private let periodButton: UIButton = {
         var config = UIButton.Configuration.plain()
-        config.baseForegroundColor = AppStyle.Colors.primaryColor
+        config.baseForegroundColor = AppStyle.Colors.secondaryColor
         config.image = UIImage(systemName: "chevron.down.circle.fill")
         config.imagePlacement = .leading
         config.imagePadding = 4
-        config.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-        config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 12, weight: .medium)
+        config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 14, weight: .medium)
         
         config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
             var attributes = incoming
