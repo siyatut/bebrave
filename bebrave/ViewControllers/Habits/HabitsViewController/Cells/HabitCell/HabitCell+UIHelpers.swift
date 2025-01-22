@@ -9,19 +9,6 @@ import UIKit
 
 extension HabitCell {
     
-    func createImageView(
-        imageName: String,
-        tintColor: UIColor,
-        alpha: CGFloat = 1.0
-    ) -> UIImageView {
-        let view = UIImageView()
-        view.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
-        view.tintColor = tintColor
-        view.alpha = alpha
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }
-    
     func createSwipeButton(
         imageName: String,
         color: UIColor,
