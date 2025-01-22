@@ -30,14 +30,9 @@ class HistoryHeaderView: UICollectionReusableView {
         return button
     }()
     
-    private let dateLabel: UILabel = {
-        let label = UILabel()
-        label.font = AppStyle.Fonts.boldFont(size: 18)
-        label.textColor = .label
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    private let dateLabel = UILabel.styled(text: "", fontSize: 18, isBold: true, alignment: .center)
+    
+    // MARK: - Period properties
     
     private var onPeriodChange: ((Period) -> Void)?
     private var selectedPeriod: Period = {

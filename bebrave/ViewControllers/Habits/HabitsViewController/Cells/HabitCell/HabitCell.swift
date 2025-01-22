@@ -42,9 +42,9 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     // MARK: - UI components for cell
     
-    lazy var habitsName = createLabel(textColor: .label, font: AppStyle.Fonts.regularFont(size: 16))
-    lazy var percentDone = createLabel(textColor: .secondaryLabel, font: AppStyle.Fonts.regularFont(size: 16))
-    lazy var habitsCount = createLabel(textColor: .secondaryLabel, font: AppStyle.Fonts.regularFont(size: 16))
+    lazy var habitsName = UILabel.styled(text: "")
+    lazy var percentDone = UILabel.styled(text: "", color: AppStyle.Colors.textColorSecondary)
+    lazy var habitsCount = UILabel.styled(text: "", color: AppStyle.Colors.textColorSecondary)
     lazy var starDivider = createImageView(imageName: "StarDivider", tintColor: AppStyle.Colors.secondaryColor)
     lazy var checkbox = createImageView(imageName: "UncheckedCheckbox", tintColor: AppStyle.Colors.borderColor)
     

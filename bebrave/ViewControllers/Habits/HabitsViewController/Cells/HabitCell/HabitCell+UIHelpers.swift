@@ -9,19 +9,6 @@ import UIKit
 
 extension HabitCell {
     
-    func createLabel(
-        textColor: UIColor,
-        font: UIFont,
-        alpha: CGFloat = 1.0
-    ) -> UILabel {
-        let label = UILabel()
-        label.textColor = textColor
-        label.font = font
-        label.alpha = alpha
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }
-    
     func createImageView(
         imageName: String,
         tintColor: UIColor,

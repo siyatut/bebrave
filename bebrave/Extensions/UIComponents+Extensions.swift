@@ -16,7 +16,8 @@ extension UILabel {
                        isBold: Bool = false,
                        alignment: NSTextAlignment = .left,
                        numberOfLines: Int = 1,
-                       isHidden: Bool = false
+                       isHidden: Bool = false,
+                       alpha: CGFloat = 1.0
     ) -> UILabel {
         let label = UILabel()
         label.text = text
@@ -25,12 +26,13 @@ extension UILabel {
         label.textAlignment = alignment
         label.numberOfLines = numberOfLines
         label.isHidden = isHidden
+        label.alpha = alpha
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }
 }
 
-// MARK: - UITextField Styling
+// MARK: - UITextField styling
 
 extension UITextField {
     static func styled(placeholder: String,
@@ -49,6 +51,22 @@ extension UITextField {
         textField.backgroundColor = .systemBackground
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
+    }
+}
+
+// MARK: - ImageView Styling
+
+extension UIImageView {
+    static func styled(imageName: String,
+                       tintColor: UIColor,
+                       alpha: CGFloat = 1.0
+    ) -> UIImageView {
+        let view = UIImageView()
+        view.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
+        view.tintColor = tintColor
+        view.alpha = alpha
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }
 }
 

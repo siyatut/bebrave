@@ -16,6 +16,7 @@ struct AppStyle {
         static let errorColor = UIColor.red
         static let borderColor = UIColor.systemGray5
         static let textColor = UIColor.label
+        static let textColorSecondary = UIColor.secondaryLabel
         static let backgroundColor = UIColor.systemBackground
         static let disabledButtonColor = UIColor.systemGray5
         static let backgroundEmptyStateColor = UIColor(named: "MyGrayColor") ?? .lightGray

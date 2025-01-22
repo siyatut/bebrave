@@ -11,16 +11,7 @@ class EmptyStateView: UIView{
     
     // MARK: - UI components
     
-    private let label: UILabel = {
-        let label = UILabel()
-        label.textColor = AppStyle.Colors.primaryColor
-        label.font = AppStyle.Fonts.boldFont(size: 16)
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Пора что-нибудь сюда добавить"
-        return label
-    }()
+    private let label = UILabel.styled(text: "Пора что-нибудь сюда добавить", color: AppStyle.Colors.primaryColor, isBold: true, alignment: .center)
     
     // MARK: - Init
     

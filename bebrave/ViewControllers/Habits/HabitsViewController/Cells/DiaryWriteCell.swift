@@ -11,14 +11,7 @@ class DiaryWriteCell: UICollectionViewCell {
     
     // MARK: - UI Components
     
-    private let writeDiaryLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Заполнить дневник"
-        label.textColor = .label
-        label.font = AppStyle.Fonts.regularFont(size: 16)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    private let writeDiaryLabel = UILabel.styled(text: "Заполнить дневник")
     
     private let chevron: UIImageView = {
         let view = UIImageView()

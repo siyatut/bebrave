@@ -24,8 +24,8 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // MARK: - UI components
     
-    let historyButton = UIButton()
     let calendarLabel = UILabel()
+    let historyButton = UIButton()
     let createNewHabitButton = UIButton()
     
     lazy var collectionView: UICollectionView = {

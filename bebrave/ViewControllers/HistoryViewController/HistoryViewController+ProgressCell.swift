@@ -13,8 +13,8 @@ final class ProgressCell: UICollectionViewCell {
     
     // MARK: - UI Components
     
-    private let habitNameLabel = UILabel()
-    private let progressLabel = UILabel()
+    private let habitNameLabel = UILabel.styled(text: "")
+    private let progressLabel = UILabel.styled(text: "", fontSize: 14, color: AppStyle.Colors.textColorSecondary, alignment: .right)
     private let progressBar = UIProgressView()
     
     // MARK: - Init
@@ -31,11 +31,6 @@ final class ProgressCell: UICollectionViewCell {
     // MARK: - Setup UI
     
     private func setupProgressCell() {
-        habitNameLabel.font = AppStyle.Fonts.regularFont(size: 16)
-        progressLabel.font = AppStyle.Fonts.regularFont(size: 14)
-        habitNameLabel.textColor = .label
-        progressLabel.textColor = .secondaryLabel
-        progressLabel.textAlignment = .right
         progressBar.progressTintColor = AppStyle.Colors.primaryGreenColor
         progressBar.trackTintColor = AppStyle.Colors.isUncompletedHabitColor
         progressBar.layer.cornerRadius = 5
