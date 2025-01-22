@@ -36,7 +36,7 @@ final class ProgressCell: UICollectionViewCell {
         habitNameLabel.textColor = .label
         progressLabel.textColor = .secondaryLabel
         progressLabel.textAlignment = .right
-        progressBar.progressTintColor = AppStyle.Colors.isProgressHabitColor
+        progressBar.progressTintColor = AppStyle.Colors.primaryGreenColor
         progressBar.trackTintColor = AppStyle.Colors.isUncompletedHabitColor
         progressBar.layer.cornerRadius = 5
         progressBar.layer.masksToBounds = true
