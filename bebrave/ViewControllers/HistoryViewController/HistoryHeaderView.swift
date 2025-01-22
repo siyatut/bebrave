@@ -103,7 +103,7 @@ class HistoryHeaderView: UICollectionReusableView {
                 self.selectedPeriod = .halfYear
                 self.onPeriodChange?(.halfYear)
             },
-            UIAction(title: "Год", state: selectedPeriod == .year ? .on : .off) { _ in
+            UIAction(title: "Целый год", state: selectedPeriod == .year ? .on : .off) { _ in
                 self.selectedPeriod = .year
                 self.onPeriodChange?(.year)
             }
@@ -118,7 +118,7 @@ class HistoryHeaderView: UICollectionReusableView {
         case .week: periodTitle = "Неделя"
         case .month: periodTitle = "Месяц"
         case .halfYear: periodTitle = "Полгода"
-        case .year: periodTitle = "Год"
+        case .year: periodTitle = "Целый год"
         }
         periodButton.setTitle(periodTitle, for: .normal)
         dateLabel.text = calculateDateRange(for: selectedPeriod)
@@ -133,7 +133,7 @@ class HistoryHeaderView: UICollectionReusableView {
     
     private func calculateDateRange(for period: Period) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd.MM.yyyy"
+        formatter.dateFormat = "dd.MM.yy"
         let calendar = Calendar.current
         let today = Date()
         
