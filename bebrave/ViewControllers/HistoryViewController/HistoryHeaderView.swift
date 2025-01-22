@@ -162,7 +162,7 @@ class HistoryHeaderView: UICollectionReusableView {
         }
         
         if let start = startDate, let end = endDate {
-            return "\(formatter.string(from: start)) — \(formatter.string(from: end))"
+            return "\(formatter.string(from: start))—\(formatter.string(from: end))"
         }
         return ""
     }
