@@ -13,13 +13,16 @@ struct AppStyle {
         static let primaryColor = UIColor(named: "MyPrimaryColor") ?? .systemPurple
         static let primaryGreenColor = UIColor(named: "MyPrimaryGreenColor") ?? .systemGreen
         static let secondaryColor = UIColor(named: "MySecondaryColor") ?? .tintColor
+        
         static let errorColor = UIColor.red
         static let borderColor = UIColor.systemGray5
+        
         static let textColor = UIColor.label
         static let textColorSecondary = UIColor.secondaryLabel
+        
         static let backgroundColor = UIColor.systemBackground
-        static let disabledButtonColor = UIColor.systemGray5
         static let backgroundEmptyStateColor = UIColor(named: "MyGrayColor") ?? .lightGray
+        
         static let isProgressHabitColor = UIColor(named: "MyGreenColor") ?? .systemGreen
         static let isUncompletedHabitColor = UIColor(named: "MyLightGrayColor") ?? .lightGray
     }
