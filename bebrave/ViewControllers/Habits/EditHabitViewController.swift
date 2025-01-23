@@ -66,8 +66,8 @@ class EditHabitViewController: BaseHabitViewController {
             frequency: frequency,
             monthFrequency: monthFrequency,
             daysOfWeek: selectedDays,
-            progress: [:],
-            skipDates: []
+            progress: habitToEdit.progress,
+            skipDates: habitToEdit.skipDates
         )
     }
 }
