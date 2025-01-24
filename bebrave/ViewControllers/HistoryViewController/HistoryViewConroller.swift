@@ -5,6 +5,8 @@
 //  Created by Anastasia Tyutinova on 28/2/2567 BE.
 //
 
+#warning("№2: Если привычек нет, в истории пусто. Нужно тоже заглушку какую-то добавить. Возможно, переиспользовать серое вью?")
+
 import UIKit
 
 class HistoryViewController: UIViewController {
