@@ -7,6 +7,8 @@
 
 import Foundation
 
+// TODO: - Почему здесь и mutating, и нет одновременно. Разобраться конкретнее, что написала
+
 // MARK: - Habit Model
 
 struct Habit: Codable {
@@ -119,13 +121,5 @@ extension Habit {
         let completedDays = progress.keys.filter { calendar.isDate($0, equalTo: yearStart, toGranularity: .year) }.count
         
         return (completedDays, totalDays)
-    }
-}
-
-extension Calendar {
-    static var mondayFirst: Calendar {
-        var calendar = Calendar(identifier: .gregorian) // Используем григорианский календарь
-        calendar.firstWeekday = 2 // 1 = Воскресенье, 2 = Понедельник
-        return calendar
     }
 }

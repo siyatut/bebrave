@@ -42,13 +42,13 @@ class EditHabitViewController: BaseHabitViewController {
     
     override func handleHabitSave(_ habit: Habit) {
         var updatedHabit = habit
-        updatedHabit.daysOfWeek = selectedDays // Убедитесь, что выбраны новые дни недели
-        updatedHabit.updateSkippedDays(startDate: updatedHabit.creationDate, endDate: Date()) // Пересчёт пропущенных дней
+        updatedHabit.daysOfWeek = selectedDays
+        updatedHabit.updateSkippedDays(startDate: updatedHabit.creationDate, endDate: Date())
         
-        UserDefaultsManager.shared.updateHabit(updatedHabit) // Сохраняем обновлённую привычку
+        UserDefaultsManager.shared.updateHabit(updatedHabit)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            self.delegate?.didEditHabit(updatedHabit) // Передаём обновлённую привычку
+            self.delegate?.didEditHabit(updatedHabit)
             print("Изменённая привычка сохранена: \(updatedHabit.title)")
             self.dismiss(animated: true, completion: nil)
         }
