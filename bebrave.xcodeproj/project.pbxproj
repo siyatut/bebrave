@@ -304,19 +304,18 @@
 				5219E2B42D12372200F41D97 /* UI */,
 				52C996AD2D11EBD2000E7648 /* Extensions */,
 				52C996AB2D11EB8C000E7648 /* Cells */,
-				52C996AA2D11EB62000E7648 /* Views */,
 				52FF7F412D2EB909008EF1E2 /* HeaderDaysCollectionView */,
 			);
 			path = HabitsViewController;
 			sourceTree = "<group>";
 		};
-		52C996AA2D11EB62000E7648 /* Views */ = {
+		52C996AA2D11EB62000E7648 /* General Views */ = {
 			isa = PBXGroup;
 			children = (
 				524FC7012D075063004C839F /* EmptyStateView.swift */,
 				52021A762BAC3D2000E9D8F1 /* OutlineBackgroundView.swift */,
 			);
-			path = Views;
+			path = "General Views";
 			sourceTree = "<group>";
 		};
 		52C996AB2D11EB8C000E7648 /* Cells */ = {
@@ -367,6 +366,7 @@
 				52ACDD432CEF13CD00868730 /* AppStyle.swift */,
 				52F1E53D2B7CDC300058F767 /* TabBarViewController.swift */,
 				5259A40E2D28508200EF60A2 /* ViewControllers */,
+				52C996AA2D11EB62000E7648 /* General Views */,
 				5259A40D2D28501B00EF60A2 /* Extensions */,
 				52F1E5422B7CDC330058F767 /* Assets.xcassets */,
 				52F1E5442B7CDC330058F767 /* LaunchScreen.storyboard */,

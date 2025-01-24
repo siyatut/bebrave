@@ -7,8 +7,6 @@
 
 import Foundation
 
-// TODO: - Почему здесь и mutating, и нет одновременно. Разобраться конкретнее, что написала
-
 // MARK: - Habit Model
 
 struct Habit: Codable {

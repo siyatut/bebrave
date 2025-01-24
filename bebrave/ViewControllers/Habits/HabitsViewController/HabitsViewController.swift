@@ -36,8 +36,8 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         return collectionView
     }()
     
-    lazy var emptyStateView: UIView = {
-        let view = EmptyStateView()
+    lazy var emptyStateView: EmptyStateView = {
+        let view = EmptyStateView(text: "Пора что-нибудь сюда добавить")
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isHidden = true
         return view

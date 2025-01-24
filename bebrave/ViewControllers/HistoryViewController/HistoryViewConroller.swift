@@ -5,7 +5,7 @@
 //  Created by Anastasia Tyutinova on 28/2/2567 BE.
 //
 
-#warning("№2: Если привычек нет, в истории пусто. Нужно тоже заглушку какую-то добавить. Возможно, переиспользовать серое вью?")
+#warning("№2: Настроить корректное отображение прогресса и его закрашивания в соответствии со статусом привычки: зелёный, полосатый зелёный, серый")
 
 import UIKit
 
@@ -14,6 +14,13 @@ class HistoryViewController: UIViewController {
     // MARK: - UI Components
     
     private var collectionView: UICollectionView!
+    
+    private lazy var emptyStateView: EmptyStateView = {
+        let view = EmptyStateView(text: "История пока пуста")
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isHidden = true
+        return view
+    }()
     
     // MARK: - Data
     
@@ -38,8 +45,11 @@ class HistoryViewController: UIViewController {
         view.backgroundColor = AppStyle.Colors.backgroundColor
         navigationController?.navigationBar.tintColor = AppStyle.Colors.secondaryColor
         setupCollectionView()
+        setupEmptyStateView()
         calculateProgress()
     }
+    
+    // MARK: - Setup
     
     private func setupCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: ProgressLayout.createLayout())
@@ -73,6 +83,22 @@ class HistoryViewController: UIViewController {
         ])
     }
     
+    func setupEmptyStateView() {
+        view.addSubview(emptyStateView)
+        
+        NSLayoutConstraint.activate([
+            emptyStateView.topAnchor.constraint(equalTo: view.topAnchor, constant: 160),
+            emptyStateView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            emptyStateView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
+            emptyStateView.heightAnchor.constraint(equalToConstant: 312)
+        ])
+        setupEmptyStateVisibility()
+    }
+    
+    private func setupEmptyStateVisibility() {
+        emptyStateView.isHidden = !habits.isEmpty
+    }
+    
     // MARK: - Data Handling
     
     private func calculateProgress() {
@@ -83,7 +109,6 @@ class HistoryViewController: UIViewController {
             let (completedDays, totalDays) = habit.calculateYearProgress(for: currentYear, calendar: calendar)
             return HabitProgress(name: habit.title, completedDays: completedDays, totalDays: totalDays)
         }
-        
         collectionView.reloadData()
     }
     
