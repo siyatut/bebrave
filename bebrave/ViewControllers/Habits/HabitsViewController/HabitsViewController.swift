@@ -7,8 +7,6 @@
 
 #warning("№1: Когда создать экран «История», проверить корректность работы статуса привычки «Не выполнена», если пользователь до 00:00 по своей таймзоне никак не взаимодействовал с ней")
 
-#warning("№2: Когда пользователь создаёт новую привычку, дни, которые он не отметил для выполнения, должны автоматически закрашиваться как скипнутые привычки. Для редактирования привычки тоже нужно поправить это")
-
 import UIKit
 
 class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -65,6 +63,11 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         habits = UserDefaultsManager.shared.loadHabits()
+        
+        for index in habits.indices {
+            habits[index].updateSkippedDays(startDate: habits[index].creationDate, endDate: Date())
+        }
+        
         collectionView.reloadData()
         updateEmptyState()
         DispatchQueue.main.async {

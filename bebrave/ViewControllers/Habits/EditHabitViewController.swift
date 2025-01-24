@@ -41,11 +41,15 @@ class EditHabitViewController: BaseHabitViewController {
     // MARK: - Handle performing habit
     
     override func handleHabitSave(_ habit: Habit) {
-        UserDefaultsManager.shared.updateHabit(habit)
+        var updatedHabit = habit
+        updatedHabit.daysOfWeek = selectedDays // Убедитесь, что выбраны новые дни недели
+        updatedHabit.updateSkippedDays(startDate: updatedHabit.creationDate, endDate: Date()) // Пересчёт пропущенных дней
+        
+        UserDefaultsManager.shared.updateHabit(updatedHabit) // Сохраняем обновлённую привычку
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            self.delegate?.didEditHabit(habit)
-            print("Измененная привычка сохранена: \(habit.title)")
+            self.delegate?.didEditHabit(updatedHabit) // Передаём обновлённую привычку
+            print("Изменённая привычка сохранена: \(updatedHabit.title)")
             self.dismiss(animated: true, completion: nil)
         }
     }
@@ -67,7 +71,9 @@ class EditHabitViewController: BaseHabitViewController {
             monthFrequency: monthFrequency,
             daysOfWeek: selectedDays,
             progress: habitToEdit.progress,
-            skipDates: habitToEdit.skipDates
+            skipDates: habitToEdit.skipDates,
+            creationDate: habitToEdit.creationDate
         )
     }
 }
+

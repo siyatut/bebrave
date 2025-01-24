@@ -17,6 +17,7 @@ struct Habit: Codable {
     var daysOfWeek: [Bool]
     var progress: [Date: Int]
     var skipDates: Set<Date>
+    var creationDate: Date
 }
 
 // MARK: - Habit Factory
@@ -35,7 +36,8 @@ extension Habit {
             monthFrequency: monthFrequency,
             daysOfWeek: daysOfWeek,
             progress: [:],
-            skipDates: []
+            skipDates: [],
+            creationDate: Date()
         )
     }
 }
@@ -71,6 +73,25 @@ extension Habit {
         progress[today] = 0
     }
     
+    mutating func updateSkippedDays(startDate: Date = Date(), endDate: Date = Date()) {
+        let calendar = Calendar.current
+        var currentDate = calendar.startOfDay(for: startDate)
+        let endOfDay = calendar.startOfDay(for: endDate)
+        
+        while currentDate <= endOfDay {
+            let weekday = (calendar.component(.weekday, from: currentDate) + 5) % 7
+            let startOfDay = calendar.startOfDay(for: currentDate)
+            
+            if daysOfWeek[weekday] {
+                skipDates.remove(startOfDay)
+            } else if !skipDates.contains(startOfDay) {
+                skipDates.insert(startOfDay)
+            }
+            
+            currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate
+        }
+    }
+    
     func getStatus(for date: Date = Date()) -> HabitStatus {
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: date)
@@ -101,4 +122,10 @@ extension Habit {
     }
 }
 
-
+extension Calendar {
+    static var mondayFirst: Calendar {
+        var calendar = Calendar(identifier: .gregorian) // Используем григорианский календарь
+        calendar.firstWeekday = 2 // 1 = Воскресенье, 2 = Понедельник
+        return calendar
+    }
+}

@@ -124,15 +124,16 @@ class BaseHabitViewController: UIViewController {
             return nil
         }
         
-        return Habit(
-            id: UUID(),
+        let today = Date()
+        
+        var newHabit = Habit.createNew(
             title: title,
             frequency: frequency,
             monthFrequency: monthFrequency,
-            daysOfWeek: selectedDays,
-            progress: [:],
-            skipDates: []
+            daysOfWeek: selectedDays
         )
+        newHabit.updateSkippedDays(startDate: today)
+        return newHabit
     }
 }
 
