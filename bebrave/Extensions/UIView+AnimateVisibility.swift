@@ -8,7 +8,12 @@
 import UIKit
 
 extension UIView {
-    func animateVisibility(isVisible: Bool, duration: TimeInterval = 0.8, transformEffect: Bool = false, completion: (() -> Void)? = nil) {
+    func animateVisibility(
+        isVisible: Bool,
+        duration: TimeInterval = 0.8,
+        transformEffect: Bool = false,
+        completion: (() -> Void
+        )? = nil) {
         if isVisible {
             self.alpha = 0
             self.isHidden = false

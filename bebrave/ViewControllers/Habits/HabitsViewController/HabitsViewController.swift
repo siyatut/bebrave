@@ -5,7 +5,8 @@
 //  Created by Anastasia Tyutinova on 14/2/2567 BE.
 //
 
-#warning("№1: Когда создать экран «История», проверить корректность работы статуса привычки «Не выполнена», если пользователь до 00:00 по своей таймзоне никак не взаимодействовал с ней")
+// swiftlint:disable:next line_length
+// TODO: - Когда создать экран «История», проверить корректность работы статуса привычки «Не выполнена», если пользователь до 00:00 по своей таймзоне никак не взаимодействовал с ней")
 
 import UIKit
 
@@ -85,7 +86,7 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: - Tap actions
     
     @objc func historyButtonTapped() {
-        let historyVC = HistoryViewController(habits: habits) 
+        let historyVC = HistoryViewController(habits: habits)
         self.navigationController?.pushViewController(historyVC, animated: true)
     }
     
@@ -102,9 +103,17 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     func scheduleMidnightCheck() {
         let calendar = Calendar.current
         let now = Date()
-        let nextMidnight = calendar.nextDate(after: now, matching: DateComponents(hour: 0), matchingPolicy: .strict) ?? now
-        
-        let timer = Timer(fireAt: nextMidnight, interval: 0, target: self, selector: #selector(handleMidnight), userInfo: nil, repeats: false)
+        let nextMidnight = calendar.nextDate(
+            after: now,
+            matching: DateComponents(hour: 0),
+            matchingPolicy: .strict
+        ) ?? now
+        let timer = Timer(
+            fireAt: nextMidnight,
+            interval: 0, target: self,
+            selector: #selector(handleMidnight),
+            userInfo: nil, repeats: false
+        )
         RunLoop.main.add(timer, forMode: .common)
     }
     
@@ -115,5 +124,3 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         scheduleMidnightCheck()
     }
 }
-
-

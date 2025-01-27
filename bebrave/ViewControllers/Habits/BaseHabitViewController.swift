@@ -47,10 +47,34 @@ class BaseHabitViewController: UIViewController {
     
     // MARK: - Error labels
     
-    lazy var habitErrorLabel = UILabel.styled(text: "", fontSize: 12, color: AppStyle.Colors.errorColor, numberOfLines: 0, isHidden: true)
-    lazy var timesPerDayErrorLabel = UILabel.styled(text: "", fontSize: 12, color: AppStyle.Colors.errorColor, numberOfLines: 0, isHidden: true)
-    lazy var daysOfWeekErrorLabel = UILabel.styled(text: "", fontSize: 12, color: AppStyle.Colors.errorColor, numberOfLines: 0, isHidden: true)
-    lazy var monthsErrorLabel = UILabel.styled(text: "", fontSize: 12, color: AppStyle.Colors.errorColor, numberOfLines: 0, isHidden: true)
+    lazy var habitErrorLabel = UILabel.styled(
+        text: "",
+        fontSize: 12,
+        color: AppStyle.Colors.errorColor,
+        numberOfLines: 0,
+        isHidden: true
+    )
+    lazy var timesPerDayErrorLabel = UILabel.styled(
+        text: "",
+        fontSize: 12,
+        color: AppStyle.Colors.errorColor,
+        numberOfLines: 0,
+        isHidden: true
+    )
+    lazy var daysOfWeekErrorLabel = UILabel.styled(
+        text: "",
+        fontSize: 12,
+        color: AppStyle.Colors.errorColor,
+        numberOfLines: 0,
+        isHidden: true
+    )
+    lazy var monthsErrorLabel = UILabel.styled(
+        text: "",
+        fontSize: 12,
+        color: AppStyle.Colors.errorColor,
+        numberOfLines: 0,
+        isHidden: true
+    )
     
     // MARK: - Error label's height
     

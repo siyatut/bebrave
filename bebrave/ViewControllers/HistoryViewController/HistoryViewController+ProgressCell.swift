@@ -13,8 +13,15 @@ final class ProgressCell: UICollectionViewCell {
     
     // MARK: - UI Components
     
-    private let habitNameLabel = UILabel.styled(text: "")
-    private let progressLabel = UILabel.styled(text: "", fontSize: 14, color: AppStyle.Colors.textColorSecondary, alignment: .right)
+    private let habitNameLabel = UILabel.styled(
+        text: ""
+    )
+    private let progressLabel = UILabel.styled(
+        text: "",
+        fontSize: 14,
+        color: AppStyle.Colors.textColorSecondary,
+        alignment: .right
+    )
     private let progressBar = UIProgressView()
     
     // MARK: - Init

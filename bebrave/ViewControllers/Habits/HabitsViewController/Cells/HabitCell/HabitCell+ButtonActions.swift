@@ -39,11 +39,22 @@ extension HabitCell {
         let titleFont = AppStyle.Fonts.boldFont(size: 16)
         let messageFont = AppStyle.Fonts.regularFont(size: 12)
         
-        let titleAttributes: [NSAttributedString.Key: Any] = [.font: titleFont, .foregroundColor: AppStyle.Colors.textColor]
-        let messageAttributes: [NSAttributedString.Key: Any] = [.font: messageFont, .foregroundColor: AppStyle.Colors.textColorSecondary]
-        
-        let attributedTitle = NSAttributedString(string: "Точно удаляем привычку?", attributes: titleAttributes)
-        let attributedMessage = NSAttributedString(string: "прогресс не восстановить", attributes: messageAttributes)
+        let titleAttributes: [NSAttributedString.Key: Any] = [
+            .font: titleFont,
+            .foregroundColor: AppStyle.Colors.textColor
+        ]
+        let messageAttributes: [NSAttributedString.Key: Any] = [
+            .font: messageFont,
+            .foregroundColor: AppStyle.Colors.textColorSecondary
+        ]
+        let attributedTitle = NSAttributedString(
+            string: "Точно удаляем привычку?",
+            attributes: titleAttributes
+        )
+        let attributedMessage = NSAttributedString(
+            string: "прогресс не восстановить",
+            attributes: messageAttributes
+        )
         
         alert.setValue(attributedTitle, forKey: "attributedTitle")
         alert.setValue(attributedMessage, forKey: "attributedMessage")

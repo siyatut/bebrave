@@ -93,7 +93,8 @@ extension HabitCell {
         for (index, button) in rightButtons.enumerated() {
             rightButtonContainer.addSubview(button)
             NSLayoutConstraint.activate([
-                button.trailingAnchor.constraint(equalTo: rightButtonContainer.trailingAnchor, constant: -CGFloat(index) * buttonWidth),
+                button.trailingAnchor.constraint(equalTo: rightButtonContainer.trailingAnchor,
+                                                 constant: -CGFloat(index) * buttonWidth),
                 button.topAnchor.constraint(equalTo: rightButtonContainer.topAnchor),
                 button.bottomAnchor.constraint(equalTo: rightButtonContainer.bottomAnchor),
                 button.widthAnchor.constraint(equalToConstant: buttonWidth)
@@ -104,7 +105,8 @@ extension HabitCell {
         for (index, button) in leftButtons.enumerated() {
             leftButtonContainer.addSubview(button)
             NSLayoutConstraint.activate([
-                button.leadingAnchor.constraint(equalTo: leftButtonContainer.leadingAnchor, constant: CGFloat(index) * buttonWidth),
+                button.leadingAnchor.constraint(equalTo: leftButtonContainer.leadingAnchor,
+                                                constant: CGFloat(index) * buttonWidth),
                 button.topAnchor.constraint(equalTo: leftButtonContainer.topAnchor),
                 button.bottomAnchor.constraint(equalTo: leftButtonContainer.bottomAnchor),
                 button.widthAnchor.constraint(equalToConstant: buttonWidth)

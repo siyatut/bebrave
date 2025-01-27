@@ -69,17 +69,31 @@ class HeaderDaysCollectionView: UICollectionReusableView {
         let today = Date()
         
         calendar.firstWeekday = 2
-        guard let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today)) else {
+        guard let startOfWeek = calendar.date(
+            from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear],
+            from: today)
+        ) else {
             assertionFailure("Не удалось определить начало недели")
             return
         }
         
         let habits = UserDefaultsManager.shared.loadHabits()
         
-        daysData = (0..<7).compactMap { dayOffset -> (date: Date, emoji: String)? in
-            guard let date = calendar.date(byAdding: .day, value: dayOffset, to: startOfWeek) else { return nil }
+        daysData = (0..<7).compactMap { dayOffset -> (
+            date: Date,
+            emoji: String
+        )? in
+            guard let date = calendar.date(
+                byAdding: .day,
+                value: dayOffset,
+                to: startOfWeek
+            ) else { return nil }
             let startOfDay = calendar.startOfDay(for: date)
-            let emoji = HabitEmojiCalculator.calculateEmoji(for: startOfDay, habits: habits, calendar: calendar)
+            let emoji = HabitEmojiCalculator.calculateEmoji(
+                for: startOfDay,
+                habits: habits,
+                calendar: calendar
+            )
             return (date: startOfDay, emoji: emoji)
         }
         collectionView.reloadData()
@@ -93,7 +107,11 @@ class HeaderDaysCollectionView: UICollectionReusableView {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension HeaderDaysCollectionView: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
         let totalSpacing = 6 * 4
         let availableWidth = collectionView.bounds.width - CGFloat(totalSpacing)
         let itemWidth = floor(availableWidth / 7)

@@ -7,13 +7,19 @@
 
 import UIKit
 
-extension BaseHabitViewController  {
+extension BaseHabitViewController {
     
     func delegateTextFields() {
         [habitTextField, timesPerDayTextField, monthsTextField].forEach { $0.delegate = self }
     }
     
-    func createStackView(arrangedSubviews: [UIView], axis: NSLayoutConstraint.Axis = .horizontal, spacing: CGFloat = 8, alignment: UIStackView.Alignment = .leading, distribution: UIStackView.Distribution = .fillProportionally) -> UIStackView {
+    func createStackView(
+        arrangedSubviews: [UIView],
+        axis: NSLayoutConstraint.Axis = .horizontal,
+        spacing: CGFloat = 8,
+        alignment: UIStackView.Alignment = .leading,
+        distribution: UIStackView.Distribution = .fillProportionally
+    ) -> UIStackView {
         let stackView = UIStackView(arrangedSubviews: arrangedSubviews)
         stackView.axis = .horizontal
         stackView.spacing = 8
@@ -102,15 +108,18 @@ extension BaseHabitViewController  {
             daysOfWeekStack.translatesAutoresizingMaskIntoConstraints = false
             let dayTitles = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"]
             
-            for i in 0..<7 {
+            for day in 0..<7 {
                 let dayContainer = UIView()
                 dayContainer.layer.cornerRadius = AppStyle.Sizes.cornerRadius
                 dayContainer.layer.borderWidth = AppStyle.Sizes.borderWidth
                 dayContainer.layer.borderColor = AppStyle.Colors.borderColor.cgColor
                 dayContainer.layer.masksToBounds = true
                 dayContainer.translatesAutoresizingMaskIntoConstraints = false
-                dayContainer.tag = i
-                dayContainer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(checkboxTapped(_:))))
+                dayContainer.tag = day
+                dayContainer.addGestureRecognizer(UITapGestureRecognizer(
+                    target: self,
+                    action: #selector(checkboxTapped(_:)))
+                )
                 
                 let dayStack = UIStackView()
                 dayStack.axis = .vertical
@@ -120,14 +129,14 @@ extension BaseHabitViewController  {
                 dayContainer.addSubview(dayStack)
                 
                 let dayLabel = UILabel()
-                dayLabel.text = dayTitles[i]
+                dayLabel.text = dayTitles[day]
                 dayLabel.font = AppStyle.Fonts.regularFont(size: 16)
                 dayLabel.textAlignment = .center
                 dayLabel.translatesAutoresizingMaskIntoConstraints = false
                 
                 let checkboxImageView = UIImageView()
                 // checkboxImageView.image = UIImage(named: "UncheckedCheckbox")
-                checkboxImageView.image = UIImage(named: selectedDays[i] ? "CheckedCheckbox" : "UncheckedCheckbox")
+                checkboxImageView.image = UIImage(named: selectedDays[day] ? "CheckedCheckbox" : "UncheckedCheckbox")
                 checkboxImageView.contentMode = .scaleAspectFit
                 checkboxImageView.isUserInteractionEnabled = false
                 checkboxImageView.tag = 999
@@ -149,7 +158,9 @@ extension BaseHabitViewController  {
         } else {
             for (index, subview) in daysOfWeekStack.arrangedSubviews.enumerated() {
                 guard let checkboxImageView = subview.viewWithTag(999) as? UIImageView else { continue }
-                checkboxImageView.image = UIImage(named: selectedDays[index] ? "CheckedCheckbox" : "UncheckedCheckbox")
+                checkboxImageView.image = UIImage(
+                    named: selectedDays[index] ? "CheckedCheckbox" : "UncheckedCheckbox"
+                )
             }
         }
     }
@@ -162,8 +173,7 @@ extension BaseHabitViewController  {
         NSLayoutConstraint.activate([
             habitErrorLabelHeightConstraint,
             timesPerDayErrorLabelHeightConstraint,
-            daysOfWeekErrorLabelHeightConstraint,
+            daysOfWeekErrorLabelHeightConstraint
         ])
     }
 }
-

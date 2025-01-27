@@ -287,15 +287,6 @@
 			path = UserDefaults;
 			sourceTree = "<group>";
 		};
-		52C996A22D11E9F2000E7648 /* App and Scene Delegate */ = {
-			isa = PBXGroup;
-			children = (
-				52F1E5392B7CDC300058F767 /* AppDelegate.swift */,
-				52F1E53B2B7CDC300058F767 /* SceneDelegate.swift */,
-			);
-			path = "App and Scene Delegate";
-			sourceTree = "<group>";
-		};
 		52C996A32D11EA17000E7648 /* HabitsViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -360,7 +351,8 @@
 		52F1E5382B7CDC300058F767 /* bebrave */ = {
 			isa = PBXGroup;
 			children = (
-				52C996A22D11E9F2000E7648 /* App and Scene Delegate */,
+				52F1E5392B7CDC300058F767 /* AppDelegate.swift */,
+				52F1E53B2B7CDC300058F767 /* SceneDelegate.swift */,
 				52A7624F2D367E54000A30EA /* Models */,
 				52C996A02D11E984000E7648 /* UserDefaults */,
 				52ACDD432CEF13CD00868730 /* AppStyle.swift */,
@@ -411,6 +403,7 @@
 			buildConfigurationList = 52F1E5602B7CDC330058F767 /* Build configuration list for PBXNativeTarget "bebrave" */;
 			buildPhases = (
 				52F1E5322B7CDC300058F767 /* Sources */,
+				527C40682D47582F008F4807 /* ShellScript */,
 				52F1E5332B7CDC300058F767 /* Frameworks */,
 				52F1E5342B7CDC300058F767 /* Resources */,
 			);
@@ -529,6 +522,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		527C40682D47582F008F4807 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"$(uname -m)\" = \"arm64\" ]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif command -v swiftlint >/dev/null 2>&1; then\n    swiftlint --config \"${SRCROOT}/bebrave/.swiftlint.yml\"\nelse\n    echo \"warning: SwiftLint not installed. Visit https://github.com/realm/SwiftLint to install.\"\nfi\n\n\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		52F1E5322B7CDC300058F767 /* Sources */ = {
@@ -674,7 +688,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -737,7 +751,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

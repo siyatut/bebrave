@@ -11,13 +11,22 @@ import UIKit
 
 extension HeaderDaysCollectionView: UICollectionViewDelegate, UICollectionViewDataSource {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         return daysData.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         do {
-            let cell: DayCell = try collectionView.dequeueCell(withReuseIdentifier: "DayCell", for: indexPath)
+            let cell: DayCell = try collectionView.dequeueCell(
+                withReuseIdentifier: "DayCell",
+                for: indexPath
+            )
             let item = daysData[indexPath.item]
             
             let calendar = Calendar.current

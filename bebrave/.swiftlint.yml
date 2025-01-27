@@ -1,0 +1,85 @@
+# Включение и отключение проверок
+disabled_rules:
+  - force_cast # Запрещаем использование force-cast, чтобы следовать принципам безопасности
+  - force_try  # Избегаем force-try, так как это нарушает безопасность кода
+
+# Настройка активных правил
+opt_in_rules:
+  - closure_end_indentation # Следим за правильным форматированием замыканий
+  - closure_spacing # Обеспечиваем корректные пробелы в замыканиях
+  - explicit_enum_raw_value # Указываем raw-value для всех перечислений
+  - function_default_parameter_at_end # Параметры по умолчанию всегда в конце
+
+# Настройка стиля именования
+identifier_name:
+  min_length: 3        # Минимальная длина идентификаторов
+  max_length: 40       # Максимальная длина идентификаторов
+  excluded:
+    - id               # Исключение для часто используемых имен (например, id)
+
+# Операторы доступа (например, fileprivate, private)
+access_control:
+  strict: true          # Рекомендуется использовать явное указание уровня доступа
+
+# Пробелы и отступы
+line_length:
+  warning: 100          # Рекомендуемая длина строки
+  error: 120            # Предельная длина строки
+
+trailing_whitespace:
+  ignores_empty_lines: true # Игнорируем пустые строки
+  ignores_comments: true    # Игнорируем комментарии
+
+indentation:
+  spaces: 4             # Используем 4 пробела для отступов
+
+# Пробелы перед и после ключевых символов
+operator_usage_whitespace:
+  severity: warning
+
+# Форматирование функций
+function_body_length:
+  warning: 40           # Предупреждение для длинных функций
+  error: 60             # Ошибка, если функция слишком длинная
+
+function_parameter_count:
+  warning: 5            # Максимум 5 параметров
+  error: 7              # Больше 7 параметров — ошибка
+
+# Именование файлов
+file_name:
+  severity: warning      # Имена файлов должны быть осмысленными
+  excluded:              # Исключения для стандартных имен
+    - main.swift
+    - AppDelegate.swift
+
+# Конвенции именования (CamelCase для переменных, PascalCase для типов)
+type_name:
+  min_length: 3
+  max_length: 50
+  validates_start_with_lowercase: false # PascalCase для типов
+
+# Пустые строки
+empty_count:
+  warning: 1            # Только одна пустая строка подряд допустима
+  error: 2              # Более двух пустых строк — ошибка
+
+# Строгий порядок модификаторов
+modifier_order:
+  severity: error
+
+# Другие важные правила
+legacy_hashing:
+  severity: warning      # Используем современные функции для хеширования
+
+type_body_length:
+  warning: 300           # Предупреждение при длинных типах
+  error: 400             # Ошибка, если тип слишком большой
+
+vertical_whitespace_between_cases:
+  severity: warning      # Пробелы между case в enum
+
+# Исключаемые файлы
+excluded:
+ - AppDelegate.swift
+ - SceneDelegate.swift

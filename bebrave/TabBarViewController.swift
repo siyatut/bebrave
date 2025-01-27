@@ -22,18 +22,33 @@ class TabBarViewController: UITabBarController {
         self.tabBar.tintColor = AppStyle.Colors.primaryColor
     }
     
-    
     // MARK: — Setup tab bar
     
     private func setupTabs() {
         
-        let habits = self.createNavigationController(with: "Привычки", and: .temporaryTabbarIcon, vc: HabitsViewController())
-        let diary = self.createNavigationController(with: "Дневник", and: .temporaryTabbarIcon, vc: DiaryViewController())
-        let settings = self.createNavigationController(with: "Профиль", and: .temporaryTabbarIcon, vc: ProfileViewController())
+        let habits = self.createNavigationController(
+            with: "Привычки",
+            and: .temporaryTabbarIcon,
+            vc: HabitsViewController()
+        )
+        let diary = self.createNavigationController(
+            with: "Дневник",
+            and: .temporaryTabbarIcon,
+            vc: DiaryViewController()
+        )
+        let settings = self.createNavigationController(
+            with: "Профиль",
+            and: .temporaryTabbarIcon,
+            vc: ProfileViewController()
+        )
         self.setViewControllers([habits, diary, settings], animated: true)
     }
     
-    func createNavigationController(with title: String, and image: UIImage?, vc: UIViewController) -> UINavigationController {
+    func createNavigationController(
+        with title: String,
+        and image: UIImage?,
+        vc: UIViewController
+    ) -> UINavigationController {
         
         let navigationController = UINavigationController(rootViewController: vc)
         navigationController.tabBarItem.title = title
@@ -41,4 +56,3 @@ class TabBarViewController: UITabBarController {
         return navigationController
     }
 }
-

@@ -30,23 +30,46 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     lazy var leftButtonContainer: UIView = createContainer()
     lazy var rightButtonContainer: UIView = createContainer()
     lazy var contentContainer: UIView = createContainer()
-    lazy var progressViewContainer: UIView = createContainer(backgroundColor: AppStyle.Colors.isProgressHabitColor)
+    lazy var progressViewContainer: UIView = createContainer(
+        backgroundColor: AppStyle.Colors.isProgressHabitColor
+    )
     
-    // MARK: -  Swipe buttons
+    // MARK: - Swipe buttons
     
-    lazy var editButton: UIButton = createSwipeButton(imageName: "pencil", color: .systemBlue, action: #selector(editHabit))
-    lazy var skipButton: UIButton = createSwipeButton(imageName: "forward", color: .systemOrange, action: #selector(skipHabit))
-    lazy var cancelButton: UIButton = createSwipeButton(imageName: "xmark.circle", color: .systemGray, action: #selector(cancelHabit))
-    lazy var deleteButton: UIButton = createSwipeButton(imageName: "trash", color: .systemRed, action: #selector(confirmDelete))
-    
+    lazy var editButton: UIButton = createSwipeButton(
+        imageName: "pencil",
+        color: .systemBlue,
+        action: #selector(editHabit)
+    )
+    lazy var skipButton: UIButton = createSwipeButton(
+        imageName: "forward",
+        color: .systemOrange,
+        action: #selector(skipHabit)
+    )
+    lazy var cancelButton: UIButton = createSwipeButton(
+        imageName: "xmark.circle",
+        color: .systemGray,
+        action: #selector(cancelHabit)
+    )
+    lazy var deleteButton: UIButton = createSwipeButton(
+        imageName: "trash",
+        color: .systemRed,
+        action: #selector(confirmDelete)
+    )
     
     // MARK: - UI components for cell
     
     lazy var habitsName = UILabel.styled(text: "")
     lazy var percentDone = UILabel.styled(text: "", color: AppStyle.Colors.textColorSecondary)
     lazy var habitsCount = UILabel.styled(text: "", color: AppStyle.Colors.textColorSecondary)
-    lazy var starDivider = UIImageView.styled(imageName: "StarDivider", tintColor: AppStyle.Colors.secondaryColor)
-    lazy var checkbox = UIImageView.styled(imageName: "UncheckedCheckbox", tintColor: AppStyle.Colors.borderColor)
+    lazy var starDivider = UIImageView.styled(
+        imageName: "StarDivider",
+        tintColor: AppStyle.Colors.secondaryColor
+    )
+    lazy var checkbox = UIImageView.styled(
+        imageName: "UncheckedCheckbox",
+        tintColor: AppStyle.Colors.borderColor
+    )
     
     let checkmarkLayer = CAShapeLayer()
     

@@ -5,7 +5,8 @@
 //  Created by Anastasia Tyutinova on 28/2/2567 BE.
 //
 
-#warning("№2: Настроить корректное отображение прогресса и его закрашивания в соответствии со статусом привычки: зелёный, полосатый зелёный, серый")
+// swiftlint:disable:next line_length
+// TODO: - Настроить корректное отображение прогресса и его закрашивания в соответствии со статусом привычки: зелёный, полосатый зелёный, серый
 
 import UIKit
 
@@ -181,6 +182,7 @@ extension HistoryViewController: UICollectionViewDataSource {
                 withReuseIdentifier: CustomElement.outlineBackground.rawValue,
                 for: indexPath
             ) as? OutlineBackgroundView else {
+                // swiftlint:disable:next line_length
                 fatalError("\(SupplementaryViewError.dequeuingFailed(kind: kind, reuseIdentifier: CustomElement.outlineBackground.rawValue))")
             }
             return background
@@ -191,4 +193,3 @@ extension HistoryViewController: UICollectionViewDataSource {
     }
     
 }
-
