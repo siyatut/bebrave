@@ -10,7 +10,7 @@ import UIKit
 enum HabitsLayout {
     
     static func createLayout() -> UICollectionViewLayout {
-        let provider: UICollectionViewCompositionalLayoutSectionProvider = { section, environment in
+        let provider: UICollectionViewCompositionalLayoutSectionProvider = { section, _ in
             
             let background = NSCollectionLayoutSupplementaryItem(
                 layoutSize: .init(

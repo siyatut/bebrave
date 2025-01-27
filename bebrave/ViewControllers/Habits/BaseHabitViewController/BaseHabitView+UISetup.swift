@@ -31,11 +31,16 @@ extension BaseHabitViewController {
     
     func setupComponents() {
         setupDaysOfWeekStack()
-        
-        let timesPerDayStack = createStackView(
+        setupLabelsAndStacks()
+        setupSubviews()
+        setupConstraints()
+    }
+    
+    private func setupLabelsAndStacks() {
+        timesPerDayStack = createStackView(
             arrangedSubviews: [timesPerDayTextField, timesPerDayLabel]
         )
-        let monthsStack = createStackView(
+        monthsStack = createStackView(
             arrangedSubviews: [monthsTextField, monthsLabel]
         )
         
@@ -47,163 +52,73 @@ extension BaseHabitViewController {
             monthsErrorLabel
         ]
         
-        let stacks = [
-            timesPerDayStack,
-            daysOfWeekStack,
-            monthsStack
-        ]
-        
+        let stacks = [timesPerDayStack, daysOfWeekStack, monthsStack].compactMap { $0 }
         addSubviews(labels + stacks)
+    }
+    
+    private func setupSubviews() {
         addSubviews([emojiImageView, didSaveNewHabitButton, habitTextField])
-        
+    }
+    
+    private func setupConstraints() {
+        // Emoji Image
         NSLayoutConstraint.activate([
-            emojiImageView.topAnchor.constraint(
-                equalTo: view.topAnchor,
-                constant: 20
-            ),
-            emojiImageView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor,
-                constant: 24
-            ),
+            emojiImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            emojiImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             emojiImageView.widthAnchor.constraint(equalToConstant: 40),
             emojiImageView.heightAnchor.constraint(equalToConstant: 40),
-            
-            promiseLabel.topAnchor.constraint(
-                equalTo: emojiImageView.bottomAnchor,
-                constant: 16
-            ),
-            promiseLabel.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor,
-                constant: 24
-            ),
+            // Promise Label
+            promiseLabel.topAnchor.constraint(equalTo: emojiImageView.bottomAnchor, constant: 16),
+            promiseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             promiseLabel.trailingAnchor.constraint(
                 greaterThanOrEqualTo: view.trailingAnchor,
                 constant: -187
             ),
-            
-            habitTextField.topAnchor.constraint(
-                equalTo: promiseLabel.bottomAnchor,
-                constant: 16
-            ),
-            habitTextField.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor,
-                constant: 12
-            ),
-            habitTextField.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor,
-                constant: -12
-            ),
+            // Habit Text Field
+            habitTextField.topAnchor.constraint(equalTo: promiseLabel.bottomAnchor, constant: 16),
+            habitTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            habitTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
             habitTextField.heightAnchor.constraint(equalToConstant: 48),
-            
-            habitErrorLabel.topAnchor.constraint(
-                equalTo: habitTextField.bottomAnchor,
-                constant: 4
-            ),
-            habitErrorLabel.leadingAnchor.constraint(
-                equalTo: habitTextField.leadingAnchor,
-                constant: 16
-            ),
-            habitErrorLabel.trailingAnchor.constraint(
-                equalTo: habitTextField.trailingAnchor
-            ),
-            
-            timesPerDayStack.topAnchor.constraint(
-                equalTo: habitErrorLabel.bottomAnchor,
-                constant: 16
-            ),
-            timesPerDayStack.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor,
-                constant: 12
-            ),
-            timesPerDayStack.trailingAnchor.constraint(
-                equalTo: habitTextField.trailingAnchor
-            ),
-            
-            timesPerDayErrorLabel.topAnchor.constraint(
-                equalTo: timesPerDayStack.bottomAnchor,
-                constant: 4
-            ),
-            timesPerDayErrorLabel.leadingAnchor.constraint(
-                equalTo: timesPerDayStack.leadingAnchor,
-                constant: 16
-            ),
-            timesPerDayErrorLabel.trailingAnchor.constraint(
-                equalTo: timesPerDayStack.trailingAnchor
-            ),
-            
-            daysOfWeekStack.topAnchor.constraint(
-                equalTo: timesPerDayErrorLabel.bottomAnchor,
-                constant: 16
-            ),
-            daysOfWeekStack.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor,
-                constant: 12
-            ),
-            daysOfWeekStack.trailingAnchor.constraint(
-                equalTo: habitTextField.trailingAnchor
-            ),
-            
-            daysOfWeekErrorLabel.topAnchor.constraint(
-                equalTo: daysOfWeekStack.bottomAnchor,
-                constant: 4
-            ),
-            daysOfWeekErrorLabel.leadingAnchor.constraint(
-                equalTo: daysOfWeekStack.leadingAnchor,
-                constant: 16
-            ),
-            daysOfWeekErrorLabel.trailingAnchor.constraint(
-                equalTo: daysOfWeekStack.trailingAnchor
-            ),
-            
-            monthsStack.topAnchor.constraint(
-                equalTo: daysOfWeekErrorLabel.bottomAnchor,
-                constant: 16
-            ),
-            monthsStack.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor,
-                constant: 12
-            ),
-            monthsStack.trailingAnchor.constraint(
-                equalTo: habitTextField.trailingAnchor
-            ),
-            
-            monthsErrorLabel.topAnchor.constraint(
-                equalTo: monthsStack.bottomAnchor,
-                constant: 4
-            ),
-            monthsErrorLabel.leadingAnchor.constraint(
-                equalTo: monthsStack.leadingAnchor,
-                constant: 16
-            ),
-            monthsErrorLabel.trailingAnchor.constraint(
-                equalTo: monthsStack.trailingAnchor
-            ),
-            
-            timesPerDayLabel.centerYAnchor.constraint(
-                equalTo: timesPerDayTextField.centerYAnchor
-            ),
-            monthsLabel.centerYAnchor.constraint(
-                equalTo: monthsTextField.centerYAnchor
-            ),
-            
+            // Habit Error Label
+            habitErrorLabel.topAnchor.constraint(equalTo: habitTextField.bottomAnchor, constant: 4),
+            habitErrorLabel.leadingAnchor.constraint(equalTo: habitTextField.leadingAnchor, constant: 16),
+            habitErrorLabel.trailingAnchor.constraint(equalTo: habitTextField.trailingAnchor),
+            // Times Per Day Stack
+            timesPerDayStack.topAnchor.constraint(equalTo: habitErrorLabel.bottomAnchor, constant: 16),
+            timesPerDayStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            timesPerDayStack.trailingAnchor.constraint(equalTo: habitTextField.trailingAnchor),
+            // Times Per Day Error Label
+            timesPerDayErrorLabel.topAnchor.constraint(equalTo: timesPerDayStack.bottomAnchor, constant: 4),
+            timesPerDayErrorLabel.leadingAnchor.constraint(equalTo: timesPerDayStack.leadingAnchor, constant: 16),
+            timesPerDayErrorLabel.trailingAnchor.constraint(equalTo: timesPerDayStack.trailingAnchor),
+            // Days of Week Stack
+            daysOfWeekStack.topAnchor.constraint(equalTo: timesPerDayErrorLabel.bottomAnchor, constant: 16),
+            daysOfWeekStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            daysOfWeekStack.trailingAnchor.constraint(equalTo: habitTextField.trailingAnchor),
+            // Days of Week Error Label
+            daysOfWeekErrorLabel.topAnchor.constraint(equalTo: daysOfWeekStack.bottomAnchor, constant: 4),
+            daysOfWeekErrorLabel.leadingAnchor.constraint(equalTo: daysOfWeekStack.leadingAnchor, constant: 16),
+            daysOfWeekErrorLabel.trailingAnchor.constraint(equalTo: daysOfWeekStack.trailingAnchor),
+            // Months Stack
+            monthsStack.topAnchor.constraint(equalTo: daysOfWeekErrorLabel.bottomAnchor, constant: 16),
+            monthsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            monthsStack.trailingAnchor.constraint(equalTo: habitTextField.trailingAnchor),
+            // Months Error Label
+            monthsErrorLabel.topAnchor.constraint(equalTo: monthsStack.bottomAnchor, constant: 4),
+            monthsErrorLabel.leadingAnchor.constraint(equalTo: monthsStack.leadingAnchor, constant: 16),
+            monthsErrorLabel.trailingAnchor.constraint(equalTo: monthsStack.trailingAnchor),
+            // Align labels in stacks
+            timesPerDayLabel.centerYAnchor.constraint(equalTo: timesPerDayTextField.centerYAnchor),
+            monthsLabel.centerYAnchor.constraint(equalTo: monthsTextField.centerYAnchor),
+            // Text Field Sizes
             timesPerDayTextField.widthAnchor.constraint(equalToConstant: 57),
             timesPerDayTextField.heightAnchor.constraint(equalToConstant: 48),
-            
             monthsTextField.widthAnchor.constraint(equalToConstant: 57),
             monthsTextField.heightAnchor.constraint(equalToConstant: 48),
-            
-            didSaveNewHabitButton.bottomAnchor.constraint(
-                equalTo: view.bottomAnchor,
-                constant: -42
-            ),
-            didSaveNewHabitButton.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor,
-                constant: 12
-            ),
-            didSaveNewHabitButton.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor,
-                constant: -12
-            ),
+            // Save Button
+            didSaveNewHabitButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -42),
+            didSaveNewHabitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
+            didSaveNewHabitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
             didSaveNewHabitButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }

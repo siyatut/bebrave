@@ -37,6 +37,9 @@ class BaseHabitViewController: UIViewController {
     lazy var monthsTextField = UITextField.styled(placeholder: "1", alignment: .center)
     lazy var monthsLabel = UILabel.styled(text: "месяц")
     
+    var timesPerDayStack: UIStackView!
+    var monthsStack: UIStackView!
+    
     // MARK: - Helper methods for text field
     
     private func addPaddingToTextField(_ textField: UITextField, paddingWidth: CGFloat) {

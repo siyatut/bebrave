@@ -10,7 +10,20 @@ import UIKit
 enum ProgressLayout {
     
     static func createLayout() -> UICollectionViewLayout {
-        let provider: UICollectionViewCompositionalLayoutSectionProvider = { section, environment in
+        let provider = createSectionProvider()
+        let header = createHeader()
+        let configuration = UICollectionViewCompositionalLayoutConfiguration()
+        configuration.boundarySupplementaryItems = [header]
+        
+        return UICollectionViewCompositionalLayout(
+            sectionProvider: provider,
+            configuration: configuration
+        )
+    }
+    
+    private static func createSectionProvider() ->
+    UICollectionViewCompositionalLayoutSectionProvider {
+        return { section, _ in
             let background = NSCollectionLayoutSupplementaryItem(
                 layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
@@ -41,21 +54,16 @@ enum ProgressLayout {
             section.interGroupSpacing = 8
             return section
         }
-        
-        let header = NSCollectionLayoutBoundarySupplementaryItem(
+    }
+    
+    private static func createHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+        return NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1),
                 heightDimension: .absolute(60)
             ),
             elementKind: CustomElement.historyHeader.rawValue,
             alignment: .top
-        )
-        
-        let configuration = UICollectionViewCompositionalLayoutConfiguration()
-        configuration.boundarySupplementaryItems = [header]
-        return UICollectionViewCompositionalLayout(
-            sectionProvider: provider,
-            configuration: configuration
         )
     }
 }

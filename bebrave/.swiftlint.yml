@@ -23,7 +23,7 @@ access_control:
 
 # Пробелы и отступы
 line_length:
-  warning: 105         # Рекомендуемая длина строки
+  warning: 100          # Рекомендуемая длина строки
   error: 120            # Предельная длина строки
 
 trailing_whitespace:
