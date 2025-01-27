@@ -21,13 +21,13 @@ class HistoryHeaderView: UICollectionReusableView {
             pointSize: 14,
             weight: .medium
         )
-        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer {
-            incoming in
+        // swiftlint:disable:next line_length
+        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
             var attributes = incoming
             attributes.font = AppStyle.Fonts.regularFont(size: 16)
             return attributes
         }
-        
+
         let button = UIButton(configuration: config, primaryAction: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -68,7 +68,9 @@ class HistoryHeaderView: UICollectionReusableView {
         NSLayoutConstraint.activate([
             dateLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             dateLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 28),
-            dateLabel.trailingAnchor.constraint(lessThanOrEqualTo: periodButton.leadingAnchor, constant: -10),
+            dateLabel.trailingAnchor.constraint(
+                lessThanOrEqualTo: periodButton.leadingAnchor,
+                constant: -10),
             dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
             
             periodButton.topAnchor.constraint(equalTo: topAnchor, constant: 10),

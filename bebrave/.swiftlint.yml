@@ -23,7 +23,7 @@ access_control:
 
 # Пробелы и отступы
 line_length:
-  warning: 100          # Рекомендуемая длина строки
+  warning: 105         # Рекомендуемая длина строки
   error: 120            # Предельная длина строки
 
 trailing_whitespace:
@@ -52,6 +52,7 @@ file_name:
   excluded:              # Исключения для стандартных имен
     - main.swift
     - AppDelegate.swift
+    - SceneDelegate.swift
 
 # Конвенции именования (CamelCase для переменных, PascalCase для типов)
 type_name:
@@ -83,3 +84,7 @@ vertical_whitespace_between_cases:
 excluded:
  - AppDelegate.swift
  - SceneDelegate.swift
+ 
+# Исключаемые правила
+disabled_rules:
+  - explicit_enum_raw_value

@@ -15,7 +15,8 @@ enum SupplementaryViewError: Error, CustomStringConvertible {
         case .unexpectedKind(let kind):
             return "Неожиданный тип дополнительного элемента: \(kind)"
         case .dequeuingFailed(let kind, let reuseIdentifier):
-            return "Не удалось извлечь дополнительный элемент типа \(kind) с идентификатором \(reuseIdentifier)"
+            return "Не удалось извлечь дополнительный элемент типа \(kind) " +
+            "с идентификатором \(reuseIdentifier)"
         case .unhandledCustomElement(let element):
             return "Необработанный пользовательский элемент: \(element)"
         }
