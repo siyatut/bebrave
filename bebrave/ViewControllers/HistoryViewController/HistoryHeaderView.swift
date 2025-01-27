@@ -17,9 +17,12 @@ class HistoryHeaderView: UICollectionReusableView {
         config.image = UIImage(systemName: "chevron.down.circle.fill")
         config.imagePlacement = .leading
         config.imagePadding = 4
-        config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 14, weight: .medium)
-        
-        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
+        config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(
+            pointSize: 14,
+            weight: .medium
+        )
+        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer {
+            incoming in
             var attributes = incoming
             attributes.font = AppStyle.Fonts.regularFont(size: 16)
             return attributes
@@ -43,8 +46,7 @@ class HistoryHeaderView: UICollectionReusableView {
             updateUIForSelectedPeriod()
         }
     }
-    
-    
+
     // MARK: - Init
     
     override init(frame: CGRect) {

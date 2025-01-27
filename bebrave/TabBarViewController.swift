@@ -29,17 +29,17 @@ class TabBarViewController: UITabBarController {
         let habits = self.createNavigationController(
             with: "Привычки",
             and: .temporaryTabbarIcon,
-            vc: HabitsViewController()
+            viewController: HabitsViewController()
         )
         let diary = self.createNavigationController(
             with: "Дневник",
             and: .temporaryTabbarIcon,
-            vc: DiaryViewController()
+            viewController: DiaryViewController()
         )
         let settings = self.createNavigationController(
             with: "Профиль",
             and: .temporaryTabbarIcon,
-            vc: ProfileViewController()
+            viewController: ProfileViewController()
         )
         self.setViewControllers([habits, diary, settings], animated: true)
     }
@@ -47,10 +47,10 @@ class TabBarViewController: UITabBarController {
     func createNavigationController(
         with title: String,
         and image: UIImage?,
-        vc: UIViewController
+        viewController: UIViewController
     ) -> UINavigationController {
         
-        let navigationController = UINavigationController(rootViewController: vc)
+        let navigationController = UINavigationController(rootViewController: viewController)
         navigationController.tabBarItem.title = title
         navigationController.tabBarItem.image = image
         return navigationController

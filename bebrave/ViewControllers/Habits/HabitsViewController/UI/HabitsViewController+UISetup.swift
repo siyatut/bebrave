@@ -93,7 +93,10 @@ extension HabitsViewController {
         createNewHabitButton.layer.borderColor = AppStyle.Colors.borderColor.cgColor
         createNewHabitButton.layer.cornerRadius = AppStyle.Sizes.cornerRadius
         createNewHabitButton.layer.masksToBounds = true
-        createNewHabitButton.addTarget(self, action: #selector(presentAddHabitController), for: .touchUpInside)
+        createNewHabitButton.addTarget(self,
+                                       action: #selector(presentAddHabitController),
+                                       for: .touchUpInside
+        )
         createNewHabitButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(createNewHabitButton)
         

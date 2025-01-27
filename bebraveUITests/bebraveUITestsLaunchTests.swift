@@ -9,7 +9,7 @@ import XCTest
 
 final class bebraveUITestsLaunchTests: XCTestCase {
 
-    override class var runsForEachTargetApplicationUIConfiguration: Bool {
+    static override var runsForEachTargetApplicationUIConfiguration: Bool {
         true
     }
 

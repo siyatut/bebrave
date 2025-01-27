@@ -60,8 +60,7 @@ final class ProgressCell: UICollectionViewCell {
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
-            
-            progressBar.heightAnchor.constraint(equalToConstant: 15) 
+            progressBar.heightAnchor.constraint(equalToConstant: 15)
         ])
     }
     // MARK: - Configure

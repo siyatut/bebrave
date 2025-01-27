@@ -76,7 +76,6 @@ class DayCell: UICollectionViewCell {
         
         dayLabel.text = dateFormatter.string(from: date)
         
-        
         if isCurrentDay {
             contentView.backgroundColor = AppStyle.Colors.primaryColor
             dayLabel.textColor = .white

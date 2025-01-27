@@ -53,6 +53,9 @@ enum ProgressLayout {
         
         let configuration = UICollectionViewCompositionalLayoutConfiguration()
         configuration.boundarySupplementaryItems = [header]
-        return UICollectionViewCompositionalLayout(sectionProvider: provider, configuration: configuration)
+        return UICollectionViewCompositionalLayout(
+            sectionProvider: provider,
+            configuration: configuration
+        )
     }
 }

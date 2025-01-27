@@ -27,13 +27,13 @@ extension HeaderDaysCollectionView: UICollectionViewDelegate, UICollectionViewDa
                 withReuseIdentifier: "DayCell",
                 for: indexPath
             )
-            let item = daysData[indexPath.item]
             
+            let item = daysData[indexPath.item]
             let calendar = Calendar.current
             let isCurrentDay = calendar.isDate(item.date, inSameDayAs: Date())
-            
             cell.configure(date: item.date, emoji: item.emoji, isCurrentDay: isCurrentDay)
             return cell
+
         } catch {
             assertionFailure("Error dequeuing DayCell: \(error)")
             return UICollectionViewCell()

@@ -30,5 +30,3 @@ extension HabitCell {
         return view
     }
 }
-
-

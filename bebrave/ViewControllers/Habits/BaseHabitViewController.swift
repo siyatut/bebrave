@@ -40,7 +40,12 @@ class BaseHabitViewController: UIViewController {
     // MARK: - Helper methods for text field
     
     private func addPaddingToTextField(_ textField: UITextField, paddingWidth: CGFloat) {
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: paddingWidth, height: textField.frame.height))
+        let paddingView = UIView(
+            frame: CGRect(
+                x: 0, y: 0,
+                width: paddingWidth,
+                height: textField.frame.height)
+        )
         textField.leftView = paddingView
         textField.leftViewMode = .always
     }
@@ -128,7 +133,6 @@ class BaseHabitViewController: UIViewController {
         views.forEach { view.addSubview($0) }
     }
     
-    
     func animateLayoutChanges(duration: TimeInterval = 0.5) {
         UIView.animate(withDuration: duration, delay: 0, options: .curveEaseInOut) {
             self.view.layoutIfNeeded()
@@ -160,4 +164,3 @@ class BaseHabitViewController: UIViewController {
         return newHabit
     }
 }
-

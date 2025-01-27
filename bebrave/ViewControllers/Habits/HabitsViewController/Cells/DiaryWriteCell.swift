@@ -52,6 +52,3 @@ class DiaryWriteCell: UICollectionViewCell {
         ])
     }
 }
-
-
-

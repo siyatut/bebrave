@@ -39,6 +39,6 @@ extension BaseHabitViewController {
     @objc func dismissKeyboard() {
         view.endEditing(true)
         hasAttemptedSave = true
-        let _ = validateFields(showErrors: true)
+        _ = validateFields(showErrors: true)
     }
 }

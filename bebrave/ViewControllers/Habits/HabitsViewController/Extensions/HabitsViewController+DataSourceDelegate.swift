@@ -15,7 +15,10 @@ extension HabitsViewController {
         1
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         return habits.count + 1
     }
     
@@ -33,8 +36,7 @@ extension HabitsViewController {
                 habitCell.delegate = self
                 habitCell.configure(with: habit)
                 return habitCell
-            }
-            else if indexPath.item == habits.count {
+            } else if indexPath.item == habits.count {
                 let diaryCell: DiaryWriteCell = try collectionView.dequeueCell(
                     withReuseIdentifier: CustomElement.writeDiaryCell.rawValue,
                     for: indexPath
@@ -97,4 +99,3 @@ extension HabitsViewController {
         }
     }
 }
-

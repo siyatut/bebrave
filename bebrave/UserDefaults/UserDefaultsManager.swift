@@ -5,6 +5,7 @@
 //  Created by Anastasia Tyutinova on 3/12/2567 BE.
 //
 
+// swiftlint:disable:next line_length
 // TODO: - В resetUncompletedHabits(), возможно, поебётся логика, проверить при реальном использовании потом
 
 import Foundation
@@ -102,4 +103,3 @@ final class UserDefaultsManager {
         }
     }
 }
-

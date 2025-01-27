@@ -37,12 +37,6 @@ class HeaderDaysCollectionView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Layout methods
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-    }
-    
     // MARK: - Setup methods
     
     private func setupCollectionView() {

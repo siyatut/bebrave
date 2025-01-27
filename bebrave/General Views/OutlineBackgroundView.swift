@@ -37,4 +37,3 @@ class OutlineBackgroundView: UICollectionReusableView {
         path.stroke()
     }
 }
-

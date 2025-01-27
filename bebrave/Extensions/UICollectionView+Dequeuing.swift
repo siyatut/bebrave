@@ -19,7 +19,9 @@ extension UICollectionView {
             withReuseIdentifier: reuseIdentifier,
             for: indexPath
         ) as? T else {
-            throw SupplementaryViewError.dequeuingFailed(kind: kind, reuseIdentifier: reuseIdentifier)
+            throw SupplementaryViewError.dequeuingFailed(
+                kind: kind,
+                reuseIdentifier: reuseIdentifier)
         }
         return view
     }
@@ -37,4 +39,3 @@ extension UICollectionView {
         return cell
     }
 }
-

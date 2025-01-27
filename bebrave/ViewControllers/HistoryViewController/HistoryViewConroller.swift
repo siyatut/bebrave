@@ -53,7 +53,10 @@ class HistoryViewController: UIViewController {
     // MARK: - Setup
     
     private func setupCollectionView() {
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: ProgressLayout.createLayout())
+        collectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: ProgressLayout.createLayout()
+        )
         collectionView.dataSource = self
         
         collectionView.register(
@@ -107,8 +110,15 @@ class HistoryViewController: UIViewController {
         let currentYear = calendar.component(.year, from: Date())
         
         habitsProgress = habits.map { habit in
-            let (completedDays, totalDays) = habit.calculateYearProgress(for: currentYear, calendar: calendar)
-            return HabitProgress(name: habit.title, completedDays: completedDays, totalDays: totalDays)
+            let (completedDays, totalDays) = habit.calculateYearProgress(
+                for: currentYear,
+                calendar: calendar
+            )
+            return HabitProgress(
+                name: habit.title,
+                completedDays: completedDays,
+                totalDays: totalDays
+            )
         }
         collectionView.reloadData()
     }
@@ -146,7 +156,10 @@ extension HistoryViewController: UICollectionViewDataSource {
             withReuseIdentifier: CustomElement.progressCell.rawValue,
             for: indexPath
         ) as? ProgressCell else {
-            fatalError("\(CellError.dequeuingFailed(reuseIdentifier: CustomElement.progressCell.rawValue))")
+            let error = CellError.dequeuingFailed(
+                reuseIdentifier: CustomElement.progressCell.rawValue
+            )
+            fatalError("\(error)")
         }
         
         let habitProgress = habitsProgress[indexPath.row]
@@ -182,8 +195,11 @@ extension HistoryViewController: UICollectionViewDataSource {
                 withReuseIdentifier: CustomElement.outlineBackground.rawValue,
                 for: indexPath
             ) as? OutlineBackgroundView else {
-                // swiftlint:disable:next line_length
-                fatalError("\(SupplementaryViewError.dequeuingFailed(kind: kind, reuseIdentifier: CustomElement.outlineBackground.rawValue))")
+                let error = SupplementaryViewError.dequeuingFailed(
+                    kind: kind,
+                    reuseIdentifier: CustomElement.outlineBackground.rawValue
+                )
+                fatalError("\(error)")
             }
             return background
             

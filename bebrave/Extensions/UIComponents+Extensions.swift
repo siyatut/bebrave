@@ -22,7 +22,9 @@ extension UILabel {
         let label = UILabel()
         label.text = text
         label.textColor = color
-        label.font = isBold ? AppStyle.Fonts.boldFont(size: fontSize) : AppStyle.Fonts.regularFont(size: fontSize)
+        label.font = isBold ?
+        AppStyle.Fonts.boldFont(size: fontSize) :
+        AppStyle.Fonts.regularFont(size: fontSize)
         label.textAlignment = alignment
         label.numberOfLines = numberOfLines
         label.isHidden = isHidden
@@ -69,4 +71,3 @@ extension UIImageView {
         return view
     }
 }
-

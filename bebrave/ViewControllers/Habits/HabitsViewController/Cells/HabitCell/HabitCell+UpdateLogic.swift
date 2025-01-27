@@ -67,8 +67,9 @@ extension HabitCell {
     }
     
     func setupCheckboxBackground() {
-        checkbox.layer.sublayers?.filter { $0.name == "InnerWhiteLayer" }.forEach { $0.removeFromSuperlayer() }
-        
+        checkbox.layer.sublayers?
+            .filter { $0.name == "InnerWhiteLayer" }
+            .forEach { $0.removeFromSuperlayer() }
         
         let innerWhiteLayer = CALayer()
         innerWhiteLayer.name = "InnerWhiteLayer"

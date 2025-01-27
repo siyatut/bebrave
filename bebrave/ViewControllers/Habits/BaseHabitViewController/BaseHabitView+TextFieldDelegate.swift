@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 extension BaseHabitViewController: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
@@ -41,4 +40,3 @@ extension BaseHabitViewController: UITextFieldDelegate {
         return true
     }
 }
-

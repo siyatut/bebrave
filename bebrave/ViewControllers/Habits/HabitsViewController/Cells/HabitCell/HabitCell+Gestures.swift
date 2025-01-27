@@ -55,7 +55,9 @@ extension HabitCell {
     func showRightSwipeActions() {
         isSwiped = true
         UIView.animate(withDuration: 0.3) {
-            self.contentContainer.transform = CGAffineTransform(translationX: self.buttonWidth * 2, y: 0)
+            self.contentContainer.transform = CGAffineTransform(
+                translationX: self.buttonWidth * 2, y: 0
+            )
             self.leftButtonContainer.isHidden = false
             self.rightButtonContainer.isHidden = true
             self.layoutIfNeeded()
@@ -65,7 +67,9 @@ extension HabitCell {
     func showLeftSwipeAction() {
         isSwiped = true
         UIView.animate(withDuration: 0.3) {
-            self.contentContainer.transform = CGAffineTransform(translationX: -self.buttonWidth * 2, y: 0)
+            self.contentContainer.transform = CGAffineTransform(
+                translationX: -self.buttonWidth * 2, y: 0
+            )
             self.rightButtonContainer.isHidden = false
             self.leftButtonContainer.isHidden = true
             self.layoutIfNeeded()

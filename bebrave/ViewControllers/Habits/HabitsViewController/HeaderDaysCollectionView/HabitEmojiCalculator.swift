@@ -45,7 +45,7 @@ class HabitEmojiCalculator {
         case 20..<50:
             return "😕"
         default:
-            return "😞" 
+            return "😞"
         }
     }
 }

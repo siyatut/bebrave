@@ -51,9 +51,9 @@ extension HabitCell {
         let step: CGFloat = 10
         let diagonalLength = hypot(rect.width, rect.height)
 
-        for x in stride(from: -diagonalLength, to: diagonalLength, by: step) {
-            path.move(to: CGPoint(x: x, y: 0))
-            path.addLine(to: CGPoint(x: x + diagonalLength, y: rect.height))
+        for xOffset in stride(from: -diagonalLength, to: diagonalLength, by: step) {
+            path.move(to: CGPoint(x: xOffset, y: 0))
+            path.addLine(to: CGPoint(x: xOffset + diagonalLength, y: rect.height))
         }
         return path
     }
