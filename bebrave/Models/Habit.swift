@@ -82,9 +82,8 @@ extension Habit {
             let weekday = (calendar.component(.weekday, from: currentDate) + 5) % 7
             let startOfDay = calendar.startOfDay(for: currentDate)
             
-            if daysOfWeek[weekday] {
-                skipDates.remove(startOfDay)
-            } else if !skipDates.contains(startOfDay) {
+            // Если день недели не отмечен, но день уже пропущен вручную, не перезаписываю его
+            if !daysOfWeek[weekday] && !skipDates.contains(startOfDay) {
                 skipDates.insert(startOfDay)
             }
             
