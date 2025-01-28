@@ -38,7 +38,7 @@ class DiaryWriteCell: UICollectionViewCell {
     private func setupComponents() {
         contentView.addSubview(writeDiaryLabel)
         contentView.addSubview(chevron)
-        
+        // swiftlint:disable line_length
         NSLayoutConstraint.activate([
             writeDiaryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             writeDiaryLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -52,3 +52,4 @@ class DiaryWriteCell: UICollectionViewCell {
         ])
     }
 }
+// swiftlint:enable line_length

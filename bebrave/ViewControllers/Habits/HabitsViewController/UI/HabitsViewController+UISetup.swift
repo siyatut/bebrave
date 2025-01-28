@@ -99,7 +99,7 @@ extension HabitsViewController {
         )
         createNewHabitButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(createNewHabitButton)
-        
+        // swiftlint:disable line_length
         NSLayoutConstraint.activate([
             createNewHabitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12),
             createNewHabitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
@@ -108,3 +108,4 @@ extension HabitsViewController {
         ])
     }
 }
+// swiftlint:enable line_length

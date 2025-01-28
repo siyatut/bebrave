@@ -62,7 +62,7 @@ extension HabitCell {
             contentContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
-    
+    // swiftlint:disable line_length
     private func setupProgressViewContainer() {
         contentContainer.addSubview(progressViewContainer)
         progressViewWidthConstraint = progressViewContainer.widthAnchor.constraint(equalToConstant: 0)
@@ -152,3 +152,4 @@ extension HabitCell {
         }
     }
 }
+// swiftlint:enable line_length

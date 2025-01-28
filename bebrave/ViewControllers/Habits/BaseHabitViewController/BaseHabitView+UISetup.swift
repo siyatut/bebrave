@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+// swiftlint:disable line_length
 extension BaseHabitViewController {
     
     func delegateTextFields() {
@@ -61,61 +61,91 @@ extension BaseHabitViewController {
     }
     
     private func setupConstraints() {
-        // Emoji Image
+        setupEmojiImageConstraints()
+        setupPromiseLabelConstraints()
+        setupHabitConstraints()
+        setupTimesPerDayConstraints()
+        setupDaysOfWeekConstraints()
+        setupMonthsConstraints()
+        setupSaveButtonConstraints()
+    }
+    
+    private func setupEmojiImageConstraints() {
         NSLayoutConstraint.activate([
             emojiImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
             emojiImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             emojiImageView.widthAnchor.constraint(equalToConstant: 40),
-            emojiImageView.heightAnchor.constraint(equalToConstant: 40),
-            // Promise Label
+            emojiImageView.heightAnchor.constraint(equalToConstant: 40)
+        ])
+    }
+    
+    private func setupPromiseLabelConstraints() {
+        NSLayoutConstraint.activate([
             promiseLabel.topAnchor.constraint(equalTo: emojiImageView.bottomAnchor, constant: 16),
             promiseLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            promiseLabel.trailingAnchor.constraint(
-                greaterThanOrEqualTo: view.trailingAnchor,
-                constant: -187
-            ),
-            // Habit Text Field
+            promiseLabel.trailingAnchor.constraint(greaterThanOrEqualTo: view.trailingAnchor, constant: -187)
+        ])
+    }
+    
+    private func setupHabitConstraints() {
+        NSLayoutConstraint.activate([
             habitTextField.topAnchor.constraint(equalTo: promiseLabel.bottomAnchor, constant: 16),
             habitTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             habitTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
             habitTextField.heightAnchor.constraint(equalToConstant: 48),
-            // Habit Error Label
+            
             habitErrorLabel.topAnchor.constraint(equalTo: habitTextField.bottomAnchor, constant: 4),
             habitErrorLabel.leadingAnchor.constraint(equalTo: habitTextField.leadingAnchor, constant: 16),
-            habitErrorLabel.trailingAnchor.constraint(equalTo: habitTextField.trailingAnchor),
-            // Times Per Day Stack
+            habitErrorLabel.trailingAnchor.constraint(equalTo: habitTextField.trailingAnchor)
+        ])
+    }
+    
+    private func setupTimesPerDayConstraints() {
+        NSLayoutConstraint.activate([
             timesPerDayStack.topAnchor.constraint(equalTo: habitErrorLabel.bottomAnchor, constant: 16),
             timesPerDayStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             timesPerDayStack.trailingAnchor.constraint(equalTo: habitTextField.trailingAnchor),
-            // Times Per Day Error Label
+            
             timesPerDayErrorLabel.topAnchor.constraint(equalTo: timesPerDayStack.bottomAnchor, constant: 4),
             timesPerDayErrorLabel.leadingAnchor.constraint(equalTo: timesPerDayStack.leadingAnchor, constant: 16),
             timesPerDayErrorLabel.trailingAnchor.constraint(equalTo: timesPerDayStack.trailingAnchor),
-            // Days of Week Stack
+            
+            timesPerDayLabel.centerYAnchor.constraint(equalTo: timesPerDayTextField.centerYAnchor),
+            timesPerDayTextField.widthAnchor.constraint(equalToConstant: 57),
+            timesPerDayTextField.heightAnchor.constraint(equalToConstant: 48)
+        ])
+    }
+    
+    private func setupDaysOfWeekConstraints() {
+        NSLayoutConstraint.activate([
             daysOfWeekStack.topAnchor.constraint(equalTo: timesPerDayErrorLabel.bottomAnchor, constant: 16),
             daysOfWeekStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             daysOfWeekStack.trailingAnchor.constraint(equalTo: habitTextField.trailingAnchor),
-            // Days of Week Error Label
+            
             daysOfWeekErrorLabel.topAnchor.constraint(equalTo: daysOfWeekStack.bottomAnchor, constant: 4),
             daysOfWeekErrorLabel.leadingAnchor.constraint(equalTo: daysOfWeekStack.leadingAnchor, constant: 16),
-            daysOfWeekErrorLabel.trailingAnchor.constraint(equalTo: daysOfWeekStack.trailingAnchor),
-            // Months Stack
+            daysOfWeekErrorLabel.trailingAnchor.constraint(equalTo: daysOfWeekStack.trailingAnchor)
+        ])
+    }
+    
+    private func setupMonthsConstraints() {
+        NSLayoutConstraint.activate([
             monthsStack.topAnchor.constraint(equalTo: daysOfWeekErrorLabel.bottomAnchor, constant: 16),
             monthsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             monthsStack.trailingAnchor.constraint(equalTo: habitTextField.trailingAnchor),
-            // Months Error Label
+            
             monthsErrorLabel.topAnchor.constraint(equalTo: monthsStack.bottomAnchor, constant: 4),
             monthsErrorLabel.leadingAnchor.constraint(equalTo: monthsStack.leadingAnchor, constant: 16),
             monthsErrorLabel.trailingAnchor.constraint(equalTo: monthsStack.trailingAnchor),
-            // Align labels in stacks
-            timesPerDayLabel.centerYAnchor.constraint(equalTo: timesPerDayTextField.centerYAnchor),
+            
             monthsLabel.centerYAnchor.constraint(equalTo: monthsTextField.centerYAnchor),
-            // Text Field Sizes
-            timesPerDayTextField.widthAnchor.constraint(equalToConstant: 57),
-            timesPerDayTextField.heightAnchor.constraint(equalToConstant: 48),
             monthsTextField.widthAnchor.constraint(equalToConstant: 57),
-            monthsTextField.heightAnchor.constraint(equalToConstant: 48),
-            // Save Button
+            monthsTextField.heightAnchor.constraint(equalToConstant: 48)
+        ])
+    }
+    
+    private func setupSaveButtonConstraints() {
+        NSLayoutConstraint.activate([
             didSaveNewHabitButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -42),
             didSaveNewHabitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             didSaveNewHabitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
@@ -203,3 +233,4 @@ extension BaseHabitViewController {
         ])
     }
 }
+// swiftlint:enable line_length
