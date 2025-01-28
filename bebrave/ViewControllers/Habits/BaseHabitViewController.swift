@@ -124,7 +124,7 @@ class BaseHabitViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = AppStyle.Colors.backgroundColor
         setupComponents()
-        setupErrorLabelConstraints()
+        setupErrorLabelHeight()
         delegateTextFields()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
