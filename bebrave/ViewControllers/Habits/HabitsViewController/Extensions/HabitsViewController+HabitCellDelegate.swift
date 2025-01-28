@@ -16,18 +16,22 @@ extension HabitsViewController: HabitCellDelegate {
             changeHabitVC.modalPresentationStyle = .pageSheet
             changeHabitVC.delegate = self
             navigationController?.present(changeHabitVC, animated: true, completion: nil)
+           
         case .delete:
             deleteHabit(habit)
+            
         case .skipToday:
             var updatedHabit = habit
             updatedHabit.skipToday()
             UserDefaultsManager.shared.updateHabit(updatedHabit)
             reloadHabit(updatedHabit)
+            
         case .unmarkCompletion:
             var updatedHabit = habit
             updatedHabit.undoCompletion()
             UserDefaultsManager.shared.updateHabit(updatedHabit)
             reloadHabit(updatedHabit)
+            
         case .undoSkip:
             var updatedHabit = habit
             updatedHabit.undoSkip()

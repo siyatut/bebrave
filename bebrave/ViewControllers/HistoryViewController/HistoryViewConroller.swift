@@ -127,10 +127,13 @@ class HistoryViewController: UIViewController {
         switch period {
         case .week:
             print("Показать данные за неделю")
+            
         case .month:
             print("Показать данные за месяц")
+            
         case .halfYear:
             print("Показать данные за полгода")
+            
         case .year:
             print("Показать данные за год")
         }

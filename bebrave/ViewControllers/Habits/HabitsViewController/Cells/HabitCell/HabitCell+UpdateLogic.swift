@@ -44,14 +44,17 @@ extension HabitCell {
         case .notCompleted:
             contentContainer.backgroundColor = Calendar.current.isDateInToday(today) ?
             AppStyle.Colors.backgroundColor : AppStyle.Colors.isUncompletedHabitColor
+            
         case .partiallyCompleted(let progress, _):
             currentProgress = progress
             updateHabitProgress()
+            
         case .completed:
             currentProgress = habit.frequency
             drawCheckmark()
             setupCheckboxBackground()
             checkbox.isHidden = false
+            
         case .skipped:
             applySkippedHabitPattern(for: status)
         }

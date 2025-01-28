@@ -11,7 +11,6 @@ opt_in_rules:
   - vertical_whitespace_between_cases # Требует пустую строку между case в перечислениях (enum)
   - operator_usage_whitespace # Проверяет пробелы вокруг операторов (например, `a + b` вместо `a+b`)
   - modifier_order # Требует определённый порядок модификаторов (например, public, final, override)
-  - file_name # Проверяет, чтобы имя файла совпадало с названием содержащегося в нём типа
   - force_cast # Запрещаем использование force-cast, чтобы следовать принципам безопасности
   - force_try  # Избегаем force-try, так как это нарушает безопасность кода
 
@@ -39,15 +38,7 @@ function_body_length:
 function_parameter_count:
   warning: 5            # Максимум 5 параметров
   error: 7              # Больше 7 параметров — ошибка
-
-# Именование файлов
-file_name:
-  severity: warning      # Имена файлов должны быть осмысленными
-  excluded:              # Исключения для стандартных имен
-    - main.swift
-    - AppDelegate.swift
-    - SceneDelegate.swift
-
+  
 # Конвенции именования (CamelCase для переменных, PascalCase для типов)
 type_name:
   min_length: 3
