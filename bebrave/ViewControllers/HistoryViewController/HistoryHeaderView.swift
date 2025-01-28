@@ -133,30 +133,36 @@ class HistoryHeaderView: UICollectionReusableView {
     private func calculateDateRange(for period: Period) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd.MM.yy"
+        
         let calendar = Calendar.current
         let today = Date()
-        
-        var startDate: Date?
-        var endDate: Date?
+        let startDate: Date?
+        let endDate: Date?
         
         switch period {
         case .week:
             startDate = calendar.date(byAdding: .day, value: -6, to: today)
             endDate = today
+            
         case .month:
             startDate = calendar.date(from: calendar.dateComponents([.year, .month], from: today))
-            endDate = calendar.date(byAdding: .month, value: 1, to: startDate!)?.addingTimeInterval(-1)
+            endDate = startDate.flatMap {
+                calendar.date(byAdding: .month, value: 1, to: $0)?.addingTimeInterval(-1)
+            }
+            
         case .halfYear:
             startDate = calendar.date(byAdding: .month, value: -5, to: today)
             endDate = today
+            
         case .year:
             startDate = calendar.date(byAdding: .year, value: -1, to: today)
             endDate = today
         }
         
-        if let start = startDate, let end = endDate {
-            return "\(formatter.string(from: start))–\(formatter.string(from: end))"
+        guard let start = startDate, let end = endDate else {
+            return ""
         }
-        return ""
+        
+        return "\(formatter.string(from: start))–\(formatter.string(from: end))"
     }
 }
