@@ -22,7 +22,7 @@ enum ProgressLayout {
     }
     // swiftlint:disable:next line_length
     private static func createSectionProvider() -> UICollectionViewCompositionalLayoutSectionProvider {
-        return { section, _ in
+        return { _, _ in
             let background = NSCollectionLayoutSupplementaryItem(
                 layoutSize: .init(
                     widthDimension: .fractionalWidth(1),

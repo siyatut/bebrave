@@ -10,8 +10,20 @@ import UIKit
 enum HabitsLayout {
     
     static func createLayout() -> UICollectionViewLayout {
-        let provider: UICollectionViewCompositionalLayoutSectionProvider = { section, _ in
-            
+        let provider = createSectionProvider()
+        let header = createHeader()
+        
+        let configuration = UICollectionViewCompositionalLayoutConfiguration()
+        configuration.boundarySupplementaryItems = [header]
+        
+        return UICollectionViewCompositionalLayout(
+            sectionProvider: provider,
+            configuration: configuration
+        )
+    }
+    // swiftlint:disable:next line_length
+    private static func createSectionProvider() -> UICollectionViewCompositionalLayoutSectionProvider {
+        return { _, _ in
             let background = NSCollectionLayoutSupplementaryItem(
                 layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
@@ -20,6 +32,7 @@ enum HabitsLayout {
                 elementKind: CustomElement.outlineBackground.rawValue,
                 containerAnchor: .init(edges: .all)
             )
+            
             let item = NSCollectionLayoutItem(
                 layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
@@ -27,6 +40,7 @@ enum HabitsLayout {
                 ),
                 supplementaryItems: [background]
             )
+            
             let group = NSCollectionLayoutGroup.vertical(
                 layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
@@ -38,8 +52,12 @@ enum HabitsLayout {
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets = .init(top: 0, leading: 12, bottom: 0, trailing: 12)
             section.interGroupSpacing = 8
+            
             return section
         }
+    }
+    
+    private static func createHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let header = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1),
@@ -51,12 +69,6 @@ enum HabitsLayout {
         )
         header.extendsBoundary = true
         header.contentInsets = .init(top: 0, leading: 12, bottom: 0, trailing: 12)
-        
-        let configuration = UICollectionViewCompositionalLayoutConfiguration()
-        configuration.boundarySupplementaryItems = [header]
-        return UICollectionViewCompositionalLayout(
-            sectionProvider: provider,
-            configuration: configuration
-        )
+        return header
     }
 }
