@@ -7,7 +7,7 @@
 
 import XCTest
 
-final class bebraveUITests: XCTestCase {
+final class BebraveUITests: XCTestCase {
 
     override func setUpWithError() throws {
 

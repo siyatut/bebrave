@@ -1,14 +1,19 @@
 # Включение и отключение проверок
 disabled_rules:
-  - force_cast # Запрещаем использование force-cast, чтобы следовать принципам безопасности
-  - force_try  # Избегаем force-try, так как это нарушает безопасность кода
+ - explicit_enum_raw_value # Убираем требование явного указания raw-value для enum
 
 # Настройка активных правил
 opt_in_rules:
   - closure_end_indentation # Следим за правильным форматированием замыканий
   - closure_spacing # Обеспечиваем корректные пробелы в замыканиях
-  - explicit_enum_raw_value # Указываем raw-value для всех перечислений
   - function_default_parameter_at_end # Параметры по умолчанию всегда в конце
+  - empty_count  # Правило для замены `count == 0` на `isEmpty`
+  - vertical_whitespace_between_cases # Требует пустую строку между case в перечислениях (enum)
+  - operator_usage_whitespace # Проверяет пробелы вокруг операторов (например, `a + b` вместо `a+b`)
+  - modifier_order # Требует определённый порядок модификаторов (например, public, final, override)
+  - file_name # Проверяет, чтобы имя файла совпадало с названием содержащегося в нём типа
+  - force_cast # Запрещаем использование force-cast, чтобы следовать принципам безопасности
+  - force_try  # Избегаем force-try, так как это нарушает безопасность кода
 
 # Настройка стиля именования
 identifier_name:
@@ -16,10 +21,6 @@ identifier_name:
   max_length: 40       # Максимальная длина идентификаторов
   excluded:
     - id               # Исключение для часто используемых имен (например, id)
-
-# Операторы доступа (например, fileprivate, private)
-access_control:
-  strict: true          # Рекомендуется использовать явное указание уровня доступа
 
 # Пробелы и отступы
 line_length:
@@ -29,13 +30,6 @@ line_length:
 trailing_whitespace:
   ignores_empty_lines: true # Игнорируем пустые строки
   ignores_comments: true    # Игнорируем комментарии
-
-indentation:
-  spaces: 4             # Используем 4 пробела для отступов
-
-# Пробелы перед и после ключевых символов
-operator_usage_whitespace:
-  severity: warning
 
 # Форматирование функций
 function_body_length:
@@ -58,12 +52,13 @@ file_name:
 type_name:
   min_length: 3
   max_length: 50
-  validates_start_with_lowercase: false # PascalCase для типов
+  validates_start_with_lowercase:
+    severity: warning # PascalCase для типов
 
-# Пустые строки
+# Конфигурация правила empty_count
 empty_count:
-  warning: 1            # Только одна пустая строка подряд допустима
-  error: 2              # Более двух пустых строк — ошибка
+  severity: error         # Уровень: ошибка (выдаёт ошибку при нарушении)
+  only_after_dot: false   # Проверять вызовы `count` даже без явного обращения через точку
 
 # Строгий порядок модификаторов
 modifier_order:
@@ -84,7 +79,4 @@ vertical_whitespace_between_cases:
 excluded:
  - AppDelegate.swift
  - SceneDelegate.swift
- 
-# Исключаемые правила
-disabled_rules:
-  - explicit_enum_raw_value
+

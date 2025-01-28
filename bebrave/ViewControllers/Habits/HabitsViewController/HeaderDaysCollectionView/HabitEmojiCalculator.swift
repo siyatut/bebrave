@@ -21,17 +21,20 @@ class HabitEmojiCalculator {
             case .completed:
                 totalProgress += habit.frequency
                 totalFrequency += habit.frequency
+                
             case .partiallyCompleted(let progress, let total):
                 totalProgress += progress
                 totalFrequency += total
+                
             case .skipped:
                 skippedCount += 1
+                
             case .notCompleted:
                 totalFrequency += habit.frequency
             }
         }
         
-        if skippedCount == habits.count && habits.count > 0 {
+        if skippedCount == habits.count && habits.isEmpty == false {
             return "💤"
         }
         
@@ -40,10 +43,13 @@ class HabitEmojiCalculator {
         switch completionRate {
         case 80...100:
             return "🎉"
+            
         case 50..<80:
             return "🙂"
+            
         case 20..<50:
             return "😕"
+            
         default:
             return "😞"
         }

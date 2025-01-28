@@ -8,7 +8,7 @@
 import XCTest
 @testable import bebrave
 
-final class bebraveTests: XCTestCase {
+final class BebraveTests: XCTestCase {
 
     override func setUpWithError() throws {
     }

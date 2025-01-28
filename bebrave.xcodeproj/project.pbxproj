@@ -54,9 +54,9 @@
 		52F1E53E2B7CDC300058F767 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E53D2B7CDC300058F767 /* TabBarViewController.swift */; };
 		52F1E5432B7CDC330058F767 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52F1E5422B7CDC330058F767 /* Assets.xcassets */; };
 		52F1E5462B7CDC330058F767 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52F1E5442B7CDC330058F767 /* LaunchScreen.storyboard */; };
-		52F1E5512B7CDC330058F767 /* bebraveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E5502B7CDC330058F767 /* bebraveTests.swift */; };
-		52F1E55B2B7CDC330058F767 /* bebraveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E55A2B7CDC330058F767 /* bebraveUITests.swift */; };
-		52F1E55D2B7CDC330058F767 /* bebraveUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E55C2B7CDC330058F767 /* bebraveUITestsLaunchTests.swift */; };
+		52F1E5512B7CDC330058F767 /* BebraveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E5502B7CDC330058F767 /* BebraveTests.swift */; };
+		52F1E55B2B7CDC330058F767 /* BebraveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E55A2B7CDC330058F767 /* BebraveUITests.swift */; };
+		52F1E55D2B7CDC330058F767 /* BebraveUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E55C2B7CDC330058F767 /* BebraveUITestsLaunchTests.swift */; };
 		52F1E56A2B7CE6330058F767 /* HabitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E5692B7CE6330058F767 /* HabitsViewController.swift */; };
 		52F1E56C2B7CE6B10058F767 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */; };
 		52F1E56E2B7CE6D10058F767 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */; };
@@ -136,10 +136,10 @@
 		52F1E5452B7CDC330058F767 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52F1E5472B7CDC330058F767 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52F1E54C2B7CDC330058F767 /* bebraveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = bebraveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		52F1E5502B7CDC330058F767 /* bebraveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bebraveTests.swift; sourceTree = "<group>"; };
+		52F1E5502B7CDC330058F767 /* BebraveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BebraveTests.swift; sourceTree = "<group>"; };
 		52F1E5562B7CDC330058F767 /* bebraveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = bebraveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		52F1E55A2B7CDC330058F767 /* bebraveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bebraveUITests.swift; sourceTree = "<group>"; };
-		52F1E55C2B7CDC330058F767 /* bebraveUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bebraveUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		52F1E55A2B7CDC330058F767 /* BebraveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BebraveUITests.swift; sourceTree = "<group>"; };
+		52F1E55C2B7CDC330058F767 /* BebraveUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BebraveUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		52F1E5692B7CE6330058F767 /* HabitsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsViewController.swift; sourceTree = "<group>"; };
 		52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
 		52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -370,7 +370,7 @@
 		52F1E54F2B7CDC330058F767 /* bebraveTests */ = {
 			isa = PBXGroup;
 			children = (
-				52F1E5502B7CDC330058F767 /* bebraveTests.swift */,
+				52F1E5502B7CDC330058F767 /* BebraveTests.swift */,
 			);
 			path = bebraveTests;
 			sourceTree = "<group>";
@@ -378,8 +378,8 @@
 		52F1E5592B7CDC330058F767 /* bebraveUITests */ = {
 			isa = PBXGroup;
 			children = (
-				52F1E55A2B7CDC330058F767 /* bebraveUITests.swift */,
-				52F1E55C2B7CDC330058F767 /* bebraveUITestsLaunchTests.swift */,
+				52F1E55A2B7CDC330058F767 /* BebraveUITests.swift */,
+				52F1E55C2B7CDC330058F767 /* BebraveUITestsLaunchTests.swift */,
 			);
 			path = bebraveUITests;
 			sourceTree = "<group>";
@@ -609,7 +609,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52F1E5512B7CDC330058F767 /* bebraveTests.swift in Sources */,
+				52F1E5512B7CDC330058F767 /* BebraveTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,8 +617,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52F1E55D2B7CDC330058F767 /* bebraveUITestsLaunchTests.swift in Sources */,
-				52F1E55B2B7CDC330058F767 /* bebraveUITests.swift in Sources */,
+				52F1E55D2B7CDC330058F767 /* BebraveUITestsLaunchTests.swift in Sources */,
+				52F1E55B2B7CDC330058F767 /* BebraveUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
