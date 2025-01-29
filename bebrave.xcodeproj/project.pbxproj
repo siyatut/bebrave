@@ -43,6 +43,7 @@
 		52A762512D367E68000A30EA /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A762502D367E62000A30EA /* Habit.swift */; };
 		52A762532D367EA5000A30EA /* HabitStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A762522D367EA5000A30EA /* HabitStatus.swift */; };
 		52A762552D367F2D000A30EA /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A762542D367F2B000A30EA /* UserDefaultsKeys.swift */; };
+		52A7B4642D49FB5500297E80 /* HistoryViewController+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A7B4632D49FB4000297E80 /* HistoryViewController+DataSource.swift */; };
 		52AB21F22D19AF51006C7DF9 /* UIComponents+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AB21F12D19AF3D006C7DF9 /* UIComponents+Extensions.swift */; };
 		52ACDD442CEF13CD00868730 /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ACDD432CEF13CD00868730 /* AppStyle.swift */; };
 		52C996A52D11EAC7000E7648 /* UICollectionView+Dequeuing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C996A42D11EAC3000E7648 /* UICollectionView+Dequeuing.swift */; };
@@ -122,6 +123,7 @@
 		52A762502D367E62000A30EA /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
 		52A762522D367EA5000A30EA /* HabitStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitStatus.swift; sourceTree = "<group>"; };
 		52A762542D367F2B000A30EA /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
+		52A7B4632D49FB4000297E80 /* HistoryViewController+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistoryViewController+DataSource.swift"; sourceTree = "<group>"; };
 		52AB21F12D19AF3D006C7DF9 /* UIComponents+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIComponents+Extensions.swift"; sourceTree = "<group>"; };
 		52ACDD432CEF13CD00868730 /* AppStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyle.swift; sourceTree = "<group>"; };
 		52C996A42D11EAC3000E7648 /* UICollectionView+Dequeuing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Dequeuing.swift"; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				5241DDD12B8F61F000C7ECF0 /* HistoryViewConroller.swift */,
+				52A7B4632D49FB4000297E80 /* HistoryViewController+DataSource.swift */,
 				52DE3E5C2D3976E200A221FC /* HistoryHeaderView.swift */,
 				5209B4472D38F2910063CF1C /* HistoryViewController+ProgressCell.swift */,
 				5209B4452D38F2300063CF1C /* HistoryViewController+ProgressLayout.swift */,
@@ -583,6 +586,7 @@
 				52652B8E2D240D2C00608550 /* BaseHabitView+Actions.swift in Sources */,
 				52359DB62D359EBF00207E09 /* HabitCell+ButtonActions.swift in Sources */,
 				52DE3E5D2D3976F700A221FC /* HistoryHeaderView.swift in Sources */,
+				52A7B4642D49FB5500297E80 /* HistoryViewController+DataSource.swift in Sources */,
 				52A762512D367E68000A30EA /* Habit.swift in Sources */,
 				52FF7F482D2EBACF008EF1E2 /* HabitEmojiCalculator.swift in Sources */,
 				52923ECF2CF70F080088E54B /* HeaderDaysCollectionView.swift in Sources */,

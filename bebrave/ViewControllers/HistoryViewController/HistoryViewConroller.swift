@@ -26,7 +26,7 @@ class HistoryViewController: UIViewController {
     // MARK: - Data
     
     private var habits: [Habit] = []
-    private var habitsProgress: [HabitProgress] = []
+    var habitsProgress: [HabitProgress] = []
     
     // MARK: - Init
     
@@ -113,7 +113,7 @@ class HistoryViewController: UIViewController {
         let startDate: Date?
         switch period {
         case .week:
-            startDate = calendar.date(byAdding: .day, value: -6, to: today)
+            startDate = calendar.date(byAdding: .day, value: -7, to: today)
             
         case .month:
             startDate = calendar.date(byAdding: .month, value: -1, to: today)
@@ -143,79 +143,8 @@ class HistoryViewController: UIViewController {
         collectionView.reloadData()
     }
     
-    private func updateData(for period: Period) {
+    func updateData(for period: Period) {
         calculateProgress(for: period)
         collectionView.reloadData()
     }
-}
-
-extension HistoryViewController: UICollectionViewDataSource {
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        numberOfItemsInSection section: Int
-    ) -> Int {
-        return habitsProgress.count
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: CustomElement.progressCell.rawValue,
-            for: indexPath
-        ) as? ProgressCell else {
-            let error = CellError.dequeuingFailed(
-                reuseIdentifier: CustomElement.progressCell.rawValue
-            )
-            fatalError("\(error)")
-        }
-        
-        let habitProgress = habitsProgress[indexPath.row]
-        cell.configure(with: habitProgress)
-        return cell
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        viewForSupplementaryElementOfKind kind: String,
-        at indexPath: IndexPath
-    ) -> UICollectionReusableView {
-        switch kind {
-        case CustomElement.historyHeader.rawValue:
-            guard let header = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: CustomElement.historyHeader.rawValue,
-                for: indexPath
-            ) as? HistoryHeaderView else {
-                fatalError("Не удалось deque header с типом \(kind)")
-            }
-            
-            header.configure(
-                onPeriodChange: { [weak self] selectedPeriod in
-                    self?.updateData(for: selectedPeriod)
-                }
-            )
-            return header
-            
-        case CustomElement.outlineBackground.rawValue:
-            guard let background = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: CustomElement.outlineBackground.rawValue,
-                for: indexPath
-            ) as? OutlineBackgroundView else {
-                let error = SupplementaryViewError.dequeuingFailed(
-                    kind: kind,
-                    reuseIdentifier: CustomElement.outlineBackground.rawValue
-                )
-                fatalError("\(error)")
-            }
-            return background
-            
-        default:
-            fatalError("\(SupplementaryViewError.unexpectedKind(kind))")
-        }
-    }
-    
 }
