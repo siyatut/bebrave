@@ -6,7 +6,7 @@
 //
 
 // swiftlint:disable:next line_length
-// TODO: - Настроить корректное отображение прогресса и его закрашивания в соответствии со статусом привычки: зелёный, полосатый зелёный, серый
+// TODO: - Настроить корректное отображение прогресса и его закрашивания в соответствии со статусом привычки: зелёный, полосатый зелёный, серый. UPD: с зелёным и серым вроде бы окей, но паттерн для спипа отрисовать не получилось
 
 import UIKit
 
@@ -25,7 +25,7 @@ class HistoryViewController: UIViewController {
     
     // MARK: - Data
     
-    private var habits: [Habit] = []
+    var habits: [Habit] = []
     var habitsProgress: [HabitProgress] = []
     
     // MARK: - Init
@@ -113,7 +113,7 @@ class HistoryViewController: UIViewController {
         let startDate: Date?
         switch period {
         case .week:
-            startDate = calendar.date(byAdding: .day, value: -7, to: today)
+            startDate = calendar.date(byAdding: .day, value: -6, to: today)
             
         case .month:
             startDate = calendar.date(byAdding: .month, value: -1, to: today)
@@ -123,23 +123,27 @@ class HistoryViewController: UIViewController {
             
         case .year:
             startDate = calendar.date(byAdding: .year, value: -1, to: today)
-            
         }
         
         guard let startDate = startDate else { return }
         
         habitsProgress = habits.map { habit in
-            let (completedDays, totalDays) = habit.calculateProgress(
-                from: startDate,
-                to: today,
-                calendar: calendar
-            )
+            let totalDays = calendar.dateComponents([.day], from: startDate, to: today).day! + 1
+            let completedDays = habit.progress
+                .filter { $0.key >= startDate && $0.key <= today && $0.value > 0 }
+                .count
+            let skippedDays = habit.skipDates.filter { $0 >= startDate && $0 <= today }.count
+            let remainingDays = totalDays - (completedDays + skippedDays)
+            
             return HabitProgress(
                 name: habit.title,
                 completedDays: completedDays,
-                totalDays: totalDays
+                totalDays: totalDays,
+                skippedDays: skippedDays,
+                remainingDays: remainingDays
             )
         }
+        
         collectionView.reloadData()
     }
     

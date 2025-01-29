@@ -22,7 +22,7 @@ final class ProgressCell: UICollectionViewCell {
         color: AppStyle.Colors.textColorSecondary,
         alignment: .right
     )
-    private let progressBar = UIProgressView()
+    private let segmentedProgressBar = SegmentedProgressBar()
     
     // MARK: - Init
     
@@ -38,17 +38,15 @@ final class ProgressCell: UICollectionViewCell {
     // MARK: - Setup UI
     
     private func setupProgressCell() {
-        progressBar.progressTintColor = AppStyle.Colors.primaryGreenColor
-        progressBar.trackTintColor = AppStyle.Colors.isUncompletedHabitColor
-        progressBar.layer.cornerRadius = 5
-        progressBar.layer.masksToBounds = true
-        progressBar.translatesAutoresizingMaskIntoConstraints = false
+        segmentedProgressBar.layer.cornerRadius = 5
+        segmentedProgressBar.layer.masksToBounds = true
+        segmentedProgressBar.translatesAutoresizingMaskIntoConstraints = false
         
         let headerStackView = UIStackView(arrangedSubviews: [habitNameLabel, progressLabel])
         headerStackView.axis = .horizontal
         headerStackView.distribution = .fillProportionally
-    
-        let stackView = UIStackView(arrangedSubviews: [headerStackView, progressBar])
+        
+        let stackView = UIStackView(arrangedSubviews: [headerStackView, segmentedProgressBar])
         stackView.axis = .vertical
         stackView.spacing = 5
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -60,15 +58,31 @@ final class ProgressCell: UICollectionViewCell {
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
-            progressBar.heightAnchor.constraint(equalToConstant: 15)
+            segmentedProgressBar.heightAnchor.constraint(equalToConstant: 15)
         ])
     }
     // MARK: - Configure
     
-    func configure(with habit: HabitProgress) {
-        habitNameLabel.text = habit.name
-        progressLabel.text = "\(habit.completedDays) / \(habit.totalDays)"
-        progressBar.progress = Float(habit.completedDays) / Float(habit.totalDays)
+    func configure(with habitProgress: HabitProgress) {
+        habitNameLabel.text = habitProgress.name
+        progressLabel.text = "\(habitProgress.completedDays) / \(habitProgress.totalDays)"
+        
+        let segmentRatios: [(color: UIColor, ratio: CGFloat)] = [
+            (AppStyle.Colors.isProgressHabitColor,
+             CGFloat(habitProgress.completedDays) /
+             CGFloat(habitProgress.totalDays)
+            ),
+            (AppStyle.Colors.isProgressHabitColor,
+             CGFloat(habitProgress.skippedDays) /
+             CGFloat(habitProgress.totalDays)
+            ),
+            (AppStyle.Colors.isUncompletedHabitColor,
+             CGFloat(habitProgress.remainingDays) /
+             CGFloat(habitProgress.totalDays)
+            )
+        ]
+        
+        segmentedProgressBar.setSegments(segmentRatios)
     }
     
     private func calculateProgress(for habit: Habit) -> Float {

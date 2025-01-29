@@ -29,7 +29,6 @@ extension HistoryViewController: UICollectionViewDataSource {
             )
             fatalError("\(error)")
         }
-        
         let habitProgress = habitsProgress[indexPath.row]
         cell.configure(with: habitProgress)
         return cell

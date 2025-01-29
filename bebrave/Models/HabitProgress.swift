@@ -9,4 +9,6 @@ struct HabitProgress {
     let name: String
     let completedDays: Int
     let totalDays: Int
+    let skippedDays: Int
+    let remainingDays: Int
 }
