@@ -47,7 +47,8 @@ class HistoryViewController: UIViewController {
         navigationController?.navigationBar.tintColor = AppStyle.Colors.secondaryColor
         setupCollectionView()
         setupEmptyStateView()
-        calculateProgress()
+        let initialPeriod = UserDefaultsManager.shared.loadSelectedPeriod() ?? .week
+        calculateProgress(for: initialPeriod)
     }
     
     // MARK: - Setup
@@ -105,13 +106,32 @@ class HistoryViewController: UIViewController {
     
     // MARK: - Data Handling
     
-    private func calculateProgress() {
+    private func calculateProgress(for period: Period) {
         let calendar = Calendar.current
-        let currentYear = calendar.component(.year, from: Date())
+        let today = Date()
+        
+        let startDate: Date?
+        switch period {
+        case .week:
+            startDate = calendar.date(byAdding: .day, value: -6, to: today)
+            
+        case .month:
+            startDate = calendar.date(byAdding: .month, value: -1, to: today)
+            
+        case .halfYear:
+            startDate = calendar.date(byAdding: .month, value: -6, to: today)
+            
+        case .year:
+            startDate = calendar.date(byAdding: .year, value: -1, to: today)
+            
+        }
+        
+        guard let startDate = startDate else { return }
         
         habitsProgress = habits.map { habit in
-            let (completedDays, totalDays) = habit.calculateYearProgress(
-                for: currentYear,
+            let (completedDays, totalDays) = habit.calculateProgress(
+                from: startDate,
+                to: today,
                 calendar: calendar
             )
             return HabitProgress(
@@ -124,26 +144,13 @@ class HistoryViewController: UIViewController {
     }
     
     private func updateData(for period: Period) {
-        switch period {
-        case .week:
-            print("Показать данные за неделю")
-            
-        case .month:
-            print("Показать данные за месяц")
-            
-        case .halfYear:
-            print("Показать данные за полгода")
-            
-        case .year:
-            print("Показать данные за год")
-        }
-        
-        calculateProgress()
+        calculateProgress(for: period)
         collectionView.reloadData()
     }
 }
 
 extension HistoryViewController: UICollectionViewDataSource {
+    
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int

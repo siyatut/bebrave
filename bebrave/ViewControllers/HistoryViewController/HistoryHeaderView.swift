@@ -38,7 +38,7 @@ class HistoryHeaderView: UICollectionReusableView {
     // MARK: - Period properties
     
     private var onPeriodChange: ((Period) -> Void)?
-    private var selectedPeriod: Period = {
+    var selectedPeriod: Period = {
         return UserDefaultsManager.shared.loadSelectedPeriod() ?? .week
     }() {
         didSet {

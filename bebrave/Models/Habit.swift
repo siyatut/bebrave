@@ -110,34 +110,19 @@ extension Habit {
         }
     }
     
-    func calculateYearProgress(
-        for year: Int,
+    func calculateProgress(
+        from startDate: Date,
+        to endDate: Date,
         calendar: Calendar = .current
-    ) -> (
-        completedDays: Int,
-        totalDays: Int
-    ) {
-        guard
-            let yearStart = calendar.date(from: DateComponents(year: year, month: 1, day: 1)),
-            let yearEnd = calendar.date(from: DateComponents(year: year + 1, month: 1, day: 1))
-        else {
-            return (0, 0)
-        }
-        
-        let totalDays = calendar.dateComponents(
-            [.day],
-            from: yearStart,
-            to: yearEnd
-        ).day ?? 0
-        
+    ) -> (completedDays: Int, totalDays: Int) {
+        guard startDate <= endDate else { return (0, 0) }
+
+        let totalDays = calendar.dateComponents([.day], from: startDate, to: endDate).day ?? 0 + 1
+
         let completedDays = progress.keys.filter {
-            calendar.isDate(
-                $0,
-                equalTo: yearStart,
-                toGranularity: .year
-            )
+            $0 >= startDate && $0 <= endDate
         }.count
-        
+
         return (completedDays, totalDays)
     }
 }
