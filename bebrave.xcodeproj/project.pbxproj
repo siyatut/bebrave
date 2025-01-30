@@ -409,7 +409,7 @@
 			buildConfigurationList = 52F1E5602B7CDC330058F767 /* Build configuration list for PBXNativeTarget "bebrave" */;
 			buildPhases = (
 				52F1E5322B7CDC300058F767 /* Sources */,
-				527C40682D47582F008F4807 /* ShellScript */,
+				527C40682D47582F008F4807 /* SwiftLint */,
 				52F1E5332B7CDC300058F767 /* Frameworks */,
 				52F1E5342B7CDC300058F767 /* Resources */,
 			);
@@ -530,7 +530,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		527C40682D47582F008F4807 /* ShellScript */ = {
+		527C40682D47582F008F4807 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -540,6 +540,7 @@
 			);
 			inputPaths = (
 			);
+			name = SwiftLint;
 			outputFileListPaths = (
 			);
 			outputPaths = (
