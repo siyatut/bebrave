@@ -8,16 +8,16 @@
 import UIKit
 
 extension BaseHabitViewController {
-    
+
     func validateFields(showErrors: Bool = false) -> Bool {
         var isValid = true
         resetErrorStates(animated: true)
-        
+
         isValid = validateHabitTextField(showErrors: showErrors) && isValid
         isValid = validateTimesPerDayTextField(showErrors: showErrors) && isValid
         isValid = validateSelectedDays(showErrors: showErrors) && isValid
         isValid = validateMonthsTextField(showErrors: showErrors) && isValid
-        
+
         animateLayoutChanges()
         return isValid
     }
@@ -103,23 +103,23 @@ extension BaseHabitViewController {
         timesPerDayErrorLabel.isHidden = true
         daysOfWeekErrorLabel.isHidden = true
         monthsErrorLabel.isHidden = true
-        
+
         habitTextField.layer.borderColor = AppStyle.Colors.borderColor.cgColor
         timesPerDayTextField.layer.borderColor = AppStyle.Colors.borderColor.cgColor
         monthsTextField.layer.borderColor = AppStyle.Colors.borderColor.cgColor
         highlightDaysOfWeekStack(with: AppStyle.Colors.borderColor)
-        
+
         habitErrorLabelHeightConstraint.constant = 0
         timesPerDayErrorLabelHeightConstraint.constant = 0
         daysOfWeekErrorLabelHeightConstraint.constant = 0
-        
+
         if animated {
             animateLayoutChanges()
         } else {
             view.layoutIfNeeded()
         }
     }
-    
+
     func highlightDaysOfWeekStack(with color: UIColor) {
         for view in daysOfWeekStack.arrangedSubviews {
             view.layer.borderColor = color.cgColor

@@ -8,9 +8,9 @@
 import UIKit
 
 class HistoryHeaderView: UICollectionReusableView {
-    
+
     // MARK: - UI components
-    
+
     private let periodButton: UIButton = {
         var config = UIButton.Configuration.plain()
         config.baseForegroundColor = AppStyle.Colors.secondaryColor
@@ -21,7 +21,7 @@ class HistoryHeaderView: UICollectionReusableView {
             pointSize: 14,
             weight: .medium
         )
-        // swiftlint:disable:next line_length
+
         config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
             var attributes = incoming
             attributes.font = AppStyle.Fonts.regularFont(size: 16)
@@ -32,11 +32,11 @@ class HistoryHeaderView: UICollectionReusableView {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
+
     private let dateLabel = UILabel.styled(text: "", fontSize: 18, isBold: true, alignment: .center)
-    
+
     // MARK: - Period properties
-    
+
     private var onPeriodChange: ((Period) -> Void)?
     var selectedPeriod: Period = {
         return UserDefaultsManager.shared.loadSelectedPeriod() ?? .week
@@ -48,23 +48,23 @@ class HistoryHeaderView: UICollectionReusableView {
     }
 
     // MARK: - Init
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
         setupActions()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+
     // MARK: - Setup UI
-    
+
     private func setupView() {
         addSubview(periodButton)
         addSubview(dateLabel)
-        
+
         NSLayoutConstraint.activate([
             dateLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             dateLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 28),
@@ -72,22 +72,22 @@ class HistoryHeaderView: UICollectionReusableView {
                 lessThanOrEqualTo: periodButton.leadingAnchor,
                 constant: -10),
             dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
-            
+
             periodButton.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             periodButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             periodButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
         ])
-        
+
         updateUIForSelectedPeriod()
     }
-    
+
     // MARK: - Actions
-    
+
     private func setupActions() {
         periodButton.menu = createPeriodMenu()
         periodButton.showsMenuAsPrimaryAction = true
     }
-    
+
     private func createPeriodMenu() -> UIMenu {
         return UIMenu(title: "Выберите период:", children: [
             UIAction(title: "Неделя", state: selectedPeriod == .week ? .on : .off) { _ in
@@ -108,9 +108,9 @@ class HistoryHeaderView: UICollectionReusableView {
             }
         ])
     }
-    
+
     // MARK: - Update UI
-    
+
     private func updateUIForSelectedPeriod() {
         let periodTitle: String
         switch selectedPeriod {
@@ -123,46 +123,46 @@ class HistoryHeaderView: UICollectionReusableView {
         dateLabel.text = calculateDateRange(for: selectedPeriod)
         periodButton.menu = createPeriodMenu()
     }
-    
+
     // MARK: - Configure
-    
+
     func configure(onPeriodChange: @escaping (Period) -> Void) {
         self.onPeriodChange = onPeriodChange
     }
-    
+
     private func calculateDateRange(for period: Period) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd.MM.yy"
-        
+
         let calendar = Calendar.current
         let today = Date()
         let startDate: Date?
         let endDate: Date?
-        
+
         switch period {
         case .week:
             startDate = calendar.date(byAdding: .day, value: -6, to: today)
             endDate = today
-            
+
         case .month:
             startDate = calendar.date(from: calendar.dateComponents([.year, .month], from: today))
             endDate = startDate.flatMap {
                 calendar.date(byAdding: .month, value: 1, to: $0)?.addingTimeInterval(-1)
             }
-            
+
         case .halfYear:
             startDate = calendar.date(byAdding: .month, value: -5, to: today)
             endDate = today
-            
+
         case .year:
             startDate = calendar.date(byAdding: .year, value: -1, to: today)
             endDate = today
         }
-        
+
         guard let start = startDate, let end = endDate else {
             return ""
         }
-        
+
         return "\(formatter.string(from: start))–\(formatter.string(from: end))"
     }
 }

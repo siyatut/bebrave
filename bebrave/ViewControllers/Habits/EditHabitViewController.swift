@@ -8,22 +8,22 @@
 import UIKit
 
 class EditHabitViewController: BaseHabitViewController {
-    
+
     var habitToEdit: Habit?
-    
+
     // MARK: - Init
-    
+
     init(habit: Habit) {
         self.habitToEdit = habit
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Lifecycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         if let habit = habitToEdit {
@@ -37,23 +37,23 @@ class EditHabitViewController: BaseHabitViewController {
         didSaveNewHabitButton.setTitle("Сохранить изменения", for: .normal)
         didSaveNewHabitButton.addTarget(self, action: #selector(saveHabit), for: .touchUpInside)
     }
-    
+
     // MARK: - Handle performing habit
-    
+
     override func handleHabitSave(_ habit: Habit) {
         var updatedHabit = habit
         updatedHabit.daysOfWeek = selectedDays
         updatedHabit.updateSkippedDays(startDate: updatedHabit.creationDate, endDate: Date())
-        
+
         UserDefaultsManager.shared.updateHabit(updatedHabit)
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             self.delegate?.didEditHabit(updatedHabit)
             print("Изменённая привычка сохранена: \(updatedHabit.title)")
             self.dismiss(animated: true, completion: nil)
         }
     }
-    
+
     override func createHabitFromFields() -> Habit? {
         guard let title = habitTextField.text,
               let frequencyText = timesPerDayTextField.text,
@@ -63,7 +63,7 @@ class EditHabitViewController: BaseHabitViewController {
               let habitToEdit = habitToEdit else {
             return nil
         }
-        
+
         return Habit(
             id: habitToEdit.id,
             title: title,

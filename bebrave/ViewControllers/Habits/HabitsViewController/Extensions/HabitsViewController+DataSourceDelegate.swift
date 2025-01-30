@@ -10,18 +10,18 @@ import UIKit
 // MARK: - UICollectionView DataSource
 
 extension HabitsViewController {
-    
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
         return habits.count + 1
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
@@ -49,7 +49,7 @@ extension HabitsViewController {
             return UICollectionViewCell()
         }
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
@@ -59,7 +59,7 @@ extension HabitsViewController {
             guard let customElement = CustomElement(rawValue: kind) else {
                 throw SupplementaryViewError.unexpectedKind(kind)
             }
-            
+
             switch customElement {
             case .collectionHeader:
                 let header = try collectionView.dequeueSupplementaryView(
@@ -70,7 +70,7 @@ extension HabitsViewController {
                 header.backgroundColor = AppStyle.Colors.backgroundColor
                 headerView = header
                 return header
-                
+
             case .outlineBackground:
                 let outlineBackground = try collectionView.dequeueSupplementaryView(
                     ofKind: kind,
@@ -78,7 +78,7 @@ extension HabitsViewController {
                     for: indexPath
                 ) as OutlineBackgroundView
                 return outlineBackground
-                
+
             default:
                 throw SupplementaryViewError.unhandledCustomElement(customElement)
             }

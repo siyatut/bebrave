@@ -8,19 +8,19 @@
 import UIKit
 
 enum ProgressLayout {
-    
+
     static func createLayout() -> UICollectionViewLayout {
         let provider = createSectionProvider()
         let header = createHeader()
         let configuration = UICollectionViewCompositionalLayoutConfiguration()
         configuration.boundarySupplementaryItems = [header]
-        
+
         return UICollectionViewCompositionalLayout(
             sectionProvider: provider,
             configuration: configuration
         )
     }
-    // swiftlint:disable:next line_length
+
     private static func createSectionProvider() -> UICollectionViewCompositionalLayoutSectionProvider {
         return { _, _ in
             let background = NSCollectionLayoutSupplementaryItem(
@@ -31,7 +31,7 @@ enum ProgressLayout {
                 elementKind: CustomElement.outlineBackground.rawValue,
                 containerAnchor: .init(edges: .all)
             )
-            
+
             let item = NSCollectionLayoutItem(
                 layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
@@ -39,7 +39,7 @@ enum ProgressLayout {
                 ),
                 supplementaryItems: [background]
             )
-            
+
             let group = NSCollectionLayoutGroup.vertical(
                 layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
@@ -47,14 +47,14 @@ enum ProgressLayout {
                 ),
                 subitems: [item]
             )
-            
+
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets = .init(top: 0, leading: 12, bottom: 0, trailing: 12)
             section.interGroupSpacing = 8
             return section
         }
     }
-    
+
     private static func createHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         return NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: .init(

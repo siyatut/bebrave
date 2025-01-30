@@ -8,9 +8,9 @@
 import UIKit
 
 extension HabitsViewController {
-    
+
     func setupCollectionView() {
-        
+
         collectionView.register(
             HabitCell.self,
             forCellWithReuseIdentifier: CustomElement.habitsCell.rawValue
@@ -29,7 +29,7 @@ extension HabitsViewController {
             forSupplementaryViewOfKind: CustomElement.collectionHeader.rawValue,
             withReuseIdentifier: CustomElement.collectionHeader.rawValue
         )
-        
+
         view.addSubview(collectionView)
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),

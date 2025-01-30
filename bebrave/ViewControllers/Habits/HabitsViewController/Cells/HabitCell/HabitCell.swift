@@ -8,9 +8,9 @@
 import UIKit
 
 class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
-    
+
     // MARK: - Properties
-    
+
     weak var delegate: HabitCellDelegate?
     var habit: Habit?
     var currentProgress: Int = 0 {
@@ -18,24 +18,24 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
             updateHabitProgress()
         }
     }
-    
+
     var panGesture: UIPanGestureRecognizer!
     var tapGesture: UITapGestureRecognizer!
     var originalCenter: CGPoint = .zero
     let buttonWidth: CGFloat = 50
     var isSwiped = false
-    
+
     // MARK: - Containers for UI components
-    
+
     lazy var leftButtonContainer: UIView = createContainer()
     lazy var rightButtonContainer: UIView = createContainer()
     lazy var contentContainer: UIView = createContainer()
     lazy var progressViewContainer: UIView = createContainer(
         backgroundColor: AppStyle.Colors.isProgressHabitColor
     )
-    
+
     // MARK: - Swipe buttons
-    
+
     lazy var editButton: UIButton = createSwipeButton(
         imageName: "pencil",
         color: .systemBlue,
@@ -56,9 +56,9 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         color: .systemRed,
         action: #selector(confirmDelete)
     )
-    
+
     // MARK: - UI components for cell
-    
+
     lazy var habitsName = UILabel.styled(text: "")
     lazy var percentDone = UILabel.styled(text: "", color: AppStyle.Colors.textColorSecondary)
     lazy var habitsCount = UILabel.styled(text: "", color: AppStyle.Colors.textColorSecondary)
@@ -70,11 +70,11 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         imageName: "UncheckedCheckbox",
         tintColor: AppStyle.Colors.borderColor
     )
-    
+
     let checkmarkLayer = CAShapeLayer()
-    
+
     var progressViewWidthConstraint: NSLayoutConstraint!
-    
+
     let horizontalStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
@@ -84,9 +84,9 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-    
+
     // MARK: - Init
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupComponents()
@@ -94,22 +94,22 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         setupPanGesture()
         setupCheckmarkLayer()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Lifecycle 
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         isSwiped = false
         resetPosition(animated: false)
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         if let habit = habit {
             let today = Calendar.current.startOfDay(for: Date())
             let status = habit.getStatus(for: today)

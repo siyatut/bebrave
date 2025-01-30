@@ -10,14 +10,14 @@ import UIKit
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
 extension HeaderDaysCollectionView: UICollectionViewDelegate, UICollectionViewDataSource {
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
         return daysData.count
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
@@ -27,7 +27,7 @@ extension HeaderDaysCollectionView: UICollectionViewDelegate, UICollectionViewDa
                 withReuseIdentifier: "DayCell",
                 for: indexPath
             )
-            
+
             let item = daysData[indexPath.item]
             let calendar = Calendar.current
             let isCurrentDay = calendar.isDate(item.date, inSameDayAs: Date())

@@ -8,11 +8,11 @@
 import UIKit
 
 extension HabitCell {
-    
+
     func addSubviewsToStackView(_ stackView: UIStackView, views: [UIView]) {
         views.forEach { stackView.addArrangedSubview($0) }
     }
-    
+
     func setupComponents() {
         setupSubviews()
         setupContentView()
@@ -23,19 +23,19 @@ extension HabitCell {
         setupHorizontalStackView()
         setupButtonConstraints()
     }
-    
+
     private func setupSubviews() {
         contentView.addSubview(rightButtonContainer)
         contentView.addSubview(leftButtonContainer)
         contentView.addSubview(contentContainer)
     }
-    
+
     private func setupContentView() {
         contentView.layer.cornerRadius = AppStyle.Sizes.cornerRadius
         contentView.layer.masksToBounds = true
         contentContainer.layer.masksToBounds = true
     }
-    
+
     private func setupLeftAndRightButtonContainers() {
         NSLayoutConstraint.activate([
             leftButtonContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -44,7 +44,7 @@ extension HabitCell {
             leftButtonContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             leftButtonContainer.widthAnchor.constraint(equalToConstant: buttonWidth * 2)
         ])
-        
+
         NSLayoutConstraint.activate([
             rightButtonContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             rightButtonContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -53,7 +53,7 @@ extension HabitCell {
             rightButtonContainer.widthAnchor.constraint(equalToConstant: buttonWidth * 2)
         ])
     }
-    
+
     private func setupContentContainer() {
         NSLayoutConstraint.activate([
             contentContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -62,11 +62,11 @@ extension HabitCell {
             contentContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
-    // swiftlint:disable line_length
+
     private func setupProgressViewContainer() {
         contentContainer.addSubview(progressViewContainer)
         progressViewWidthConstraint = progressViewContainer.widthAnchor.constraint(equalToConstant: 0)
-        
+
         NSLayoutConstraint.activate([
             progressViewContainer.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
             progressViewContainer.topAnchor.constraint(equalTo: contentContainer.topAnchor),
@@ -74,10 +74,10 @@ extension HabitCell {
             progressViewWidthConstraint
         ])
     }
-    
+
     private func setupCheckbox() {
         contentContainer.addSubview(checkbox)
-        
+
         NSLayoutConstraint.activate([
             checkbox.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor, constant: -23),
             checkbox.centerYAnchor.constraint(equalTo: contentContainer.centerYAnchor),
@@ -85,28 +85,28 @@ extension HabitCell {
             checkbox.widthAnchor.constraint(equalToConstant: 20)
         ])
     }
-    
+
     private func setupHorizontalStackView() {
         contentContainer.addSubview(horizontalStackView)
         contentContainer.addSubview(percentDone)
-        
+
         habitsName.lineBreakMode = .byTruncatingTail
         habitsName.numberOfLines = 1
-        
+
         addSubviewsToStackView(horizontalStackView, views: [habitsName, starDivider, habitsCount])
-        
+
         NSLayoutConstraint.activate([
             horizontalStackView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 16),
             horizontalStackView.topAnchor.constraint(equalTo: contentContainer.topAnchor, constant: 10),
             horizontalStackView.trailingAnchor.constraint(lessThanOrEqualTo: checkbox.leadingAnchor, constant: -23),
-            
+
             percentDone.topAnchor.constraint(equalTo: horizontalStackView.bottomAnchor, constant: 4),
             percentDone.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor, constant: -12),
             percentDone.leadingAnchor.constraint(equalTo: horizontalStackView.leadingAnchor),
             percentDone.trailingAnchor.constraint(lessThanOrEqualTo: checkbox.leadingAnchor, constant: 106)
         ])
     }
-    
+
     private func setupButtonConstraints() {
         let rightButtons = [deleteButton, skipButton]
         for (index, button) in rightButtons.enumerated() {
@@ -119,7 +119,7 @@ extension HabitCell {
                 button.widthAnchor.constraint(equalToConstant: buttonWidth)
             ])
         }
-        
+
         let leftButtons = [editButton, cancelButton]
         for (index, button) in leftButtons.enumerated() {
             leftButtonContainer.addSubview(button)
@@ -133,4 +133,3 @@ extension HabitCell {
         }
     }
 }
-// swiftlint:enable line_length

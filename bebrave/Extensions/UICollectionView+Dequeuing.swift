@@ -8,7 +8,7 @@
 import UIKit
 
 extension UICollectionView {
-    
+
     func dequeueSupplementaryView<T: UICollectionReusableView>(
         ofKind kind: String,
         withReuseIdentifier reuseIdentifier: String,
@@ -25,7 +25,7 @@ extension UICollectionView {
         }
         return view
     }
-    
+
     func dequeueCell<T: UICollectionViewCell>(
         withReuseIdentifier reuseIdentifier: String,
         for indexPath: IndexPath

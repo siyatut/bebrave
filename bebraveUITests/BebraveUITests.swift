@@ -16,7 +16,7 @@ final class BebraveUITests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-    
+
     }
 
     func testExample() throws {

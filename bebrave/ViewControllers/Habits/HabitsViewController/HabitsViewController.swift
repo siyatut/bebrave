@@ -11,22 +11,22 @@
 import UIKit
 
 class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-    
+
     // MARK: - Data Source
-    
+
     var habits: [Habit] = []
-    
+
     // MARK: - Properties
-    
+
     var headerView: HeaderDaysCollectionView?
     weak var swipedCell: HabitCell?
-    
+
     // MARK: - UI components
-    
+
     let calendarLabel = UILabel()
     let historyButton = UIButton()
     let createNewHabitButton = UIButton()
-    
+
     lazy var collectionView: UICollectionView = {
         let layout = HabitsLayout.createLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -36,16 +36,16 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         collectionView.dataSource = self
         return collectionView
     }()
-    
+
     lazy var emptyStateView: EmptyStateView = {
         let view = EmptyStateView(text: "Пора что-нибудь сюда добавить")
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isHidden = true
         return view
     }()
-    
+
     // MARK: - Lifecycle 
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = AppStyle.Colors.backgroundColor
@@ -54,42 +54,42 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         setupEmptyStateView()
         setupHistoryButton()
         setupCalendarLabel()
-        
+
         // Вот это логика для невыполненной привычки:
         UserDefaultsManager.shared.resetUncompletedHabits()
         habits = UserDefaultsManager.shared.loadHabits()
         scheduleMidnightCheck()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         habits = UserDefaultsManager.shared.loadHabits()
-        
+
         for index in habits.indices {
             habits[index].updateSkippedDays(startDate: habits[index].creationDate, endDate: Date())
         }
-        
+
         collectionView.reloadData()
         updateEmptyState()
         DispatchQueue.main.async {
             self.updateCalendarLabel()
         }
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if self.isMovingFromParent {
             navigationController?.delegate = nil
         }
     }
-    
+
     // MARK: - Tap actions
-    
+
     @objc func historyButtonTapped() {
         let historyVC = HistoryViewController(habits: habits)
         self.navigationController?.pushViewController(historyVC, animated: true)
     }
-    
+
     @objc func presentAddHabitController() {
         let newHabitVC = NewHabitViewController()
         newHabitVC.modalPresentationStyle = .pageSheet
@@ -97,9 +97,9 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         print("Открыт экран добавления привычки")
         self.present(newHabitVC, animated: true, completion: nil)
     }
-    
+
     // MARK: - Handle uncompleted habits
-    
+
     func scheduleMidnightCheck() {
         let calendar = Calendar.current
         let now = Date()
@@ -116,7 +116,7 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         )
         RunLoop.main.add(timer, forMode: .common)
     }
-    
+
     @objc private func handleMidnight() {
         UserDefaultsManager.shared.resetUncompletedHabits()
         habits = UserDefaultsManager.shared.loadHabits()

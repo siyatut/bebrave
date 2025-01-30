@@ -45,7 +45,7 @@ extension Habit {
 // MARK: - Habit progress management
 
 extension Habit {
-    
+
     mutating func markCompleted() {
         let today = Calendar.current.startOfDay(for: Date())
         let currentProgress = progress[today] ?? 0
@@ -53,7 +53,7 @@ extension Habit {
             progress[today] = currentProgress + 1
         }
     }
-    
+
     mutating func undoCompletion() {
         let today = Calendar.current.startOfDay(for: Date())
         let currentProgress = progress[today] ?? 0
@@ -61,46 +61,46 @@ extension Habit {
             progress[today] = currentProgress - 1
         }
     }
-    
+
     mutating func skipToday() {
         let today = Calendar.current.startOfDay(for: Date())
         skipDates.insert(today)
     }
-    
+
     mutating func undoSkip() {
         let today = Calendar.current.startOfDay(for: Date())
         skipDates.remove(today)
         progress[today] = 0
     }
-    
+
     mutating func updateSkippedDays(startDate: Date = Date(), endDate: Date = Date()) {
         let calendar = Calendar.current
         var currentDate = calendar.startOfDay(for: startDate)
         let endOfDay = calendar.startOfDay(for: endDate)
-        
+
         while currentDate <= endOfDay {
             let weekday = (calendar.component(.weekday, from: currentDate) + 5) % 7
             let startOfDay = calendar.startOfDay(for: currentDate)
-            
+
             // Если день недели не отмечен, но день уже пропущен вручную, не перезаписываю его
             if !daysOfWeek[weekday] && !skipDates.contains(startOfDay) {
                 skipDates.insert(startOfDay)
             }
-            
+
             currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate
         }
     }
-    
+
     func getStatus(for date: Date = Date()) -> HabitStatus {
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: date)
-        
+
         if skipDates.contains(startOfDay) {
             return .skipped
         }
-        
+
         let progressForDay = progress[startOfDay] ?? 0
-        
+
         if progressForDay == 0 {
             return .notCompleted
         } else if progressForDay < frequency {
@@ -109,7 +109,7 @@ extension Habit {
             return .completed
         }
     }
-    
+
     func calculateProgress(
         from startDate: Date,
         to endDate: Date,

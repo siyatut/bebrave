@@ -8,7 +8,7 @@
 import UIKit
 
 extension HabitCell {
-    
+
     func createSwipeButton(
         imageName: String,
         color: UIColor,
@@ -22,7 +22,7 @@ extension HabitCell {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }
-    
+
     func createContainer(backgroundColor: UIColor = AppStyle.Colors.backgroundColor) -> UIView {
         let view = UIView()
         view.backgroundColor = backgroundColor

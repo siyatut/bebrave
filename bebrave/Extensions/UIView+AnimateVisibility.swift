@@ -17,11 +17,11 @@ extension UIView {
         if isVisible {
             self.alpha = 0
             self.isHidden = false
-            
+
             if transformEffect {
                 self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
             }
-            
+
             UIView.animate(
                 withDuration: duration,
                 delay: 0,

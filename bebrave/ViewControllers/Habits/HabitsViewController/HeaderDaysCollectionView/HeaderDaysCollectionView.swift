@@ -8,9 +8,9 @@
 import UIKit
 
 class HeaderDaysCollectionView: UICollectionReusableView {
-    
+
     // MARK: - UI components
-    
+
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -21,24 +21,24 @@ class HeaderDaysCollectionView: UICollectionReusableView {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
-    
+
     var daysData: [(date: Date, emoji: String)] = []
-    
+
     // MARK: - Init
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCollectionView()
         setupLayout()
         generateDaysForCurrentMonth()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Setup methods
-    
+
     private func setupCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -46,7 +46,7 @@ class HeaderDaysCollectionView: UICollectionReusableView {
         collectionView.backgroundColor = .clear
         addSubview(collectionView)
     }
-    
+
     private func setupLayout() {
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: topAnchor),
@@ -55,13 +55,13 @@ class HeaderDaysCollectionView: UICollectionReusableView {
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
-    
+
     // MARK: - Data methods
-    
+
     private func generateDaysForCurrentMonth() {
         var calendar = Calendar.current
         let today = Date()
-        
+
         calendar.firstWeekday = 2
         guard let startOfWeek = calendar.date(
             from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear],
@@ -70,9 +70,9 @@ class HeaderDaysCollectionView: UICollectionReusableView {
             assertionFailure("Не удалось определить начало недели")
             return
         }
-        
+
         let habits = UserDefaultsManager.shared.loadHabits()
-        
+
         daysData = (0..<7).compactMap { dayOffset -> (
             date: Date,
             emoji: String
@@ -92,7 +92,7 @@ class HeaderDaysCollectionView: UICollectionReusableView {
         }
         collectionView.reloadData()
     }
-    
+
     func getDisplayedDates() -> [Date] {
         return daysData.map { $0.date }
     }

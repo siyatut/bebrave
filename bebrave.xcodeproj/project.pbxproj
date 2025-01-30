@@ -546,7 +546,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"$(uname -m)\" = \"arm64\" ]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif command -v swiftlint >/dev/null 2>&1; then\n    swiftlint --config \"${SRCROOT}/bebrave/.swiftlint.yml\"\nelse\n    echo \"warning: SwiftLint not installed. Visit https://github.com/realm/SwiftLint to install.\"\nfi\n\n\n";
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]\nthen\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif command -v swiftlint >/dev/null 2>&1\nthen\n    swiftlint\nelse\n    echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\nfi\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

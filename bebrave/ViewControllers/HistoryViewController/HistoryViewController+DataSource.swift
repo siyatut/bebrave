@@ -8,14 +8,14 @@
 import UIKit
 
 extension HistoryViewController: UICollectionViewDataSource {
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
         return habitsProgress.count
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
@@ -33,7 +33,7 @@ extension HistoryViewController: UICollectionViewDataSource {
         cell.configure(with: habitProgress)
         return cell
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
@@ -48,14 +48,14 @@ extension HistoryViewController: UICollectionViewDataSource {
             ) as? HistoryHeaderView else {
                 fatalError("Не удалось deque header с типом \(kind)")
             }
-            
+
             header.configure(
                 onPeriodChange: { [weak self] selectedPeriod in
                     self?.updateData(for: selectedPeriod)
                 }
             )
             return header
-            
+
         case CustomElement.outlineBackground.rawValue:
             guard let background = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
@@ -69,7 +69,7 @@ extension HistoryViewController: UICollectionViewDataSource {
                 fatalError("\(error)")
             }
             return background
-            
+
         default:
             fatalError("\(SupplementaryViewError.unexpectedKind(kind))")
         }

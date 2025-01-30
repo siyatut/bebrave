@@ -15,22 +15,22 @@ extension HabitsViewController {
             print("Header is not visible or initialized.")
             return
         }
-        
+
         let dates = header.getDisplayedDates()
-        
+
         guard let firstDate = dates.first, let lastDate = dates.last else {
             assertionFailure("Dates array is empty")
             return
         }
-        
+
         let calendar = Calendar.current
         let formatter = DateFormatter()
         formatter.locale = Locale.current
         formatter.dateFormat = "LLLL"
-        
+
         let firstMonth = formatter.string(from: firstDate).capitalized
         let lastMonth = formatter.string(from: lastDate).lowercased()
-        
+
         if calendar.isDate(firstDate, equalTo: lastDate, toGranularity: .month) {
             calendarLabel.text = firstMonth
         } else {

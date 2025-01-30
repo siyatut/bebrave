@@ -8,36 +8,36 @@
 import UIKit
 
 extension HabitCell {
-    
+
     // MARK: - Gesture methods
-    
+
     func setupTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         tapGesture.cancelsTouchesInView = false
         tapGesture.delegate = self
         contentContainer.addGestureRecognizer(tapGesture)
     }
-    
+
     func setupPanGesture() {
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
         panGesture.cancelsTouchesInView = true
         panGesture.delegate = self
         contentView.addGestureRecognizer(panGesture)
     }
-    
+
     // MARK: - Handle pan gesture
-    
+
     @objc func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: self)
-        
+
         switch gesture.state {
         case .began:
             originalCenter = contentContainer.center
             delegate?.habitCellDidStartSwipe(self)
-            
+
         case .changed:
             contentContainer.transform = CGAffineTransform(translationX: translation.x, y: 0)
-            
+
         case .ended:
             if translation.x < -buttonWidth {
                 showLeftSwipeAction()
@@ -46,12 +46,12 @@ extension HabitCell {
             } else {
                 resetPosition()
             }
-            
+
         default:
             break
         }
     }
-    
+
     func showRightSwipeActions() {
         isSwiped = true
         UIView.animate(withDuration: 0.3) {
@@ -63,7 +63,7 @@ extension HabitCell {
             self.layoutIfNeeded()
         }
     }
-    
+
     func showLeftSwipeAction() {
         isSwiped = true
         UIView.animate(withDuration: 0.3) {
@@ -75,7 +75,7 @@ extension HabitCell {
             self.layoutIfNeeded()
         }
     }
-    
+
     @objc func resetPosition(animated: Bool = true) {
         isSwiped = false
         let animations = {
@@ -89,15 +89,15 @@ extension HabitCell {
             animations()
         }
     }
-    
+
     // MARK: - Handle tap gesture
-    
+
     @objc func handleTap() {
         guard var habit = habit else {
             print("No habit found. Exiting tap handler.")
             return
         }
-        
+
         if currentProgress < habit.frequency {
             habit.markCompleted()
             currentProgress += 1
