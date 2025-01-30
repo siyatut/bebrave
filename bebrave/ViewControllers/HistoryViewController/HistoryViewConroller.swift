@@ -109,29 +109,40 @@ class HistoryViewController: UIViewController {
         let calendar = Calendar.current
         let today = Date()
 
-        let startDate: Date?
+        var dateInterval: DateInterval?
+
         switch period {
         case .week:
-            startDate = calendar.date(byAdding: .day, value: -6, to: today)
+            dateInterval = calendar.dateInterval(of: .weekOfYear, for: today)
 
         case .month:
-            startDate = calendar.date(byAdding: .month, value: -1, to: today)
+            dateInterval = calendar.dateInterval(of: .month, for: today)
 
         case .halfYear:
-            startDate = calendar.date(byAdding: .month, value: -6, to: today)
+            if let sixMonthsAgo = calendar.date(byAdding: .month, value: -5, to: today),
+               let startOfHalfYear = calendar.date(from: calendar.dateComponents([.year, .month], from: sixMonthsAgo)),
+            let endOfHalfYear = calendar.date(
+                byAdding: .day,
+                value: -1,
+                to: calendar.date(byAdding: .month, value: 6,
+                to: startOfHalfYear)!) {
+                dateInterval = DateInterval(start: startOfHalfYear, end: endOfHalfYear)
+            }
 
         case .year:
-            startDate = calendar.date(byAdding: .year, value: -1, to: today)
+            dateInterval = calendar.dateInterval(of: .year, for: today)
         }
 
-        guard let startDate = startDate else { return }
+        guard let interval = dateInterval else { return }
+
+        let adjustedEnd = calendar.date(byAdding: .day, value: -1, to: interval.end) ?? interval.end
+        let totalDays = calendar.dateComponents([.day], from: interval.start, to: adjustedEnd).day! + 1
 
         habitsProgress = habits.map { habit in
-            let totalDays = calendar.dateComponents([.day], from: startDate, to: today).day! + 1
             let completedDays = habit.progress
-                .filter { $0.key >= startDate && $0.key <= today && $0.value > 0 }
+                .filter { $0.key >= interval.start && $0.key <= adjustedEnd && $0.value > 0 }
                 .count
-            let skippedDays = habit.skipDates.filter { $0 >= startDate && $0 <= today }.count
+            let skippedDays = habit.skipDates.filter { $0 >= interval.start && $0 <= adjustedEnd }.count
             let remainingDays = totalDays - (completedDays + skippedDays)
 
             return HabitProgress(
