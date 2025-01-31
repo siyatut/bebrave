@@ -115,7 +115,7 @@ final class UserDefaultsManager {
         logError("Ошибка при загрузке данных (\(key))", error: error)
         #endif
     }
-    
+
     private func handleSaveError(_ error: Error, forKey key: String) {
         #if DEBUG
         assertionFailure("Ошибка при сохранении данных (\(key)): \(error)")

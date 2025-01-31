@@ -106,6 +106,7 @@ class HistoryViewController: UIViewController {
     // MARK: - Data Handling
 
     private func calculateProgress(for period: Period) {
+        // TODO: - Опять что-то неправильно здесь посчитывается. Или UI некорректно обновляется. Только при перезагрузки, а нужно чтобы и при смене экрана апдейтился
         let calendar = Calendar.current
         let today = Date()
 
