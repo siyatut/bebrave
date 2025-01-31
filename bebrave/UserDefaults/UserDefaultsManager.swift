@@ -24,19 +24,21 @@ final class UserDefaultsManager {
             return []
         }
         do {
-            return try JSONDecoder().decode([Habit].self, from: data)
+            let decoder = JSONDecoder()
+            return try decoder.decode([Habit].self, from: data)
         } catch {
-            print("Ошибка при загрузке привычек: \(error)")
+            logError("Ошибка при загрузке привычек", error: error)
             return []
         }
     }
 
     func saveHabits(_ habits: [Habit]) {
         do {
-            let encodedData = try JSONEncoder().encode(habits)
+            let encoder = JSONEncoder()
+            let encodedData = try encoder.encode(habits)
             defaults.set(encodedData, forKey: UserDefaultsKeys.habits)
         } catch {
-            assertionFailure("Ошибка при сохранении привычек: \(error)")
+            handleSaveError(error, forKey: UserDefaultsKeys.habits)
         }
     }
 
@@ -86,19 +88,44 @@ final class UserDefaultsManager {
             return nil
         }
         do {
-            return try JSONDecoder().decode(Period.self, from: data)
+            let decoder = JSONDecoder()
+            return try decoder.decode(Period.self, from: data)
         } catch {
-            print("Ошибка при загрузке периода: \(error)")
+            handleLoadError(error, forKey: UserDefaultsKeys.selectedPeriod)
             return nil
         }
     }
 
     func saveSelectedPeriod(_ period: Period) {
         do {
-            let encodedData = try JSONEncoder().encode(period)
+            let encoder = JSONEncoder()
+            let encodedData = try encoder.encode(period)
             defaults.set(encodedData, forKey: UserDefaultsKeys.selectedPeriod)
         } catch {
-            assertionFailure("Ошибка при сохранении периода: \(error)")
+            handleSaveError(error, forKey: UserDefaultsKeys.selectedPeriod)
         }
+    }
+
+    // MARK: - Error Handling
+
+    private func handleLoadError(_ error: Error, forKey key: String) {
+        #if DEBUG
+        assertionFailure("Ошибка при загрузке данных (\(key)): \(error)")
+        #else
+        logError("Ошибка при загрузке данных (\(key))", error: error)
+        #endif
+    }
+    
+    private func handleSaveError(_ error: Error, forKey key: String) {
+        #if DEBUG
+        assertionFailure("Ошибка при сохранении данных (\(key)): \(error)")
+        #else
+        logError("Ошибка при сохранении данных (\(key))", error: error)
+        #endif
+    }
+
+    private func logError(_ message: String, error: Error) {
+        print("\(message): \(error)")
+
     }
 }
