@@ -23,7 +23,7 @@ extension HabitsViewController {
         ])
         configuration.attributedTitle = AttributedString("История", attributes: titleAttributes)
         historyButton.configuration = configuration
-        historyButton.addTarget(self, action: #selector(historyButtonTapped), for: .touchUpInside)
+//        historyButton.addTarget(self, action: #selector(historyButtonTapped), for: .touchUpInside)
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: historyButton)
     }
@@ -63,7 +63,7 @@ extension HabitsViewController {
     }
 
     func updateEmptyState(animated: Bool = true) {
-        let shouldShowEmptyState = habits.isEmpty
+        let shouldShowEmptyState = viewModel.habits.isEmpty
 
         emptyStateView.animateVisibility(
             isVisible: shouldShowEmptyState,

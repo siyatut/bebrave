@@ -24,19 +24,8 @@ class HistoryViewController: UIViewController {
 
     // MARK: - Data
 
-    var habits: [Habit] = []
+    var viewModel = HabitsViewModel()
     var habitsProgress: [HabitProgress] = []
-
-    // MARK: - Init
-
-    init(habits: [Habit]) {
-        self.habits = habits
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     // MARK: - Lifecycle
 
@@ -100,7 +89,7 @@ class HistoryViewController: UIViewController {
     }
 
     private func setupEmptyStateVisibility() {
-        emptyStateView.isHidden = !habits.isEmpty
+        emptyStateView.isHidden = !viewModel.habits.isEmpty
     }
 
     // MARK: - Data Handling
@@ -139,7 +128,7 @@ class HistoryViewController: UIViewController {
         let adjustedEnd = calendar.date(byAdding: .day, value: -1, to: interval.end) ?? interval.end
         let totalDays = calendar.dateComponents([.day], from: interval.start, to: adjustedEnd).day! + 1
 
-        habitsProgress = habits.map { habit in
+        habitsProgress = viewModel.habits.map { habit in
             let completedDays = habit.progress
                 .filter { $0.key >= interval.start && $0.key <= adjustedEnd && $0.value > 0 }
                 .count

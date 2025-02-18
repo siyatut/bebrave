@@ -19,7 +19,7 @@ class NewHabitViewController: BaseHabitViewController {
     // MARK: - Handle performing habit
 
     override func handleHabitSave(_ habit: Habit) {
-        UserDefaultsManager.shared.addHabit(habit)
+        viewModel.addHabit(habit)
         delegate?.willHideEmptyStateView()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {

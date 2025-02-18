@@ -8,6 +8,10 @@
 import UIKit
 
 class BaseHabitViewController: UIViewController {
+    
+    // MARK: - Properties
+    
+    let viewModel = HabitsViewModel()
 
     // MARK: - Delegate
 

@@ -93,16 +93,13 @@ extension HabitCell {
     // MARK: - Handle tap gesture
 
     @objc func handleTap() {
-        guard var habit = habit else {
-            print("No habit found. Exiting tap handler.")
+        guard let habit = habit, let viewModel = viewModel else {
+            print("No habit or viewModel found. Exiting tap handler.")
             return
         }
-
+        
         if currentProgress < habit.frequency {
-            habit.markCompleted()
-            currentProgress += 1
-            UserDefaultsManager.shared.updateHabit(habit)
-            configure(with: habit)
+            viewModel.markHabitCompleted(id: habit.id)
         } else {
             print("Habit already completed.")
         }

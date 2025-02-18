@@ -13,6 +13,7 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
     weak var delegate: HabitCellDelegate?
     var habit: Habit?
+    var viewModel: HabitsViewModel?
     var currentProgress: Int = 0 {
         didSet {
             updateHabitProgress()

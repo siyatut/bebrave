@@ -45,7 +45,7 @@ class EditHabitViewController: BaseHabitViewController {
         updatedHabit.daysOfWeek = selectedDays
         updatedHabit.updateSkippedDays(startDate: updatedHabit.creationDate, endDate: Date())
 
-        UserDefaultsManager.shared.updateHabit(updatedHabit)
+        viewModel.updateHabit(updatedHabit)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             self.delegate?.didEditHabit(updatedHabit)

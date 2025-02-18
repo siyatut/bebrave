@@ -9,17 +9,16 @@
 // TODO: - Когда создать экран «История», проверить корректность работы статуса привычки «Не выполнена», если пользователь до 00:00 по своей таймзоне никак не взаимодействовал с ней")
 
 import UIKit
+import Combine
 
 class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
-    // MARK: - Data Source
-
-    var habits: [Habit] = []
-
     // MARK: - Properties
 
+    let viewModel = HabitsViewModel()
     var headerView: HeaderDaysCollectionView?
     weak var swipedCell: HabitCell?
+    private var cancellables = Set<AnyCancellable>()
 
     // MARK: - UI components
 
@@ -54,21 +53,17 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         setupEmptyStateView()
         setupHistoryButton()
         setupCalendarLabel()
+        setupBindings()
 
         // Вот это логика для невыполненной привычки:
-        UserDefaultsManager.shared.resetUncompletedHabits()
-        habits = UserDefaultsManager.shared.loadHabits()
+        viewModel.resetUncompletedHabits()
+        viewModel.loadHabits()
         scheduleMidnightCheck()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        habits = UserDefaultsManager.shared.loadHabits()
-
-        for index in habits.indices {
-            habits[index].updateSkippedDays(startDate: habits[index].creationDate, endDate: Date())
-        }
-
+        viewModel.updateSkippedDaysForAllHabits()
         collectionView.reloadData()
         updateEmptyState()
         DispatchQueue.main.async {
@@ -83,10 +78,20 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
 
+    private func setupBindings() {
+        viewModel.$habits
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.collectionView.reloadData()
+            }
+            .store(in: &cancellables)
+    }
+
     // MARK: - Tap actions
 
     @objc func historyButtonTapped() {
-        let historyVC = HistoryViewController(habits: habits)
+        let historyVC = HistoryViewController()
+        historyVC.viewModel = self.viewModel
         self.navigationController?.pushViewController(historyVC, animated: true)
     }
 
@@ -118,8 +123,7 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
 
     @objc private func handleMidnight() {
-        UserDefaultsManager.shared.resetUncompletedHabits()
-        habits = UserDefaultsManager.shared.loadHabits()
+        viewModel.resetUncompletedHabits()
         collectionView.reloadData()
         scheduleMidnightCheck()
     }

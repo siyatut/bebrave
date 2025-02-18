@@ -18,36 +18,30 @@ extension HabitsViewController: HabitCellDelegate {
             navigationController?.present(changeHabitVC, animated: true, completion: nil)
 
         case .delete:
-            deleteHabit(habit)
+            viewModel.deleteHabit(id: habit.id)
+            updateCollectionView(for: habit.id)
 
         case .skipToday:
-            var updatedHabit = habit
-            updatedHabit.skipToday()
-            UserDefaultsManager.shared.updateHabit(updatedHabit)
-            reloadHabit(updatedHabit)
+            viewModel.skipHabit(id: habit.id)
+            updateCollectionView(for: habit.id)
 
         case .unmarkCompletion:
-            var updatedHabit = habit
-            updatedHabit.undoCompletion()
-            UserDefaultsManager.shared.updateHabit(updatedHabit)
-            reloadHabit(updatedHabit)
+            viewModel.undoCompletion(id: habit.id)
+            updateCollectionView(for: habit.id)
 
         case .undoSkip:
-            var updatedHabit = habit
-            updatedHabit.undoSkip()
-            UserDefaultsManager.shared.updateHabit(updatedHabit)
-            reloadHabit(updatedHabit)
+            viewModel.undoSkipHabit(id: habit.id)
+            updateCollectionView(for: habit.id)
         }
     }
-
-    private func reloadHabit(_ habit: Habit) {
-        if let index = habits.firstIndex(where: { $0.id == habit.id }) {
-            habits[index] = habit
+    
+    private func updateCollectionView(for habitId: UUID) {
+        if let index = viewModel.habits.firstIndex(where: { $0.id == habitId }) {
             let indexPath = IndexPath(item: index, section: 0)
             collectionView.reloadItems(at: [indexPath])
         }
     }
-
+    
     func habitCellDidStartSwipe(_ cell: HabitCell) {
         if swipedCell != cell {
             swipedCell?.resetPosition()

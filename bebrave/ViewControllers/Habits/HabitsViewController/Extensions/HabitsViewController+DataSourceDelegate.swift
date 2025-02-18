@@ -19,7 +19,7 @@ extension HabitsViewController {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return habits.count + 1
+        return viewModel.habits.count + 1
     }
 
     func collectionView(
@@ -27,16 +27,16 @@ extension HabitsViewController {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         do {
-            if indexPath.item < habits.count {
+            if indexPath.item < viewModel.habits.count {
                 let habitCell: HabitCell = try collectionView.dequeueCell(
                     withReuseIdentifier: CustomElement.habitsCell.rawValue,
                     for: indexPath
                 )
-                let habit = habits[indexPath.item]
+                let habit = viewModel.habits[indexPath.item]
                 habitCell.delegate = self
-                habitCell.configure(with: habit)
+                habitCell.configure(with: habit, viewModel: viewModel)
                 return habitCell
-            } else if indexPath.item == habits.count {
+            } else if indexPath.item == viewModel.habits.count {
                 let diaryCell: DiaryWriteCell = try collectionView.dequeueCell(
                     withReuseIdentifier: CustomElement.writeDiaryCell.rawValue,
                     for: indexPath
@@ -93,8 +93,8 @@ extension HabitsViewController {
 
 extension HabitsViewController {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 0, indexPath.item < habits.count {
-            let selectedHabit = habits[indexPath.item]
+        if indexPath.section == 0, indexPath.item < viewModel.habits.count {
+            let selectedHabit = viewModel.habits[indexPath.item]
             print("Selected habit: \(selectedHabit.title)")
         }
     }

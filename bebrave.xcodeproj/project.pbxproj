@@ -15,6 +15,8 @@
 		5219E2B02D12324500F41D97 /* CellError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219E2AF2D12324500F41D97 /* CellError.swift */; };
 		5219E2B32D12371E00F41D97 /* HabitsViewController+Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219E2B22D12371300F41D97 /* HabitsViewController+Calendar.swift */; };
 		5219E2B62D1237B300F41D97 /* HabitsViewController+UISetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219E2B52D1237B100F41D97 /* HabitsViewController+UISetup.swift */; };
+		521E56D12D6454DD00F512A5 /* HabitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521E56D02D6454DB00F512A5 /* HabitsViewModel.swift */; };
+		521E56D32D645C8C00F512A5 /* HabitsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521E56D22D645C8700F512A5 /* HabitsService.swift */; };
 		5232E9DE2D27BA990069FD70 /* UIView+AnimateVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232E9DD2D27BA7D0069FD70 /* UIView+AnimateVisibility.swift */; };
 		52359DAC2D3596E100207E09 /* HabitCellProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52359DAB2D3596DF00207E09 /* HabitCellProtocols.swift */; };
 		52359DAE2D35970300207E09 /* HabitCell+UIHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52359DAD2D35970200207E09 /* HabitCell+UIHelpers.swift */; };
@@ -96,6 +98,8 @@
 		5219E2AF2D12324500F41D97 /* CellError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellError.swift; sourceTree = "<group>"; };
 		5219E2B22D12371300F41D97 /* HabitsViewController+Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+Calendar.swift"; sourceTree = "<group>"; };
 		5219E2B52D1237B100F41D97 /* HabitsViewController+UISetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+UISetup.swift"; sourceTree = "<group>"; };
+		521E56D02D6454DB00F512A5 /* HabitsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsViewModel.swift; sourceTree = "<group>"; };
+		521E56D22D645C8700F512A5 /* HabitsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsService.swift; sourceTree = "<group>"; };
 		5232E9DD2D27BA7D0069FD70 /* UIView+AnimateVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AnimateVisibility.swift"; sourceTree = "<group>"; };
 		52359DAB2D3596DF00207E09 /* HabitCellProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCellProtocols.swift; sourceTree = "<group>"; };
 		52359DAD2D35970200207E09 /* HabitCell+UIHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCell+UIHelpers.swift"; sourceTree = "<group>"; };
@@ -296,7 +300,9 @@
 		52C996A32D11EA17000E7648 /* HabitsViewController */ = {
 			isa = PBXGroup;
 			children = (
+				521E56D22D645C8700F512A5 /* HabitsService.swift */,
 				52F1E5692B7CE6330058F767 /* HabitsViewController.swift */,
+				521E56D02D6454DB00F512A5 /* HabitsViewModel.swift */,
 				52697D5C2D19533A004B9D7E /* Layout */,
 				5219E2B42D12372200F41D97 /* UI */,
 				52C996AD2D11EBD2000E7648 /* Extensions */,
@@ -604,9 +610,11 @@
 				52697D602D1957A9004B9D7E /* HabitsViewController+DataSourceDelegate.swift in Sources */,
 				52C996A92D11EB25000E7648 /* CustomElement.swift in Sources */,
 				524FC7022D075071004C839F /* EmptyStateView.swift in Sources */,
+				521E56D32D645C8C00F512A5 /* HabitsService.swift in Sources */,
 				52C996A52D11EAC7000E7648 /* UICollectionView+Dequeuing.swift in Sources */,
 				52FDA0EE2D37B0970081520A /* NewHabitViewController.swift in Sources */,
 				52359DB22D35987E00207E09 /* HabitCell+Gestures.swift in Sources */,
+				521E56D12D6454DD00F512A5 /* HabitsViewModel.swift in Sources */,
 				52652B8C2D240BD200608550 /* BaseHabitView+Validation.swift in Sources */,
 				5232E9DE2D27BA990069FD70 /* UIView+AnimateVisibility.swift in Sources */,
 				5242479D2D2F9AF600C5E049 /* HabitsViewController+HabitCellDelegate.swift in Sources */,

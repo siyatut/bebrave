@@ -33,8 +33,9 @@ extension HabitCell {
         }
     }
 
-    func configure(with habit: Habit) {
+    func configure(with habit: Habit, viewModel: HabitsViewModel) {
         self.habit = habit
+        self.viewModel = viewModel
         resetCellState()
 
         let today = Calendar.current.startOfDay(for: Date())

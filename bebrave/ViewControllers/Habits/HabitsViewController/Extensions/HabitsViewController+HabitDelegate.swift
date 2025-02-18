@@ -19,14 +19,14 @@ protocol HabitDelegate: AnyObject {
 
 extension HabitsViewController: HabitDelegate {
     func didAddNewHabit(_ habit: Habit) {
-        habits.append(habit)
+        viewModel.addHabit(habit)
         collectionView.reloadData()
         updateEmptyState(animated: true)
     }
 
     func didEditHabit(_ habit: Habit) {
-        if let index = habits.firstIndex(where: { $0.id == habit.id }) {
-            habits[index] = habit
+        viewModel.updateHabit(habit)
+        if let index = viewModel.habits.firstIndex(where: { $0.id == habit.id }) {
             collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
         } else {
             print("Ошибка: Привычка для редактирования не найдена.")
@@ -34,13 +34,13 @@ extension HabitsViewController: HabitDelegate {
     }
 
     func willHideEmptyStateView() {
-        if habits.isEmpty {
+        if viewModel.habits.isEmpty {
             emptyStateView.animateVisibility(isVisible: false, transformEffect: true)
         }
     }
 
     func deleteHabit(_ habit: Habit) {
-        guard let index = habits.firstIndex(where: { $0.id == habit.id }) else {
+        guard let index = viewModel.habits.firstIndex(where: { $0.id == habit.id }) else {
             print("Habit not found or already deleted")
             return
         }
@@ -53,8 +53,7 @@ extension HabitsViewController: HabitDelegate {
                 cell.alpha = 0
             }
         }, completion: { _ in
-            self.habits.remove(at: index)
-            UserDefaultsManager.shared.deleteHabit(id: habit.id)
+            self.viewModel.deleteHabit(id: habit.id)
             self.collectionView.performBatchUpdates({
                 self.collectionView.deleteItems(at: [indexPath])
             }, completion: { _ in
