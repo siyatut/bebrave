@@ -34,14 +34,14 @@ extension HabitsViewController: HabitCellDelegate {
             updateCollectionView(for: habit.id)
         }
     }
-    
+
     private func updateCollectionView(for habitId: UUID) {
         if let index = viewModel.habits.firstIndex(where: { $0.id == habitId }) {
             let indexPath = IndexPath(item: index, section: 0)
             collectionView.reloadItems(at: [indexPath])
         }
     }
-    
+
     func habitCellDidStartSwipe(_ cell: HabitCell) {
         if swipedCell != cell {
             swipedCell?.resetPosition()

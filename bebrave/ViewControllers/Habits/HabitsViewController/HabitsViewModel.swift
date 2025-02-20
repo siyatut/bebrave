@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 class HabitsViewModel: ObservableObject {
-    
+
     @Published private(set) var habits: [Habit] = []
 
     private let habitService = HabitService()
@@ -25,48 +25,50 @@ class HabitsViewModel: ObservableObject {
 
     func addHabit(_ habit: Habit) {
         habitService.addHabit(habit)
-        habits = habitService.getAllHabits()
+        habits.append(habit)
     }
 
     func updateHabit(_ habit: Habit) {
+        guard let index = habits.firstIndex(where: { $0.id == habit.id }) else { return }
+        habits[index] = habit
         habitService.updateHabit(habit)
-        habits = habitService.getAllHabits()
     }
 
     func deleteHabit(id: UUID) {
+        guard let index = habits.firstIndex(where: { $0.id == id }) else { return }
+        habits.remove(at: index)
         habitService.deleteHabit(id: id)
-        habits = habitService.getAllHabits()
     }
 
     func markHabitCompleted(id: UUID) {
-        guard var habit = habits.first(where: { $0.id == id }) else { return }
-        habit.markCompleted()
-        updateHabit(habit)
+        guard let index = habits.firstIndex(where: { $0.id == id }) else { return }
+        habits[index].markCompleted()
+        habitService.updateHabit(habits[index])
     }
 
     func undoCompletion(id: UUID) {
-        guard var habit = habits.first(where: { $0.id == id }) else { return }
-        habit.undoCompletion()
-        updateHabit(habit)
+        guard let index = habits.firstIndex(where: { $0.id == id }) else { return }
+        habits[index].undoCompletion()
+        habitService.updateHabit(habits[index])
     }
 
     func skipHabit(id: UUID) {
-        guard var habit = habits.first(where: { $0.id == id }) else { return }
-        habit.skipToday()
-        updateHabit(habit)
+        guard let index = habits.firstIndex(where: { $0.id == id }) else { return }
+        habits[index].skipToday()
+        habitService.updateHabit(habits[index])
     }
 
     func undoSkipHabit(id: UUID) {
-        guard var habit = habits.first(where: { $0.id == id }) else { return }
-        habit.undoSkip()
-        updateHabit(habit)
+        guard let index = habits.firstIndex(where: { $0.id == id }) else { return }
+        habits[index].undoSkip()
+        habitService.updateHabit(habits[index])
     }
 
     func resetUncompletedHabits() {
         habitService.resetUncompletedHabits()
-        habits = habitService.getAllHabits()
+        loadHabits()
     }
-    
+
     func updateSkippedDaysForAllHabits() {
         for index in habits.indices {
             habits[index].updateSkippedDays(startDate: habits[index].creationDate, endDate: Date())

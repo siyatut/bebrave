@@ -97,7 +97,7 @@ extension HabitCell {
             print("No habit or viewModel found. Exiting tap handler.")
             return
         }
-        
+
         if currentProgress < habit.frequency {
             viewModel.markHabitCompleted(id: habit.id)
         } else {

@@ -17,24 +17,24 @@ protocol HabitDelegate: AnyObject {
 // MARK: - NewHabitDelegate
 
 extension HabitsViewController: HabitDelegate {
-    
+
     func didAddNewHabit(_ habit: Habit) {
         viewModel.addHabit(habit)
         updateEmptyState(animated: true)
     }
-    
+
     func didEditHabit(_ habit: Habit) {
         viewModel.updateHabit(habit)
     }
-  
+
     func deleteHabit(_ habit: Habit) {
         guard let index = viewModel.habits.firstIndex(where: { $0.id == habit.id }) else {
             print("Habit not found or already deleted")
             return
         }
-        
+
         let indexPath = IndexPath(item: index, section: 0)
-        
+
         UIView.animate(withDuration: 0.3, animations: {
             if let cell = self.collectionView.cellForItem(at: indexPath) {
                 cell.transform = CGAffineTransform(translationX: self.view.frame.width, y: 0)
