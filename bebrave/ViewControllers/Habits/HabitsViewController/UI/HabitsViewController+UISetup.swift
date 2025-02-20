@@ -67,7 +67,7 @@ extension HabitsViewController {
 
         emptyStateView.animateVisibility(
             isVisible: shouldShowEmptyState,
-            duration: animated ? 0.4 : 0.0,
+            duration: animated ? 0.5 : 0.0,
             transformEffect: true
         )
     }

@@ -19,13 +19,8 @@ class NewHabitViewController: BaseHabitViewController {
     // MARK: - Handle performing habit
 
     override func handleHabitSave(_ habit: Habit) {
-        viewModel.addHabit(habit)
-        delegate?.willHideEmptyStateView()
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            self.delegate?.didAddNewHabit(habit)
-            print("Новая привычка сохранена: \(habit.title)")
-            self.dismiss(animated: true, completion: nil)
-        }
+        delegate?.didAddNewHabit(habit)
+        print("Новая привычка сохранена: \(habit.title)")
+        self.dismiss(animated: true, completion: nil)
     }
 }

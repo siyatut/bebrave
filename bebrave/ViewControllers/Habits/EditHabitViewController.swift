@@ -45,13 +45,9 @@ class EditHabitViewController: BaseHabitViewController {
         updatedHabit.daysOfWeek = selectedDays
         updatedHabit.updateSkippedDays(startDate: updatedHabit.creationDate, endDate: Date())
 
-        viewModel.updateHabit(updatedHabit)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            self.delegate?.didEditHabit(updatedHabit)
-            print("Изменённая привычка сохранена: \(updatedHabit.title)")
-            self.dismiss(animated: true, completion: nil)
-        }
+        delegate?.didEditHabit(habit)
+        print("Изменённая привычка сохранена: \(updatedHabit.title)")
+        self.dismiss(animated: true, completion: nil)
     }
 
     override func createHabitFromFields() -> Habit? {

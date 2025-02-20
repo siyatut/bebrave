@@ -25,17 +25,17 @@ class HabitsViewModel: ObservableObject {
 
     func addHabit(_ habit: Habit) {
         habitService.addHabit(habit)
-        loadHabits()
+        habits = habitService.getAllHabits()
     }
 
     func updateHabit(_ habit: Habit) {
         habitService.updateHabit(habit)
-        loadHabits()
+        habits = habitService.getAllHabits()
     }
 
     func deleteHabit(id: UUID) {
         habitService.deleteHabit(id: id)
-        loadHabits()
+        habits = habitService.getAllHabits()
     }
 
     func markHabitCompleted(id: UUID) {
@@ -64,7 +64,7 @@ class HabitsViewModel: ObservableObject {
 
     func resetUncompletedHabits() {
         habitService.resetUncompletedHabits()
-        loadHabits()
+        habits = habitService.getAllHabits()
     }
     
     func updateSkippedDaysForAllHabits() {
