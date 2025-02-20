@@ -26,13 +26,17 @@ class EditHabitViewController: BaseHabitViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let habit = habitToEdit {
-            habitTextField.text = habit.title
-            timesPerDayTextField.text = "\(habit.frequency)"
-            selectedDays = habit.daysOfWeek
-            setupDaysOfWeekStack()
-            monthsTextField.text = "\(habit.monthFrequency)"
-        }
+        setupUI()
+    }
+
+    private func setupUI() {
+        guard let habit = habitToEdit else { return }
+        habitTextField.text = habit.title
+        timesPerDayTextField.text = "\(habit.frequency)"
+        selectedDays = habit.daysOfWeek
+        setupDaysOfWeekStack()
+        monthsTextField.text = "\(habit.monthFrequency)"
+
         didSaveNewHabitButton.configuration?.baseBackgroundColor = AppStyle.Colors.primaryGreenColor
         didSaveNewHabitButton.setTitle("Сохранить изменения", for: .normal)
         didSaveNewHabitButton.addTarget(self, action: #selector(saveHabit), for: .touchUpInside)
