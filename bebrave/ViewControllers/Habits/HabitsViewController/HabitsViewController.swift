@@ -83,6 +83,7 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.collectionView.reloadData()
+                self?.updateEmptyState()
             }
             .store(in: &cancellables)
     }
