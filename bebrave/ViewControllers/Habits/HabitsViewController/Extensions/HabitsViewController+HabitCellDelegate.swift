@@ -19,26 +19,15 @@ extension HabitsViewController: HabitCellDelegate {
 
         case .delete:
             viewModel.deleteHabit(id: habit.id)
-            updateCollectionView(for: habit.id)
 
         case .skipToday:
             viewModel.skipHabit(id: habit.id)
-            updateCollectionView(for: habit.id)
 
         case .unmarkCompletion:
             viewModel.undoCompletion(id: habit.id)
-            updateCollectionView(for: habit.id)
 
         case .undoSkip:
             viewModel.undoSkipHabit(id: habit.id)
-            updateCollectionView(for: habit.id)
-        }
-    }
-
-    private func updateCollectionView(for habitId: UUID) {
-        if let index = viewModel.habits.firstIndex(where: { $0.id == habitId }) {
-            let indexPath = IndexPath(item: index, section: 0)
-            collectionView.reloadItems(at: [indexPath])
         }
     }
 
