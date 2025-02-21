@@ -63,14 +63,8 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     lazy var habitsName = UILabel.styled(text: "")
     lazy var percentDone = UILabel.styled(text: "", color: AppStyle.Colors.textColorSecondary)
     lazy var habitsCount = UILabel.styled(text: "", color: AppStyle.Colors.textColorSecondary)
-    lazy var starDivider = UIImageView.styled(
-        imageName: "StarDivider",
-        tintColor: AppStyle.Colors.secondaryColor
-    )
-    lazy var checkbox = UIImageView.styled(
-        imageName: "UncheckedCheckbox",
-        tintColor: AppStyle.Colors.borderColor
-    )
+    lazy var starDivider = UIImageView.styled(imageName: "StarDivider")
+    lazy var checkbox = UIImageView.styled(imageName: "UncheckedCheckbox")
 
     let checkmarkLayer = CAShapeLayer()
 

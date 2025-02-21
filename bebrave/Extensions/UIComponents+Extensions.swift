@@ -60,12 +60,11 @@ extension UITextField {
 
 extension UIImageView {
     static func styled(imageName: String,
-                       tintColor: UIColor,
                        alpha: CGFloat = 1.0
     ) -> UIImageView {
         let view = UIImageView()
-        view.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
-        view.tintColor = tintColor
+        let originalImage = UIImage(named: imageName)?.withRenderingMode(.alwaysOriginal)
+        view.image = originalImage
         view.alpha = alpha
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
