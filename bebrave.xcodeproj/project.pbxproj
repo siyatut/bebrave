@@ -38,7 +38,7 @@
 		52652B922D240EE900608550 /* BaseHabitView+TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52652B912D240EE800608550 /* BaseHabitView+TextFieldDelegate.swift */; };
 		52652B942D240FC900608550 /* BaseHabitView+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52652B932D240FC700608550 /* BaseHabitView+Formatting.swift */; };
 		52697D5E2D195361004B9D7E /* HabitsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D5D2D19535F004B9D7E /* HabitsLayout.swift */; };
-		52697D602D1957A9004B9D7E /* HabitsViewController+DataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D5F2D1957A6004B9D7E /* HabitsViewController+DataSourceDelegate.swift */; };
+		52697D602D1957A9004B9D7E /* HabitsViewController+CollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D5F2D1957A6004B9D7E /* HabitsViewController+CollectionViewDelegate.swift */; };
 		52697D642D195A97004B9D7E /* HabitsViewController+HabitDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D632D195A95004B9D7E /* HabitsViewController+HabitDelegate.swift */; };
 		5269FBDD2D40C9EE003A6AC9 /* Period.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5269FBDC2D40C9EA003A6AC9 /* Period.swift */; };
 		52751BAD2D26ACEA008F84A8 /* EditHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52751BAC2D26ACE2008F84A8 /* EditHabitViewController.swift */; };
@@ -122,7 +122,7 @@
 		52652B912D240EE800608550 /* BaseHabitView+TextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BaseHabitView+TextFieldDelegate.swift"; sourceTree = "<group>"; };
 		52652B932D240FC700608550 /* BaseHabitView+Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BaseHabitView+Formatting.swift"; sourceTree = "<group>"; };
 		52697D5D2D19535F004B9D7E /* HabitsLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsLayout.swift; sourceTree = "<group>"; };
-		52697D5F2D1957A6004B9D7E /* HabitsViewController+DataSourceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+DataSourceDelegate.swift"; sourceTree = "<group>"; };
+		52697D5F2D1957A6004B9D7E /* HabitsViewController+CollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+CollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		52697D632D195A95004B9D7E /* HabitsViewController+HabitDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+HabitDelegate.swift"; sourceTree = "<group>"; };
 		5269FBDC2D40C9EA003A6AC9 /* Period.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Period.swift; sourceTree = "<group>"; };
 		52751BAC2D26ACE2008F84A8 /* EditHabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHabitViewController.swift; sourceTree = "<group>"; };
@@ -231,9 +231,10 @@
 		5259A40E2D28508200EF60A2 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				5209B4442D38F2140063CF1C /* HistoryViewController */,
+				52F1E53D2B7CDC300058F767 /* TabBarViewController.swift */,
 				52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */,
 				52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */,
+				5209B4442D38F2140063CF1C /* HistoryViewController */,
 				5259A40F2D28509800EF60A2 /* Habits */,
 			);
 			path = ViewControllers;
@@ -301,35 +302,66 @@
 			path = Actions;
 			sourceTree = "<group>";
 		};
-		52A7624F2D367E54000A30EA /* Models */ = {
+		52934FC02D68D391004BBFAF /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				521E56D02D6454DB00F512A5 /* HabitsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		52934FC12D68D72A004BBFAF /* Domain */ = {
 			isa = PBXGroup;
 			children = (
 				52A762502D367E62000A30EA /* Habit.swift */,
 				5269FBDC2D40C9EA003A6AC9 /* Period.swift */,
-				52A762522D367EA5000A30EA /* HabitStatus.swift */,
 				5209B4492D38F2B90063CF1C /* HabitProgress.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		52934FC22D68D754004BBFAF /* Types  */ = {
+			isa = PBXGroup;
+			children = (
+				52A762522D367EA5000A30EA /* HabitStatus.swift */,
 				52C996A82D11EB23000E7648 /* CustomElement.swift */,
+			);
+			path = "Types ";
+			sourceTree = "<group>";
+		};
+		52934FC42D68D7FF004BBFAF /* Errors */ = {
+			isa = PBXGroup;
+			children = (
 				5219E2AF2D12324500F41D97 /* CellError.swift */,
 				52C996A62D11EAED000E7648 /* SupplementaryViewError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		52A7624F2D367E54000A30EA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				52934FC12D68D72A004BBFAF /* Domain */,
+				52934FC22D68D754004BBFAF /* Types  */,
+				52934FC42D68D7FF004BBFAF /* Errors */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		52C996A02D11E984000E7648 /* UserDefaults */ = {
+		52C996A02D11E984000E7648 /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				52FBCF392CFF1673000206BC /* UserDefaultsManager.swift */,
 				52A762542D367F2B000A30EA /* UserDefaultsKeys.swift */,
+				521E56D22D645C8700F512A5 /* HabitsService.swift */,
 			);
-			path = UserDefaults;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		52C996A32D11EA17000E7648 /* HabitsViewController */ = {
 			isa = PBXGroup;
 			children = (
-				521E56D22D645C8700F512A5 /* HabitsService.swift */,
 				52F1E5692B7CE6330058F767 /* HabitsViewController.swift */,
-				521E56D02D6454DB00F512A5 /* HabitsViewModel.swift */,
 				52697D5C2D19533A004B9D7E /* Layout */,
 				5219E2B42D12372200F41D97 /* UI */,
 				52C996AD2D11EBD2000E7648 /* Delegate */,
@@ -362,7 +394,7 @@
 			children = (
 				52697D632D195A95004B9D7E /* HabitsViewController+HabitDelegate.swift */,
 				5242479C2D2F9AE000C5E049 /* HabitsViewController+HabitCellDelegate.swift */,
-				52697D5F2D1957A6004B9D7E /* HabitsViewController+DataSourceDelegate.swift */,
+				52697D5F2D1957A6004B9D7E /* HabitsViewController+CollectionViewDelegate.swift */,
 			);
 			path = Delegate;
 			sourceTree = "<group>";
@@ -392,10 +424,10 @@
 			children = (
 				52F1E5392B7CDC300058F767 /* AppDelegate.swift */,
 				52F1E53B2B7CDC300058F767 /* SceneDelegate.swift */,
-				52A7624F2D367E54000A30EA /* Models */,
-				52C996A02D11E984000E7648 /* UserDefaults */,
 				52ACDD432CEF13CD00868730 /* AppStyle.swift */,
-				52F1E53D2B7CDC300058F767 /* TabBarViewController.swift */,
+				52A7624F2D367E54000A30EA /* Models */,
+				52934FC02D68D391004BBFAF /* ViewModels */,
+				52C996A02D11E984000E7648 /* Services */,
 				5259A40E2D28508200EF60A2 /* ViewControllers */,
 				52C996AA2D11EB62000E7648 /* General Views */,
 				5259A40D2D28501B00EF60A2 /* Extensions */,
@@ -635,7 +667,7 @@
 				52F1E56E2B7CE6D10058F767 /* ProfileViewController.swift in Sources */,
 				522705A22D68CFCA005FA186 /* HabitCellAction.swift in Sources */,
 				5209B4462D38F23F0063CF1C /* HistoryViewController+ProgressLayout.swift in Sources */,
-				52697D602D1957A9004B9D7E /* HabitsViewController+DataSourceDelegate.swift in Sources */,
+				52697D602D1957A9004B9D7E /* HabitsViewController+CollectionViewDelegate.swift in Sources */,
 				52C996A92D11EB25000E7648 /* CustomElement.swift in Sources */,
 				524FC7022D075071004C839F /* EmptyStateView.swift in Sources */,
 				521E56D32D645C8C00F512A5 /* HabitsService.swift in Sources */,
