@@ -17,8 +17,9 @@
 		5219E2B62D1237B300F41D97 /* HabitsViewController+UISetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219E2B52D1237B100F41D97 /* HabitsViewController+UISetup.swift */; };
 		521E56D12D6454DD00F512A5 /* HabitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521E56D02D6454DB00F512A5 /* HabitsViewModel.swift */; };
 		521E56D32D645C8C00F512A5 /* HabitsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521E56D22D645C8700F512A5 /* HabitsService.swift */; };
+		522705A22D68CFCA005FA186 /* HabitCellAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522705A12D68CFC9005FA186 /* HabitCellAction.swift */; };
 		5232E9DE2D27BA990069FD70 /* UIView+AnimateVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232E9DD2D27BA7D0069FD70 /* UIView+AnimateVisibility.swift */; };
-		52359DAC2D3596E100207E09 /* HabitCellProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52359DAB2D3596DF00207E09 /* HabitCellProtocols.swift */; };
+		52359DAC2D3596E100207E09 /* HabitCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52359DAB2D3596DF00207E09 /* HabitCellDelegate.swift */; };
 		52359DAE2D35970300207E09 /* HabitCell+UIHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52359DAD2D35970200207E09 /* HabitCell+UIHelpers.swift */; };
 		52359DB02D35980A00207E09 /* HabitCell+LayerEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52359DAF2D35980600207E09 /* HabitCell+LayerEffects.swift */; };
 		52359DB22D35987E00207E09 /* HabitCell+Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52359DB12D35987C00207E09 /* HabitCell+Gestures.swift */; };
@@ -41,7 +42,7 @@
 		52697D642D195A97004B9D7E /* HabitsViewController+HabitDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52697D632D195A95004B9D7E /* HabitsViewController+HabitDelegate.swift */; };
 		5269FBDD2D40C9EE003A6AC9 /* Period.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5269FBDC2D40C9EA003A6AC9 /* Period.swift */; };
 		52751BAD2D26ACEA008F84A8 /* EditHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52751BAC2D26ACE2008F84A8 /* EditHabitViewController.swift */; };
-		527BDF4B2D363B7C00CBDAD6 /* HabitCell+UpdateLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527BDF4A2D363B6600CBDAD6 /* HabitCell+UpdateLogic.swift */; };
+		527BDF4B2D363B7C00CBDAD6 /* HabitCell+StateRendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527BDF4A2D363B6600CBDAD6 /* HabitCell+StateRendering.swift */; };
 		52923ECF2CF70F080088E54B /* HeaderDaysCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */; };
 		52A762512D367E68000A30EA /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A762502D367E62000A30EA /* Habit.swift */; };
 		52A762532D367EA5000A30EA /* HabitStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A762522D367EA5000A30EA /* HabitStatus.swift */; };
@@ -100,8 +101,9 @@
 		5219E2B52D1237B100F41D97 /* HabitsViewController+UISetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+UISetup.swift"; sourceTree = "<group>"; };
 		521E56D02D6454DB00F512A5 /* HabitsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsViewModel.swift; sourceTree = "<group>"; };
 		521E56D22D645C8700F512A5 /* HabitsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsService.swift; sourceTree = "<group>"; };
+		522705A12D68CFC9005FA186 /* HabitCellAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCellAction.swift; sourceTree = "<group>"; };
 		5232E9DD2D27BA7D0069FD70 /* UIView+AnimateVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AnimateVisibility.swift"; sourceTree = "<group>"; };
-		52359DAB2D3596DF00207E09 /* HabitCellProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCellProtocols.swift; sourceTree = "<group>"; };
+		52359DAB2D3596DF00207E09 /* HabitCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCellDelegate.swift; sourceTree = "<group>"; };
 		52359DAD2D35970200207E09 /* HabitCell+UIHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCell+UIHelpers.swift"; sourceTree = "<group>"; };
 		52359DAF2D35980600207E09 /* HabitCell+LayerEffects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCell+LayerEffects.swift"; sourceTree = "<group>"; };
 		52359DB12D35987C00207E09 /* HabitCell+Gestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCell+Gestures.swift"; sourceTree = "<group>"; };
@@ -124,7 +126,7 @@
 		52697D632D195A95004B9D7E /* HabitsViewController+HabitDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+HabitDelegate.swift"; sourceTree = "<group>"; };
 		5269FBDC2D40C9EA003A6AC9 /* Period.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Period.swift; sourceTree = "<group>"; };
 		52751BAC2D26ACE2008F84A8 /* EditHabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHabitViewController.swift; sourceTree = "<group>"; };
-		527BDF4A2D363B6600CBDAD6 /* HabitCell+UpdateLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCell+UpdateLogic.swift"; sourceTree = "<group>"; };
+		527BDF4A2D363B6600CBDAD6 /* HabitCell+StateRendering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCell+StateRendering.swift"; sourceTree = "<group>"; };
 		52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderDaysCollectionView.swift; sourceTree = "<group>"; };
 		52A762502D367E62000A30EA /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
 		52A762522D367EA5000A30EA /* HabitStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitStatus.swift; sourceTree = "<group>"; };
@@ -209,14 +211,9 @@
 		52359DAA2D3596BF00207E09 /* HabitCell */ = {
 			isa = PBXGroup;
 			children = (
-				5246C9752BC6C39D00BA7912 /* HabitCell.swift */,
-				527BDF4A2D363B6600CBDAD6 /* HabitCell+UpdateLogic.swift */,
-				52359DB52D359EA800207E09 /* HabitCell+ButtonActions.swift */,
-				52359DB32D359C7000207E09 /* HabitCell+SetupUI.swift */,
-				52359DB12D35987C00207E09 /* HabitCell+Gestures.swift */,
-				52359DAF2D35980600207E09 /* HabitCell+LayerEffects.swift */,
-				52359DAD2D35970200207E09 /* HabitCell+UIHelpers.swift */,
-				52359DAB2D3596DF00207E09 /* HabitCellProtocols.swift */,
+				52934FBF2D68D267004BBFAF /* Actions */,
+				52934FBE2D68D1A0004BBFAF /* UI */,
+				52934FBD2D68D177004BBFAF /* Core */,
 			);
 			path = HabitCell;
 			sourceTree = "<group>";
@@ -274,6 +271,36 @@
 			path = Layout;
 			sourceTree = "<group>";
 		};
+		52934FBD2D68D177004BBFAF /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				5246C9752BC6C39D00BA7912 /* HabitCell.swift */,
+				522705A12D68CFC9005FA186 /* HabitCellAction.swift */,
+				52359DAB2D3596DF00207E09 /* HabitCellDelegate.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		52934FBE2D68D1A0004BBFAF /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				52359DB32D359C7000207E09 /* HabitCell+SetupUI.swift */,
+				52359DAF2D35980600207E09 /* HabitCell+LayerEffects.swift */,
+				527BDF4A2D363B6600CBDAD6 /* HabitCell+StateRendering.swift */,
+				52359DAD2D35970200207E09 /* HabitCell+UIHelpers.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		52934FBF2D68D267004BBFAF /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				52359DB52D359EA800207E09 /* HabitCell+ButtonActions.swift */,
+				52359DB12D35987C00207E09 /* HabitCell+Gestures.swift */,
+			);
+			path = Actions;
+			sourceTree = "<group>";
+		};
 		52A7624F2D367E54000A30EA /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -305,7 +332,7 @@
 				521E56D02D6454DB00F512A5 /* HabitsViewModel.swift */,
 				52697D5C2D19533A004B9D7E /* Layout */,
 				5219E2B42D12372200F41D97 /* UI */,
-				52C996AD2D11EBD2000E7648 /* Extensions */,
+				52C996AD2D11EBD2000E7648 /* Delegate */,
 				52C996AB2D11EB8C000E7648 /* Cells */,
 				52FF7F412D2EB909008EF1E2 /* HeaderDaysCollectionView */,
 			);
@@ -330,14 +357,14 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		52C996AD2D11EBD2000E7648 /* Extensions */ = {
+		52C996AD2D11EBD2000E7648 /* Delegate */ = {
 			isa = PBXGroup;
 			children = (
 				52697D632D195A95004B9D7E /* HabitsViewController+HabitDelegate.swift */,
 				5242479C2D2F9AE000C5E049 /* HabitsViewController+HabitCellDelegate.swift */,
 				52697D5F2D1957A6004B9D7E /* HabitsViewController+DataSourceDelegate.swift */,
 			);
-			path = Extensions;
+			path = Delegate;
 			sourceTree = "<group>";
 		};
 		52F1E52D2B7CDC300058F767 = {
@@ -575,7 +602,7 @@
 				52FF7F462D2EB9EF008EF1E2 /* HeaderDays+DataSourceDelegate.swift in Sources */,
 				52ACDD442CEF13CD00868730 /* AppStyle.swift in Sources */,
 				52751BAD2D26ACEA008F84A8 /* EditHabitViewController.swift in Sources */,
-				527BDF4B2D363B7C00CBDAD6 /* HabitCell+UpdateLogic.swift in Sources */,
+				527BDF4B2D363B7C00CBDAD6 /* HabitCell+StateRendering.swift in Sources */,
 				5246C9762BC6C39D00BA7912 /* HabitCell.swift in Sources */,
 				52F1E56C2B7CE6B10058F767 /* DiaryViewController.swift in Sources */,
 				52359DB42D359C7100207E09 /* HabitCell+SetupUI.swift in Sources */,
@@ -591,7 +618,7 @@
 				52F1E53C2B7CDC300058F767 /* SceneDelegate.swift in Sources */,
 				5209B44A2D38F2C00063CF1C /* HabitProgress.swift in Sources */,
 				523AF3B92CBFBDE900EEFA8A /* BaseHabitViewController.swift in Sources */,
-				52359DAC2D3596E100207E09 /* HabitCellProtocols.swift in Sources */,
+				52359DAC2D3596E100207E09 /* HabitCellDelegate.swift in Sources */,
 				52697D5E2D195361004B9D7E /* HabitsLayout.swift in Sources */,
 				52652B8E2D240D2C00608550 /* BaseHabitView+Actions.swift in Sources */,
 				52359DB62D359EBF00207E09 /* HabitCell+ButtonActions.swift in Sources */,
@@ -606,6 +633,7 @@
 				5209B4482D38F2A60063CF1C /* HistoryViewController+ProgressCell.swift in Sources */,
 				52A762532D367EA5000A30EA /* HabitStatus.swift in Sources */,
 				52F1E56E2B7CE6D10058F767 /* ProfileViewController.swift in Sources */,
+				522705A22D68CFCA005FA186 /* HabitCellAction.swift in Sources */,
 				5209B4462D38F23F0063CF1C /* HistoryViewController+ProgressLayout.swift in Sources */,
 				52697D602D1957A9004B9D7E /* HabitsViewController+DataSourceDelegate.swift in Sources */,
 				52C996A92D11EB25000E7648 /* CustomElement.swift in Sources */,
