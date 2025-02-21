@@ -33,18 +33,17 @@ extension HabitCell {
         }
     }
 
-    func configure(with habit: Habit, viewModel: HabitsViewModel) {
-        self.habit = habit
-        self.viewModel = viewModel
+    func applyHabitState(_ habit: Habit) {
         resetCellState()
 
         let today = Calendar.current.startOfDay(for: Date())
         let status = habit.getStatus(for: today)
 
         switch status {
-        case .notCompleted:
-            contentContainer.backgroundColor = Calendar.current.isDateInToday(today) ?
-            AppStyle.Colors.backgroundColor : AppStyle.Colors.isUncompletedHabitColor
+        case .skipped:
+            currentProgress = 0
+            updateHabitProgress()
+            applySkippedHabitPattern(for: status)
 
         case .partiallyCompleted(let progress, _):
             currentProgress = progress
@@ -52,15 +51,25 @@ extension HabitCell {
 
         case .completed:
             currentProgress = habit.frequency
-            drawCheckmark()
+            updateHabitProgress()
             setupCheckboxBackground()
             checkbox.isHidden = false
 
-        case .skipped:
-            applySkippedHabitPattern(for: status)
+        case .notCompleted:
+            currentProgress = 0
+            updateHabitProgress()
+            let isToday = Calendar.current.isDateInToday(today)
+            contentContainer.backgroundColor = isToday
+                ? AppStyle.Colors.backgroundColor
+                : AppStyle.Colors.isUncompletedHabitColor
         }
+    }
 
+    func configure(with habit: Habit, viewModel: HabitsViewModel) {
+        self.habit = habit
+        self.viewModel = viewModel
         habitsName.text = habit.title
+        applyHabitState(habit)
     }
 
     func resetCellState() {
@@ -68,20 +77,12 @@ extension HabitCell {
         clearLayerPatterns()
         currentProgress = 0
         checkbox.isHidden = true
+        contentContainer.backgroundColor = AppStyle.Colors.backgroundColor
     }
 
     func setupCheckboxBackground() {
-        checkbox.layer.sublayers?
-            .filter { $0.name == "InnerWhiteLayer" }
-            .forEach { $0.removeFromSuperlayer() }
-
-        let innerWhiteLayer = CALayer()
-        innerWhiteLayer.name = "InnerWhiteLayer"
-
-        innerWhiteLayer.frame = checkbox.bounds
-        innerWhiteLayer.cornerRadius = 6
-        innerWhiteLayer.backgroundColor = UIColor.white.cgColor
-
-        checkbox.layer.insertSublayer(innerWhiteLayer, at: 0)
+        checkbox.backgroundColor = .white
+        checkbox.layer.cornerRadius = 6
+        checkbox.layer.masksToBounds = true
     }
 }

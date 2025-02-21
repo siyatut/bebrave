@@ -93,15 +93,32 @@ extension HabitCell {
     // MARK: - Handle tap gesture
 
     @objc func handleTap() {
-        guard let habit = habit, let viewModel = viewModel else {
+        guard let oldHabit = habit, let viewModel = viewModel else {
             print("No habit or viewModel found. Exiting tap handler.")
             return
         }
 
-        if currentProgress < habit.frequency {
-            viewModel.markHabitCompleted(id: habit.id)
-        } else {
-            print("Habit already completed.")
+        if let freshHabit = viewModel.habits.first(where: { $0.id == oldHabit.id }) {
+            let today = Calendar.current.startOfDay(for: Date())
+
+            if freshHabit.skipDates.contains(today) {
+                print("Habit is skipped for today. Undo skip first if you want to track progress.")
+                return
+            }
+
+            let progress = freshHabit.progress[today] ?? 0
+            if progress < freshHabit.frequency {
+
+                viewModel.markHabitCompleted(id: freshHabit.id)
+
+                if let updatedHabit = viewModel.habits.first(where: { $0.id == freshHabit.id }) {
+                    let newProgress = updatedHabit.progress[today] ?? 0
+                    self.currentProgress = newProgress
+                    self.habit = updatedHabit
+                }
+            } else {
+                print("Habit already completed today.")
+            }
         }
     }
 }

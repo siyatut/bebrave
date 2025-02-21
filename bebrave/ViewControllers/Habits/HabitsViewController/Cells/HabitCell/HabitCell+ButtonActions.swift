@@ -16,18 +16,33 @@ extension HabitCell {
     }
 
     @objc func skipHabit() {
-        guard let habit = habit else { return }
-        delegate?.habitCell(self, didTriggerAction: .skipToday, for: habit)
+        guard let oldHabit = habit, let viewModel = viewModel else { return }
+        delegate?.habitCell(self, didTriggerAction: .skipToday, for: oldHabit)
+
+        if let updatedHabit = viewModel.habits.first(where: { $0.id == oldHabit.id }) {
+            self.habit = updatedHabit
+            applyHabitState(updatedHabit)
+        }
         resetPosition()
     }
 
     @objc func cancelHabit() {
-        guard let habit = habit else { return }
-        if habit.skipDates.contains(Calendar.current.startOfDay(for: Date())) {
-            delegate?.habitCell(self, didTriggerAction: .undoSkip, for: habit)
-        } else {
-            delegate?.habitCell(self, didTriggerAction: .unmarkCompletion, for: habit)
+        guard let oldHabit = habit, let viewModel = viewModel else { return }
+        let today = Calendar.current.startOfDay(for: Date())
+        if let freshHabit = viewModel.habits.first(where: { $0.id == oldHabit.id }) {
+
+            if freshHabit.skipDates.contains(today) {
+                delegate?.habitCell(self, didTriggerAction: .undoSkip, for: freshHabit)
+            } else {
+                delegate?.habitCell(self, didTriggerAction: .unmarkCompletion, for: freshHabit)
+            }
         }
+
+        if let updatedHabit = viewModel.habits.first(where: { $0.id == oldHabit.id }) {
+            self.habit = updatedHabit
+            applyHabitState(updatedHabit)
+        }
+
         resetPosition()
     }
 

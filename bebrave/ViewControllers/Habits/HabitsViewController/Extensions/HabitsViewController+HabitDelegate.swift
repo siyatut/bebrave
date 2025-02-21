@@ -20,11 +20,23 @@ extension HabitsViewController: HabitDelegate {
 
     func didAddNewHabit(_ habit: Habit) {
         viewModel.addHabit(habit)
-        updateEmptyState(animated: true)
+
+        let newIndex = viewModel.habits.count - 1
+        let indexPath = IndexPath(item: newIndex, section: 0)
+
+        collectionView.performBatchUpdates({
+            collectionView.insertItems(at: [indexPath])
+        }, completion: { _ in
+            self.updateEmptyState()
+        })
     }
 
     func didEditHabit(_ habit: Habit) {
         viewModel.updateHabit(habit)
+        if let index = viewModel.habits.firstIndex(where: { $0.id == habit.id }) {
+            let indexPath = IndexPath(item: index, section: 0)
+            collectionView.reloadItems(at: [indexPath])
+        }
     }
 
     func deleteHabit(_ habit: Habit) {

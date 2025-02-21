@@ -107,14 +107,4 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         isSwiped = false
         resetPosition(animated: false)
     }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        if let habit = habit {
-            let today = Calendar.current.startOfDay(for: Date())
-            let status = habit.getStatus(for: today)
-            applySkippedHabitPattern(for: status)
-        }
-    }
 }
