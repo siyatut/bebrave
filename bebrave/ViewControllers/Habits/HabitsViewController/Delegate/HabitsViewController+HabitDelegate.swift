@@ -54,13 +54,6 @@ extension HabitsViewController: HabitDelegate {
             }
         }, completion: { _ in
             self.viewModel.deleteHabit(id: habit.id)
-            self.collectionView.performBatchUpdates({
-                if self.viewModel.habits.indices.contains(index) {
-                    self.collectionView.deleteItems(at: [indexPath])
-                }
-            }, completion: { _ in
-                self.updateEmptyState(animated: true)
-            })
         })
     }
 }

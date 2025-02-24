@@ -84,12 +84,22 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
             .receive(on: DispatchQueue.main)
             .sink { [weak self] habits in
                 guard let self = self else { return }
-                
-                if habits.count != self.previousHabitCount {
-                    self.collectionView.reloadData()
-                    self.previousHabitCount = habits.count
+                if habits.count < self.previousHabitCount {
+                    let deletedIndex = (0..<self.previousHabitCount)
+                        .first(where: { !habits.indices.contains($0) })
+
+                    if let deletedIndex = deletedIndex {
+                        let indexPath = IndexPath(item: deletedIndex, section: 0)
+
+                        collectionView.performBatchUpdates({
+                            self.collectionView.deleteItems(at: [indexPath])
+                        }, completion: { _ in
+                            self.updateEmptyState()
+                        })
+                    }
                 }
-                self.updateEmptyState()
+
+                self.previousHabitCount = habits.count
             }
             .store(in: &cancellables)
     }
