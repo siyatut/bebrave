@@ -19,6 +19,7 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     var headerView: HeaderDaysCollectionView?
     weak var swipedCell: HabitCell?
     private var cancellables = Set<AnyCancellable>()
+    private var previousHabitCount: Int = 0
 
     // MARK: - UI components
 
@@ -81,9 +82,14 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     private func setupBindings() {
         viewModel.$habits
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.collectionView.reloadData()
-                self?.updateEmptyState()
+            .sink { [weak self] habits in
+                guard let self = self else { return }
+                
+                if habits.count != self.previousHabitCount {
+                    self.collectionView.reloadData()
+                    self.previousHabitCount = habits.count
+                }
+                self.updateEmptyState()
             }
             .store(in: &cancellables)
     }
