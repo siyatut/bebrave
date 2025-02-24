@@ -15,7 +15,7 @@ extension HeaderDaysCollectionView: UICollectionViewDelegate, UICollectionViewDa
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return daysData.count
+        return viewModel?.daysData.count ?? 0
     }
 
     func collectionView(
@@ -28,7 +28,7 @@ extension HeaderDaysCollectionView: UICollectionViewDelegate, UICollectionViewDa
                 for: indexPath
             )
 
-            let item = daysData[indexPath.item]
+            guard let item = viewModel?.daysData[indexPath.item] else { return UICollectionViewCell() }
             let calendar = Calendar.current
             let isCurrentDay = calendar.isDate(item.date, inSameDayAs: Date())
             cell.configure(date: item.date, emoji: item.emoji, isCurrentDay: isCurrentDay)

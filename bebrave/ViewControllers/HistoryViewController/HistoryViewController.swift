@@ -51,7 +51,7 @@ class HistoryViewController: UIViewController {
     }
 
     // MARK: - ViewModel Binding
-    
+
     private func bindViewModel() {
         viewModel.$habitsProgress
             .receive(on: DispatchQueue.main)

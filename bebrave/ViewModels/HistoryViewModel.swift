@@ -127,16 +127,16 @@ class HistoryViewModel: ObservableObject {
             )
         }
     }
-    
+
     // MARK: - Period Selection
 
     func updateSelectedPeriod(_ period: Period) {
         selectedPeriod = period
         UserDefaultsManager.shared.saveSelectedPeriod(period)
     }
-    
+
     // MARK: - Date Range Formatting
-    
+
     private func updateDateRange() {
         dateRangeText = calculateDateRange(for: selectedPeriod)
     }
@@ -168,7 +168,7 @@ class HistoryViewModel: ObservableObject {
         guard let start = startDate, let end = endDate else {
             return ""
         }
-        
+
         return "\(formatter.string(from: start))–\(formatter.string(from: end))"
     }
 }

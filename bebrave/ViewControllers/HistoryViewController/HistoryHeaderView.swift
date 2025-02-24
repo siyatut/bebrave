@@ -92,7 +92,7 @@ class HistoryHeaderView: UICollectionReusableView {
             }
             .store(in: &cancellables)
     }
-    
+
     // MARK: - Period Selection Menu
 
     private func createPeriodMenu(viewModel: HistoryViewModel, onPeriodChange: @escaping (Period) -> Void) -> UIMenu {

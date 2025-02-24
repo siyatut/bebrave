@@ -68,6 +68,7 @@ extension HabitsViewController {
                     for: indexPath
                 ) as HeaderDaysCollectionView
                 header.backgroundColor = AppStyle.Colors.backgroundColor
+                header.configure(with: headerViewModel)
                 headerView = header
                 return header
 

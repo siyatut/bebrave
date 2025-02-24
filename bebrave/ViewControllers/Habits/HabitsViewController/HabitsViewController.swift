@@ -13,11 +13,18 @@ import Combine
 
 class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
-    // MARK: - Properties
+    // MARK: - ViewModel
 
     let viewModel = HabitsViewModel()
-    var headerView: HeaderDaysCollectionView?
+    lazy var headerViewModel = HeaderDaysViewModel(habitsViewModel: viewModel)
+
+    // MARK: - UI Components
+
+    weak var headerView: HeaderDaysCollectionView?
     weak var swipedCell: HabitCell?
+
+    // MARK: - State Management
+
     private var cancellables = Set<AnyCancellable>()
     private var previousHabitCount: Int = 0
 
@@ -79,6 +86,8 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
 
+    // MARK: - ViewModel Bindings
+
     private func setupBindings() {
         viewModel.$habits
             .receive(on: DispatchQueue.main)
@@ -104,7 +113,7 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
             .store(in: &cancellables)
     }
 
-    // MARK: - Tap actions
+    // MARK: - User Actions
 
     @objc func historyButtonTapped() {
         let historyViewModel = HistoryViewModel(habitsViewModel: self.viewModel)
@@ -120,7 +129,7 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.present(newHabitVC, animated: true, completion: nil)
     }
 
-    // MARK: - Handle uncompleted habits
+    // MARK: - Handle Uncompleted Habits
 
     func scheduleMidnightCheck() {
         let calendar = Calendar.current

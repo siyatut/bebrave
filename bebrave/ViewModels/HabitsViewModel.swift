@@ -56,12 +56,14 @@ class HabitsViewModel: ObservableObject {
         guard let index = habits.firstIndex(where: { $0.id == id }) else { return }
         habits[index].skipToday()
         habitService.updateHabit(habits[index])
+        habits = Array(habits)
     }
 
     func undoSkipHabit(id: UUID) {
         guard let index = habits.firstIndex(where: { $0.id == id }) else { return }
         habits[index].undoSkip()
         habitService.updateHabit(habits[index])
+        habits = Array(habits)
     }
 
     func resetUncompletedHabits() {

@@ -8,7 +8,7 @@
 import UIKit
 
 final class ProgressCell: UICollectionViewCell {
-    
+
     // MARK: - Constants
 
     static let identifier = "ProgressCell"
@@ -63,9 +63,9 @@ final class ProgressCell: UICollectionViewCell {
             segmentedProgressBar.heightAnchor.constraint(equalToConstant: 15)
         ])
     }
-    
+
     // MARK: - Configuration
-    
+
     func configure(with habitProgress: HabitProgress) {
         habitNameLabel.text = habitProgress.name
         progressLabel.text = "\(habitProgress.completedDays) / \(habitProgress.totalDays)"

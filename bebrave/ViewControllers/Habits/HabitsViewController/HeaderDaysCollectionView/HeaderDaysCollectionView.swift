@@ -6,10 +6,16 @@
 //
 
 import UIKit
+import Combine
 
 class HeaderDaysCollectionView: UICollectionReusableView {
 
-    // MARK: - UI components
+    // MARK: - ViewModel and Data Binding
+
+    var viewModel: HeaderDaysViewModel?
+    private var cancellables = Set<AnyCancellable>()
+
+    // MARK: - UI Components
 
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -30,14 +36,32 @@ class HeaderDaysCollectionView: UICollectionReusableView {
         super.init(frame: frame)
         setupCollectionView()
         setupLayout()
-        generateDaysForCurrentMonth()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - Setup methods
+    // MARK: - Configuration
+
+    func configure(with viewModel: HeaderDaysViewModel) {
+        self.viewModel = viewModel
+        bindViewModel()
+        collectionView.reloadData()
+    }
+
+    // MARK: - Bind ViewModel
+
+    private func bindViewModel() {
+        viewModel?.$daysData
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.collectionView.reloadData()
+            }
+            .store(in: &cancellables)
+    }
+
+    // MARK: - Setup Methods
 
     private func setupCollectionView() {
         collectionView.delegate = self
@@ -56,46 +80,10 @@ class HeaderDaysCollectionView: UICollectionReusableView {
         ])
     }
 
-    // MARK: - Data methods
-
-    private func generateDaysForCurrentMonth() {
-        var calendar = Calendar.current
-        let today = Date()
-
-        calendar.firstWeekday = 2
-        guard let startOfWeek = calendar.date(
-            from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear],
-            from: today)
-        ) else {
-            assertionFailure("Не удалось определить начало недели")
-            return
-        }
-
-        let habits = UserDefaultsManager.shared.loadHabits()
-
-        daysData = (0..<7).compactMap { dayOffset -> (
-            date: Date,
-            emoji: String
-        )? in
-            guard let date = calendar.date(
-                byAdding: .day,
-                value: dayOffset,
-                to: startOfWeek
-            ) else { return nil }
-            let startOfDay = calendar.startOfDay(for: date)
-            let emoji = HabitEmojiCalculator.calculateEmoji(
-                for: startOfDay,
-                habits: habits,
-                calendar: calendar
-            )
-            return (date: startOfDay, emoji: emoji)
-        }
-        collectionView.reloadData()
-    }
-
     func getDisplayedDates() -> [Date] {
-        return daysData.map { $0.date }
+        return viewModel?.daysData.map { $0.date } ?? []
     }
+
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

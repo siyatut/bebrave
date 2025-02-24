@@ -19,7 +19,7 @@ class SegmentedProgressBar: UIView {
         self.segments = segments
         setNeedsDisplay()
     }
-    
+
     // MARK: - Drawing
 
     override func draw(_ rect: CGRect) {

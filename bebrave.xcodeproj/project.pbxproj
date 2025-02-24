@@ -45,6 +45,7 @@
 		52751BAD2D26ACEA008F84A8 /* EditHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52751BAC2D26ACE2008F84A8 /* EditHabitViewController.swift */; };
 		527BDF4B2D363B7C00CBDAD6 /* HabitCell+StateRendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527BDF4A2D363B6600CBDAD6 /* HabitCell+StateRendering.swift */; };
 		52923ECF2CF70F080088E54B /* HeaderDaysCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */; };
+		52A048E82D6CCB84008483B1 /* HeaderDaysViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A048E72D6CCB84008483B1 /* HeaderDaysViewModel.swift */; };
 		52A762512D367E68000A30EA /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A762502D367E62000A30EA /* Habit.swift */; };
 		52A762532D367EA5000A30EA /* HabitStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A762522D367EA5000A30EA /* HabitStatus.swift */; };
 		52A762552D367F2D000A30EA /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A762542D367F2B000A30EA /* UserDefaultsKeys.swift */; };
@@ -69,7 +70,7 @@
 		52FBCF3A2CFF1677000206BC /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FBCF392CFF1673000206BC /* UserDefaultsManager.swift */; };
 		52FDA0EE2D37B0970081520A /* NewHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FDA0ED2D37B0890081520A /* NewHabitViewController.swift */; };
 		52FF7F432D2EB96A008EF1E2 /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FF7F422D2EB963008EF1E2 /* DayCell.swift */; };
-		52FF7F462D2EB9EF008EF1E2 /* HeaderDays+DataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FF7F452D2EB9D2008EF1E2 /* HeaderDays+DataSourceDelegate.swift */; };
+		52FF7F462D2EB9EF008EF1E2 /* HeaderDays+CollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FF7F452D2EB9D2008EF1E2 /* HeaderDays+CollectionViewDelegate.swift */; };
 		52FF7F482D2EBACF008EF1E2 /* HabitEmojiCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FF7F472D2EBAC7008EF1E2 /* HabitEmojiCalculator.swift */; };
 /* End PBXBuildFile section */
 
@@ -130,6 +131,7 @@
 		52751BAC2D26ACE2008F84A8 /* EditHabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHabitViewController.swift; sourceTree = "<group>"; };
 		527BDF4A2D363B6600CBDAD6 /* HabitCell+StateRendering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCell+StateRendering.swift"; sourceTree = "<group>"; };
 		52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderDaysCollectionView.swift; sourceTree = "<group>"; };
+		52A048E72D6CCB84008483B1 /* HeaderDaysViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderDaysViewModel.swift; sourceTree = "<group>"; };
 		52A762502D367E62000A30EA /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
 		52A762522D367EA5000A30EA /* HabitStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitStatus.swift; sourceTree = "<group>"; };
 		52A762542D367F2B000A30EA /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
@@ -158,7 +160,7 @@
 		52FBCF392CFF1673000206BC /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		52FDA0ED2D37B0890081520A /* NewHabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHabitViewController.swift; sourceTree = "<group>"; };
 		52FF7F422D2EB963008EF1E2 /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCell.swift; sourceTree = "<group>"; };
-		52FF7F452D2EB9D2008EF1E2 /* HeaderDays+DataSourceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HeaderDays+DataSourceDelegate.swift"; sourceTree = "<group>"; };
+		52FF7F452D2EB9D2008EF1E2 /* HeaderDays+CollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HeaderDays+CollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		52FF7F472D2EBAC7008EF1E2 /* HabitEmojiCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitEmojiCalculator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -307,6 +309,7 @@
 		52934FC02D68D391004BBFAF /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				52A048E72D6CCB84008483B1 /* HeaderDaysViewModel.swift */,
 				5274A6302D6C4C52004A1CAB /* HistoryViewModel.swift */,
 				521E56D02D6454DB00F512A5 /* HabitsViewModel.swift */,
 			);
@@ -462,7 +465,7 @@
 			isa = PBXGroup;
 			children = (
 				52923ECE2CF70F050088E54B /* HeaderDaysCollectionView.swift */,
-				52FF7F452D2EB9D2008EF1E2 /* HeaderDays+DataSourceDelegate.swift */,
+				52FF7F452D2EB9D2008EF1E2 /* HeaderDays+CollectionViewDelegate.swift */,
 				52FF7F422D2EB963008EF1E2 /* DayCell.swift */,
 				52FF7F472D2EBAC7008EF1E2 /* HabitEmojiCalculator.swift */,
 			);
@@ -634,7 +637,8 @@
 				5241DDD22B8F61F000C7ECF0 /* HistoryViewController.swift in Sources */,
 				52A762552D367F2D000A30EA /* UserDefaultsKeys.swift in Sources */,
 				52697D642D195A97004B9D7E /* HabitsViewController+HabitDelegate.swift in Sources */,
-				52FF7F462D2EB9EF008EF1E2 /* HeaderDays+DataSourceDelegate.swift in Sources */,
+				52A048E82D6CCB84008483B1 /* HeaderDaysViewModel.swift in Sources */,
+				52FF7F462D2EB9EF008EF1E2 /* HeaderDays+CollectionViewDelegate.swift in Sources */,
 				52ACDD442CEF13CD00868730 /* AppStyle.swift in Sources */,
 				52751BAD2D26ACEA008F84A8 /* EditHabitViewController.swift in Sources */,
 				527BDF4B2D363B7C00CBDAD6 /* HabitCell+StateRendering.swift in Sources */,

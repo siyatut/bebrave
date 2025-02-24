@@ -8,7 +8,7 @@
 import UIKit
 
 extension HistoryViewController: UICollectionViewDataSource {
-    
+
     // MARK: - Number of Items
 
     func collectionView(
@@ -17,7 +17,7 @@ extension HistoryViewController: UICollectionViewDataSource {
     ) -> Int {
         return viewModel.habitsProgress.count
     }
-    
+
     // MARK: - Cell Configuration
 
     func collectionView(
@@ -37,7 +37,7 @@ extension HistoryViewController: UICollectionViewDataSource {
         cell.configure(with: habitProgress)
         return cell
     }
-    
+
     // MARK: - Supplementary Views
 
     func collectionView(

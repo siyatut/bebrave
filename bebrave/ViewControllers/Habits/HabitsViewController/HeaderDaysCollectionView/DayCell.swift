@@ -9,7 +9,7 @@ import UIKit
 
 class DayCell: UICollectionViewCell {
 
-    // MARK: - UI components of cell
+    // MARK: - UI Components
 
     private let dayLabel: UILabel = {
         let label = UILabel()
@@ -45,7 +45,7 @@ class DayCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - Setup methods
+    // MARK: - Setup Methods
 
     private func setupLayout() {
         contentView.addSubview(dayLabel)
