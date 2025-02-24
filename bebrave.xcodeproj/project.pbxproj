@@ -194,10 +194,9 @@
 			children = (
 				5241DDD12B8F61F000C7ECF0 /* HistoryViewController.swift */,
 				52A7B4632D49FB4000297E80 /* HistoryViewController+DataSource.swift */,
-				52DE3E5C2D3976E200A221FC /* HistoryHeaderView.swift */,
-				5209B4472D38F2910063CF1C /* HistoryViewController+ProgressCell.swift */,
-				5209FDB42D4A577000BBDECC /* HistoryViewController+SegmentProgress.swift */,
-				5209B4452D38F2300063CF1C /* HistoryViewController+ProgressLayout.swift */,
+				52A048EB2D6CD2A1008483B1 /* HistoryHeader */,
+				52A048EA2D6CD287008483B1 /* Layout */,
+				52A048E92D6CD264008483B1 /* Cell */,
 			);
 			path = HistoryViewController;
 			sourceTree = "<group>";
@@ -342,6 +341,31 @@
 				52C996A62D11EAED000E7648 /* SupplementaryViewError.swift */,
 			);
 			path = Errors;
+			sourceTree = "<group>";
+		};
+		52A048E92D6CD264008483B1 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5209B4472D38F2910063CF1C /* HistoryViewController+ProgressCell.swift */,
+				5209FDB42D4A577000BBDECC /* HistoryViewController+SegmentProgress.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		52A048EA2D6CD287008483B1 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				5209B4452D38F2300063CF1C /* HistoryViewController+ProgressLayout.swift */,
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
+		52A048EB2D6CD2A1008483B1 /* HistoryHeader */ = {
+			isa = PBXGroup;
+			children = (
+				52DE3E5C2D3976E200A221FC /* HistoryHeaderView.swift */,
+			);
+			path = HistoryHeader;
 			sourceTree = "<group>";
 		};
 		52A7624F2D367E54000A30EA /* Models */ = {
