@@ -8,6 +8,8 @@
 import UIKit
 
 final class ProgressCell: UICollectionViewCell {
+    
+    // MARK: - Constants
 
     static let identifier = "ProgressCell"
 
@@ -35,7 +37,7 @@ final class ProgressCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - Setup UI
+    // MARK: - UI Setup
 
     private func setupProgressCell() {
         segmentedProgressBar.layer.cornerRadius = 5
@@ -61,8 +63,9 @@ final class ProgressCell: UICollectionViewCell {
             segmentedProgressBar.heightAnchor.constraint(equalToConstant: 15)
         ])
     }
-    // MARK: - Configure
-
+    
+    // MARK: - Configuration
+    
     func configure(with habitProgress: HabitProgress) {
         habitNameLabel.text = habitProgress.name
         progressLabel.text = "\(habitProgress.completedDays) / \(habitProgress.totalDays)"
@@ -83,11 +86,5 @@ final class ProgressCell: UICollectionViewCell {
         ]
 
         segmentedProgressBar.setSegments(segmentRatios)
-    }
-
-    private func calculateProgress(for habit: Habit) -> Float {
-        let totalFrequency = habit.frequency
-        let completed = habit.progress.values.reduce(0, +)
-        return totalFrequency > 0 ? Float(completed) / Float(totalFrequency) : 0.0
     }
 }

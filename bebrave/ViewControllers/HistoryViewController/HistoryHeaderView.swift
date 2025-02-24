@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class HistoryHeaderView: UICollectionReusableView {
 
@@ -35,31 +36,22 @@ class HistoryHeaderView: UICollectionReusableView {
 
     private let dateLabel = UILabel.styled(text: "", fontSize: 18, isBold: true, alignment: .center)
 
-    // MARK: - Period properties
+    // MARK: - Properties
 
-    private var onPeriodChange: ((Period) -> Void)?
-    var selectedPeriod: Period = {
-        return UserDefaultsManager.shared.loadSelectedPeriod() ?? .week
-    }() {
-        didSet {
-            UserDefaultsManager.shared.saveSelectedPeriod(selectedPeriod)
-            updateUIForSelectedPeriod()
-        }
-    }
+    private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
-        setupActions()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
 
-    // MARK: - Setup UI
+    // MARK: - UI Setup
 
     private func setupView() {
         addSubview(periodButton)
@@ -77,92 +69,59 @@ class HistoryHeaderView: UICollectionReusableView {
             periodButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             periodButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
         ])
-
-        updateUIForSelectedPeriod()
     }
 
-    // MARK: - Actions
+    // MARK: - Configuration
 
-    private func setupActions() {
-        periodButton.menu = createPeriodMenu()
+    func configure(with viewModel: HistoryViewModel, onPeriodChange: @escaping (Period) -> Void) {
+        bindViewModel(viewModel)
+
+        periodButton.menu = createPeriodMenu(viewModel: viewModel, onPeriodChange: onPeriodChange)
         periodButton.showsMenuAsPrimaryAction = true
+
+        updateUIForSelectedPeriod(viewModel: viewModel)
     }
 
-    private func createPeriodMenu() -> UIMenu {
+    // MARK: - ViewModel Binding
+
+    private func bindViewModel(_ viewModel: HistoryViewModel) {
+        viewModel.$dateRangeText
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] dateRange in
+                self?.dateLabel.text = dateRange
+            }
+            .store(in: &cancellables)
+    }
+    
+    // MARK: - Period Selection Menu
+
+    private func createPeriodMenu(viewModel: HistoryViewModel, onPeriodChange: @escaping (Period) -> Void) -> UIMenu {
         return UIMenu(title: "Выберите период:", children: [
-            UIAction(title: "Неделя", state: selectedPeriod == .week ? .on : .off) { _ in
-                self.selectedPeriod = .week
-                self.onPeriodChange?(.week)
+            UIAction(title: "Неделя", state: viewModel.selectedPeriod == .week ? .on : .off) { _ in
+                onPeriodChange(.week)
             },
-            UIAction(title: "Месяц", state: selectedPeriod == .month ? .on : .off) { _ in
-                self.selectedPeriod = .month
-                self.onPeriodChange?(.month)
+            UIAction(title: "Месяц", state: viewModel.selectedPeriod == .month ? .on : .off) { _ in
+                onPeriodChange(.month)
             },
-            UIAction(title: "Полгода", state: selectedPeriod == .halfYear ? .on : .off) { _ in
-                self.selectedPeriod = .halfYear
-                self.onPeriodChange?(.halfYear)
+            UIAction(title: "Полгода", state: viewModel.selectedPeriod == .halfYear ? .on : .off) { _ in
+                onPeriodChange(.halfYear)
             },
-            UIAction(title: "Целый год", state: selectedPeriod == .year ? .on : .off) { _ in
-                self.selectedPeriod = .year
-                self.onPeriodChange?(.year)
+            UIAction(title: "Год", state: viewModel.selectedPeriod == .year ? .on : .off) { _ in
+                onPeriodChange(.year)
             }
         ])
     }
 
-    // MARK: - Update UI
+    // MARK: - UI Update
 
-    private func updateUIForSelectedPeriod() {
+    private func updateUIForSelectedPeriod(viewModel: HistoryViewModel) {
         let periodTitle: String
-        switch selectedPeriod {
+        switch viewModel.selectedPeriod {
         case .week: periodTitle = "Неделя"
         case .month: periodTitle = "Месяц"
         case .halfYear: periodTitle = "Полгода"
-        case .year: periodTitle = "Целый год"
+        case .year: periodTitle = "Год"
         }
         periodButton.setTitle(periodTitle, for: .normal)
-        dateLabel.text = calculateDateRange(for: selectedPeriod)
-        periodButton.menu = createPeriodMenu()
-    }
-
-    // MARK: - Configure
-
-    func configure(onPeriodChange: @escaping (Period) -> Void) {
-        self.onPeriodChange = onPeriodChange
-    }
-
-    private func calculateDateRange(for period: Period) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd.MM.yy"
-
-        let calendar = Calendar.current
-        let today = Date()
-        let startDate: Date?
-        let endDate: Date?
-
-        switch period {
-        case .week:
-            startDate = calendar.date(byAdding: .day, value: -6, to: today)
-            endDate = today
-
-        case .month:
-            startDate = calendar.date(from: calendar.dateComponents([.year, .month], from: today))
-            endDate = startDate.flatMap {
-                calendar.date(byAdding: .month, value: 1, to: $0)?.addingTimeInterval(-1)
-            }
-
-        case .halfYear:
-            startDate = calendar.date(byAdding: .month, value: -5, to: today)
-            endDate = today
-
-        case .year:
-            startDate = calendar.date(byAdding: .year, value: -1, to: today)
-            endDate = today
-        }
-
-        guard let start = startDate, let end = endDate else {
-            return ""
-        }
-
-        return "\(formatter.string(from: start))–\(formatter.string(from: end))"
     }
 }

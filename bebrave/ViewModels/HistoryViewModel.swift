@@ -12,11 +12,13 @@ class HistoryViewModel: ObservableObject {
 
     // MARK: - Published Properties
 
+    @Published var dateRangeText: String = ""
     @Published var habitsProgress: [HabitProgress] = []
     @Published var selectedPeriod: Period = .week {
         didSet {
             referenceDate = Date()
             calculateProgress()
+            updateDateRange()
         }
     }
 
@@ -30,8 +32,12 @@ class HistoryViewModel: ObservableObject {
 
     init(habitsViewModel: HabitsViewModel) {
         self.habitsViewModel = habitsViewModel
+        self.selectedPeriod = UserDefaultsManager.shared.loadSelectedPeriod() ?? .week
+        updateDateRange()
         setupBindings()
     }
+
+    // MARK: - Private Methods
 
     private func setupBindings() {
         habitsViewModel.$habits
@@ -43,13 +49,12 @@ class HistoryViewModel: ObservableObject {
         $selectedPeriod
             .sink { [weak self] _ in
                 self?.calculateProgress()
+                self?.updateDateRange()
             }
             .store(in: &cancellables)
     }
 
-    // MARK: - Private Methods
-
-    func calculateProgress() {
+    private func calculateProgress() {
         guard let interval = calculateDateInterval() else { return }
 
         let totalDays = calculateTotalDays(for: interval)
@@ -61,7 +66,7 @@ class HistoryViewModel: ObservableObject {
         }
     }
 
-    // MARK: - Determine the date interval
+    // MARK: - Date Interval Calculation
 
     private func calculateDateInterval() -> DateInterval? {
         let calendar = Calendar.current
@@ -97,15 +102,13 @@ class HistoryViewModel: ObservableObject {
         }
     }
 
-    // MARK: - Calculate the total number of days
+    // MARK: - Habit Progress Calculation
 
     private func calculateTotalDays(for interval: DateInterval) -> Int {
         let calendar = Calendar.current
         let adjustedEnd = calendar.date(byAdding: .day, value: -1, to: interval.end) ?? interval.end
         return (calendar.dateComponents([.day], from: interval.start, to: adjustedEnd).day ?? 0) + 1
     }
-
-    // MARK: - Calculate habit progress
 
     private func calculateHabitProgress(for interval: DateInterval, totalDays: Int) -> [HabitProgress] {
         return habitsViewModel.habits.map { habit in
@@ -123,5 +126,49 @@ class HistoryViewModel: ObservableObject {
                 remainingDays: remainingDays
             )
         }
+    }
+    
+    // MARK: - Period Selection
+
+    func updateSelectedPeriod(_ period: Period) {
+        selectedPeriod = period
+        UserDefaultsManager.shared.saveSelectedPeriod(period)
+    }
+    
+    // MARK: - Date Range Formatting
+    
+    private func updateDateRange() {
+        dateRangeText = calculateDateRange(for: selectedPeriod)
+    }
+
+    private func calculateDateRange(for period: Period) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.yy"
+
+        let calendar = Calendar.current
+        let today = Date()
+        let startDate: Date?
+        let endDate: Date?
+
+        switch selectedPeriod {
+        case .week:
+            startDate = calendar.date(byAdding: .day, value: -6, to: today)
+            endDate = today
+        case .month:
+            startDate = calendar.date(from: calendar.dateComponents([.year, .month], from: today))
+            endDate = startDate.flatMap { calendar.date(byAdding: .month, value: 1, to: $0)?.addingTimeInterval(-1) }
+        case .halfYear:
+            startDate = calendar.date(byAdding: .month, value: -5, to: today)
+            endDate = today
+        case .year:
+            startDate = calendar.date(byAdding: .year, value: -1, to: today)
+            endDate = today
+        }
+
+        guard let start = startDate, let end = endDate else {
+            return ""
+        }
+        
+        return "\(formatter.string(from: start))–\(formatter.string(from: end))"
     }
 }

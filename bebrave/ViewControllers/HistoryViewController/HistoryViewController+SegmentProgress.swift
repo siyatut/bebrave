@@ -13,12 +13,14 @@ class SegmentedProgressBar: UIView {
 
     private var segments: [(color: UIColor, ratio: CGFloat)] = []
 
-    // MARK: - Setup
+    // MARK: - Public Methods
 
     func setSegments(_ segments: [(color: UIColor, ratio: CGFloat)]) {
         self.segments = segments
         setNeedsDisplay()
     }
+    
+    // MARK: - Drawing
 
     override func draw(_ rect: CGRect) {
         guard !segments.isEmpty else { return }

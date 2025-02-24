@@ -28,7 +28,7 @@ class HistoryViewController: UIViewController {
     let viewModel: HistoryViewModel
     private var cancellables = Set<AnyCancellable>()
 
-    // MARK: - Init for dependency injection
+    // MARK: - Initialization
 
     init(viewModel: HistoryViewModel) {
         self.viewModel = viewModel
@@ -48,11 +48,10 @@ class HistoryViewController: UIViewController {
         setupCollectionView()
         setupEmptyStateView()
         bindViewModel()
-        viewModel.selectedPeriod = UserDefaultsManager.shared.loadSelectedPeriod() ?? .week
     }
 
-    // MARK: - Binding
-
+    // MARK: - ViewModel Binding
+    
     private func bindViewModel() {
         viewModel.$habitsProgress
             .receive(on: DispatchQueue.main)
@@ -63,7 +62,7 @@ class HistoryViewController: UIViewController {
             .store(in: &cancellables)
     }
 
-    // MARK: - Setup
+    // MARK: - UI Setup
 
     private func setupCollectionView() {
         collectionView = UICollectionView(

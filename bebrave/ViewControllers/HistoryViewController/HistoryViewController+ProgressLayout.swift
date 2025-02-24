@@ -8,6 +8,8 @@
 import UIKit
 
 enum ProgressLayout {
+    
+    // MARK: - Public Methods
 
     static func createLayout() -> UICollectionViewLayout {
         let provider = createSectionProvider()
@@ -20,6 +22,8 @@ enum ProgressLayout {
             configuration: configuration
         )
     }
+    
+    // MARK: - Private Methods
 
     private static func createSectionProvider() -> UICollectionViewCompositionalLayoutSectionProvider {
         return { _, _ in
