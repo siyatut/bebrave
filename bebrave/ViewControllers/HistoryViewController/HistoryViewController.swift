@@ -8,6 +8,7 @@
 // TODO: - Настроить отображение прогресса и закрашивания в соответствии со статусом: зелёный, полосатый зелёный, серый. UPD: с зелёным и серым вроде ок, но паттерн для спипа отрисовать не получилось
 
 import UIKit
+import Combine
 
 class HistoryViewController: UIViewController {
 
@@ -22,10 +23,21 @@ class HistoryViewController: UIViewController {
         return view
     }()
 
-    // MARK: - Data
+    // MARK: - ViewModel and Data Binding
 
-    var viewModel = HabitsViewModel()
-    var habitsProgress: [HabitProgress] = []
+    let viewModel: HistoryViewModel
+    private var cancellables = Set<AnyCancellable>()
+
+    // MARK: - Init for dependency injection
+
+    init(viewModel: HistoryViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: - Lifecycle
 
@@ -35,8 +47,20 @@ class HistoryViewController: UIViewController {
         navigationController?.navigationBar.tintColor = AppStyle.Colors.secondaryColor
         setupCollectionView()
         setupEmptyStateView()
-        let initialPeriod = UserDefaultsManager.shared.loadSelectedPeriod() ?? .week
-        calculateProgress(for: initialPeriod)
+        bindViewModel()
+        viewModel.selectedPeriod = UserDefaultsManager.shared.loadSelectedPeriod() ?? .week
+    }
+
+    // MARK: - Binding
+
+    private func bindViewModel() {
+        viewModel.$habitsProgress
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.collectionView.reloadData()
+                self?.emptyStateView.isHidden = !(self?.viewModel.habitsProgress.isEmpty ?? true)
+            }
+            .store(in: &cancellables)
     }
 
     // MARK: - Setup
@@ -89,66 +113,12 @@ class HistoryViewController: UIViewController {
     }
 
     private func setupEmptyStateVisibility() {
-        emptyStateView.isHidden = !viewModel.habits.isEmpty
+        emptyStateView.isHidden = !viewModel.habitsProgress.isEmpty
     }
 
     // MARK: - Data Handling
 
-    private func calculateProgress(for period: Period) {
-        // TODO: - Опять что-то неправильно здесь посчитывается. Или UI некорректно обновляется. Только при перезагрузки, а нужно чтобы и при смене экрана апдейтился. С полгода опять что-то не так
-        let calendar = Calendar.current
-        let today = Date()
-
-        var dateInterval: DateInterval?
-
-        switch period {
-        case .week:
-            dateInterval = calendar.dateInterval(of: .weekOfYear, for: today)
-
-        case .month:
-            dateInterval = calendar.dateInterval(of: .month, for: today)
-
-        case .halfYear:
-            if let sixMonthsAgo = calendar.date(byAdding: .month, value: -5, to: today),
-               let startOfHalfYear = calendar.date(from: calendar.dateComponents([.year, .month], from: sixMonthsAgo)),
-            let endOfHalfYear = calendar.date(
-                byAdding: .day,
-                value: -1,
-                to: calendar.date(byAdding: .month, value: 6,
-                to: startOfHalfYear)!) {
-                dateInterval = DateInterval(start: startOfHalfYear, end: endOfHalfYear)
-            }
-
-        case .year:
-            dateInterval = calendar.dateInterval(of: .year, for: today)
-        }
-
-        guard let interval = dateInterval else { return }
-
-        let adjustedEnd = calendar.date(byAdding: .day, value: -1, to: interval.end) ?? interval.end
-        let totalDays = calendar.dateComponents([.day], from: interval.start, to: adjustedEnd).day! + 1
-
-        habitsProgress = viewModel.habits.map { habit in
-            let completedDays = habit.progress
-                .filter { $0.key >= interval.start && $0.key <= adjustedEnd && $0.value > 0 }
-                .count
-            let skippedDays = habit.skipDates.filter { $0 >= interval.start && $0 <= adjustedEnd }.count
-            let remainingDays = totalDays - (completedDays + skippedDays)
-
-            return HabitProgress(
-                name: habit.title,
-                completedDays: completedDays,
-                totalDays: totalDays,
-                skippedDays: skippedDays,
-                remainingDays: remainingDays
-            )
-        }
-
-        collectionView.reloadData()
-    }
-
     func updateData(for period: Period) {
-        calculateProgress(for: period)
-        collectionView.reloadData()
+        viewModel.selectedPeriod = period
     }
 }

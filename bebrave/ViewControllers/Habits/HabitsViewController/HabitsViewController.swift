@@ -91,8 +91,8 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     // MARK: - Tap actions
 
     @objc func historyButtonTapped() {
-        let historyVC = HistoryViewController()
-        historyVC.viewModel = self.viewModel
+        let historyViewModel = HistoryViewModel(habitsViewModel: self.viewModel)
+        let historyVC = HistoryViewController(viewModel: historyViewModel)
         self.navigationController?.pushViewController(historyVC, animated: true)
     }
 

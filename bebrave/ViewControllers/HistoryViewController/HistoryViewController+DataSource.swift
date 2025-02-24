@@ -13,7 +13,7 @@ extension HistoryViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return habitsProgress.count
+        return viewModel.habitsProgress.count
     }
 
     func collectionView(
@@ -29,7 +29,7 @@ extension HistoryViewController: UICollectionViewDataSource {
             )
             fatalError("\(error)")
         }
-        let habitProgress = habitsProgress[indexPath.row]
+        let habitProgress = viewModel.habitsProgress[indexPath.row]
         cell.configure(with: habitProgress)
         return cell
     }
@@ -48,12 +48,9 @@ extension HistoryViewController: UICollectionViewDataSource {
             ) as? HistoryHeaderView else {
                 fatalError("Не удалось deque header с типом \(kind)")
             }
-
-            header.configure(
-                onPeriodChange: { [weak self] selectedPeriod in
-                    self?.updateData(for: selectedPeriod)
-                }
-            )
+            header.configure(onPeriodChange: { [weak self] selectedPeriod in
+                self?.updateData(for: selectedPeriod)
+            })
             return header
 
         case CustomElement.outlineBackground.rawValue:
