@@ -24,8 +24,6 @@ extension HabitCell {
             self.contentView.layoutIfNeeded()
         }
 
-        checkbox.isHidden = percentage < 1.0
-
         if percentage >= 1.0 {
             drawCheckmark()
         } else {
@@ -52,8 +50,6 @@ extension HabitCell {
         case .completed:
             currentProgress = habit.frequency
             updateHabitProgress()
-            setupCheckboxBackground()
-            checkbox.isHidden = false
 
         case .notCompleted:
             currentProgress = 0
@@ -76,13 +72,6 @@ extension HabitCell {
         clearCheckmark()
         clearLayerPatterns()
         currentProgress = 0
-        checkbox.isHidden = true
         contentContainer.backgroundColor = AppStyle.Colors.backgroundColor
-    }
-
-    func setupCheckboxBackground() {
-        checkbox.backgroundColor = .white
-        checkbox.layer.cornerRadius = 6
-        checkbox.layer.masksToBounds = true
     }
 }
