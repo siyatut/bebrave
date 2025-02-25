@@ -1,5 +1,5 @@
 //
-//  Untitled.swift
+//  BaseHabitView+UISetup.swift
 //  bebrave
 //
 //  Created by Anastasia Tyutinova on 31/12/2567 BE.
@@ -146,12 +146,12 @@ extension BaseHabitViewController {
     // MARK: - Days of week setup
 
     func setupDaysOfWeekStack() {
-        if daysOfWeekStack.arrangedSubviews.isEmpty {
-            configureDaysOfWeekStack()
-            addDayViewsToStack()
-        } else {
+        guard daysOfWeekStack.arrangedSubviews.isEmpty else {
             updateCheckboxes()
+            return
         }
+        configureDaysOfWeekStack()
+        addDayViewsToStack()
     }
 
     private func configureDaysOfWeekStack() {
@@ -164,18 +164,19 @@ extension BaseHabitViewController {
     private func addDayViewsToStack() {
         let dayTitles = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"]
 
-        for day in 0..<7 {
-            let dayContainer = createDayContainer(for: day)
-            let dayStack = createDayStack()
+        for (index, title) in dayTitles.enumerated() {
+            let dayContainer = createDayContainer(for: index)
+            let (dayLabel, checkboxImageView) = createDayLabelWithCheckbox(title: title, isSelected: selectedDays[index])
+
+            let dayStack = UIStackView(arrangedSubviews: [dayLabel, checkboxImageView])
+            dayStack.axis = .vertical
+            dayStack.alignment = .center
+            dayStack.spacing = 8
+            dayStack.translatesAutoresizingMaskIntoConstraints = false
+
             dayContainer.addSubview(dayStack)
-
-            let dayLabel = createDayLabel(with: dayTitles[day])
-            let checkboxImageView = createCheckboxImageView(isSelected: selectedDays[day])
-
-            dayStack.addArrangedSubview(dayLabel)
-            dayStack.addArrangedSubview(checkboxImageView)
-
             setupConstraints(for: dayStack, in: dayContainer, checkboxImageView: checkboxImageView)
+
             daysOfWeekStack.addArrangedSubview(dayContainer)
         }
     }
@@ -195,32 +196,21 @@ extension BaseHabitViewController {
         return dayContainer
     }
 
-    private func createDayStack() -> UIStackView {
-        let dayStack = UIStackView()
-        dayStack.axis = .vertical
-        dayStack.alignment = .center
-        dayStack.spacing = 8
-        dayStack.translatesAutoresizingMaskIntoConstraints = false
-        return dayStack
-    }
-
-    private func createDayLabel(with title: String) -> UILabel {
+    private func createDayLabelWithCheckbox(title: String, isSelected: Bool) -> (UILabel, UIImageView) {
         let dayLabel = UILabel()
         dayLabel.text = title
         dayLabel.font = AppStyle.Fonts.regularFont(size: 16)
         dayLabel.textAlignment = .center
         dayLabel.translatesAutoresizingMaskIntoConstraints = false
-        return dayLabel
-    }
 
-    private func createCheckboxImageView(isSelected: Bool) -> UIImageView {
         let checkboxImageView = UIImageView()
         checkboxImageView.image = UIImage(named: isSelected ? "CheckedCheckbox" : "UncheckedCheckbox")
         checkboxImageView.contentMode = .scaleAspectFit
         checkboxImageView.isUserInteractionEnabled = false
         checkboxImageView.tag = 999
         checkboxImageView.translatesAutoresizingMaskIntoConstraints = false
-        return checkboxImageView
+
+        return (dayLabel, checkboxImageView)
     }
 
     private func setupConstraints(
