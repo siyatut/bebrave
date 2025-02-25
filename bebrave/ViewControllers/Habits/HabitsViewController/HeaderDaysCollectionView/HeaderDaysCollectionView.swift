@@ -12,7 +12,7 @@ class HeaderDaysCollectionView: UICollectionReusableView {
 
     // MARK: - ViewModel and Data Binding
 
-    var viewModel: HeaderDaysViewModel?
+    private(set) var viewModel: HeaderDaysViewModel?
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - UI Components
@@ -27,8 +27,6 @@ class HeaderDaysCollectionView: UICollectionReusableView {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
-
-    var daysData: [(date: Date, emoji: String)] = []
 
     // MARK: - Init
 
@@ -47,7 +45,6 @@ class HeaderDaysCollectionView: UICollectionReusableView {
     func configure(with viewModel: HeaderDaysViewModel) {
         self.viewModel = viewModel
         bindViewModel()
-        collectionView.reloadData()
     }
 
     // MARK: - Bind ViewModel
