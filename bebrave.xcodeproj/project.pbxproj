@@ -222,9 +222,9 @@
 		52359DAA2D3596BF00207E09 /* HabitCell */ = {
 			isa = PBXGroup;
 			children = (
-				52934FBF2D68D267004BBFAF /* Actions */,
-				52934FBE2D68D1A0004BBFAF /* UI */,
 				52934FBD2D68D177004BBFAF /* Core */,
+				52934FBE2D68D1A0004BBFAF /* UI */,
+				52934FBF2D68D267004BBFAF /* Actions */,
 			);
 			path = HabitCell;
 			sourceTree = "<group>";

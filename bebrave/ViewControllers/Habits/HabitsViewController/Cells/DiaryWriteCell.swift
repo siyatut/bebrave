@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DiaryWriteCell: UICollectionViewCell {
+final class DiaryWriteCell: UICollectionViewCell {
 
     // MARK: - UI Components
 

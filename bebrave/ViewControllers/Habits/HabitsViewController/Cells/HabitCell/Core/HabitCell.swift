@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
+final class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
     // MARK: - Properties
 
@@ -60,11 +60,11 @@ class HabitCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
     // MARK: - UI components for cell
 
-    lazy var habitsName = UILabel.styled(text: "")
-    lazy var percentDone = UILabel.styled(text: "", color: AppStyle.Colors.textColorSecondary)
-    lazy var habitsCount = UILabel.styled(text: "", color: AppStyle.Colors.textColorSecondary)
-    lazy var starDivider = UIImageView.styled(imageName: "StarDivider")
-    lazy var checkbox = UIImageView.styled(imageName: "UncheckedCheckbox")
+    let habitsName = UILabel.styled(text: "")
+    let percentDone = UILabel.styled(text: "", color: AppStyle.Colors.textColorSecondary)
+    let habitsCount = UILabel.styled(text: "", color: AppStyle.Colors.textColorSecondary)
+    let starDivider = UIImageView.styled(imageName: "StarDivider")
+    let checkbox = UIImageView.styled(imageName: "UncheckedCheckbox")
 
     let checkmarkLayer = CAShapeLayer()
 

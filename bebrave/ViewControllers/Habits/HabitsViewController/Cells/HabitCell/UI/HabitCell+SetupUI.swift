@@ -9,7 +9,7 @@ import UIKit
 
 extension HabitCell {
 
-    func addSubviewsToStackView(_ stackView: UIStackView, views: [UIView]) {
+    private func addSubviewsToStackView(_ stackView: UIStackView, views: [UIView]) {
         views.forEach { stackView.addArrangedSubview($0) }
     }
 
