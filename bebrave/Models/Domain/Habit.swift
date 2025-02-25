@@ -46,29 +46,29 @@ extension Habit {
 
 extension Habit {
 
-    mutating func markCompleted() {
-        let today = Calendar.current.startOfDay(for: Date())
+    mutating func markCompleted(calendar: Calendar = .current) {
+        let today = calendar.startOfDay(for: Date())
         let currentProgress = progress[today] ?? 0
         if currentProgress < frequency {
             progress[today] = currentProgress + 1
         }
     }
 
-    mutating func undoCompletion() {
-        let today = Calendar.current.startOfDay(for: Date())
+    mutating func undoCompletion(calendar: Calendar = .current) {
+        let today = calendar.startOfDay(for: Date())
         let currentProgress = progress[today] ?? 0
         if currentProgress > 0 {
             progress[today] = currentProgress - 1
         }
     }
 
-    mutating func skipToday() {
-        let today = Calendar.current.startOfDay(for: Date())
+    mutating func skipToday(calendar: Calendar = .current) {
+        let today = calendar.startOfDay(for: Date())
         skipDates.insert(today)
     }
 
-    mutating func undoSkip() {
-        let today = Calendar.current.startOfDay(for: Date())
+    mutating func undoSkip(calendar: Calendar = .current) {
+        let today = calendar.startOfDay(for: Date())
         skipDates.remove(today)
         progress[today] = 0
     }
@@ -91,8 +91,7 @@ extension Habit {
         }
     }
 
-    func getStatus(for date: Date = Date()) -> HabitStatus {
-        let calendar = Calendar.current
+    func getStatus(for date: Date = Date(), calendar: Calendar = .current) -> HabitStatus {
         let startOfDay = calendar.startOfDay(for: date)
 
         if skipDates.contains(startOfDay) {
