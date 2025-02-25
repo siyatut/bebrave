@@ -7,10 +7,4 @@
 
 import UIKit
 
-class DiaryViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = AppStyle.Colors.backgroundColor
-    }
-}
+class DiaryViewController: PlaceholderViewController {}
