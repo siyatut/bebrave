@@ -53,6 +53,8 @@ extension HabitsViewController {
     // MARK: - Empty state view
 
     func setupEmptyStateView() {
+        emptyStateView.translatesAutoresizingMaskIntoConstraints = false
+        emptyStateView.isHidden = true
         view.addSubview(emptyStateView)
         NSLayoutConstraint.activate([
             emptyStateView.topAnchor.constraint(equalTo: view.topAnchor, constant: 180),

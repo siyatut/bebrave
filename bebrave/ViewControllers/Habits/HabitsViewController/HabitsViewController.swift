@@ -8,12 +8,12 @@
 import UIKit
 import Combine
 
-class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+final class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     // MARK: - ViewModel
 
     let viewModel = HabitsViewModel()
-    lazy var headerViewModel = HeaderDaysViewModel(habitsViewModel: viewModel)
+    let headerViewModel: HeaderDaysViewModel
 
     // MARK: - UI Components
 
@@ -31,33 +31,32 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
     let historyButton = UIButton()
     let createNewHabitButton = UIButton()
 
-    lazy var collectionView: UICollectionView = {
+    let collectionView: UICollectionView = {
         let layout = HabitsLayout.createLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsVerticalScrollIndicator = true
-        collectionView.delegate = self
-        collectionView.dataSource = self
         return collectionView
     }()
 
-    lazy var emptyStateView: EmptyStateView = {
-        let view = EmptyStateView(text: "Пора что-нибудь сюда добавить")
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.isHidden = true
-        return view
-    }()
+    let emptyStateView = EmptyStateView(text: "Пора что-нибудь сюда добавить")
+
+    // MARK: - Init
+
+    init() {
+        self.headerViewModel = HeaderDaysViewModel(habitsViewModel: viewModel)
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = AppStyle.Colors.backgroundColor
-        setupAddNewHabitButton()
-        setupCollectionView()
-        setupEmptyStateView()
-        setupHistoryButton()
-        setupCalendarLabel()
+        setupUI()
         setupBindings()
 
         // Вот это логика для невыполненной привычки:
@@ -83,31 +82,45 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
 
+    // MARK: - Setup UI
+
+    private func setupUI() {
+        setupAddNewHabitButton()
+        setupCollectionView()
+        setupEmptyStateView()
+        setupHistoryButton()
+        setupCalendarLabel()
+    }
+
     // MARK: - ViewModel Bindings
 
     private func setupBindings() {
         viewModel.$habits
             .receive(on: DispatchQueue.main)
             .sink { [weak self] habits in
-                guard let self = self else { return }
-                if habits.count < self.previousHabitCount {
-                    let deletedIndex = (0..<self.previousHabitCount)
-                        .first(where: { !habits.indices.contains($0) })
-
-                    if let deletedIndex = deletedIndex {
-                        let indexPath = IndexPath(item: deletedIndex, section: 0)
-
-                        collectionView.performBatchUpdates({
-                            self.collectionView.deleteItems(at: [indexPath])
-                        }, completion: { _ in
-                            self.updateEmptyState()
-                        })
-                    }
-                }
-
-                self.previousHabitCount = habits.count
+                self?.handleHabitUpdates(habits: habits)
             }
             .store(in: &cancellables)
+    }
+
+    private func handleHabitUpdates(habits: [Habit]) {
+        if habits.count < previousHabitCount {
+            removeDeletedHabit()
+        }
+        previousHabitCount = habits.count
+    }
+
+    private func removeDeletedHabit() {
+        guard let deletedIndex = (0..<previousHabitCount)
+            .first(where: { !viewModel.habits.indices.contains($0) }) else { return }
+
+        let indexPath = IndexPath(item: deletedIndex, section: 0)
+
+        collectionView.performBatchUpdates({
+            collectionView.deleteItems(at: [indexPath])
+        }, completion: { _ in
+            self.updateEmptyState()
+        })
     }
 
     // MARK: - User Actions
@@ -128,7 +141,7 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     // MARK: - Handle Uncompleted Habits
 
-    func scheduleMidnightCheck() {
+    private func scheduleMidnightCheck() {
         let calendar = Calendar.current
         let now = Date()
         let nextMidnight = calendar.nextDate(
@@ -136,13 +149,14 @@ class HabitsViewController: UIViewController, UICollectionViewDelegate, UICollec
             matching: DateComponents(hour: 0),
             matchingPolicy: .strict
         ) ?? now
-        let timer = Timer(
-            fireAt: nextMidnight,
-            interval: 0, target: self,
+
+        Timer.scheduledTimer(
+            timeInterval: nextMidnight.timeIntervalSince(now),
+            target: self,
             selector: #selector(handleMidnight),
-            userInfo: nil, repeats: false
+            userInfo: nil,
+            repeats: false
         )
-        RunLoop.main.add(timer, forMode: .common)
     }
 
     @objc private func handleMidnight() {

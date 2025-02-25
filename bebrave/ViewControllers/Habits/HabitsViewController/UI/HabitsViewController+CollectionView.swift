@@ -30,6 +30,10 @@ extension HabitsViewController {
             withReuseIdentifier: CustomElement.collectionHeader.rawValue
         )
 
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+
         view.addSubview(collectionView)
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),

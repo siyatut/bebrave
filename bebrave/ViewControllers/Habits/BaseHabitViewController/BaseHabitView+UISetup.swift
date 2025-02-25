@@ -166,7 +166,10 @@ extension BaseHabitViewController {
 
         for (index, title) in dayTitles.enumerated() {
             let dayContainer = createDayContainer(for: index)
-            let (dayLabel, checkboxImageView) = createDayLabelWithCheckbox(title: title, isSelected: selectedDays[index])
+            let (dayLabel, checkboxImageView) = createDayLabelWithCheckbox(
+                title: title,
+                isSelected: selectedDays[index]
+            )
 
             let dayStack = UIStackView(arrangedSubviews: [dayLabel, checkboxImageView])
             dayStack.axis = .vertical
