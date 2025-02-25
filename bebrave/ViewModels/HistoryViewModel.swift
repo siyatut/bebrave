@@ -77,7 +77,9 @@ class HistoryViewModel: ObservableObject {
             return calendar.dateInterval(of: .weekOfYear, for: today)
 
         case .month:
-            return calendar.dateInterval(of: .month, for: today)
+            guard let startOfMonth = calendar.date(byAdding: .day, value: -30, to: today)
+            else { return nil }
+            return DateInterval(start: startOfMonth, end: today)
 
         case .halfYear:
             guard
@@ -113,11 +115,14 @@ class HistoryViewModel: ObservableObject {
     private func calculateHabitProgress(for interval: DateInterval, totalDays: Int) -> [HabitProgress] {
         return habitsViewModel.habits.map { habit in
             let completedDays = habit.progress
-                .filter { $0.key >= interval.start && $0.key <= interval.end && $0.value > 0 }
+                .filter { $0.key >= interval.start && $0.key <= interval.end &&
+                    $0.value > 0 && !habit.skipDates.contains($0.key) } 
                 .count
-            let skippedDays = habit.skipDates.filter { $0 >= interval.start && $0 <= interval.end }.count
+            let skippedDays = habit.skipDates
+                .filter { $0 >= interval.start && $0 <= interval.end }
+                .count
             let remainingDays = totalDays - (completedDays + skippedDays)
-
+            
             return HabitProgress(
                 name: habit.title,
                 completedDays: completedDays,
@@ -155,8 +160,8 @@ class HistoryViewModel: ObservableObject {
             startDate = calendar.date(byAdding: .day, value: -6, to: today)
             endDate = today
         case .month:
-            startDate = calendar.date(from: calendar.dateComponents([.year, .month], from: today))
-            endDate = startDate.flatMap { calendar.date(byAdding: .month, value: 1, to: $0)?.addingTimeInterval(-1) }
+            startDate = calendar.date(byAdding: .day, value: -30, to: today)
+            endDate = today
         case .halfYear:
             startDate = calendar.date(byAdding: .month, value: -5, to: today)
             endDate = today
