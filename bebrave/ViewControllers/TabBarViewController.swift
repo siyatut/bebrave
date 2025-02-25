@@ -18,41 +18,25 @@ class TabBarViewController: UITabBarController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tabBar.backgroundColor = AppStyle.Colors.backgroundColor
-        self.tabBar.tintColor = AppStyle.Colors.primaryColor
+        tabBar.backgroundColor = AppStyle.Colors.backgroundColor
+        tabBar.tintColor = AppStyle.Colors.primaryColor
     }
 
-    // MARK: — Setup tab bar
-
+    // MARK: - Setup Tab Bar
+    
     private func setupTabs() {
-
-        let habits = self.createNavigationController(
-            with: "Привычки",
-            and: .temporaryTabbarIcon,
-            viewController: HabitsViewController()
-        )
-        let diary = self.createNavigationController(
-            with: "Дневник",
-            and: .temporaryTabbarIcon,
-            viewController: DiaryViewController()
-        )
-        let settings = self.createNavigationController(
-            with: "Профиль",
-            and: .temporaryTabbarIcon,
-            viewController: ProfileViewController()
-        )
-        self.setViewControllers([habits, diary, settings], animated: true)
+        let tabs: [TabItem] = [.habits, .diary, .profile]
+        let viewControllers = tabs.map { createNavigationController(for: $0) }
+        setViewControllers(viewControllers, animated: true)
     }
-
-    func createNavigationController(
-        with title: String,
-        and image: UIImage?,
-        viewController: UIViewController
-    ) -> UINavigationController {
-
-        let navigationController = UINavigationController(rootViewController: viewController)
-        navigationController.tabBarItem.title = title
-        navigationController.tabBarItem.image = image
+    
+    private func createNavigationController(for tabItem: TabItem) -> UINavigationController {
+        let navigationController = UINavigationController(rootViewController: tabItem.viewController)
+        navigationController.tabBarItem = UITabBarItem(
+            title: tabItem.title,
+            image: tabItem.icon,
+            tag: tabItem.rawValue
+        )
         return navigationController
     }
 }

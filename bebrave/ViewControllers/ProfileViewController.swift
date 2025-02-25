@@ -7,4 +7,4 @@
 
 import UIKit
 
-class ProfileViewController: PlaceholderViewController {}
+final class ProfileViewController: PlaceholderViewController {}

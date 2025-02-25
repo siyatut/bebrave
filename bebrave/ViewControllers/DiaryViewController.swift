@@ -7,4 +7,4 @@
 
 import UIKit
 
-class DiaryViewController: PlaceholderViewController {}
+final class DiaryViewController: PlaceholderViewController {}
