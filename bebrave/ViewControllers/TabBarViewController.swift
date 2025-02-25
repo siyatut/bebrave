@@ -23,13 +23,13 @@ class TabBarViewController: UITabBarController {
     }
 
     // MARK: - Setup Tab Bar
-    
+
     private func setupTabs() {
         let tabs: [TabItem] = [.habits, .diary, .profile]
         let viewControllers = tabs.map { createNavigationController(for: $0) }
         setViewControllers(viewControllers, animated: true)
     }
-    
+
     private func createNavigationController(for tabItem: TabItem) -> UINavigationController {
         let navigationController = UINavigationController(rootViewController: tabItem.viewController)
         navigationController.tabBarItem = UITabBarItem(

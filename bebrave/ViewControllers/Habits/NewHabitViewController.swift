@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewHabitViewController: BaseHabitViewController {
+final class NewHabitViewController: BaseHabitViewController {
 
     // MARK: - Lifecycle
 

@@ -5,13 +5,12 @@
 //  Created by Anastasia Tyutinova on 25/2/2568 BE.
 //
 
-
 import UIKit
 
 // MARK: - Tab Bar Items
 
 enum TabItem: Int, CaseIterable {
-    
+
     case habits
     case diary
     case profile

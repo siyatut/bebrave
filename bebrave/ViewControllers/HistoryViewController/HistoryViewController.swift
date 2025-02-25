@@ -63,10 +63,10 @@ final class HistoryViewController: UIViewController {
         )
         collectionView.dataSource = self
         registerCells()
-        
+
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -74,19 +74,19 @@ final class HistoryViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-    
+
     private func registerCells() {
         collectionView.register(
             ProgressCell.self,
             forCellWithReuseIdentifier: CustomElement.progressCell.rawValue
         )
-        
+
         collectionView.register(
             HistoryHeaderView.self,
             forSupplementaryViewOfKind: CustomElement.historyHeader.rawValue,
             withReuseIdentifier: CustomElement.historyHeader.rawValue
         )
-        
+
         collectionView.register(
             OutlineBackgroundView.self,
             forSupplementaryViewOfKind: CustomElement.outlineBackground.rawValue,

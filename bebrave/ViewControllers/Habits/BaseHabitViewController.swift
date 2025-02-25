@@ -12,9 +12,6 @@ class BaseHabitViewController: UIViewController {
     // MARK: - Properties
 
     let viewModel = HabitsViewModel()
-
-    // MARK: - Delegate
-
     weak var delegate: HabitDelegate?
 
     // MARK: - UI components top down
@@ -32,14 +29,14 @@ class BaseHabitViewController: UIViewController {
         return textField
     }()
 
-    lazy var promiseLabel = UILabel.styled(text: "Я обещаю себе", fontSize: 24, isBold: true)
-    lazy var timesPerDayTextField = UITextField.styled(placeholder: "1", alignment: .center)
-    lazy var timesPerDayLabel = UILabel.styled(text: "раз в день")
+    let promiseLabel = UILabel.styled(text: "Я обещаю себе", fontSize: 24, isBold: true)
+    let timesPerDayTextField = UITextField.styled(placeholder: "1", alignment: .center)
+    let timesPerDayLabel = UILabel.styled(text: "раз в день")
 
     let daysOfWeekStack = UIStackView()
     var selectedDays: [Bool] = Array(repeating: true, count: 7)
-    lazy var monthsTextField = UITextField.styled(placeholder: "1", alignment: .center)
-    lazy var monthsLabel = UILabel.styled(text: "месяц")
+    let monthsTextField = UITextField.styled(placeholder: "1", alignment: .center)
+    let monthsLabel = UILabel.styled(text: "месяц")
 
     var timesPerDayStack: UIStackView!
     var monthsStack: UIStackView!
@@ -59,28 +56,28 @@ class BaseHabitViewController: UIViewController {
 
     // MARK: - Error labels
 
-    lazy var habitErrorLabel = UILabel.styled(
+    let habitErrorLabel = UILabel.styled(
         text: "",
         fontSize: 12,
         color: AppStyle.Colors.errorColor,
         numberOfLines: 0,
         isHidden: true
     )
-    lazy var timesPerDayErrorLabel = UILabel.styled(
+    let timesPerDayErrorLabel = UILabel.styled(
         text: "",
         fontSize: 12,
         color: AppStyle.Colors.errorColor,
         numberOfLines: 0,
         isHidden: true
     )
-    lazy var daysOfWeekErrorLabel = UILabel.styled(
+    let daysOfWeekErrorLabel = UILabel.styled(
         text: "",
         fontSize: 12,
         color: AppStyle.Colors.errorColor,
         numberOfLines: 0,
         isHidden: true
     )
-    lazy var monthsErrorLabel = UILabel.styled(
+    let monthsErrorLabel = UILabel.styled(
         text: "",
         fontSize: 12,
         color: AppStyle.Colors.errorColor,

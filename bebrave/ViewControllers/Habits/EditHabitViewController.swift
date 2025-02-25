@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EditHabitViewController: BaseHabitViewController {
+final class EditHabitViewController: BaseHabitViewController {
 
     var habitToEdit: Habit?
 

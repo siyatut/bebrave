@@ -70,3 +70,23 @@ extension UIImageView {
         return view
     }
 }
+
+// MARK: - UIStackView Extension
+
+extension UIStackView {
+    static func createStack(
+        arrangedSubviews: [UIView],
+        axis: NSLayoutConstraint.Axis = .horizontal,
+        spacing: CGFloat = 8,
+        alignment: UIStackView.Alignment = .leading,
+        distribution: UIStackView.Distribution = .fillProportionally
+    ) -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: arrangedSubviews)
+        stackView.axis = axis
+        stackView.spacing = spacing
+        stackView.alignment = alignment
+        stackView.distribution = distribution
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }
+}

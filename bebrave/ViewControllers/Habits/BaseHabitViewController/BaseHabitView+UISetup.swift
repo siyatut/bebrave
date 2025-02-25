@@ -15,22 +15,6 @@ extension BaseHabitViewController {
         [habitTextField, timesPerDayTextField, monthsTextField].forEach { $0.delegate = self }
     }
 
-    func createStackView(
-        arrangedSubviews: [UIView],
-        axis: NSLayoutConstraint.Axis = .horizontal,
-        spacing: CGFloat = 8,
-        alignment: UIStackView.Alignment = .leading,
-        distribution: UIStackView.Distribution = .fillProportionally
-    ) -> UIStackView {
-        let stackView = UIStackView(arrangedSubviews: arrangedSubviews)
-        stackView.axis = .horizontal
-        stackView.spacing = 8
-        stackView.alignment = .leading
-        stackView.distribution = .fillProportionally
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }
-
     // MARK: - Setup UI
 
     func setupComponents() {
@@ -41,10 +25,10 @@ extension BaseHabitViewController {
     }
 
     private func setupLabelsAndStacks() {
-        timesPerDayStack = createStackView(
+        timesPerDayStack = UIStackView.createStack(
             arrangedSubviews: [timesPerDayTextField, timesPerDayLabel]
         )
-        monthsStack = createStackView(
+        monthsStack = UIStackView.createStack(
             arrangedSubviews: [monthsTextField, monthsLabel]
         )
 
