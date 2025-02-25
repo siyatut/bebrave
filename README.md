@@ -2,7 +2,7 @@
 
 #### 📝 **Description**
 
-bebrave is an app designed to help users build and track their habits efficiently. It allows users to set goals, monitor progress, and analyze results over different time periods. The app leverages Combine for reactive programming, stores data using UserDefaults, and features a well-structured UI with custom cells and smooth animations.
+**bebrave** is an app designed to help users build and track their habits efficiently. It allows users to set goals, monitor progress, and analyze results over different time periods. The app leverages Combine for reactive programming, stores data using UserDefaults, and features a well-structured UI with custom cells and smooth animations.
 
 #### 🚀 **Key Features:**
 
