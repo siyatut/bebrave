@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class HeaderDaysViewModel: ObservableObject {
+final class HeaderDaysViewModel: ObservableObject {
 
     // MARK: - Published Properties
 

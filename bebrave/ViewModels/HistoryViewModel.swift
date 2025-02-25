@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class HistoryViewModel: ObservableObject {
+final class HistoryViewModel: ObservableObject {
 
     // MARK: - Published Properties
 
@@ -37,7 +37,7 @@ class HistoryViewModel: ObservableObject {
         setupBindings()
     }
 
-    // MARK: - Private Methods
+    // MARK: - Data Binding
 
     private func setupBindings() {
         habitsViewModel.$habits
@@ -53,6 +53,8 @@ class HistoryViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
+    
+    // MARK: - General Progress Calculation
 
     private func calculateProgress() {
         guard let interval = calculateDateInterval() else { return }
