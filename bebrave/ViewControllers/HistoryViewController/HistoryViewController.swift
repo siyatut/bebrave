@@ -8,18 +8,12 @@
 import UIKit
 import Combine
 
-class HistoryViewController: UIViewController {
+final class HistoryViewController: UIViewController {
 
     // MARK: - UI Components
 
     private var collectionView: UICollectionView!
-
-    private lazy var emptyStateView: EmptyStateView = {
-        let view = EmptyStateView(text: "История пока пуста")
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.isHidden = true
-        return view
-    }()
+    private let emptyStateView = EmptyStateView(text: "История пока пуста")
 
     // MARK: - ViewModel and Data Binding
 
@@ -55,7 +49,7 @@ class HistoryViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.collectionView.reloadData()
-                self?.emptyStateView.isHidden = !(self?.viewModel.habitsProgress.isEmpty ?? true)
+                self?.updateEmptyStateVisibility()
             }
             .store(in: &cancellables)
     }
@@ -68,27 +62,11 @@ class HistoryViewController: UIViewController {
             collectionViewLayout: ProgressLayout.createLayout()
         )
         collectionView.dataSource = self
-
-        collectionView.register(
-            ProgressCell.self,
-            forCellWithReuseIdentifier: CustomElement.progressCell.rawValue
-        )
-
-        collectionView.register(
-            HistoryHeaderView.self,
-            forSupplementaryViewOfKind: CustomElement.historyHeader.rawValue,
-            withReuseIdentifier: CustomElement.historyHeader.rawValue
-        )
-
-        collectionView.register(
-            OutlineBackgroundView.self,
-            forSupplementaryViewOfKind: CustomElement.outlineBackground.rawValue,
-            withReuseIdentifier: CustomElement.outlineBackground.rawValue
-        )
-
+        registerCells()
+        
         view.addSubview(collectionView)
-
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -96,8 +74,29 @@ class HistoryViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+    
+    private func registerCells() {
+        collectionView.register(
+            ProgressCell.self,
+            forCellWithReuseIdentifier: CustomElement.progressCell.rawValue
+        )
+        
+        collectionView.register(
+            HistoryHeaderView.self,
+            forSupplementaryViewOfKind: CustomElement.historyHeader.rawValue,
+            withReuseIdentifier: CustomElement.historyHeader.rawValue
+        )
+        
+        collectionView.register(
+            OutlineBackgroundView.self,
+            forSupplementaryViewOfKind: CustomElement.outlineBackground.rawValue,
+            withReuseIdentifier: CustomElement.outlineBackground.rawValue
+        )
+    }
 
-    func setupEmptyStateView() {
+    private func setupEmptyStateView() {
+        emptyStateView.translatesAutoresizingMaskIntoConstraints = false
+        emptyStateView.isHidden = true
         view.addSubview(emptyStateView)
 
         NSLayoutConstraint.activate([
@@ -106,10 +105,10 @@ class HistoryViewController: UIViewController {
             emptyStateView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
             emptyStateView.heightAnchor.constraint(equalToConstant: 312)
         ])
-        setupEmptyStateVisibility()
+        updateEmptyStateVisibility()
     }
 
-    private func setupEmptyStateVisibility() {
+    private func updateEmptyStateVisibility() {
         emptyStateView.isHidden = !viewModel.habitsProgress.isEmpty
     }
 

@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		52021A772BAC3D2000E9D8F1 /* OutlineBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52021A762BAC3D2000E9D8F1 /* OutlineBackgroundView.swift */; };
-		5209B4462D38F23F0063CF1C /* HistoryViewController+ProgressLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5209B4452D38F2300063CF1C /* HistoryViewController+ProgressLayout.swift */; };
-		5209B4482D38F2A60063CF1C /* HistoryViewController+ProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5209B4472D38F2910063CF1C /* HistoryViewController+ProgressCell.swift */; };
+		5209B4462D38F23F0063CF1C /* ProgressLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5209B4452D38F2300063CF1C /* ProgressLayout.swift */; };
+		5209B4482D38F2A60063CF1C /* ProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5209B4472D38F2910063CF1C /* ProgressCell.swift */; };
 		5209B44A2D38F2C00063CF1C /* HabitProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5209B4492D38F2B90063CF1C /* HabitProgress.swift */; };
-		5209FDB52D4A578400BBDECC /* HistoryViewController+SegmentProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5209FDB42D4A577000BBDECC /* HistoryViewController+SegmentProgress.swift */; };
+		5209FDB52D4A578400BBDECC /* SegmentProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5209FDB42D4A577000BBDECC /* SegmentProgressBar.swift */; };
 		5219E2B02D12324500F41D97 /* CellError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219E2AF2D12324500F41D97 /* CellError.swift */; };
 		5219E2B32D12371E00F41D97 /* HabitsViewController+Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219E2B22D12371300F41D97 /* HabitsViewController+Calendar.swift */; };
 		5219E2B62D1237B300F41D97 /* HabitsViewController+UISetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219E2B52D1237B100F41D97 /* HabitsViewController+UISetup.swift */; };
@@ -97,10 +97,10 @@
 
 /* Begin PBXFileReference section */
 		52021A762BAC3D2000E9D8F1 /* OutlineBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineBackgroundView.swift; sourceTree = "<group>"; };
-		5209B4452D38F2300063CF1C /* HistoryViewController+ProgressLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistoryViewController+ProgressLayout.swift"; sourceTree = "<group>"; };
-		5209B4472D38F2910063CF1C /* HistoryViewController+ProgressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistoryViewController+ProgressCell.swift"; sourceTree = "<group>"; };
+		5209B4452D38F2300063CF1C /* ProgressLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressLayout.swift; sourceTree = "<group>"; };
+		5209B4472D38F2910063CF1C /* ProgressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressCell.swift; sourceTree = "<group>"; };
 		5209B4492D38F2B90063CF1C /* HabitProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitProgress.swift; sourceTree = "<group>"; };
-		5209FDB42D4A577000BBDECC /* HistoryViewController+SegmentProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistoryViewController+SegmentProgress.swift"; sourceTree = "<group>"; };
+		5209FDB42D4A577000BBDECC /* SegmentProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentProgressBar.swift; sourceTree = "<group>"; };
 		521584B02BA320FC009F1B5A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		5219E2AF2D12324500F41D97 /* CellError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellError.swift; sourceTree = "<group>"; };
 		5219E2B22D12371300F41D97 /* HabitsViewController+Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitsViewController+Calendar.swift"; sourceTree = "<group>"; };
@@ -356,8 +356,8 @@
 		52A048E92D6CD264008483B1 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				5209B4472D38F2910063CF1C /* HistoryViewController+ProgressCell.swift */,
-				5209FDB42D4A577000BBDECC /* HistoryViewController+SegmentProgress.swift */,
+				5209B4472D38F2910063CF1C /* ProgressCell.swift */,
+				5209FDB42D4A577000BBDECC /* SegmentProgressBar.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -365,7 +365,7 @@
 		52A048EA2D6CD287008483B1 /* Layout */ = {
 			isa = PBXGroup;
 			children = (
-				5209B4452D38F2300063CF1C /* HistoryViewController+ProgressLayout.swift */,
+				5209B4452D38F2300063CF1C /* ProgressLayout.swift */,
 			);
 			path = Layout;
 			sourceTree = "<group>";
@@ -701,7 +701,7 @@
 				52652B8E2D240D2C00608550 /* BaseHabitView+Actions.swift in Sources */,
 				52359DB62D359EBF00207E09 /* HabitCell+ButtonActions.swift in Sources */,
 				52DE3E5D2D3976F700A221FC /* HistoryHeaderView.swift in Sources */,
-				5209FDB52D4A578400BBDECC /* HistoryViewController+SegmentProgress.swift in Sources */,
+				5209FDB52D4A578400BBDECC /* SegmentProgressBar.swift in Sources */,
 				5274A6312D6C4C52004A1CAB /* HistoryViewModel.swift in Sources */,
 				52A7B4642D49FB5500297E80 /* HistoryViewController+DataSource.swift in Sources */,
 				52A762512D367E68000A30EA /* Habit.swift in Sources */,
@@ -709,12 +709,12 @@
 				52FF7F482D2EBACF008EF1E2 /* HabitEmojiCalculator.swift in Sources */,
 				52923ECF2CF70F080088E54B /* HeaderDaysCollectionView.swift in Sources */,
 				52F1E56A2B7CE6330058F767 /* HabitsViewController.swift in Sources */,
-				5209B4482D38F2A60063CF1C /* HistoryViewController+ProgressCell.swift in Sources */,
+				5209B4482D38F2A60063CF1C /* ProgressCell.swift in Sources */,
 				52A762532D367EA5000A30EA /* HabitStatus.swift in Sources */,
 				52FE0A582D6E20C400B721EF /* HabitStorageManager.swift in Sources */,
 				52F1E56E2B7CE6D10058F767 /* ProfileViewController.swift in Sources */,
 				522705A22D68CFCA005FA186 /* HabitCellAction.swift in Sources */,
-				5209B4462D38F23F0063CF1C /* HistoryViewController+ProgressLayout.swift in Sources */,
+				5209B4462D38F23F0063CF1C /* ProgressLayout.swift in Sources */,
 				52697D602D1957A9004B9D7E /* HabitsViewController+CollectionViewDelegate.swift in Sources */,
 				52C996A92D11EB25000E7648 /* CustomElement.swift in Sources */,
 				524FC7022D075071004C839F /* EmptyStateView.swift in Sources */,

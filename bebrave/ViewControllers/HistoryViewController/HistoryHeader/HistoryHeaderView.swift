@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class HistoryHeaderView: UICollectionReusableView {
+final class HistoryHeaderView: UICollectionReusableView {
 
     // MARK: - UI components
 

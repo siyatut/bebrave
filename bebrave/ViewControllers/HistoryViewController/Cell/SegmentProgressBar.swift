@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SegmentedProgressBar: UIView {
+final class SegmentedProgressBar: UIView {
 
     // MARK: - Properties
 
