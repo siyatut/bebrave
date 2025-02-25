@@ -116,13 +116,13 @@ class HistoryViewModel: ObservableObject {
         return habitsViewModel.habits.map { habit in
             let completedDays = habit.progress
                 .filter { $0.key >= interval.start && $0.key <= interval.end &&
-                    $0.value > 0 && !habit.skipDates.contains($0.key) } 
+                    $0.value > 0 && !habit.skipDates.contains($0.key) }
                 .count
             let skippedDays = habit.skipDates
                 .filter { $0 >= interval.start && $0 <= interval.end }
                 .count
             let remainingDays = totalDays - (completedDays + skippedDays)
-            
+
             return HabitProgress(
                 name: habit.title,
                 completedDays: completedDays,

@@ -5,9 +5,6 @@
 //  Created by Anastasia Tyutinova on 14/2/2567 BE.
 //
 
-// swiftlint:disable:next line_length
-// TODO: - Когда создать экран «История», проверить корректность работы статуса привычки «Не выполнена», если пользователь до 00:00 по своей таймзоне никак не взаимодействовал с ней")
-
 import UIKit
 import Combine
 

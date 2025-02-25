@@ -4,8 +4,6 @@
 //
 //  Created by Anastasia Tyutinova on 28/2/2567 BE.
 //
-// swiftlint:disable:next line_length
-// TODO: - Настроить отображение прогресса и закрашивания в соответствии со статусом: зелёный, полосатый зелёный, серый. UPD: с зелёным и серым вроде ок, но паттерн для спипа отрисовать не получилось
 
 import UIKit
 import Combine

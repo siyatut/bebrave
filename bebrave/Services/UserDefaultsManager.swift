@@ -5,8 +5,6 @@
 //  Created by Anastasia Tyutinova on 3/12/2567 BE.
 //
 
-// TODO: - В resetUncompletedHabits(), возможно, поебётся логика, проверить при реальном использовании потом
-
 import Foundation
 
 // MARK: - UserDefaults Manager
