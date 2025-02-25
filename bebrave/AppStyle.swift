@@ -10,9 +10,9 @@ import UIKit
 struct AppStyle {
 
     struct Colors {
-        static let primaryColor = UIColor(named: "MyPrimaryColor") ?? .systemPurple
-        static let primaryGreenColor = UIColor(named: "MyPrimaryGreenColor") ?? .systemGreen
-        static let secondaryColor = UIColor(named: "MySecondaryColor") ?? .tintColor
+        static let primaryColor = UIColor(named: "PrimaryAccent") ?? .systemPurple
+        static let primaryGreenColor = UIColor(named: "PrimaryGreen") ?? .systemGreen
+        static let secondaryColor = UIColor(named: "SecondaryAccent") ?? .tintColor
 
         static let errorColor = UIColor.red
         static let borderColor = UIColor.systemGray5
@@ -21,10 +21,11 @@ struct AppStyle {
         static let textColorSecondary = UIColor.secondaryLabel
 
         static let backgroundColor = UIColor.systemBackground
-        static let backgroundEmptyStateColor = UIColor(named: "MyGrayColor") ?? .lightGray
+        static let backgroundEmptyStateColor = UIColor(named: "NeutralGray") ?? .lightGray
 
-        static let isProgressHabitColor = UIColor(named: "MyGreenColor") ?? .systemGreen
-        static let isUncompletedHabitColor = UIColor(named: "MyLightGrayColor") ?? .lightGray
+        static let isProgressHabitColor = UIColor(named: "SuccessGreen") ?? .systemGreen
+        static let isUncompletedHabitColor = UIColor(named: "InactiveGray") ?? .lightGray
+        static let isSkippedHabitColor = UIColor(named: "SoftYellow") ?? .systemYellow
     }
 
     struct Sizes {

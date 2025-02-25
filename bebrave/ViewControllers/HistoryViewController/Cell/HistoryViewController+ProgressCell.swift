@@ -75,7 +75,7 @@ final class ProgressCell: UICollectionViewCell {
              CGFloat(habitProgress.completedDays) /
              CGFloat(habitProgress.totalDays)
             ),
-            (AppStyle.Colors.isProgressHabitColor,
+            (AppStyle.Colors.isSkippedHabitColor,
              CGFloat(habitProgress.skippedDays) /
              CGFloat(habitProgress.totalDays)
             ),
