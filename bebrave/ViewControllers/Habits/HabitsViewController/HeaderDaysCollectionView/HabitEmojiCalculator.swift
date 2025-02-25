@@ -7,7 +7,7 @@
 
 import Foundation
 
-class HabitEmojiCalculator {
+final class HabitEmojiCalculator {
     static func calculateEmoji(for date: Date, habits: [Habit], calendar: Calendar) -> String {
         let startOfDay = calendar.startOfDay(for: date)
 

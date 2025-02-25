@@ -243,9 +243,9 @@
 			isa = PBXGroup;
 			children = (
 				52F1E53D2B7CDC300058F767 /* TabBarViewController.swift */,
+				526737352D6DCEDB005346E2 /* PlaceholderViewController.swift */,
 				52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */,
 				52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */,
-				526737352D6DCEDB005346E2 /* PlaceholderViewController.swift */,
 				5209B4442D38F2140063CF1C /* HistoryViewController */,
 				5259A40F2D28509800EF60A2 /* Habits */,
 			);

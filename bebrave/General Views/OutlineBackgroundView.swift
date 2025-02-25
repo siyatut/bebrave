@@ -7,7 +7,7 @@
 
 import UIKit
 
-class OutlineBackgroundView: UICollectionReusableView {
+final class OutlineBackgroundView: UICollectionReusableView {
 
     // MARK: - Init
 

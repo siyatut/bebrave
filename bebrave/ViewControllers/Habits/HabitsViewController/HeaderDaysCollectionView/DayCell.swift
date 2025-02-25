@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DayCell: UICollectionViewCell {
+final class DayCell: UICollectionViewCell {
 
     // MARK: - UI Components
 

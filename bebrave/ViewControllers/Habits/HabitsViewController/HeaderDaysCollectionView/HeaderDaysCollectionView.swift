@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class HeaderDaysCollectionView: UICollectionReusableView {
+final class HeaderDaysCollectionView: UICollectionReusableView {
 
     // MARK: - ViewModel and Data Binding
 
