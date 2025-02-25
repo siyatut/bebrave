@@ -9,22 +9,23 @@ import Foundation
 import Combine
 
 final class HabitsViewModel: ObservableObject {
-    
+
     // MARK: - Published Properties
 
     @Published private(set) var habits: [Habit] = []
-    
+
     // MARK: - Private Properties
 
-    private let habitService = HabitService()
+    private let habitService: HabitService
     private var cancellables = Set<AnyCancellable>()
-    
+
     // MARK: - Init
 
-    init() {
+    init(habitService: HabitService = HabitService()) {
+        self.habitService = habitService
         loadHabits()
     }
-    
+
     // MARK: - Public Methods
 
     func loadHabits() {

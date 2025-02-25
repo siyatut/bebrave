@@ -7,9 +7,13 @@
 
 import Foundation
 
-class HabitService {
+final class HabitService {
 
-    private let storage = UserDefaultsManager.shared
+    private let storage: HabitStorageManager
+
+    init(storage: HabitStorageManager = HabitStorageManager()) {
+        self.storage = storage
+    }
 
     func getAllHabits() -> [Habit] {
         return storage.loadHabits()

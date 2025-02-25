@@ -26,13 +26,15 @@ final class HistoryViewModel: ObservableObject {
 
     private var referenceDate: Date = Date()
     private var habitsViewModel: HabitsViewModel
+    private let settingsStorage: SettingsStorageManager
     private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Init
 
-    init(habitsViewModel: HabitsViewModel) {
+    init(habitsViewModel: HabitsViewModel, settingsStorage: SettingsStorageManager = SettingsStorageManager()) {
         self.habitsViewModel = habitsViewModel
-        self.selectedPeriod = UserDefaultsManager.shared.loadSelectedPeriod() ?? .week
+        self.settingsStorage = settingsStorage
+        self.selectedPeriod = settingsStorage.loadSelectedPeriod() ?? .week
         updateDateRange()
         setupBindings()
     }
@@ -53,7 +55,7 @@ final class HistoryViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
-    
+
     // MARK: - General Progress Calculation
 
     private func calculateProgress() {
@@ -139,7 +141,6 @@ final class HistoryViewModel: ObservableObject {
 
     func updateSelectedPeriod(_ period: Period) {
         selectedPeriod = period
-        UserDefaultsManager.shared.saveSelectedPeriod(period)
     }
 
     // MARK: - Date Range Formatting

@@ -1,21 +1,17 @@
 //
-//  UserDefaultsManager.swift
+//  HabitStorageManager.swift
 //  bebrave
 //
-//  Created by Anastasia Tyutinova on 3/12/2567 BE.
+//  Created by Anastasia Tyutinova on 25/2/2568 BE.
 //
 
-import Foundation
+import UIKit
 
-// MARK: - UserDefaults Manager
+final class HabitStorageManager {
 
-final class UserDefaultsManager {
-    static let shared = UserDefaultsManager()
     private let defaults = UserDefaults.standard
 
-    private init() {}
-
-    // MARK: - Habit methods
+    // MARK: - Public Methods
 
     func loadHabits() -> [Habit] {
         guard let data = defaults.data(forKey: UserDefaultsKeys.habits) else {
@@ -25,7 +21,7 @@ final class UserDefaultsManager {
             let decoder = JSONDecoder()
             return try decoder.decode([Habit].self, from: data)
         } catch {
-            logError("Ошибка при загрузке привычек", error: error)
+            StorageErrorLogger.handleLoadError(error, forKey: UserDefaultsKeys.habits)
             return []
         }
     }
@@ -36,7 +32,7 @@ final class UserDefaultsManager {
             let encodedData = try encoder.encode(habits)
             defaults.set(encodedData, forKey: UserDefaultsKeys.habits)
         } catch {
-            handleSaveError(error, forKey: UserDefaultsKeys.habits)
+            StorageErrorLogger.handleSaveError(error, forKey: UserDefaultsKeys.habits)
         }
     }
 
@@ -77,53 +73,5 @@ final class UserDefaultsManager {
             habits[index].progress[yesterday] = 0
         }
         saveHabits(habits)
-    }
-
-    // MARK: - Period methods
-
-    func loadSelectedPeriod() -> Period? {
-        guard let data = defaults.data(forKey: UserDefaultsKeys.selectedPeriod) else {
-            return nil
-        }
-        do {
-            let decoder = JSONDecoder()
-            return try decoder.decode(Period.self, from: data)
-        } catch {
-            handleLoadError(error, forKey: UserDefaultsKeys.selectedPeriod)
-            return nil
-        }
-    }
-
-    func saveSelectedPeriod(_ period: Period) {
-        do {
-            let encoder = JSONEncoder()
-            let encodedData = try encoder.encode(period)
-            defaults.set(encodedData, forKey: UserDefaultsKeys.selectedPeriod)
-        } catch {
-            handleSaveError(error, forKey: UserDefaultsKeys.selectedPeriod)
-        }
-    }
-
-    // MARK: - Error Handling
-
-    private func handleLoadError(_ error: Error, forKey key: String) {
-        #if DEBUG
-        assertionFailure("Ошибка при загрузке данных (\(key)): \(error)")
-        #else
-        logError("Ошибка при загрузке данных (\(key))", error: error)
-        #endif
-    }
-
-    private func handleSaveError(_ error: Error, forKey key: String) {
-        #if DEBUG
-        assertionFailure("Ошибка при сохранении данных (\(key)): \(error)")
-        #else
-        logError("Ошибка при сохранении данных (\(key))", error: error)
-        #endif
-    }
-
-    private func logError(_ message: String, error: Error) {
-        print("\(message): \(error)")
-
     }
 }

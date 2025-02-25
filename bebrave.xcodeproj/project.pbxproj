@@ -68,8 +68,10 @@
 		52F1E56A2B7CE6330058F767 /* HabitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E5692B7CE6330058F767 /* HabitsViewController.swift */; };
 		52F1E56C2B7CE6B10058F767 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */; };
 		52F1E56E2B7CE6D10058F767 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */; };
-		52FBCF3A2CFF1677000206BC /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FBCF392CFF1673000206BC /* UserDefaultsManager.swift */; };
 		52FDA0EE2D37B0970081520A /* NewHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FDA0ED2D37B0890081520A /* NewHabitViewController.swift */; };
+		52FE0A582D6E20C400B721EF /* HabitStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FE0A572D6E20C400B721EF /* HabitStorageManager.swift */; };
+		52FE0A5A2D6E217300B721EF /* StorageErrorLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FE0A592D6E217300B721EF /* StorageErrorLogger.swift */; };
+		52FE0A5C2D6E223000B721EF /* SettingsStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FE0A5B2D6E223000B721EF /* SettingsStorageManager.swift */; };
 		52FF7F432D2EB96A008EF1E2 /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FF7F422D2EB963008EF1E2 /* DayCell.swift */; };
 		52FF7F462D2EB9EF008EF1E2 /* HeaderDays+CollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FF7F452D2EB9D2008EF1E2 /* HeaderDays+CollectionViewDelegate.swift */; };
 		52FF7F482D2EBACF008EF1E2 /* HabitEmojiCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FF7F472D2EBAC7008EF1E2 /* HabitEmojiCalculator.swift */; };
@@ -159,8 +161,10 @@
 		52F1E5692B7CE6330058F767 /* HabitsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsViewController.swift; sourceTree = "<group>"; };
 		52F1E56B2B7CE6B10058F767 /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
 		52F1E56D2B7CE6D10058F767 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		52FBCF392CFF1673000206BC /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		52FDA0ED2D37B0890081520A /* NewHabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHabitViewController.swift; sourceTree = "<group>"; };
+		52FE0A572D6E20C400B721EF /* HabitStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitStorageManager.swift; sourceTree = "<group>"; };
+		52FE0A592D6E217300B721EF /* StorageErrorLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageErrorLogger.swift; sourceTree = "<group>"; };
+		52FE0A5B2D6E223000B721EF /* SettingsStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStorageManager.swift; sourceTree = "<group>"; };
 		52FF7F422D2EB963008EF1E2 /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCell.swift; sourceTree = "<group>"; };
 		52FF7F452D2EB9D2008EF1E2 /* HeaderDays+CollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HeaderDays+CollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		52FF7F472D2EBAC7008EF1E2 /* HabitEmojiCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitEmojiCalculator.swift; sourceTree = "<group>"; };
@@ -384,7 +388,9 @@
 		52C996A02D11E984000E7648 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				52FBCF392CFF1673000206BC /* UserDefaultsManager.swift */,
+				52FE0A572D6E20C400B721EF /* HabitStorageManager.swift */,
+				52FE0A5B2D6E223000B721EF /* SettingsStorageManager.swift */,
+				52FE0A592D6E217300B721EF /* StorageErrorLogger.swift */,
 				52A762542D367F2B000A30EA /* UserDefaultsKeys.swift */,
 				521E56D22D645C8700F512A5 /* HabitsService.swift */,
 			);
@@ -678,8 +684,10 @@
 				5219E2B02D12324500F41D97 /* CellError.swift in Sources */,
 				5219E2B32D12371E00F41D97 /* HabitsViewController+Calendar.swift in Sources */,
 				5259A4062D284ACF00EF60A2 /* HabitsViewController+CollectionView.swift in Sources */,
+				52FE0A5C2D6E223000B721EF /* SettingsStorageManager.swift in Sources */,
 				52AB21F22D19AF51006C7DF9 /* UIComponents+Extensions.swift in Sources */,
 				52F1E53A2B7CDC300058F767 /* AppDelegate.swift in Sources */,
+				52FE0A5A2D6E217300B721EF /* StorageErrorLogger.swift in Sources */,
 				52359DAE2D35970300207E09 /* HabitCell+UIHelpers.swift in Sources */,
 				52F1E53C2B7CDC300058F767 /* SceneDelegate.swift in Sources */,
 				5209B44A2D38F2C00063CF1C /* HabitProgress.swift in Sources */,
@@ -696,10 +704,10 @@
 				526737362D6DCEDB005346E2 /* PlaceholderViewController.swift in Sources */,
 				52FF7F482D2EBACF008EF1E2 /* HabitEmojiCalculator.swift in Sources */,
 				52923ECF2CF70F080088E54B /* HeaderDaysCollectionView.swift in Sources */,
-				52FBCF3A2CFF1677000206BC /* UserDefaultsManager.swift in Sources */,
 				52F1E56A2B7CE6330058F767 /* HabitsViewController.swift in Sources */,
 				5209B4482D38F2A60063CF1C /* HistoryViewController+ProgressCell.swift in Sources */,
 				52A762532D367EA5000A30EA /* HabitStatus.swift in Sources */,
+				52FE0A582D6E20C400B721EF /* HabitStorageManager.swift in Sources */,
 				52F1E56E2B7CE6D10058F767 /* ProfileViewController.swift in Sources */,
 				522705A22D68CFCA005FA186 /* HabitCellAction.swift in Sources */,
 				5209B4462D38F23F0063CF1C /* HistoryViewController+ProgressLayout.swift in Sources */,
