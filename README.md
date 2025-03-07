@@ -19,6 +19,7 @@
 * UserDefaults (data persistence)
 * UICollectionViewCompositionalLayout (flexible UI design)
 * Animations & Gestures (smooth interactions and UI effects)
+* SwiftLint (for static code analysis)  
 
 #### 🔮 **Future Improvements**
 
