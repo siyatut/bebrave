@@ -23,6 +23,7 @@
 
 #### 🔮 **Future Improvements**
 
-* **Enhanced progress bar visualization** — improve the way the progress bar fills based on the selected time period
-* **Diary screen** — allow users to write daily reflections and review them later
-* **Profile screen** — include options to contact the developer, personalize user settings, and potentially add habit-tracking statistics
+* **Habit screen** — working on resolving issues with the emoji that represents the quality of habit completion on specific days to ensure accurate tracking.
+* **History sub-screen** — currently under development with a new designer to enhance the visualization of habit-tracking progress.
+* **Diary screen** — allow users to write daily reflections and review them later.
+* **Profile screen** — include options to contact the developer, personalize user settings, and potentially add habit-tracking statistics.
