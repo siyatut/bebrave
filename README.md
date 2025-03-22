@@ -1,10 +1,13 @@
 # bebrave
 
-![](https://github.com/siyatut/bebrave/blob/main/Simulator%20Screen%20Recording%20-%20iPhone%2012%20mini%20-%202025-03-22%20at%2009.00.00.gif)
-
 #### 📝 **Description**
 
 **bebrave** is an app designed to help users build and track their habits efficiently. It allows users to set goals, monitor progress, and analyze results over different time periods. The app leverages Combine for reactive programming, stores data using UserDefaults, and features a well-structured UI with custom cells and smooth animations.
+
+#### 🎥 Preview
+Please note: The GIF may take a few seconds to load, depending on your connection. Thank you for your patience!
+
+![](https://github.com/siyatut/bebrave/blob/main/Simulator%20Screen%20Recording%20-%20iPhone%2012%20mini%20-%202025-03-22%20at%2009.00.00.gif)
 
 #### 🚀 **Key Features:**
 
